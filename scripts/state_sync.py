@@ -99,7 +99,13 @@ GATE_REQUIRED_FIELDS = (
     "updated_at",
 )
 
-GATE_ALLOWED_FIELDS = GATE_REQUIRED_FIELDS
+# PASS 门禁必须记录裁决人与裁决日期；这两个字段是可选字段，但 PASS 时必填。
+GATE_OPTIONAL_FIELDS = (
+    "decided_by",
+    "decided_at",
+)
+
+GATE_ALLOWED_FIELDS = GATE_REQUIRED_FIELDS + GATE_OPTIONAL_FIELDS
 
 BLOCKER_REQUIRED_FIELDS = (
     "blocker_id",
@@ -260,6 +266,24 @@ def _validate_timestamp(value: Any, path: str, issues: list[Issue]) -> None:
             issues,
             path,
             "必须是带时区的 ISO-8601 时间，例如 2026-11-08T11:27:46+08:00",
+        )
+
+
+def _validate_date_or_timestamp(value: Any, path: str, issues: list[Issue]) -> None:
+    """门禁裁决日期：接受 YYYY-MM-DD 或带时区的 ISO-8601 时间。"""
+
+    if not isinstance(value, str):
+        _add(issues, path, f"必须是 YYYY-MM-DD 或带时区的 ISO-8601 字符串，实际类型为 {type(value).__name__}")
+        return
+    if _is_iso8601_with_timezone(value):
+        return
+    try:
+        datetime.strptime(value, "%Y-%m-%d")
+    except ValueError:
+        _add(
+            issues,
+            path,
+            "必须是 YYYY-MM-DD 或带时区的 ISO-8601 时间，例如 2026-11-10 或 2026-11-10T00:00:00+08:00",
         )
 
 
@@ -710,6 +734,35 @@ def _validate_stage_gates(value: Any, issues: list[Issue]) -> None:
         if "updated_at" in gate:
             _validate_timestamp(gate["updated_at"], f"{base}.updated_at", issues)
 
+        if "decided_by" in gate:
+            _non_empty_string(
+                gate["decided_by"],
+                f"{base}.decided_by",
+                issues,
+                max_length=100,
+            )
+
+        if "decided_at" in gate:
+            _validate_date_or_timestamp(
+                gate["decided_at"],
+                f"{base}.decided_at",
+                issues,
+            )
+
+        if status == "PASS":
+            if "decided_by" not in gate:
+                _add(
+                    issues,
+                    f"{base}.decided_by",
+                    "门禁状态为 PASS 时必须提供裁决人",
+                )
+            if "decided_at" not in gate:
+                _add(
+                    issues,
+                    f"{base}.decided_at",
+                    "门禁状态为 PASS 时必须提供裁决日期",
+                )
+
         if status == "PASS" and not evidence_paths:
             _add(
                 issues,
@@ -1123,9 +1176,12 @@ def render_implementation_status(state: dict[str, Any]) -> str:
                 "",
                 f"- 状态：{_status_text(gate['status'], GATE_STATUS_LABELS)}",
                 f"- 更新时间：{_cell(gate['updated_at'])}",
-                "- 验收条件：",
             ]
         )
+        if gate.get("decided_by") or gate.get("decided_at"):
+            lines.append(f"- 裁决人：{_cell(gate.get('decided_by')) if gate.get('decided_by') else '未记录'}")
+            lines.append(f"- 裁决时间：{_cell(gate.get('decided_at')) if gate.get('decided_at') else '未记录'}")
+        lines.append("- 验收条件：")
         for criterion in gate["criteria"]:
             lines.append(f"  - {_cell(criterion)}")
         lines.append("- 证据路径：")

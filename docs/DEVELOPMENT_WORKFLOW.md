@@ -214,7 +214,7 @@ $py = 'C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-
 
 - 研发看板只允许 `BACKLOG`、`READY`、`IN_PROGRESS`、`BLOCKED`、`IN_REVIEW`、`DONE`、`DEFERRED`。
 - 运行时 Task/Node 状态按附录 F；不得写入 `project_state.json`。
-- 门禁只有 `NOT_STARTED`、`IN_PROGRESS`、`PASS`、`FAIL`、`BLOCKED`；PASS 必须有证据路径。
+- 门禁只有 `NOT_STARTED`、`IN_PROGRESS`、`PASS`、`FAIL`、`BLOCKED`；PASS 必须有证据路径、`decided_by`（裁决人）与 `decided_at`（裁决日期，`YYYY-MM-DD` 或带时区 ISO-8601）。
 
 来源：`AGENTS.md` §6、§7；[`MEMORY_GUIDE.md`](MEMORY_GUIDE.md)。
 

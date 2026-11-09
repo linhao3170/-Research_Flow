@@ -13,7 +13,7 @@
 
 ## 使用规则
 
-> 2026-11-10 更新：第 2–4 项已由 G0 文档包裁决（FR-010 的 T0 最小切片见 ⑦ `WP-R` 与 `ADR-004`；WP 顺序按 ⑦ §1 的用户决议 C1；P0/P1/P2 为重要度而非阶段，见 ① §4.1）。本表保留阶段 8 的原始记录，不再作为待裁决项。R-3 的 Git 基线已建立；回滚实测仍属阶段 8 第 20 项 `NOT VERIFIED`，不因基线提交自动通过。
+> 2026-11-10 更新：第 2–4 项已由 G0 文档包裁决（FR-010 的 T0 最小切片见 ⑦ `WP-R` 与 `ADR-004`；WP 顺序按 ⑦ §1 的用户决议 C1；P0/P1/P2 为重要度而非阶段，见 ① §4.1）。本表保留阶段 8 的原始记录，不再作为待裁决项。R-3 的 Git 基线已建立，回滚已于 2026-11-10 在 `91bde66` 上补测 PASS，阶段 8 第 20 项转 PASS（见 `docs/verification/g0/18_git_rollback.log`）。
 
 1. 本清单只记录待裁决项，不构成 G0 通过。
 2. 第 1 项已由用户决议，不再作为阶段 9 的开放裁决项；阶段 9 只需引用决议，不重新讨论版本。
@@ -26,7 +26,7 @@
 |---|---|---|---|---|
 | R-1 | **13b 仅在全权限下通过** | 13b 在 workspace-write 下 23 tests / 43 errors，0 断言失败；`BLK-003` OPEN / MEDIUM；DSH 权限诊断结论 `NOT_THIS_CLASS`（WRITE_DAC / WRITE_OWNER 均具备，无缺失权限、无第三方授权项，FIXED=0，未做改动）；机制为沙箱授权未向运行期新建子目录传播 | `docs/verification/stage8/31_blk003_probe.log`、`32_unittest_workspacewrite.log`、`31b_probe_path_evidence.log`；诊断报告 `C:\Users\Administrator\AppData\Local\ResearchFlow\acl-diagnostics\acl-report-559f7ffa05844dce8e62ba3238f77f3b.jsonl` | 13b 维持 NOT VERIFIED，只有日后在 workspace-write 下真跑通才可改 PASS。23 项 unittest 属代码正确性测试，不测沙箱边界，允许在**单独批准的 full-access 会话**中运行；日志必须记录当次会话策略，运行结束立即恢复 `workspace-write`；结果不得用于第 5/6/23 项或任何安全项。不得手工改 ACL、不得再跑第二遍诊断。`tmpavet2qv9` 为空目录，**阶段 9 开始时只删除这一个目录**，不动其他目录 |
 | R-2 | **2D 未单独执行、2C 运行态未观测** | 阶段 2D 报告未在项目内落地；阶段 8 第 2 项只做静态确认（配置值 + 阶段 6 非回归），运行态未观测 | `docs/verification/stage8/02_security_2c.md`、`02_security_2c.log` | 阶段 9/G0 前补做 2D 运行态验证，或由用户书面接受“静态确认”口径；不得写成运行态已验证 |
-| R-3 | **Git 无基线、回滚未实测** | 0 commit、0 tracked；第 20 项 NOT VERIFIED | `docs/verification/stage8/20_git_rollback.md`、`19_git_docx.log` | 用户确认 Git 身份（`BLK-001`）后批准基线 commit，再做受控回滚测试；提交必须排除 DOCX |
+| R-3 | **Git 无基线、回滚未实测** | **已关闭（2026-11-10）**：基线 `91bde66` 已建立；受控回滚补测通过，阶段 8 第 20 项转 PASS | `docs/verification/g0/18_git_rollback.log`、`docs/verification/stage8/20_git_rollback.md` §3 | 后续按 Git 基线与提交规则执行；DOCX 继续精确忽略 |
 
 附加环境说明：整机既有 Docker Desktop（服务 Stopped），项目未使用；若 G0 口径要求“整机未安装”，由用户决定是否处理，不擅自卸载。证据：`docs/verification/stage8/24_dependencies.md`。
 

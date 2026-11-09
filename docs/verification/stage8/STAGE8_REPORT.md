@@ -6,10 +6,11 @@
 > 执行人：DSH Agent（deepseek-flash）
 > 结论：
 > - 初验：22 PASS / 3 FAIL / 1 NOT VERIFIED。
-> - 策略恢复后补验：第 5、6、23 项转 **PASS**；第 13 项拆分为 **13a PASS / 13b NOT VERIFIED**；第 20 项仍 **NOT VERIFIED**。
-> - **最终验收：25 PASS / 2 NOT VERIFIED / 0 FAIL（用户 2026-11-08 确认通过）。**
-> - 两条 NOT VERIFIED：13b（workspace-write 下 23 项测试未通过）、20（Git 无基线，回滚未实测）。
-> - 关键残留：`BLK-003` OPEN / MEDIUM（已诊断，非项目缺陷；13b 仅全权限下通过）；阶段 2D 未单独执行；Git 无基线。
+> - 策略恢复后补验：第 5、6、23 项转 **PASS**；第 13 项拆分为 **13a PASS / 13b NOT VERIFIED**；第 20 项当时仍 **NOT VERIFIED**。
+> - **2026-11-08 验收口径：25 PASS / 2 NOT VERIFIED / 0 FAIL（用户 2026-11-08 确认通过）。**
+> - **2026-11-10 补测：第 20 项在基线 `91bde66` 上完成受控回滚，转 PASS（基线建立后补测）；当前口径 26 PASS / 1 NOT VERIFIED（13b）/ 0 FAIL。**
+> - 历史 NOT VERIFIED 两项：13b（workspace-write 下 23 项测试未通过，仍未关闭）、20（当时 Git 无基线）。
+> - 关键残留：`BLK-003` OPEN / MEDIUM（已诊断，非项目缺陷；13b 仅全权限下通过）；阶段 2D 未单独执行；Git 回滚已补测通过。
 
 ## 0. 策略恢复与补验摘要
 
@@ -47,7 +48,7 @@
 | 17 | `docs/SKILL_CATALOG.md` 三态记录完整 | 解析 §3 表：行数、三态列、每行 8 列 | 9 行；表头含“已发现/已加载/已执行验证”；列数一致 | **PASS** | `17_skill_catalog_check.log`、`docs/SKILL_CATALOG.md` |
 | 18 | Context7 MCP 最小真实调用 | `resolve-library-id(Pydantic)` + `query-docs(/pydantic/pydantic)` | 两次均成功；返回 Pydantic V2 文档；无 API Key、无 429 | **PASS** | `18_context7.md` |
 | 19 | Git 状态清晰；无自动 commit；文件未丢；DOCX 哈希未变 | `git status`、`git rev-list`、`git ls-files`、`Get-FileHash`、DOCX/PDF 计数 | 0 commit、0 tracked；DOCX 111,209 字节 / `9E54168F…CCB3A`；全项目 DOCX/PDF=1；inbox 仅 `.gitkeep` | **PASS** | `19_git_docx.log` |
-| 20 | Git 可审查、可回滚 | `git log`、`git status`、`git diff --cached` | `git log` exit 128（无 commit）；可审查工作区，但无基线，回滚未实测 | **NOT VERIFIED** | `20_git_rollback.md`、`19_git_docx.log` |
+| 20 | Git 可审查、可回滚 | `git log`、`git status`、`git diff`、`git checkout --` | 2026-11-08：无基线，回滚未实测；**2026-11-10 基线 `91bde66` 上补测：探针修改可见、`git checkout --` exit 0、blob/SHA256 回到 HEAD 版本、探针无残留** | **PASS（基线建立后补测）** | `20_git_rollback.md` §3、`docs/verification/g0/18_git_rollback.log` |
 | 21 | 凭据与 Session 未被读取/导出/写入项目 | 审计访问路径；对 stage8 与项目文本做 6 类密钥模式扫描 | `.credentials.yaml` 未读；`sessions/` 未读；0 命中；无 Session 标识写入 | **PASS** | `21_security_audit.md`、`21_secret_scan.log` |
 | 22 | 旧 CLI 与 431 个目录联接完整 | 统计 `profiles/node_modules` 重解析点；逐个检查 target；读旧 CLI `package.json` | 431 个 Junction；0 断链；旧 CLI `0.1.0-rc.8` 存在（29,623 文件 / 214.8 MB） | **PASS** | `22_cli_junctions.log` |
 | 23 | 自动审批、Agent Teams 未启用；无大量并行 Agent | 读取审批策略；搜索 Profile/插件中的 teams/parallel；统计子 Agent | 审批 `ask`；teams 0 命中；workflow 0；子 Agent 1（仅模型探针） | **PASS** | `34_item6_23_workspacewrite.log`、`30_policy_restored.log` |
@@ -61,12 +62,13 @@
 
 - **无**。初验的第 5、6、23 项已在策略恢复后重跑并转 PASS，不接受“书面偏差”替代。
 
-### B.2 NOT VERIFIED（2 项：13b、20）
+### B.2 NOT VERIFIED（1 项：13b；第 20 项已于 2026-11-10 补测转 PASS）
 
 | 项 | 影响 | 原因 | 建议 |
 |---|---|---|---|
 | 13b | 不能宣称 workspace-write 下 23 项测试通过 | 43 个 `PermissionError`/`WinError 5`，无断言失败；失败发生在临时目录与工作区子目录写入 | `BLK-003` 保持 OPEN / MEDIUM；13b 维持 NOT VERIFIED；不引用全权限下的 23/23 |
-| 20 | 不能宣称“回滚已实测” | 0 commit、0 tracked，无基线 | 用户确认 Git 身份（`BLK-001`）并批准基线 commit 后再测 |
+
+**第 20 项补测**：2026-11-10 在基线 `91bde66` 上对 `docs/CHANGELOG_DEV.md` 写入探针，确认 `git status`/`git diff` 可见，执行 `git checkout --` 后退出码 0、blob 与 SHA256 均回到 HEAD 版本、探针无残留。判定改为 **PASS（基线建立后补测）**；命令与哈希见 [`docs/verification/g0/18_git_rollback.log`](../g0/18_git_rollback.log) 与 [`20_git_rollback.md`](20_git_rollback.md) §3。
 
 ### B.3 DEFERRED / BLOCKED
 
@@ -127,7 +129,7 @@
 
 1. **MEDIUM — BLK-003 / 13b**：workspace-write 下 23 项测试 43 errors；DSH 权限诊断为 `NOT_THIS_CLASS`，`FIXED=0`，非仓库 ACL 损坏；机制为沙箱授权未向运行期新建子目录传播。13b 维持 NOT VERIFIED。代码正确性测试可在单独批准的 full-access 会话运行，但结果不得用于安全项；不得手工改 ACL、不得重复诊断。
 2. **MEDIUM — 2D 未单独执行**：第 2 项只有静态确认，运行态未观测；已列入 G0 残留风险。建议阶段 9/G0 前补做，或由用户书面接受静态口径。
-3. **MEDIUM — Git 无基线**：0 commit，回滚未实测（`BLK-001`）。建议用户确认身份并批准基线 commit 后再测回滚。
+3. **RESOLVED（2026-11-10）— Git 无基线**：基线 `91bde66` 已建立并完成受控回滚补测；第 20 项转 PASS。`BLK-001` 保持 RESOLVED。
 4. **LOW — 历史文档仍写 `BLK-002 OPEN`**：`CHANGELOG_DEV.md`、`SESSION_HANDOFF.md`、`stage7/STAGE7_REPORT.md`、stage4/5 证据保留历史原文；当前状态以 `project_state.json` 与 `CONFLICT_REPORT` §1.7 为准。
 5. **LOW — 整机既有 Docker Desktop**：项目未使用、服务 Stopped；若 G0 口径要求“整机未安装”，需用户单独处理，未擅自卸载。
 6. **LOW — blocker schema 无 `CLOSED`**：`BLK-002` 使用 `RESOLVED` 表示关闭，并在 `resolution` 写明“等价 CLOSED”。
@@ -136,9 +138,11 @@
 
 ## F. 阶段 8 结论与阶段 9 前置
 
-**阶段 8 结论：25 PASS / 2 NOT VERIFIED / 0 FAIL，用户 2026-11-08 验收通过。**
+**阶段 8 结论（2026-11-08 验收口径）：25 PASS / 2 NOT VERIFIED / 0 FAIL，用户 2026-11-08 验收通过。**
 
-- 25 PASS 包含 13a；2 NOT VERIFIED 为 13b 与 20。
+**2026-11-10 补测后口径：26 PASS / 1 NOT VERIFIED（13b）/ 0 FAIL；第 20 项 PASS（基线建立后补测）。**
+
+- 25 PASS 包含 13a；2026-11-08 时的 2 NOT VERIFIED 为 13b 与 20；20 已于 2026-11-10 补测转 PASS。
 - 三项初验 FAIL 已因策略恢复消除；不接受任何以 `danger-full-access` 换取验收通过的 ADR 或例外。
 - 阶段 9 尚未开始；本次不进入阶段 9。
 
@@ -146,11 +150,11 @@
 
 1. **只删除** `D:\ResearchFlow-project\tmpavet2qv9` 这一个空目录；不要动其他任何目录。删除后在阶段 9 报告中确认。
 2. `BLK-003` 保持 OPEN / MEDIUM；13b 维持 NOT VERIFIED。只有日后在 workspace-write 下真跑通 23 项测试才可改 PASS。
-3. 三条 G0 残留风险已写入 [`docs/state/G0_DECISION_LIST.md`](../../state/G0_DECISION_LIST.md)：① 13b 仅在全权限下通过；② 2D 未单独执行、2C 运行态未观测；③ Git 无基线、回滚未实测。
+3. G0 残留风险已写入 [`docs/state/G0_DECISION_LIST.md`](../../state/G0_DECISION_LIST.md)：① 13b 仅在全权限下通过；② 2D 未单独执行、2C 运行态未观测；③ Git 基线已建立、回滚已于 2026-11-10 补测 PASS。
 4. 若在单独批准的 full-access 会话运行 23 项 unittest：日志记录当次策略，结束立即恢复 workspace-write；结果不得用于第 5/6/23 项或任何安全项。
 5. 不手工改 ACL；不再跑第二遍诊断。
 
-G0–G7 仍全部 `NOT_STARTED`；未 commit、未创建 `.venv`、未开发业务代码。本次停止，等待用户发送阶段 9。
+截至 2026-11-08，G0–G7 全部 `NOT_STARTED`；2026-11-10 用户宣布 G0 PASS，G1–G7 仍 `NOT_STARTED`。阶段 8 当时未 commit、未创建 `.venv`、未开发业务代码。
 
 ## 附：本阶段明确未做
 

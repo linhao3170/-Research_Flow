@@ -6,10 +6,14 @@
 
 * text=auto
 
+# 属性文件自身固定 LF，避免 core.autocrlf=true 下被改写
+/.gitattributes text eol=lf
+
 # 生成文件、脚本、契约与文档统一 LF
 *.py   text eol=lf
 *.md   text eol=lf
 *.json text eol=lf
+*.log  text eol=lf
 *.yml  text eol=lf
 *.yaml text eol=lf
 

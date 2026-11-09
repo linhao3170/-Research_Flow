@@ -299,3 +299,29 @@
   - 未创建 `.venv`、未安装依赖、未生成 lock、未写业务代码；`WP-01` 的解释器与 TestClient 冒烟在 T0 启动后执行。
   - `BLK-003` 与阶段 8 的 13b/第 20 项仍未关闭或仍 `NOT VERIFIED`，不因本提交改变。
 - 相关文件：`docs/G0/01_BASELINE_AND_TERMS.md`、`docs/PRD/02_REQUIREMENT_TRACEABILITY.md`、`docs/PRD/03_PRD_T0.md`、`docs/design/04_ARCHITECTURE.md`、`docs/design/05_CONTRACTS_AND_STATES.md`、`docs/design/06_DATA_AND_API.md`、`docs/design/07_T0_PLAN_AND_GATES.md`、`docs/G0/08_OPEN_QUESTIONS_AND_FREEZE.md`、`contracts/README.md`、`contracts/*.schema.json`、`docs/ADR/ADR-007-t0-workbench-scope.md`、`docs/ADR/README.md`、`docs/verification/g0/09_dependency_matrix.md`、`docs/verification/g0/10*`–`17*`、`.gitignore`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/SESSION_HANDOFF.md`。
+
+### 2026-11-10 · G0 PASS · Git 回滚补测 · 阶段 8 第 20 项关闭
+
+- 变更：
+  - 用户 2026-11-10 宣布 **G0 PASS**；依据 ①–⑧ + ⑨ 全部 v1.0、五份 schema 72/72、阻塞级 OQ=0、Git 基线 `91bde66`、DOCX 哈希未变。
+  - `project_state.json`：`stage_gates.G0` → `PASS`，`decided_by="用户"`、`decided_at="2026-11-10"`，`evidence_paths` 指向 ①–⑨ 与 `docs/verification/g0/` 下的决议、复核、回滚日志；`T-G0-001` → `DONE`；`G1`–`G7` 保持 `NOT_STARTED`。
+  - `scripts/state_sync.py`：门禁新增可选字段 `decided_by` / `decided_at`；`PASS` 时两者必填，`decided_at` 接受 `YYYY-MM-DD` 或带时区 ISO-8601；`IMPLEMENTATION_STATUS.md` 渲染裁决人与裁决时间。`DEVELOPMENT_WORKFLOW.md` §10.2 同步。
+  - Git 回滚补测：在已跟踪文件 `docs/CHANGELOG_DEV.md` 末尾写入 `PROBE-G0-ROLLBACK-20261110`，确认 `git status` 显示修改、`git diff` 可见该行；执行 `git checkout -- docs/CHANGELOG_DEV.md`，退出码 0；blob 与 SHA256 均回到 HEAD 版本，探针无残留。
+  - 阶段 8 第 20 项由 `NOT VERIFIED` 改为 **`PASS`（基线建立后补测）**；`20_git_rollback.md`、`STAGE8_REPORT.md` 与 `G0_DECISION_LIST.md` R-3 同步；13b 仍 `NOT VERIFIED`。
+  - `AGENTS.md` 新增的两条“正例/负例证据”规则，经用户 2026-11-10 批准纳入本次提交。
+  - 新增 `docs/verification/g0/19_g0_pass_decision.md`、`18_git_rollback.log`、`20_g0_pass_recheck.log`、`21_state_sync_g0_pass.log`、`22_gate_decision_schema_test.log`、`check_gate_decision.py`。
+- 原因：按用户 2026-11-10 指令记录 G0 PASS、补测 Git 回滚能力并关闭阶段 8 第 20 项，随后才进入 T0 `WP-01`。
+- 验证：
+  - `& $py -X utf8 scripts/validate_contracts.py --selftest` → `SELFTEST 10/10 PASS`，exit 0。
+  - `& $py -X utf8 scripts/validate_contracts.py` → `contracts=5 cases=72 pass=72 fail=0 exit=0`。
+  - `& $py -X utf8 scripts/state_sync.py validate` → `OK`，任务 5，门禁 PASS=1/8，阻塞 3，exit 0。
+  - `& $py -X utf8 scripts/state_sync.py render` → 生成 2 文件；`PROJECT_STATE.md` SHA256 `b753e313…07c9f`，`IMPLEMENTATION_STATUS.md` SHA256 `961520cb…c2360`，exit 0。
+  - `& $py -X utf8 scripts/state_sync.py check` → 2 文件逐字节一致，exit 0。
+  - `& $py -X utf8 docs/verification/g0/check_gate_decision.py` → `GATE_DECISION_SCHEMA_TEST=PASS checks=1 positive + 4 negative`，exit 0。
+  - 回滚：`git checkout --` exit 0；blob `051d761…` → `a4ae439…` → `051d761…`；SHA256 `070CF8F…AB81` 前后一致；文件级 `git status` 为空。
+- 影响/后续：
+  - G0 门禁 PASS；未开发 T0 业务代码，下一步只做 `WP-01` 环境与依赖锁定。
+  - 本提交未创建 `.venv`、未安装依赖、未生成 lock；`researchflow/` 仍只有 `.gitkeep`。
+  - `BLK-003` 保持 `OPEN` / `MEDIUM`；13b 仍 `NOT VERIFIED`；2D 未单独执行。
+  - `last_verified_commit` 保持 `null`；用户未下达更新指令，未自行改写。
+- 相关文件：`AGENTS.md`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`scripts/state_sync.py`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/state/G0_DECISION_LIST.md`、`docs/verification/g0/18*`–`22*`、`docs/verification/g0/check_gate_decision.py`、`docs/verification/stage8/20_git_rollback.md`、`docs/verification/stage8/STAGE8_REPORT.md`、`docs/memory/project-context.md`、`docs/SESSION_HANDOFF.md`。

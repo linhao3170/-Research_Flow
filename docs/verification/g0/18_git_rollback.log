@@ -1,0 +1,37 @@
+﻿== G0 Git rollback probe ==
+time=2026-11-10T00:27:45.6949991+08:00
+file=docs/CHANGELOG_DEV.md
+HEAD=91bde66365f24726003212c4b4f218da23148c1d
+before_sha256=070CF8F2B8D9B205FCB39322B56ADB098C98D6531DA8640C2D2CEDB979CCAB81
+before_blob=051d7616947cfcad59ae6d0f2b1d9b1aaf1e75a4
+head_blob=051d7616947cfcad59ae6d0f2b1d9b1aaf1e75a4
+blob_match_before=True
+status_before_file=[] exit=0
+status_before_all=[ M AGENTS.md] exit=0
+probe_line=PROBE-G0-ROLLBACK-20261110
+after_probe_sha256=22B78B2FA7E1E3F937139703C70537D593CDD8638F0D862729A1AAE8A1A3CCB3
+after_probe_blob=a4ae4393b7ef90b2ea000c16d42bb007e4d2956c
+probe_present=True
+status_after_probe_file=[ M docs/CHANGELOG_DEV.md] exit=0
+status_after_probe_all=[ M AGENTS.md; M docs/CHANGELOG_DEV.md] exit=0
+--- git diff -- docs/CHANGELOG_DEV.md ---
+diff --git a/docs/CHANGELOG_DEV.md b/docs/CHANGELOG_DEV.md
+index 051d761..a4ae439 100644
+--- a/docs/CHANGELOG_DEV.md
++++ b/docs/CHANGELOG_DEV.md
+@@ -299,3 +299,5 @@
+   - 未创建 `.venv`、未安装依赖、未生成 lock、未写业务代码；`WP-01` 的解释器与 TestClient 冒烟在 T0 启动后执行。
+   - `BLK-003` 与阶段 8 的 13b/第 20 项仍未关闭或仍 `NOT VERIFIED`，不因本提交改变。
+ - 相关文件：`docs/G0/01_BASELINE_AND_TERMS.md`、`docs/PRD/02_REQUIREMENT_TRACEABILITY.md`、`docs/PRD/03_PRD_T0.md`、`docs/design/04_ARCHITECTURE.md`、`docs/design/05_CONTRACTS_AND_STATES.md`、`docs/design/06_DATA_AND_API.md`、`docs/design/07_T0_PLAN_AND_GATES.md`、`docs/G0/08_OPEN_QUESTIONS_AND_FREEZE.md`、`contracts/README.md`、`contracts/*.schema.json`、`docs/ADR/ADR-007-t0-workbench-scope.md`、`docs/ADR/README.md`、`docs/verification/g0/09_dependency_matrix.md`、`docs/verification/g0/10*`–`17*`、`.gitignore`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/SESSION_HANDOFF.md`。
++
++PROBE-G0-ROLLBACK-20261110
+git_diff_exit=0
+checkout_exit=0
+restored_sha256=070CF8F2B8D9B205FCB39322B56ADB098C98D6531DA8640C2D2CEDB979CCAB81
+restored_blob=051d7616947cfcad59ae6d0f2b1d9b1aaf1e75a4
+sha256_restored_equals_before=True
+blob_restored_equals_head=True
+probe_present_after_restore=False
+status_after_restore_file=[] exit=0
+status_after_restore_all=[ M AGENTS.md] exit=0
+note=all_workspace_status_after_restore_contains_only_preexisting_AGENTS.md_modification

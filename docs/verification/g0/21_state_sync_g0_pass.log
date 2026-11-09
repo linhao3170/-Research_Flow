@@ -1,0 +1,12 @@
+﻿== state_sync after G0 PASS (final) ==
+time=2026-11-10T00:34:26.6299652+08:00
+OK: project_state.json 校验通过。阶段=G0_PREPARATION，任务=5，门禁 PASS=1/8，阻塞=3。
+validate_exit=0
+已生成 docs/PROJECT_STATE.md  sha256=b753e313da34ccb33b49dfc3a19530d18836907e3ca079aab7dd71f7b9307c9f
+已生成 docs/IMPLEMENTATION_STATUS.md  sha256=961520cbeb927735f3a4e99137bcd4026ee691b4d300b2b5f856d4eccf4c2360
+OK: 已生成 2 个文件。
+render_exit=0
+[OK] docs/PROJECT_STATE.md  sha256=b753e313da34ccb33b49dfc3a19530d18836907e3ca079aab7dd71f7b9307c9f
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=961520cbeb927735f3a4e99137bcd4026ee691b4d300b2b5f856d4eccf4c2360
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+check_exit=0

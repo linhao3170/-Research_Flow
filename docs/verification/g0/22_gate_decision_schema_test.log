@@ -1,0 +1,4 @@
+﻿== gate decision schema test ==
+time=2026-11-10T00:33:38.9950800+08:00
+GATE_DECISION_SCHEMA_TEST=PASS checks=1 positive + 4 negative
+exit=0

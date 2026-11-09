@@ -11,10 +11,10 @@
 |---|---|---|
 | `BACKLOG` | 待办 | 0 |
 | `READY` | 就绪 | 0 |
-| `IN_PROGRESS` | 进行中 | 1 |
+| `IN_PROGRESS` | 进行中 | 0 |
 | `BLOCKED` | 阻塞 | 0 |
 | `IN_REVIEW` | 评审中 | 0 |
-| `DONE` | 完成 | 4 |
+| `DONE` | 完成 | 5 |
 | `DEFERRED` | 延期 | 0 |
 | **合计** | — | **5** |
 
@@ -73,9 +73,9 @@
 ### `T-G0-001` G0 规格冻结文档包
 
 - 阶段：`G0_PREPARATION`
-- 状态：`IN_PROGRESS` 进行中
+- 状态：`DONE` 完成
 - 依赖：`T-DOCS-001`、`T-STAGE8-001`
-- 更新时间：2026-11-09T23:55:00+08:00
+- 更新时间：2026-11-10T00:45:00+08:00
 - 阻塞：无
 - 验收标准：
   - ①–⑧ 八份 G0 文档全部升为 v1.0 并标「G0 冻结」（冻结日期 2026-11-10、被取代版本）；① 的 v1.1 候选期编号归并回 v1.0
@@ -88,7 +88,7 @@
   - 依赖矩阵锁定为 WP-01 基线并写入 ⑦ WP-01 入口条件；解释器硬约束（uv 3.11.16 64 位、指纹校验、TestClient 冒烟与回退）已写入
   - ADR-001–006 ACCEPTED；ADR-007 保持 PROPOSED，WP-13 前裁决
   - Git 身份按仓库级配置（ResearchFlow Dev / dev@researchflow.local），全局身份仍为空；DOCX 按精确文件名忽略且原文件未动、未改名、未移动
-  - G0 规格基线提交完成（chore(g0): 建立 G0 规格基线）；T-G0-001 保持 IN_PROGRESS 直到用户确认；G0–G7 仍 NOT_STARTED
+  - G0 规格基线提交完成（91bde66）；用户 2026-11-10 宣布 G0 PASS，T-G0-001 转 DONE；G1–G7 仍 NOT_STARTED
   - 未建 .venv、未装依赖、未写业务代码
 - 测试命令：
   - `git config --local --get user.name`
@@ -147,6 +147,12 @@
   - `docs/verification/g0/15_version_freeze_state_render.log`
   - `docs/verification/g0/16_version_freeze_state_check.log`
   - `docs/verification/g0/17_version_freeze_report.md`
+  - `docs/verification/g0/18_git_rollback.log`
+  - `docs/verification/g0/19_g0_pass_decision.md`
+  - `docs/verification/g0/20_g0_pass_recheck.log`
+  - `docs/verification/g0/21_state_sync_g0_pass.log`
+  - `docs/verification/g0/22_gate_decision_schema_test.log`
+  - `docs/verification/g0/check_gate_decision.py`
 
 ### `T-MCP-001` 核实 DSH MCP Client 能力并完成 Context7 接入验证
 
@@ -279,12 +285,32 @@
 
 ### `G0` · 规格冻结
 
-- 状态：`NOT_STARTED` 未开始
-- 更新时间：2026-11-08T11:27:46+08:00
+- 状态：`PASS` 通过
+- 更新时间：2026-11-10T00:45:00+08:00
+- 裁决人：用户
+- 裁决时间：2026-11-10
 - 验收条件：
   - 数据模型、状态机、API、错误码、证据等级和规则版本确定
 - 证据路径：
-  - 无
+  - `docs/G0/01_BASELINE_AND_TERMS.md`
+  - `docs/PRD/02_REQUIREMENT_TRACEABILITY.md`
+  - `docs/PRD/03_PRD_T0.md`
+  - `docs/design/04_ARCHITECTURE.md`
+  - `docs/design/05_CONTRACTS_AND_STATES.md`
+  - `docs/design/06_DATA_AND_API.md`
+  - `docs/design/07_T0_PLAN_AND_GATES.md`
+  - `docs/G0/08_OPEN_QUESTIONS_AND_FREEZE.md`
+  - `contracts/README.md`
+  - `contracts/taskspec.schema.json`
+  - `contracts/nodespec.schema.json`
+  - `contracts/evidencerecord.schema.json`
+  - `contracts/verificationreport.schema.json`
+  - `contracts/completioncertificate.schema.json`
+  - `docs/verification/g0/09_dependency_matrix.md`
+  - `docs/verification/g0/17_version_freeze_report.md`
+  - `docs/verification/g0/18_git_rollback.log`
+  - `docs/verification/g0/19_g0_pass_decision.md`
+  - `docs/verification/g0/20_g0_pass_recheck.log`
 
 ### `G1` · 纵向闭环
 

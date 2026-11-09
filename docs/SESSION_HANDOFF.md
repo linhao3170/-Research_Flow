@@ -16,6 +16,38 @@
 
 ## 交接记录
 
+### 2026-11-10 · G0 PASS · Git 回滚补测 · 阶段 8 第 20 项关闭
+
+- 本次完成：
+  - 用户 2026-11-10 宣布 **G0 PASS**：①–⑧ + ⑨ 全部 v1.0；五份 schema 72/72；阻塞级 OQ=0；基线 `91bde66` 已建立；DOCX 未入库、SHA256 未变。
+  - `project_state.json`：`G0` → `PASS`（`decided_by=用户`、`decided_at=2026-11-10`，19 条证据路径）；`T-G0-001` → `DONE`；`G1`–`G7` 保持 `NOT_STARTED`。
+  - `state_sync.py` 门禁增加 `decided_by` / `decided_at`（PASS 必填）；渲染器输出裁决人/时间；正例 + 4 个负例校验通过。
+  - Git 回滚补测：`docs/CHANGELOG_DEV.md` 写入探针 → status/diff 可见 → `git checkout --` exit 0 → blob/SHA256 回到 HEAD → 探针无残留；日志 `docs/verification/g0/18_git_rollback.log`。
+  - 阶段 8 第 20 项转 **PASS（基线建立后补测）**；`20_git_rollback.md`、`STAGE8_REPORT.md`、`G0_DECISION_LIST.md` R-3 同步；13b 仍 `NOT VERIFIED`。
+  - `AGENTS.md` 两条负例规则修改经用户批准纳入本次提交。
+- 未完成：
+  - `WP-01` 尚未开始（下一步）；未创建 `.venv`、未安装依赖、未生成 lock。
+  - 13b 仍 `NOT VERIFIED`；2D 未单独执行；`BLK-003` OPEN / MEDIUM。
+- 已知问题/风险：
+  - 会话开始时工作区并不干净：`AGENTS.md` 有未提交修改；已报告用户并获准纳入本次提交。
+  - `state_sync.py` 门禁 schema 新增两个可选字段；旧状态文件（G1–G7 未 PASS）不受影响。
+  - `last_verified_commit` 仍为 `null`；用户未下达更新指令。
+- 实际测试命令与结果：
+  - `validate_contracts.py --selftest` → `10/10 PASS`，exit 0。
+  - `validate_contracts.py` → `cases=72 pass=72 fail=0`，exit 0。
+  - `state_sync.py validate` → `OK`，任务 5，门禁 PASS=1/8，exit 0。
+  - `state_sync.py render` → 2 文件，exit 0；`check` → 逐字节一致，exit 0。
+  - `check_gate_decision.py` → `GATE_DECISION_SCHEMA_TEST=PASS`（1 正例 + 4 负例），exit 0。
+  - 回滚：`git checkout --` exit 0；blob `051d761…` → `a4ae439…` → `051d761…`；SHA256 前后一致。
+- 下一步（等待用户）：
+  1. 验收本次 G0 PASS 提交与阶段 8 第 20 项关闭。
+  2. 批准/验收 `WP-01`：`uv venv --python 3.11.16 .venv`、指纹校验、按锁定矩阵安装、生成锁文件、TestClient 冒烟、记录体积/耗时，提交 `feat(wp-01): 锁定 T0 依赖环境`。
+  3. 决定是否将 `last_verified_commit` 更新为本轮 HEAD。
+- 待用户确认：
+  - `WP-01` 中 `httpx` 等 TestClient 运行依赖是否属于矩阵允许范围（若解析发现缺失，先报告再装）。
+  - `ADR-007` 仍 `PROPOSED`，不早于 `WP-13` 裁决。
+- 相关文件/命令：`docs/state/project_state.json`、`scripts/state_sync.py`、`docs/verification/g0/18_git_rollback.log`、`docs/verification/g0/19_g0_pass_decision.md`、`docs/verification/stage8/20_git_rollback.md`、`docs/verification/stage8/STAGE8_REPORT.md`、`docs/state/G0_DECISION_LIST.md`、`docs/CHANGELOG_DEV.md`。
+
 ### 2026-11-10 · G0 · 规格基线统一 v1.0 并提交
 
 - 本次完成：
