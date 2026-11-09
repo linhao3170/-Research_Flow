@@ -1,0 +1,29 @@
+STAGE7 DOCX PACKAGE INVENTORY (read-only)
+PATH=D:\ResearchFlow-project\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx
+SIZE_BYTES=111209
+CREATED=1793975408838937400
+MODIFIED=1793961814015094900
+SHA256=9E54168FB1B553294ECB88E2E3F5C8CE878EE699FCF07E37D531A68C195CCB3A
+
+MEMBERS:
+  [Content_Types].xml	1994	compressed=424
+  _rels/.rels	734	compressed=248
+  docProps/core.xml	976	compressed=582
+  docProps/app.xml	1132	compressed=491
+  word/document.xml	971865	compressed=73373
+  word/_rels/document.xml.rels	1484	compressed=329
+  word/styles.xml	350320	compressed=12361
+  word/stylesWithEffects.xml	438131	compressed=13625
+  word/settings.xml	2535	compressed=959
+  word/webSettings.xml	438	compressed=256
+  word/fontTable.xml	2811	compressed=611
+  word/theme/theme1.xml	10939	compressed=1734
+  customXml/item1.xml	262	compressed=167
+  customXml/_rels/item1.xml.rels	295	compressed=189
+  customXml/itemProps1.xml	354	compressed=225
+  word/numbering.xml	5513	compressed=875
+  word/header1.xml	1560	compressed=539
+  word/footer1.xml	1592	compressed=544
+  docProps/thumbnail.jpeg	8324	compressed=1469
+
+ZIP_TEST=OK

@@ -1,0 +1,13 @@
+TIME=2026-11-08T13:26:09.8136163+08:00
+WORKSPACE=D:\ResearchFlow-project
+RUNTIME_CONTEXT_FILE_POLICY=workspace-write
+RUNTIME_CONTEXT_APPROVALS=ask (approval prompts enabled)
+PRIOR_POLICY=danger-full-access / never-ask (2026-11-08T13:10+08:00)
+NOTE=Policy restored by user in Desktop before this run.
+--- ENV (selected) ---
+DSH_HOME=C:\Users\Administrator\.dsh
+DSH_PROFILE=desktop
+DSH_PROFILE_DIR=C:\Users\Administrator\.dsh\profiles\desktop
+--- WORKSPACE WRITE SANITY ---
+WRITE_OK=True
+CLEANUP_OK=True

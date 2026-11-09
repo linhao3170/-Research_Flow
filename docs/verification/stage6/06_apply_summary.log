@@ -1,0 +1,14 @@
+﻿Stage 6 config apply summary
+time=2026-11-08T12:36:09+08:00
+backup_path=C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml.bak-20261108-stage6
+backup_bytes=1200
+backup_sha256=664CE561366D925DDA1AE382528565218ABB20072211DD36562F4D3CB894FFD8
+target_bytes=1462
+target_lines=52
+target_last_byte=10
+target_sha256=6FF6F1FCB6CAE8F732F221710D9E4FFD5C6DF1E26F6EFDADE75F4B9B536159E1
+prefix_1200_equal=True
+no_bom=True
+no_crlf=True
+backup_result=OK
+append_result=OK

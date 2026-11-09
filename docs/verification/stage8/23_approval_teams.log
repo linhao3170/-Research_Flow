@@ -1,0 +1,11 @@
+TIME=2026-11-08T13:16:24.9119594+08:00
+--- APPROVAL POLICY ---
+CURRENT=danger-full-access; approvals disabled/never-ask (runtime snapshot 2026-11-08T13:10+08:00)
+EXPECTED=workspace-write / ask
+VERDICT=FAIL (effective auto-approval; confinement not enforced)
+--- AGENT TEAMS ---
+CONFIG_TEAM_HITS=0
+PLUGIN_DIRS_MATCHING_TEAM=0
+SUBAGENTS_USED=1 (minimal model probe only)
+WORKFLOWS_USED=0
+PARALLEL_AGENT_CONFIG=NOT_FOUND

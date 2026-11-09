@@ -1,0 +1,13 @@
+﻿# 07_check_after_restore
+命令: "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" scripts\state_sync.py check
+工作目录: D:\ResearchFlow-project
+开始时间: 2026-11-08T11:37:19+08:00
+解释器: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+---- stdout ----
+[OK] docs/PROJECT_STATE.md  sha256=457c0967ec242746af9bf04f12c0cedad1152c1a6f20b434c677a32f33d9b389
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=f4415b10fadbbf198f6da5a0c79043b42eac6cf58e108ebe36587f57faa4fe07
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+---- stderr ----
+
+---- exit code ----
+0

@@ -1,0 +1,35 @@
+TIME=2026-11-08T13:27:06.7295950+08:00
+POLICY=workspace-write
+FIXTURE=D:\ResearchFlow-project\docs\verification\stage8\fixture_check_ws (temporary; removed after test)
+BASELINE_EXIT=0
+[OK] docs/PROJECT_STATE.md  sha256=2335a1d69a425f0ce75410b4c2de6d1f2f2cd540cf8242531dcfeb1f71063ea5
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=d04ff6919bc24d8f9a86498c5919fd793eaf169599fb9335b778319a155e0cb8
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+
+TAMPER_EXIT=1
+python.exe : [FAIL] docs/PROJECT_STATE.md：内容与 JSON 渲染结果不一致
+所在位置 行:1 字符: 1137
++ ... lse))); $r2=& $py scripts/state_sync.py check --root $fx 2>&1; $c2=$L ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([FAIL] docs/PRO...容与 JSON 渲染结果不一致:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  预期 SHA256：2335a1d69a425f0ce75410b4c2de6d1f2f2cd540cf8242531dcfeb1f71063ea5
+  实际 SHA256：27a55fd4e9ee1cd3d7173062cbe7de3de32e204b721bceef381f184117b61711
+  --- 预期（JSON 渲染）
+  +++ 实际（docs/PROJECT_STATE.md）
+  @@ -53,3 +53,4 @@
+   ---
+   
+   本文件只反映 `project_state.json` 的当前内容，不构成开发完成声明。
+  +TAMPER-EVIDENCE-STAGE8-WS
+检查失败：1 个生成文件与 project_state.json 不一致。
+修复方式：修改 docs/state/project_state.json 后运行 `state_sync.py render`；不要手工编辑生成文件。
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=d04ff6919bc24d8f9a86498c5919fd793eaf169599fb9335b778319a155e0cb8
+
+RESTORE_EXIT=0
+[OK] docs/PROJECT_STATE.md  sha256=2335a1d69a425f0ce75410b4c2de6d1f2f2cd540cf8242531dcfeb1f71063ea5
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=d04ff6919bc24d8f9a86498c5919fd793eaf169599fb9335b778319a155e0cb8
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+
+FIXTURE_REMOVED=True

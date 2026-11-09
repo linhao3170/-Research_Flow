@@ -1,0 +1,23 @@
+Stage 5 skill structure negative test
+time=2026-11-08T11:59:48.473170+08:00
+scenario=delete researchflow-onboarding/SKILL.md in a temp copy
+command=C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe scripts/validate_skills.py --root C:\Users\ADMINI~1\AppData\Local\Temp\rf_skill_negative_tc60kk1d\skills
+---- stdout ----
+Skill root: C:\Users\ADMINI~1\AppData\Local\Temp\rf_skill_negative_tc60kk1d\skills
+PASS researchflow-spec-driven-development: bytes=5583 lines=92 sha256=223D9AAA3F38D53C334DB355045C1C4441085796912FEFA03B7DBCC910A1840E
+PASS researchflow-prompt-workflow: bytes=4988 lines=94 sha256=E40730B9C45F98DD344F6FBD0A5E7C80A29F77361F36673BB75F6C2B3E13BFF2
+PASS researchflow-contracts-api: bytes=5417 lines=95 sha256=A8CF120B4466225316A5B7326A6E46258BD6FCF28EEB7EF56DAE8ADE65FD3116
+PASS researchflow-python-backend: bytes=5473 lines=95 sha256=C763314FFBB82C0936663839DA92CFC66DDB2119AFB8BC225214E3DD6D00D777
+PASS researchflow-dag-state-machine: bytes=5619 lines=99 sha256=5795F10F5222FC648213DF9E1C335FC3B72B90D712D168C1D26F18C2963A4F2C
+PASS researchflow-evidence-security: bytes=6009 lines=102 sha256=E656CBADA7B5DE27FC9F634CD7E00EA4AE782EC0C18FF73E3557E94A1F6C13CE
+PASS researchflow-testing-benchmark: bytes=5370 lines=98 sha256=D630AE54E68FEA558525968CC8085944E41C03B7E0902A4F168998F8BF860BD5
+PASS researchflow-memory-handoff: bytes=5639 lines=114 sha256=3D77BA6FD5BC3DF6BE54B1CC0B00D44BB72F5CFF2EEF1C979218F06792BB8118
+
+FAIL:
+- researchflow-onboarding: 缺少 SKILL.md
+---- stderr ----
+
+---- exit_code ----
+1
+expected=1
+RESULT=PASS

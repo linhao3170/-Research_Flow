@@ -1,0 +1,44 @@
+TIME=2026-11-08T13:14:50.2977926+08:00
+--- PROJECT ARTIFACTS ---
+PATH=.venv EXISTS=False
+PATH=node_modules EXISTS=False
+PATH=pyproject.toml EXISTS=False
+PATH=package.json EXISTS=False
+PATH=requirements.txt EXISTS=False
+PATH=Dockerfile EXISTS=False
+PATH=docker-compose.yml EXISTS=False
+researchflow_CONTENTS=.gitkeep
+contracts_CONTENTS=.gitkeep
+--- LARGE FILES (project, top 10) ---
+
+ Length FullName                                                              
+ ------ --------                                                              
+4942461 D:\ResearchFlow-project\tmp\stage6_asar\dsh__desktop-runtime.json     
+ 838520 D:\ResearchFlow-project\tmp\stage6_asar\lib__main.js                  
+ 225678 D:\ResearchFlow-project\tmp\stage6_asar\dsh-app-boot__index.js        
+ 170470 D:\ResearchFlow-project\docs\verification\stage7\18_unittest.log      
+ 130491 D:\ResearchFlow-project\docs\verification\stage7\02_docx_body.txt     
+ 111209 D:\ResearchFlow-project\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx      
+  63948 D:\ResearchFlow-project\docs\verification\stage7\05_docx_tables.txt   
+  58530 D:\ResearchFlow-project\scripts\__pycache__\state_sync.cpython-311.pyc
+  47197 D:\ResearchFlow-project\scripts\state_sync.py                         
+  37368 D:\ResearchFlow-project\tmp\stage6_asar\dsh-app-boot__README.md       
+
+
+
+PROJECT_BYTES=7422703
+--- LOCAL LLM / MODEL FILES ---
+MODEL_FILES=0
+--- COMMANDS ---
+CMD=docker FOUND=C:\Program Files\Docker\Docker\resources\bin\docker.exe
+CMD=nvidia-smi FOUND=C:\Windows\system32\nvidia-smi.exe
+CMD=ollama FOUND=False
+CMD=nvcc FOUND=False
+--- DOCKER SERVICE ---
+DOCKER_SERVICE=Stopped
+--- CUDA DIR ---
+CUDA_DIR_EXISTS=False
+--- PYTHON PACKAGES ---
+PIP_LIST_COUNT=2
+pip==26.2.1
+setuptools==84.0.0

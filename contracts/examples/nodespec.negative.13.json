@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "node_id": "split_dataset",
+  "node_type": "ml.train.classifier",
+  "template_id": "random_forest@1.0.0",
+  "depends_on": [
+    "split_dataset"
+  ],
+  "input_refs": [
+    "artifact://split_manifest"
+  ],
+  "parameters_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+  "side_effect_class": "PURE_ARTIFACT",
+  "retry_policy": {
+    "max_attempts": 2,
+    "backoff_sec": 2
+  },
+  "required_checks": [
+    "executor_observed",
+    "artifact_hash",
+    "metric_source"
+  ]
+}

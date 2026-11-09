@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "cert_id": "cert_2b3c4d5e-6f70-4a8b-9c0d-1e2f3a4b5c6d",
+  "report_id": "report_7d1e2f3a-4b5c-4d6e-8f90-a1b2c3d4e5f6",
+  "final_state": "PARTIAL",
+  "merkle_root": "5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+  "tree_size": 128,
+  "ruleset_hash": "0b1d3f5a7c9e2b4d6f8a0c1e3b5d7f9a2c4e6b8d0f1a3c5e7b9d2f4a6c8e0b1d",
+  "code_hash": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+  "env_fingerprint": "2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a",
+  "l3_coverage": 1.0,
+  "skipped_nodes": [],
+  "alg": "Ed25519",
+  "key_id": "dev-ed25519-2026-11",
+  "key_fingerprint": "3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b",
+  "signature": "c2lnbmF0dXJlLXN5bnRoZXRpYy1leGFtcGxlLTAwMDE=",
+  "issued_at": "2026-11-09T09:06:00Z"
+}

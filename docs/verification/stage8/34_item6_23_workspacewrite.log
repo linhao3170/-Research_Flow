@@ -1,0 +1,13 @@
+TIME=2026-11-08T13:26:33.9027427+08:00
+--- ITEM 6 ---
+WORKSPACE=D:\ResearchFlow-project
+FILE_POLICY=workspace-write
+APPROVALS=ask (prompts enabled)
+PRIOR_POLICY=danger-full-access / never-ask (ended at user restore)
+--- ITEM 23 ---
+CONFIG_TEAM_HITS=0
+PLUGIN_DIRS_MATCHING_TEAM=0
+SUBAGENTS_USED=1 (minimal model probe; no tools)
+WORKFLOWS_USED=0
+PARALLEL_AGENT_CONFIG=NOT_FOUND
+AUTO_APPROVAL=DISABLED (approvals ask)

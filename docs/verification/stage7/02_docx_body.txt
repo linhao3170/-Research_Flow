@@ -1,0 +1,2165 @@
+[P0001] <(none)> 
+    ResearchFlow 3.1 v4.3.0
+[P0002] <(none)> 
+    2026 第五届全国高校「未来杯」创新大赛
+[P0003] <(none)> 
+    ResearchFlow 3.1
+[P0004] <(none)> 
+    面向 AI 实验的可信多智能体编排、动态调度与独立验证平台
+[P0005] <(none)> 
+    Evidence-Gated Orchestration · Determinism-Aware Recovery · Verification-Aware Scheduling
+[P0006] <(none)> 
+    项目策划书与工程开发基线
+[P0007] <(none)> 
+    v4.3.0 · 全面升级版
+[TABLE 01] rows=6 cols~=2
+  R01: 项目项 | 说明
+  R02: 参赛赛道 | 赛道一：Agent 编排创新应用
+  R03: 主办单位 | 智云数科（北京）科技股份有限公司
+  R04: 支持单位 | 新一代信息技术创新行业产教融合共同体
+  R05: 文档性质 | 完整策划与工程规格；不是已完成系统的实测报告
+  R06: 版本日期 | 2026 年 11 月 6 日
+[P0008] <(none)> 
+    
+[P0009] <(none)> 
+    所有目标值均为拟验收门槛；未取得原始日志、JSON、截图或第三方复核记录前，不得写成实测成绩。
+[P0010] <(none)> PAGE_BREAKS=1
+    
+    
+[P0011] <heading 1> HEADING(outline=None)
+    文档控制与升级说明
+[TABLE 02] rows=6 cols~=2
+  R01: 项目 | 说明
+  R02: 产品版本 | ResearchFlow 3.1
+  R03: 策划书版本 | v4.3.0 全面升级版开发基线
+  R04: 底稿 | 用户提供的 v4.2 定稿级清洗稿；保留 18 章主干、核心机制与实验体系。
+  R05: 赛事依据 | 用户提供的第五届未来杯活动通知图片；未显示的评分权重和提交模板不自行推断。
+  R06: 信息纪律 | 事实、设计、计划、实测、未测分开；未测数据不使用预计值伪装成绩。
+[P0012] <(none)> 
+    
+[P0013] <heading 2> HEADING(outline=None)
+    v4.3.0 的实质升级
+[TABLE 03] rows=9 cols~=3
+  R01: 升级维度 | v4.2 风险/不足 | v4.3.0 修订
+  R02: 项目定位 | Harness 之上加质量门与自研编排核心的表述不一致。 | 定位为 AI 实验领域可信多智能体编排平台；Harness 是可接入运行时，ResearchFlow 是领域控制/验证层。
+  R03: 竞品对标 | LobeHub/DeepSeek Harness 能力描述偏概括。 | 承认其 Agent 团队、插件、工具、轨迹、回放能力；不把“未提及”写成“没有”。
+  R04: 真实集成 | Adapter 主要停留在接口设想。 | DeepSeek Harness Cordis 插件作为首个参考适配器；锁定版本并做契约测试。
+  R05: 密码学 | JCS 数组排序表述不准确，锚定字段边界不清。 | JCS 对象键递归排序、数组顺序保持；Merkle 按 RFC 9162；锚定证明作为独立 sidecar。
+  R06: DC 资格 | k 次 bit-exact 易被误读为普遍确定性证明。 | DC 仅是限定条件下经验性资格；随机性/副作用节点不签 DC、不剪枝。
+  R07: 动态调度 | VAS 与任务执行调度容易混淆。 | 拆分 Ready Scheduler、Governor、Recovery、VAS 四个决策组件。
+  R08: 统计效度 | 核心 G-hold 16 个样本区间较宽。 | 保留核心 60 任务；增加独立盲测 G-hold-72 研究级扩展。
+  R09: 工程可执行性 | 接口、数据结构和开发门禁分散。 | 补充 FR、API、Schema、状态机、开发阶段、验收条件和仓库结构。
+[P0014] <(none)> 
+    
+[P0015] <heading 1> HEADING(outline=None)
+    摘要
+[P0016] <(none)> 
+    ResearchFlow 3.1 面向高校 AI 实验复现与核查场景，建设具备多智能体协作、DAG 工作流编排、运行期动态调度、故障恢复、知识反馈和独立结果验证能力的平台。项目关注的核心问题不是 Agent 能否生成一份看似完整的实验报告，而是系统能否证明任务确实执行、结果符合预先定义的规则，并允许第三方在隔离环境中复核。
+[P0017] <(none)> 
+    平台采用“Agent 决策面 + 确定性控制面 + 受控执行面 + 独立证据/验证面”的架构。六个逻辑 Agent 负责规划、数据理解、实验执行请求、结果分析、故障恢复提案与验证计划；它们不直接写任务状态、证据库或签名私钥。StateMachine 是状态变更唯一入口；Executor 运行审核过的内置模板；Collector 监听执行事件并追加 E0/E1/E2 证据；独立 Verifier 执行 L1/L2/L3 检查并签发报告与完成凭证。
+[P0018] <(none)> 
+    三条核心技术主线：① EG + TLV：以证据门控和三级验证把完成声明转换为可复核判定；② DC + SPA：识别限定条件下的确定性节点，并为合法跳过重执行生成可审计的省略溯源凭证；③ Scheduler + Governor + VAS：根据依赖、风险、资源和验证预算动态安排执行与验证。六角色协作、知识库、FOL 三层反馈环、Harness Adapter 和 ResearchFlow-Bench 构成支撑体系。
+[TABLE 04] rows=1 cols~=1
+  R01: 一句话记忆点 ⏎ ResearchFlow 把“Agent 说自己完成了”变成“独立验证器根据真实执行证据签发、第三方可以离线复核的完成凭证”。
+[P0019] <(none)> 
+    
+[P0020] <heading 1> HEADING(outline=None)
+    阅读导航
+[TABLE 05] rows=6 cols~=2
+  R01: 阅读目标 | 建议章节
+  R02: 快速理解 | 摘要、第 1 章、第 5 章、第 7–9 章、第 13 章
+  R03: 赛事对题 | 第 1 章、第 13 章、附录 A、附录 B
+  R04: 直接开发 | 第 5–8 章、第 10–12 章、第 15 章、附录 C–G、附录 I
+  R05: 准备答辩 | 第 7–14 章、附录 H
+  R06: 提交前检查 | 第 4 章、第 12 章、第 17–18 章、附录 K
+[P0021] <(none)> 
+    
+[P0022] <(none)> PAGE_BREAKS=1
+    
+    
+[P0023] <heading 1> HEADING(outline=None)
+    第1章  项目概述与参赛定位
+[P0024] <(none)> 
+    定义项目做什么、如何匹配赛道、核心价值是什么，以及哪些内容仍需开发验证。
+[P0025] <heading 2> HEADING(outline=None)
+    1.1 一句话定位
+[P0026] <(none)> 
+    ResearchFlow 3.1 是面向 AI 实验任务的可信多智能体编排、动态调度与独立验证平台。它不是通用聊天助手，也不是单纯实验追踪器，而是把任务规划、执行控制、证据采集、故障恢复、结果验证和凭证签发整合为一条可审计工程链。
+[P0027] <(none)> 
+    平台将 Agent 的自然语言声明视为低等级输入，不直接据此改变任务状态。任务是否完成由 StateMachine 根据 Gate 与独立 Verifier 的结构化结果决定。只有报告状态为 VERIFIED、必检证据覆盖完整、签名与信任锚验证通过、指标来源节点达到规定 L3 覆盖时，系统才签发完成凭证。
+[P0028] <heading 2> HEADING(outline=None)
+    1.2 赛道能力映射
+[P0029] <(none)> 
+    根据参赛者提供的活动通知图片，赛道一要求围绕大模型 Agent 工具链调度平台，设计并实现面向多智能体协作的编排、调度、执行与验证平台；对标 LobeHub、DeepSeek Harness 等主流 Agent Harness；重点考察知识库定义与集成、Agent 团队定义、工作流编排、动态调度、Self-Loop、结果验证与反馈优化等全链路工程化能力，并要求围绕真实或模拟复杂任务构建可运行平台与演示成果。
+[TABLE 06] rows=8 cols~=3
+  R01: 考察点 | 项目实现 | 必须出示的工程证据
+  R02: 知识库 | 五类 KnowledgeUnit、版本治理、绑定检索、引用留痕、故障案例回流。 | Schema、检索命中、版本冲突测试、节点引用知识 ID。
+  R03: Agent 团队 | 六逻辑角色、契约、消息协议、工具权限、role-off。 | 角色配置、权限拒绝日志、CPG、role-off 实验。
+  R04: 工作流编排 | DAG Builder、图校验、状态机、图变更审批、策略回放。 | DAG、状态迁移、非法图拒绝、策略回放。
+  R05: 动态调度 | Ready Scheduler、Governor、Recovery、VAS 分工。 | 资源水位、并发变化、预算调整、四策略对比。
+  R06: Self-Loop | 执行环、知识环、策略环。 | 故障注入→诊断→恢复→再验证事件链。
+  R07: 结果验证 | EG、L1/L2/L3、DC/SPA、完成凭证、离线复核。 | 伪造任务拒绝、L3 重跑、签名凭证、负例包拒绝。
+  R08: 工程化 | 单机启动、API、日志、基准、报告、离线演示。 | 启动脚本、测试报告、复现包、录屏、用户手册。
+[P0030] <(none)> 
+    
+[P0031] <heading 2> HEADING(outline=None)
+    1.3 通知中可确认的赛事信息
+[TABLE 07] rows=7 cols~=3
+  R01: 事项 | 通知图片明确内容 | 项目处理方式
+  R02: 赛事/赛道 | 2026 第五届未来杯创新大赛；赛道一 Agent 编排创新应用。 | 作为参赛方向。
+  R03: 主办/支持 | 智云数科（北京）科技股份有限公司；新一代信息技术创新行业产教融合共同体。 | 正式材料按通知名称书写。
+  R04: 平台 | 智云产教科创平台。 | 作为潜在生态/接口对象，不声称已经对接。
+  R05: 对标 | LobeHub、DeepSeek Harness 等主流 Agent Harness。 | 功能级对标，不把“未提及”写成“没有”。
+  R06: 奖项 | 奖金池 3.6 万元（税前）；初赛不设奖；每赛道 30 支队伍进入决赛；决赛按排名发放奖金、证书并有资源对接。 | 不把奖金池等同于省级/国家级奖项。
+  R07: 未知项 | 图片未显示详细评分权重、页数、材料模板、AI 使用和 IP 规则。 | 以组委会补充文件为准，不编造。
+[P0032] <(none)> 
+    
+[P0033] <Small Note> 
+    官方入口（按通知图片识别）：https://www.omniedu.com/ai-hub/contest/detail/2111011327399952386/intro
+[P0034] <Small Note> 
+    官方动态页本次读取未返回完整章程；赛事要求以用户提供的通知图片为依据。评分权重、页数、匿名要求、AI 使用、知识产权和现场答辩形式不自行推断。
+[P0035] <heading 2> HEADING(outline=None)
+    1.4 三条核心技术主线
+[TABLE 08] rows=4 cols~=4
+  R01: 主线 | 机制组合 | 回答的问题 | 验证方式
+  R02: 可信完成判定 | EG + TLV + Completion Certificate | Agent 声称完成是否真实？ | 证据覆盖、独立重执行、签名凭证与第三方复核。
+  R03: 确定性感知恢复 | DC + SPA + Recovery | 失败后哪些节点必须重跑，哪些可合法跳过？ | 限定条件 DC、PRR、SPA 审计链。
+  R04: 风险/资源感知调度 | Scheduler + Governor + VAS | 任务如何运行、资源如何调节、有限预算先验证哪里？ | 调度日志、资源轨迹、同预算检出效率。
+[P0036] <(none)> 
+    
+[P0037] <heading 2> HEADING(outline=None)
+    1.5 用户与价值
+[TABLE 09] rows=5 cols~=3
+  R01: 用户 | 痛点 | 平台价值
+  R02: 教师/助教 | 仅凭报告无法判断实验是否真实执行。 | 过程证据、缺口解释、批量核查、班级汇总。
+  R03: 学生 | 黑箱判定、无法知道缺失项。 | 缺口清单、证据包、自行验签与申诉。
+  R04: 科研复现团队 | 配置、数据、环境和结果分散。 | 环境指纹、独立重跑、差异归因。
+  R05: 平台方 | 需要对 Agent 执行结果做质量控制。 | Harness Adapter、质量门 API、JSON 报告。
+[P0038] <(none)> 
+    
+[TABLE 10] rows=1 cols~=1
+  R01: 30 秒陈述 ⏎ ResearchFlow 是一个面向 AI 实验的可信多智能体编排平台。六个角色协作完成规划、数据检查、实验执行、分析与恢复；动态调度控制任务顺序、资源和验证预算；独立 Collector 与 Verifier 把真实执行事件变成 E0–E3 证据，并签发可离线验签的完成凭证。
+[P0039] <(none)> 
+    
+[P0040] <heading 2> HEADING(outline=None)
+    1.6 状态声明
+[P0041] <(none)> 
+    本策划书定义开发目标和验收标准。代码、数据、试点、适配器和实验结果必须由 Git commit、测试日志、JSON 原始记录、截图或第三方材料证明。未形成物证前统一标注设计中/计划/未测。
+[P0042] <(none)> PAGE_BREAKS=1
+    
+    
+[P0043] <heading 1> HEADING(outline=None)
+    第2章  背景与立项依据
+[P0044] <heading 2> HEADING(outline=None)
+    2.1 Agent 从回答走向执行
+[P0045] <(none)> 
+    Agent 已具备工具调用、任务拆解、子 Agent 协作、文件操作、工作流执行和后台任务能力。执行链越长，系统状态越复杂：某一步可能未执行、执行一半、复用旧产物、输出格式正确但语义错误，或多个 Agent 互相引用彼此声明形成回音室。聊天轨迹有价值，但轨迹本身不足以证明任务完成。
+[P0046] <heading 2> HEADING(outline=None)
+    2.2 政策与教育背景
+[TABLE 11] rows=5 cols~=4
+  R01: 文件 | 可支撑方向 | 项目关系 | 引用纪律
+  R02: 《国务院关于深入实施“人工智能+”行动的意见》（国发〔2025〕11号） | AI 驱动科研范式、智能化研发工具和智能体应用。 | 支撑科研工具链与 Agent 工程化背景。 | 政策说明方向，不证明项目有效。
+  R03: 《“人工智能+教育”行动计划》（教科信〔2026〕1号） | 科学智能体、智能实验室、实验数据分析和防范学术造假/隐私风险。 | 与高校 AI 实验核查高度相关。 | 提交前保存官方原文并核验具体表述。
+  R04: 《教育强国建设规划纲要（2024—2035年）》 | 教育数字化、产教融合与创新实践。 | 支撑教学质量保障场景。 | 不将宏观政策写成赛事评分承诺。
+  R05: 《现代产业学院建设指南（试行）》 | 产学研转创用一体化实践平台。 | 支撑课程实验和实训平台场景。 | 条款与文号需核对原文。
+[P0047] <(none)> 
+    
+[P0048] <heading 2> HEADING(outline=None)
+    2.3 学术背景与相关工作
+[TABLE 12] rows=6 cols~=3
+  R01: 方向/代表工作 | 已有贡献 | ResearchFlow 的差异化问题
+  R02: MLAgentBench、MLE-bench、ScienceAgentBench、CORE-Bench、PaperBench、EXP-Bench、MLR-Bench | 评测 Agent 完成机器学习、科研或工程任务的能力。 | 在具体实验工作流中提供运行时编排、证据门控、恢复和完成凭证。
+  R03: 多智能体失败模式研究 | 分析角色协作、任务分配、通信和控制流失败。 | 把角色差异落实到契约、权限、证据引用和 role-off。
+  R04: Curie 等实验严谨性框架 | 引入 setup/execution validator、Agent 间控制流与实验知识。 | 比较 Collector 单写、独立签名凭证、DC/SPA 与第三方离线复核，不贬低已有验证能力。
+  R05: Snakemake/Nextflow/Bazel/Nix/DVC | 依赖图、内容寻址、输入哈希和增量执行。 | 在 Agent 场景额外验证动作是否发生、节点是否具备经验性确定资格、跳过是否仍满足门控。
+  R06: MLflow 等实验追踪 | 记录参数、指标、产物和运行元数据。 | 追踪记录作为证据输入，不把调用方 run status 当最终判决。
+[P0049] <(none)> 
+    
+[P0050] <heading 2> HEADING(outline=None)
+    2.4 教学场景：过程质量保障
+[P0051] <(none)> 
+    平台不判断学生是否使用 AI，也不把 AI 使用本身视为违规。只核查实验过程是否满足预先公布的规则：数据划分是否正确、随机种子是否记录、模型是否真正执行、指标能否从预测结果重算、报告来源节点是否完成独立重执行。学生可查看缺口并自行复核，教师保留人工申诉和例外处理权。
+[TABLE 13] rows=1 cols~=1
+  R01: 立项逻辑 ⏎ Agent 能力基准回答“模型能否完成任务”；Harness 提供“Agent 如何持续工作”；实验追踪回答“运行留下哪些记录”。ResearchFlow 进一步回答“记录能否支撑独立判定、哪些节点可以安全跳过、有限验证预算应该投向哪里”。
+[P0052] <(none)> 
+    
+[P0053] <(none)> PAGE_BREAKS=1
+    
+    
+[P0054] <heading 1> HEADING(outline=None)
+    第3章  问题定义、需求分析与威胁模型
+[P0055] <heading 2> HEADING(outline=None)
+    3.1 核心判定对象
+[P0056] <(none)> 
+    将一次实验表示为 G=(V,E)，V 为任务节点，E 为依赖边；任务目标 g、执行轨迹 τ、Agent 声明 δ、证据集合 𝓔、规则版本 ρ、环境指纹 φ。
+[P0057] <(none)> 
+    VERIFY(g, G, τ, δ, 𝓔, ρ, φ) → {VERIFIED, PARTIAL, FAILED, BLOCKED}
+[P0058] <(none)> 
+    声明 δ 只提供待核查主张，不构成成功证据。只有符合规则的 E2/E3 证据、链校验、规则版本、无未解释冲突和所需 L3 覆盖共同成立时，报告才允许为 VERIFIED。
+[P0059] <heading 2> HEADING(outline=None)
+    3.2 虚假完成的七种形态
+[TABLE 14] rows=8 cols~=4
+  R01: 编号 | 形态 | 典型表现 | 检测机制
+  R02: F-1 | 未执行 | 只输出“训练完成”，无本次执行事件与产物。 | E2 必检项缺失、L1。
+  R03: F-2 | 部分执行冒充全量 | 只训练一个模型，却报告多个模型。 | 配置/产物集合一致性。
+  R04: F-3 | 旧结果复用 | 上次 metrics、模型或预测文件冒充本次。 | 任务/数据/代码/环境指纹。
+  R05: F-4 | 篡改/成套伪造 | 改结果并重算普通哈希，或伪造 predictions 与 metrics。 | L1、L2、L3。
+  R06: F-5 | 口径错误/泄漏 | 训练集冒充测试集、测试集调参、分组/时间泄漏。 | L2 五规则、Split Manifest、L3。
+  R07: F-6 | 协议/权限违规 | 引用不存在 evidence_id、越权写库或调用未注册工具。 | 消息 Schema、Tool Gateway、权限审计。
+  R08: F-7 | 资源/运行异常 | 超时、内存超限、子进程残留、依赖不一致。 | Governor、Executor 事件、进程树回收。
+[P0060] <(none)> 
+    
+[P0061] <heading 2> HEADING(outline=None)
+    3.3 用户需求
+[TABLE 15] rows=5 cols~=3
+  R01: 用户 | 功能需求 | 非功能边界
+  R02: 教师/助教 | 批量任务、规则配置、缺口解释、报告导出。 | 不推断学生是否使用 AI；人工复核和申诉可用。
+  R03: 学生 | 查看缺口、下载证据包、独立验签、申诉。 | 判决可解释；原始数据最小化留存。
+  R04: 科研人员 | 环境/数据/代码指纹、独立重执行、差异归因。 | 明确同环境可重复与跨环境复现边界。
+  R05: 平台集成方 | REST API、Webhook、Harness Adapter。 | 版本兼容、幂等、认证和审计。
+[P0062] <(none)> 
+    
+[P0063] <heading 2> HEADING(outline=None)
+    3.4 威胁模型与信任边界
+[TABLE 16] rows=7 cols~=3
+  R01: 主体 | 信任假设 | 允许/禁止边界
+  R02: LLM Agent | 可能出错或不诚实。 | 可提计划/请求/解释；不可写状态、证据、报告或私钥。
+  R03: StateMachine | 可信计算基组件。 | 唯一状态迁移入口；不执行实验、不签凭证。
+  R04: Executor | 运行审核过的内置模板。 | 只执行；不裁决成功、不持有私钥。
+  R05: Collector | 可信记录服务，单写者追加写。 | 采集 E0/E1/E2；不根据自述补造证据。
+  R06: Verifier | 独立于 Executor 的验证进程。 | L1/L2/L3、写 E3、签发报告/凭证。
+  R07: 本机 root/主机完全失陷 | 不在 MVP 可防御范围。 | 不宣称抵御同时控制主机、数据库、密钥和锚定位置的攻击者。
+[P0064] <(none)> 
+    
+[P0065] <heading 2> HEADING(outline=None)
+    3.5 三个可靠性命题
+[P0066] <List Bullet> 
+    条件性可信：若必检规则是任务完成必要条件，E2/E3 由非 Agent 组件产生，链与签名有效，且指标来源节点经 L3 重跑，则 VERIFIED 对已定义的 F-1 至 F-5 具备可审查拒绝能力；该命题依赖 Executor、Collector、Verifier 与规则集处于信任边界内。
+[P0067] <List Bullet> 
+    不完备性：规则不能穷尽未知攻击；真实任务也可能因环境差异被误拒。必须报告误拒率、未知差异和人工申诉，不宣称零漏检。
+[P0068] <List Bullet> 
+    安全剪枝：仅当节点具备有效 DC、输入/前驱指纹未变、磁盘产物复验通过、当前规则仍通过且节点无副作用时，才允许 SPA；否则保守重跑。
+[P0069] <heading 2> HEADING(outline=None)
+    3.6 可重复性承诺
+[TABLE 17] rows=4 cols~=3
+  R01: 层级 | 定义 | 项目承诺
+  R02: Repeatability | 同一软件环境、数据、配置和控制条件下重复运行。 | 第一版主要验收目标。
+  R03: Reproducibility | 另一执行目录/进程/使用者依据相同代码和数据得到一致结果。 | 通过证据包和 replay_config 部分支持；环境需匹配。
+  R04: Replicability | 使用不同实现或数据验证同一科学结论。 | 不作为第一版承诺。
+[P0070] <(none)> 
+    
+[P0071] <(none)> PAGE_BREAKS=1
+    
+    
+[P0072] <heading 1> HEADING(outline=None)
+    第4章  建设目标、指标体系与验收口径
+[P0073] <heading 2> HEADING(outline=None)
+    4.1 总体目标
+[P0074] <(none)> 
+    在 Windows 11 / 16GB 内存 / 无 GPU 单机上完成任务输入、DAG 规划、动态执行、证据采集、故障恢复、独立验证、报告生成和第三方离线复核。LLM 仅用于理解与建议；关键状态、执行和验证必须具备无模型规则回退路径。
+[P0075] <heading 2> HEADING(outline=None)
+    4.2 核心验收指标
+[TABLE 18] rows=13 cols~=4
+  R01: 指标 | 定义/分母 | 建议目标 | 统计/证据口径
+  R02: 正常任务完成率 | 正常任务中通过验证并获得凭证的比例。 | 核心 12 任务目标 ≥90%。 | 任务级精确区间；报告 pass@3/pass^3。
+  R03: 一般故障检测率 | 24 个一般异常任务中正确检测或恢复的比例。 | 目标 ≥90%。 | 按故障类别分层。
+  R04: 错误放行数 | 无真实必检证据却判 VERIFIED 的对抗任务数。 | 观察值目标 0。 | 必须同时给 n 与置信区间。
+  R05: 盲测错误率上界 | 独立盲测任务错误放行率的置信上界。 | 研究级扩展：0/72 时双侧 95% 上界约 4.99%。 | 仅在独立 Bernoulli 假设下成立；另报家族聚类分析。
+  R06: 定向恢复成功率 | 可恢复任务恢复到 VERIFIED 的比例。 | 目标 ≥80%。 | 可恢复/不可恢复预先标注。
+  R07: 重执行节点占比 | 恢复实际重跑节点/全量重跑节点。 | 中位数目标 ≤40%。 | 中位数、IQR、配对比较。
+  R08: 剪枝风险率 PRR | 被剪枝节点中重跑会改变结果的比例。 | 观察值目标 0。 | 逐节点原始 JSON；无 DC 必须重跑。
+  R09: L3 覆盖率 | 报告关键指标来源节点的 L3 覆盖。 | 100%。 | 按 report_id 输出覆盖矩阵。
+  R10: 证据完整率 | 必需证据齐全且哈希可复核的任务比例。 | 目标 ≥95%。 | 缺失证据不得由模型补写。
+  R11: VAS 单位预算检出率 | 固定预算下每单位成本发现的有效问题数。 | 风险优先应优于随机基线。 | 同预算、同任务、同验证器。
+  R12: 适配器一致性 | Harness 事件映射、任务提交和状态同步通过率。 | 关键契约测试全部通过。 | 固定版本 Adapter Contract Test。
+  R13: 资源占用 | 应用进程树峰值 RSS。 | 无本地 LLM 目标 ≤7GB。 | 实测 CPU/RSS/持续时间。
+[P0076] <(none)> 
+    
+[P0077] <heading 2> HEADING(outline=None)
+    4.3 统计纪律
+[P0078] <List Bullet> 
+    任务是统计单位；同一任务多次重复不能当独立样本。重复先在任务内聚合，再做任务级推断。
+[P0079] <List Bullet> 
+    正常/一般异常任务每方案至少 3 次重复；随机性实验使用预先固定种子；报告 pass@3 与 pass^3。
+[P0080] <List Bullet> 
+    比例指标用精确二项区间；零错误必须同时报告分母、上界和盲测构造方式。
+[P0081] <List Bullet> 
+    配对二值比较用 McNemar；连续配对比较用任务级 bootstrap；多重比较采用 Holm 校正或标为探索性。
+[P0082] <List Bullet> 
+    预注册任务、故障、规则、等价区间和统计脚本；正式运行后不得悄悄改规则。
+[P0083] <List Bullet> 
+    负面结果、失败案例、未知差异和降级动作必须保留。
+[P0084] <heading 2> HEADING(outline=None)
+    4.4 明确不做
+[P0085] <List Bullet> 
+    不做通用科研助手；首期只覆盖可机器验证的表格型 ML 实验。
+[P0086] <List Bullet> 
+    不做 GPU 集群、分布式执行、多机高可用。
+[P0087] <List Bullet> 
+    不执行 Agent 或用户生成的任意不可信代码，只运行审核过的内置模板。
+[P0088] <List Bullet> 
+    不宣称跨硬件/跨版本普遍复现；首期目标为同软件环境下独立重执行。
+[P0089] <List Bullet> 
+    不宣称哈希链绝对不可篡改；只称可发现篡改，并明确密钥与锚定边界。
+[P0090] <List Bullet> 
+    不把知识检索、Agent 自评或多 Agent 投票当作实验完成证据。
+[TABLE 19] rows=1 cols~=1
+  R01: 数据纪律 ⏎ 本章数值是拟验收目标，不是实测成绩。只有能追溯到 run_id、原始 JSON、日志、版本和复核脚本的数字才可标记为实测。
+[P0091] <(none)> 
+    
+[P0092] <(none)> PAGE_BREAKS=1
+    
+    
+[P0093] <heading 1> HEADING(outline=None)
+    第5章  总体方案与系统架构
+[P0094] <heading 2> HEADING(outline=None)
+    5.1 五条不可协商的架构原则
+[TABLE 20] rows=6 cols~=3
+  R01: 原则 | 设计要求 | 代码保证
+  R02: 写入者隔离 | LLM Agent 无状态库、证据目录与私钥写权限。 | Agent 只经 Tool Gateway；权限拒绝测试。
+  R03: 状态单入口 | 节点状态只能由 StateMachine.transition() 改变。 | 无公开 setter；每次迁移写 audit_log。
+  R04: 执行与判定分离 | Executor 只执行；Collector 只记录；Verifier 才判定/签发。 | 独立进程、独立工作目录和文件权限。
+  R05: 证据与声明分离 | E0 声明不能推动状态。 | Gate 只读取结构化证据和规则。
+  R06: 外部可复核 | 证据包离开数据库和模型仍可验签。 | verify_bundle.py 离线运行，正负例齐全。
+[P0095] <(none)> 
+    
+[P0096] <heading 2> HEADING(outline=None)
+    5.2 六层架构
+[TABLE 21] rows=7 cols~=4
+  R01: 层 | 名称 | 职责 | 边界
+  R02: L1 | 交互层 | 任务输入、DAG、证据中心、报告、基准看板。 | 不直接修改状态/证据。
+  R03: L2 | 接入层 | REST、Harness Adapter、认证、幂等、事件标准化。 | Harness 轨迹默认 E1，不自动等于 E2。
+  R04: L3 | 编排控制层 | Planner Router、DAG、Scheduler、StateMachine、Recovery、Governor、VAS、Gate。 | 不执行实验、不持私钥。
+  R05: L4 | Agent 决策层 | 六逻辑角色：Planner/Data/Experiment/Analysis/Recovery/Verification。 | 只提交结构化请求，不自由聊天。
+  R06: L5 | 执行层 | Tool Registry、内置模板 Executor、Workspace、SplitService、资源限制。 | 不裁决成功。
+  R07: L6 | 证据/验证/知识层 | Collector、Evidence Store、Verifier、Certificate、KB、Bench。 | 按进程/权限分离写入。
+[P0097] <(none)> 
+    
+[P0098] <heading 2> HEADING(outline=None)
+    5.3 数据流
+[P0099] <(none)> 
+    任务流：
+[P0100] <(none)> 
+    用户/Harness → API/Adapter → Planner → DAG Builder → Scheduler
+[P0101] <(none)> 
+    → StateMachine → Executor(内置模板) → 产物与运行事件
+[P0102] <(none)> 
+     
+[P0103] <(none)> 
+    证据流：
+[P0104] <(none)> 
+    Agent 声明(E0) / 工具调用(E1) / Executor 观测(E2)
+[P0105] <(none)> 
+    → Collector(单写者、event_seq、哈希链) → Gate
+[P0106] <(none)> 
+    → Verifier(L1/L2/L3、独立重执行) → VerificationReport
+[P0107] <(none)> 
+    → VERIFIED 才签发 CompletionCertificate
+[P0108] <(none)> 
+    → Evidence Bundle → 第三方离线复核
+[P0109] <(none)> 
+     
+[P0110] <(none)> 
+    恢复流：
+[P0111] <(none)> 
+    节点失败 → 错误签名 → 受影响子图 → Recovery Proposal
+[P0112] <(none)> 
+    → Scheduler 校验/审批 → DC/SPA 条件检查
+[P0113] <(none)> 
+    → 必须重跑节点 + 可合法省略节点 → 重新验证
+[P0114] <heading 2> HEADING(outline=None)
+    5.4 运行进程与资源预算
+[TABLE 22] rows=9 cols~=3
+  R01: 进程 | 职责/方式 | 初始资源约束
+  R02: API + Orchestrator | REST、任务、DAG、调度和状态机。 | 约 1.0–1.5GB；状态单入口。
+  R03: Agent Gateway | 组织六角色调用、模型和工具权限。 | 逻辑角色共享模型服务，不启动六个大模型常驻进程。
+  R04: Executor ×2 | 白名单模板，独立子进程/工作目录。 | 每 worker 约 0.6–1.2GB；默认并发 2。
+  R05: Collector | 追加写 E0/E1/E2，分配 event_seq。 | 约 0.1–0.2GB；队列积压告警。
+  R06: Verifier | L1/L2/L3、独立重执行、报告和签名。 | 约 0.4–1.0GB；新目录、不共享 Executor 工作区。
+  R07: Streamlit | 工作台。 | 约 0.3–0.6GB。
+  R08: SQLite WAL/日志 | 状态、审计和证据元数据。 | 约 0.2–0.5GB；容量实测。
+  R09: 可选本地 LLM | 自然语言理解/解释。 | 非核心依赖，单独核算内存。
+[P0115] <(none)> 
+    
+[P0116] <(none)> 
+    以上是设计预算，不是未经测试的硬件承诺。16GB 单机默认无 GPU、并发 2、轻量数据、远端模型或无模型模式；每轮测试记录进程树 RSS、CPU、磁盘与峰值时间。
+[P0117] <heading 2> HEADING(outline=None)
+    5.5 技术选型
+[TABLE 23] rows=7 cols~=3
+  R01: 领域 | 建议技术 | 自研边界
+  R02: API/模型 | Python 3.11、FastAPI、Pydantic v2 | 自研任务/证据/报告/凭证 Schema。
+  R03: 持久化/DAG | SQLite WAL、NetworkX | 自研状态机、失效传播、剪枝判定。
+  R04: 实验执行 | scikit-learn、pandas、Python 子进程 | 只运行内置模板。
+  R05: 界面/检索 | Streamlit、FTS5/BM25 | 自研工作台、知识绑定与留痕。
+  R06: 密码学 | hashlib、cryptography、Ed25519、JCS、RFC 9162 Merkle | 复用标准算法，自研证据协议与签名载荷。
+  R07: Harness | DeepSeek Harness Cordis 插件首适配 | 不替换 Harness 运行时。
+[P0118] <(none)> 
+    
+[P0119] <heading 2> HEADING(outline=None)
+    5.6 架构取舍
+[P0120] <List Bullet> 
+    LangGraph 可作为固定工作流对照，但 ResearchFlow 的状态门控、证据协议、恢复判定和 VAS 必须可独立运行和消融。
+[P0121] <List Bullet> 
+    MLflow 可作旁路追踪，不作最终事实源；状态与证书由 ResearchFlow 控制。
+[P0122] <List Bullet> 
+    首期不要求 Docker；受控子进程不等于安全沙箱。开放外部代码时必须升级容器/microVM、只读挂载和网络出口控制。
+[P0123] <List Bullet> 
+    首期先用 FTS5/BM25 与结构化过滤，是否引入向量检索由命中率实验决定。
+[P0124] <List Bullet> 
+    六 Agent 是逻辑角色，不是六个拥有 OS 权限的独立进程；执行、Collector、Verifier 才是明确进程信任边界。
+[P0125] <heading 2> HEADING(outline=None)
+    5.7 Domain Pack
+[TABLE 24] rows=6 cols~=3
+  R01: 钩子 | 职责 | 约束
+  R02: profile_data | 数据画像：字段、缺失、分布、标签、分组/时间字段。 | 只读数据，结果由 Collector 记录。
+  R03: required_checks | 声明领域必检项与规则版本。 | 规则可机器判定且有测试。
+  R04: tool_contracts | 白名单工具、参数 Schema、超时和资源限制。 | 禁止任意 shell/Python 入口。
+  R05: knowledge_seeds | 领域规范、工具说明、故障案例。 | 来源、许可、版本和 hash 齐全。
+  R06: render_report | 渲染领域报告。 | 只展示 Verifier 结果，不修改判定。
+[P0126] <(none)> 
+    
+[P0127] <(none)> PAGE_BREAKS=1
+    
+    
+[P0128] <heading 1> HEADING(outline=None)
+    第6章  功能架构、状态机与接口设计
+[P0129] <heading 2> HEADING(outline=None)
+    6.1 功能组与优先级
+[TABLE 25] rows=12 cols~=4
+  R01: 功能组 | 功能范围 | 优先级 | 验收证据
+  R02: 任务接入 | 输入、配置追问、task_id、幂等。 | P0 | 缺字段追问、重复请求不重复建任务。
+  R03: DAG 编排 | 节点/边、拓扑、循环检测、图版本。 | P0 | 非法图拒绝，图版本可回放。
+  R04: 动态调度 | READY 队列、优先级、并发、资源、预算。 | P0/P1 | 资源触发后队列/并发变化。
+  R05: 执行模板 | 白名单、参数、工作区、超时、进程回收。 | P0 | 未注册模板拒绝，超时进程树清理。
+  R06: 证据采集 | 事件总线、E0–E3、哈希链、Merkle。 | P0 | 缺证据可定位，篡改后校验失败。
+  R07: 验证 | L1/L2/L3、Split Manifest、差异归因。 | P0 | 成套伪造在 L3 被拒绝。
+  R08: 凭证 | JCS、Ed25519、信任锚、离线包。 | P0 | 真包通过，负例拒绝。
+  R09: 多 Agent | 六角色契约、消息 Schema、权限、role-off。 | P1 | 越权拒绝、角色关闭可观察。
+  R10: 知识/FOL | 五类知识、版本、绑定、反馈。 | P1 | 命中率、冲突、过期测试。
+  R11: DC/SPA/VAS | 确定性资格、安全剪枝、验证预算。 | P1/P2 | PRR、剪枝日志、四策略对照。
+  R12: Harness Adapter | DeepSeek Harness 插件、事件映射。 | P1 | 插件加载和端到端契约测试。
+[P0130] <(none)> 
+    
+[P0131] <heading 2> HEADING(outline=None)
+    6.2 四类状态机
+[TABLE 26] rows=5 cols~=3
+  R01: 对象 | 状态迁移 | 约束
+  R02: Task | CREATED→PLANNING→READY→RUNNING→VERIFYING→COMPLETED/FAILED/BLOCKED/CANCELLED | 汇总状态由系统产生。
+  R03: Node | PLANNED→READY→RUNNING→VERIFYING→VERIFIED/FAILED/BLOCKED；FAILED→DIAGNOSING→RECOVERING→READY | VERIFIED 唯一入口是 Gate PASS + Verifier VERIFIED + 有效凭证。
+  R04: Evidence | RECEIVED→VALIDATED→APPENDED；INVALID/CONFLICT | 只追加；无效记录保留并标注。
+  R05: Recovery | PROPOSED→VALIDATED→APPROVED→EXECUTING→RECHECKED→CLOSED/ESCALATED | Recovery Agent 只提案，调度器/人工批准。
+[P0132] <(none)> 
+    
+[P0133] <(none)> 
+    报告状态与节点状态分开：VerificationReport 允许 VERIFIED/PARTIAL/FAILED/BLOCKED；CompletionCertificate 只允许 VERIFIED。PARTIAL 映射为节点 BLOCKED，不能签发凭证。
+[P0134] <heading 2> HEADING(outline=None)
+    6.3 消息协议
+[TABLE 27] rows=10 cols~=3
+  R01: 消息 | 方向 | 必填字段/规则
+  R02: TASK_ASSIGN | Scheduler→Agent | task_id,node_id,contract_version,inputs,limits。
+  R03: PROGRESS | Agent→Scheduler | node_id,stage,percent；仅展示。
+  R04: EVIDENCE_REF | Agent→Scheduler | evidence_id,kind；引用必须存在。
+  R05: FINDING | Agent→Scheduler | node_id,findings,confidence,evidence_ids；无效 ID 拒绝。
+  R06: PLAN_PROPOSAL | Planner→Scheduler | graph_patch,rationale,expected_cost；只提案。
+  R07: RECOVERY_PROPOSAL | Recovery→Scheduler | failed_node,affected_nodes,plan,skip_candidates,rationale。
+  R08: VERIFY_REQUEST | Verification Agent→Verifier | report_id,checks_requested,reason；只请求不裁决。
+  R09: VERDICT | Verifier→StateMachine | report_id,final_state,l3_status,gaps,certificate_id?。
+  R10: ESCALATE | 任意角色→Scheduler | reason,needs,blocking_evidence_ids。
+[P0135] <(none)> 
+    
+[P0136] <heading 2> HEADING(outline=None)
+    6.4 REST API
+[TABLE 28] rows=11 cols~=3
+  R01: 方法/路径 | 用途 | 错误语义
+  R02: POST /api/v1/tasks | 创建任务；支持 idempotency_key。 | 422 Schema 错；409 幂等冲突。
+  R03: GET /api/v1/tasks/{id} | 任务详情、状态、资源摘要。 | 404 不存在。
+  R04: GET /api/v1/tasks/{id}/graph | DAG、状态、指纹、DC/SPA。 | 409 图版本冲突。
+  R05: GET /api/v1/tasks/{id}/evidence | 证据分页与引用。 | 403 无权限。
+  R06: POST /api/v1/tasks/{id}/recover | 触发恢复。 | 409 不可恢复；422 请求错误。
+  R07: POST /api/v1/tasks/{id}/verify | 执行 L1/L2/L3。 | 429 预算不足；409 状态不允许。
+  R08: GET /api/v1/tasks/{id}/report | 报告、缺口、归因、签名。 | 404 未生成。
+  R09: GET /api/v1/tasks/{id}/certificate | 仅 VERIFIED 返回凭证。 | 409 非 VERIFIED。
+  R10: POST /api/v1/harness/events | 接收标准化 Harness 事件。 | 401/403 未认证；重复事件幂等。
+  R11: GET /healthz /readyz | 健康检查。 | 503 未就绪。
+[P0137] <(none)> 
+    
+[P0138] <heading 2> HEADING(outline=None)
+    6.5 工作台六页
+[TABLE 29] rows=7 cols~=3
+  R01: 页面 | 核心组件 | 证明目标
+  R02: 总览 | 任务状态、最近凭证、资源水位。 | 平台真实运行。
+  R03: 任务 | 目标输入、模板、配置预览、预算。 | 输入转成可校验任务。
+  R04: 工作流 | DAG、节点状态、调度优先级、图变更。 | 工作流可执行且动态调整。
+  R05: 证据中心 | E0–E3、哈希链、Merkle、缺口、SPA。 | 判决可追溯。
+  R06: 验证报告 | L1/L2/L3、Split Manifest、归因、签名。 | 结果可复核。
+  R07: 基准/知识 | 四方案、消融、统计区间、知识命中。 | 实验结论可追。
+[P0139] <(none)> 
+    
+[P0140] <heading 2> HEADING(outline=None)
+    6.6 配置文件
+[P0141] <(none)> 
+    configs/
+[P0142] <(none)> 
+      agents.yaml        # 角色、模型、工具权限、预算
+[P0143] <(none)> 
+      gates.yaml         # 必检项、证据等级、规则版本
+[P0144] <(none)> 
+      scheduler.yaml     # READY 优先级、并发、资源水位
+[P0145] <(none)> 
+      vas.yaml           # 风险特征、权重、预算、覆盖下限
+[P0146] <(none)> 
+      recovery.yaml      # 错误签名、重试、失效传播、剪枝条件
+[P0147] <(none)> 
+      security.yaml      # 进程权限、路径白名单、密钥/信任锚
+[P0148] <(none)> 
+      harness.yaml       # Adapter 版本、事件映射、认证
+[P0149] <(none)> 
+      experiment.yaml    # 任务集、种子、重复、统计协议
+[P0150] <(none)> 
+      limits.yaml        # token、超时、内存、并发、磁盘
+[P0151] <(none)> 
+      domainpacks.yaml   # 审核过的 Domain Pack
+[P0152] <heading 2> HEADING(outline=None)
+    6.7 测试策略
+[TABLE 30] rows=7 cols~=3
+  R01: 测试 | 对象 | 验收
+  R02: 单元 | 状态机、指纹、Gate、VAS、Recovery。 | 非法状态迁移全部拒绝；核心判定分支覆盖。
+  R03: 契约 | Agent 消息、API、Domain Pack、Adapter。 | Schema/版本不匹配失败。
+  R04: 权限 | Agent 写状态/证据/私钥/越界路径。 | 越权全部拒绝并审计。
+  R05: 集成 | Executor→Collector→Gate→Verifier→Certificate。 | 完整闭环成功。
+  R06: 对抗 | F-1 至 F-7 和攻击变体。 | 每类有预期状态与原始证据。
+  R07: 离线 | 断网、无模型、单机。 | 内置模板完成并导出可验签证据包。
+[P0153] <(none)> 
+    
+[P0154] <(none)> PAGE_BREAKS=1
+    
+    
+[P0155] <heading 1> HEADING(outline=None)
+    第7章  核心机制一：证据门控 EG 与完成凭证
+[P0156] <heading 2> HEADING(outline=None)
+    7.1 E0–E3 证据等级
+[TABLE 31] rows=5 cols~=5
+  R01: 等级 | 来源 | 写入者 | 典型内容 | 状态作用
+  R02: E0 | Agent 声明。 | Collector 捕获，标记 agent_claim。 | FINDING、解释、完成声明。 | 永不单独推动状态。
+  R03: E1 | 工具调用、Harness 轨迹、知识检索。 | Collector。 | tool_name、arguments_hash、result_ref、session_event_ref。 | 辅助证明请求/轨迹，不等于真实执行。
+  R04: E2 | 受控 Executor 进程和产物观测。 | Collector 监听执行事件。 | PID/attempt、退出码、stdout/stderr 摘要、耗时、资源峰值、产物 SHA-256、环境指纹。 | 可覆盖执行类必检项；依赖信任边界。
+  R05: E3 | Verifier 新目录重算或重执行。 | 独立 Verifier。 | 指标重算、split 校验、重跑结果、差异归因。 | 最高等级；关键指标节点必须满足 L3。
+[P0157] <(none)> 
+    
+[P0158] <heading 2> HEADING(outline=None)
+    7.2 Gate 规则
+[P0159] <(none)> 
+    每个 Domain Pack 声明 RequiredChecks。Gate 为每项生成 coverage row：required_check_id、evidence_ids、level、producer、hash_status、l3_status、result。任何必检项缺失、哈希不一致、规则版本不匹配或冲突未解释，均不能 VERIFIED。
+[P0160] <(none)> 
+    GATE(task, evidence, ruleset):
+[P0161] <(none)> 
+      validate_schema_and_versions()
+[P0162] <(none)> 
+      verify_event_sequence_and_hash_chain()
+[P0163] <(none)> 
+      verify_artifact_hashes_and_producers()
+[P0164] <(none)> 
+      build_required_check_coverage_matrix()
+[P0165] <(none)> 
+      reject_unresolved_evidence_conflicts()
+[P0166] <(none)> 
+      require E2/E3 for execution-critical checks
+[P0167] <(none)> 
+      require L3/IRC for report-metric source nodes
+[P0168] <(none)> 
+      PASS only if all required conditions pass; otherwise GAP(list)
+[P0169] <heading 2> HEADING(outline=None)
+    7.3 哈希链与 Merkle
+[P0170] <(none)> 
+    证据按 event_seq 顺序追加，记录 evidence_id、task/node/attempt、level、kind、producer、payload_hash、prev_hash、chain_hash、ruleset_version 和 timestamp。Merkle 按 RFC 9162：叶节点使用 0x00 前缀，内部节点使用 0x01 前缀；输入顺序固定为 event_seq。必须实现 inclusion proof 并用标准测试向量/跨语言测试。哈希链和 Merkle 提高篡改可发现性，不抵御同时控制主机、数据库、密钥和锚定位置的攻击者。
+[P0171] <heading 2> HEADING(outline=None)
+    7.4 完成凭证与报告
+[TABLE 32] rows=4 cols~=3
+  R01: 对象 | 核心字段 | 约束
+  R02: VerificationReport | report_id、task_id、final_state、l1/l2/l3_status、coverage、gaps、attribution、evidence_root、ruleset_hash、issued_at、report_hash、key_id、signature。 | Verifier 签发；四态。
+  R03: CompletionCertificate | cert_id、task_id、report_id、final_state=VERIFIED、merkle_root、tree_size、ruleset_hash、l3_coverage、skipped_nodes、code_hash、env_fp、alg、key_id、key_fingerprint、issued_at、signature。 | 仅 VERIFIED 报告可生成。
+  R04: AnchorProof | certificate_hash、merkle_root、tree_size、anchor_type、timestamp、receipt、proof_signature。 | 独立 sidecar；缺失时标 absent。
+[P0172] <(none)> 
+    
+[P0173] <heading 2> HEADING(outline=None)
+    7.5 JCS + Ed25519 规范
+[P0174] <List Bullet> 
+    签名载荷用 RFC 8785 JCS 生成规范化 UTF-8 字节串，再添加对象类型域分离前缀并用 Ed25519（RFC 8032）签名。
+[P0175] <List Bullet> 
+    JCS 递归排序 JSON 对象属性名；数组元素顺序必须保持原样，数组内对象属性仍递归规范化。不得把数组整体按字典序重排。
+[P0176] <List Bullet> 
+    拒绝重复键、NaN、Infinity 和非法 Unicode；时间统一 RFC 3339 UTC；数值字段采用明确 Schema 类型与精度。
+[P0177] <List Bullet> 
+    签名字段采用版本化白名单；未知字段不得静默纳入或忽略；Schema 升级必须提高版本号。
+[P0178] <List Bullet> 
+    公钥不作为自证信任来源；验签工具预置可信指纹/信任根。域分离前缀分别用于 Report、Certificate、DC、SPA。
+[P0179] <heading 2> HEADING(outline=None)
+    7.6 密钥生命周期与锚定
+[TABLE 33] rows=6 cols~=3
+  R01: 环节 | 要求 | 验收
+  R02: 生成 | Verifier 初始化或受控密钥工具生成；开发密钥与交付信任锚分开。 | 私钥不进入 Git、日志、证据包或前端。
+  R03: 存储 | 受限目录/ACL/系统密钥存储；最小权限。 | Agent/Executor 读取私钥失败。
+  R04: 信任 | verify_bundle.py 预置公钥指纹；不信任证书自带公钥。 | 换公钥和指纹的伪造包被拒绝。
+  R05: 轮换 | key_id、有效期、撤销列表；明确历史证书策略。 | 轮换/撤销演练通过。
+  R06: 锚定 | 优先独立时间戳或第二存储；本地副本只称备份。 | AnchorProof 独立验证；缺失标 absent。
+[P0180] <(none)> 
+    
+[P0181] <heading 2> HEADING(outline=None)
+    7.7 失败边界
+[P0182] <List Bullet> 
+    规则不完备导致未知攻击漏检；通过盲测缓解，不宣称零漏检。
+[P0183] <List Bullet> 
+    Executor/Collector 被替换时 E2 可能失真；MVP 不宣称抵御本机 root 或完全供应链失陷。
+[P0184] <List Bullet> 
+    L2 自洽不等于真实执行；成套伪造必须由 L3 重跑拦截。
+[P0185] <List Bullet> 
+    哈希链不是绝对不可篡改；准确术语是 tamper-evident。
+[P0186] <List Bullet> 
+    签名无效、公钥不受信、Merkle 根不一致或规则版本不符时，不签发/不接受凭证。
+[P0187] <(none)> PAGE_BREAKS=1
+    
+    
+[P0188] <heading 1> HEADING(outline=None)
+    第8章  核心机制二：DC、SPA、安全恢复与动态调度
+[P0189] <heading 2> HEADING(outline=None)
+    8.1 四个决策组件
+[P0190] <(none)> 
+    动态调度拆成四个可独立实现的组件：Ready Scheduler 决定 READY 节点执行顺序；Governor 决定并发和资源水位；Recovery 决定失败后哪些节点失效、哪些必须重跑；VAS 决定有限验证预算投向哪些验证项。DC/SPA 是 Recovery 的安全剪枝依据，不替代 Scheduler。
+[P0191] <heading 2> HEADING(outline=None)
+    8.2 DC：确定性资格凭证
+[P0192] <(none)> 
+    DC 不是数学意义上的普遍确定性证明，而是对某节点类型、固定输入结构、代码版本、依赖锁、环境指纹和规则版本，在受控条件下观察到 k 次跨进程、跨目录 bit-exact 一致的经验性资格。仅纯函数、无外部副作用、输入可完整枚举的节点可申请。
+[TABLE 34] rows=7 cols~=3
+  R01: 条件 | 要求 | 不满足时
+  R02: 节点纯度 | 无数据库写入、网络请求、全局状态修改、当前时间/随机外部源依赖。 | 永不签 DC。
+  R03: 输入固定 | 数据、配置、代码、模板、依赖与上游哈希一致。 | DC 失效。
+  R04: 环境指纹 | OS/架构/CPU、Python、依赖锁、关键库、线程变量、locale/timezone、种子策略。 | 环境变化即失效。
+  R05: 重复执行 | 默认 k=3 独立进程/目录；敏感因素增加探针。 | 任一产物/指标不 bit-exact，不签 DC。
+  R06: 随机性节点 | 预期具有随机波动的训练/采样节点不签 DC。 | 用多种子/TOST 评估，不允许 DC 剪枝。
+  R07: 有效期 | DC 带 expires_at、ruleset_hash、code_hash、input_schema_hash。 | 到期/规则变更后重新评估。
+[P0193] <(none)> 
+    
+[TABLE 35] rows=1 cols~=1
+  R01: 关键修正 ⏎ k 次运行相同只能形成限定环境下的经验性资格，不证明未来所有执行都确定。随机性或有副作用节点不签 DC、不剪枝。
+[P0194] <(none)> 
+    
+[P0195] <heading 2> HEADING(outline=None)
+    8.3 SPA：省略溯源凭证
+[P0196] <List Bullet> 
+    节点类型存在有效 DC，且输入结构、代码、环境和规则版本与当前一致。
+[P0197] <List Bullet> 
+    所有直接前驱输出哈希与恢复前历史一致；上游变化沿 DAG 传播失效。
+[P0198] <List Bullet> 
+    磁盘产物现场重算 SHA-256，与历史证据一致；解析软链接后不得越界或指向旧目录。
+[P0199] <List Bullet> 
+    节点旧证据在当前规则集下仍通过 Gate，未过期、未撤销、无新冲突。
+[P0200] <List Bullet> 
+    节点无副作用，且任务规则未要求本次必须实际执行。
+[P0201] <heading 2> HEADING(outline=None)
+    8.4 定向恢复算法
+[P0202] <(none)> 
+    plan_recovery(graph, failed_node):
+[P0203] <(none)> 
+      affected = descendants(failed_node) ∪ {failed_node}
+[P0204] <(none)> 
+      for node in topological_order(affected):
+[P0205] <(none)> 
+          if node == failed_node or not retryable(node): retry_or_escalate()
+[P0206] <(none)> 
+          elif has_side_effect(node): reexecute()
+[P0207] <(none)> 
+          elif not evidence_valid(node): reexecute()
+[P0208] <(none)> 
+          elif not predecessor_hashes_unchanged(node): reexecute()
+[P0209] <(none)> 
+          elif not valid_DC(node, current_env): reexecute()
+[P0210] <(none)> 
+          elif not disk_rehash_matches(node): reexecute()
+[P0211] <(none)> 
+          elif not gate_passes_under_current_rules(node): reexecute()
+[P0212] <(none)> 
+          else: sign_SPA(node, all_checks)
+[P0213] <(none)> 
+      return immutable_plan
+[P0214] <(none)> 
+    恢复计划在执行前冻结；先算受影响子图再执行，避免运行中上游变化造成剪枝判据前后不一致。未持有 DC 的节点一律保守重跑。
+[P0215] <heading 2> HEADING(outline=None)
+    8.5 Ready Scheduler
+[P0216] <(none)> 
+    只在依赖满足且资源允许的 READY 节点中选择下一执行对象。建议初始评分：
+[P0217] <(none)> 
+    SchedScore(n) = 0.30·CriticalPath + 0.25·Risk + 0.20·Age + 0.15·ResourceFit + 0.10·UserPriority
+[P0218] <(none)> 
+    各特征归一化到 [0,1]。Age 防止饥饿；权重为配置初值，须通过历史回放和敏感性分析校准，不声称理论最优。
+[P0219] <heading 2> HEADING(outline=None)
+    8.6 Governor 资源感知
+[TABLE 36] rows=6 cols~=3
+  R01: 监控项 | 初始策略 | 触发动作
+  R02: 内存 | 软/硬阈值按应用预算配置；70%/85% 仅作初始待校准值。 | 软阈值减并发/暂停非关键新任务；硬阈值停止派发并回收超限子进程。
+  R03: CPU | 持续高负载阈值可配置，例如 85% 持续 30 秒。 | 降低并发或调整低优先级任务。
+  R04: 磁盘 | 工作区剩余空间、产物大小、日志增长。 | 停止新任务；只清理临时缓存，不删证据。
+  R05: 预算 | token、wall-clock、验证预算、重试次数。 | 切换模板/模型、减少非关键验证，保留强制 L3。
+  R06: 进程 | 超时、僵尸进程、子进程树未退出。 | 按进程组/Job Object 回收并记录原因。
+[P0220] <(none)> 
+    
+[P0221] <heading 2> HEADING(outline=None)
+    8.7 VAS 验证感知调度
+[P0222] <(none)> 
+    VAS 把验证预算作为显式资源。风险分数由预注册特征构成：
+[P0223] <(none)> 
+    R_i = 0.25·F_i + 0.20·N_i + 0.20·G_i + 0.20·I_i + 0.15·A_i
+[P0224] <(none)> 
+    F 为历史失败风险（Beta-Binomial 平滑）；N 为输入/配置新颖度；G 为证据缺口；I 为下游/报告影响；A 为异常信号。特征归一化到 [0,1]，权重在 G-dev 校准后、G-hold 前冻结。
+[P0225] <(none)> 
+    Utility_i = R_i × CoverageBenefit_i
+[P0226] <(none)> 
+    Priority_i = Utility_i / max(EstimatedCost_i, ε)
+[P0227] <(none)> 
+    maximize Σ Utility_i·x_i   subject to Σ Cost_i·x_i ≤ Budget
+[P0228] <(none)> 
+    x_i = 1 for mandatory verification nodes
+[P0229] <(none)> 
+    强制集合至少包括最终报告节点、报告指标来源节点、证据完整性异常节点和安全关键节点。强制节点不得被预算优化排除。节点少时用动态规划求精确解；节点多时可用贪心近似，并报告相对小规模最优解的差距。
+[P0230] <heading 2> HEADING(outline=None)
+    8.8 四种验证预算策略
+[TABLE 37] rows=5 cols~=3
+  R01: 策略 | 做法 | 目的
+  R02: 随机 | 同预算随机选择可选节点。 | 检验风险优先是否优于无信息分配。
+  R03: 固定拓扑序 | 按 DAG 拓扑顺序验证。 | 检验固定顺序是否偏向早期节点。
+  R04: 报告优先 | 先验报告节点，再逆拓扑追溯。 | 检验只看最终输出是否足够。
+  R05: 风险优先 | 风险×覆盖收益/成本排序，并满足强制覆盖。 | 比较同预算下有效检出效率。
+[P0231] <(none)> 
+    
+[P0232] <heading 2> HEADING(outline=None)
+    8.9 图变更审批与降级
+[P0233] <(none)> 
+    Planner 只能提交 graph_patch。调度器检查无环、节点/边白名单、图规模/深度、预算、权限不扩大、已执行节点不可静默重写；影响已验证结果或扩大执行权限的变更须人工批准。资源不足时减并发、延后非关键验证、切换模板；不得静默取消必检项或 L3。
+[P0234] <(none)> PAGE_BREAKS=1
+    
+    
+[P0235] <heading 1> HEADING(outline=None)
+    第9章  独立验证、可重复执行与第三方复核
+[P0236] <heading 2> HEADING(outline=None)
+    9.1 TLV 三级验证
+[TABLE 38] rows=4 cols~=4
+  R01: 层级 | 核查目标 | 执行动作 | 能证明/不能证明
+  R02: L1 过程完整性 | 代码、数据、配置、环境、日志、产物齐全且属于本次运行。 | Schema、SHA-256 重算、event_seq、Merkle、目录复用检测。 | 能证明证据完整与指纹一致；不能证明结果真实。
+  R03: L2 结果自洽 | 指标可从预测结果重算，划分/口径合理。 | 指标重算、字段语义、泄漏五规则。 | 能证明内部自洽；不能阻止成套伪造。
+  R04: L3/IRC | 新目录、独立进程、原始数据重读、重新训练/推理是否一致。 | Split Manifest 校验、配置重放、真实模型重跑、差异归因。 | 能支持限定环境的独立重执行；不等于跨环境普遍复现。
+[P0237] <(none)> 
+    
+[P0238] <heading 2> HEADING(outline=None)
+    9.2 L2 数据泄漏五规则
+[TABLE 39] rows=6 cols~=3
+  R01: 规则 | 检查 | 机器判据
+  R02: R1 重复样本 | 训练/测试是否有重复或近重复样本。 | 规范化行哈希/相似度阈值。
+  R03: R2 分组泄漏 | 同一患者/用户/学校/批次是否跨 split。 | group_key 求交集。
+  R04: R3 时序泄漏 | 训练/调参是否使用测试期未来信息。 | 时间边界与特征窗口检查。
+  R05: R4 标签/后验字段 | 标签、ID、时间戳或后验字段是否误作特征。 | 字段白名单与配置比对。
+  R06: R5 指标来源 | 指标是否来自 test split，能否从 predictions 重算。 | split 字段、manifest、metrics 重算、混淆矩阵交叉校验。
+[P0239] <(none)> 
+    
+[P0240] <heading 2> HEADING(outline=None)
+    9.3 L3 独立重执行步骤
+[P0241] <List Bullet> 
+    Verifier 创建新临时目录、只读挂载原始数据，记录目录和进程标识。
+[P0242] <List Bullet> 
+    只读原始数据、代码快照、配置快照、依赖锁和系统 Split Manifest；禁止读取原运行 metrics、predictions、模型文件和结果目录。
+[P0243] <List Bullet> 
+    Split Manifest 包含 dataset_hash、split_algorithm/version、seed、row_id_hash、fold_assignment_hash、group/time semantics。
+[P0244] <List Bullet> 
+    在独立进程真正重跑训练/推理；只重算指标或重读 predictions 不算 L3。
+[P0245] <List Bullet> 
+    比较预测、指标和产物，按环境、数据、代码、随机性、规则、未知六类归因。
+[P0246] <heading 2> HEADING(outline=None)
+    9.4 等价性判定
+[P0247] <(none)> 
+    确定性模式要求 bit-exact；不一致即不授予 DC。随机性模式使用预注册种子集合（建议至少 5 个），报告均值/标准差和任务级分布，并用 TOST 检验预先定义的等价边界。等价边界必须在正式运行前根据独立预实验确定并哈希冻结。
+[P0248] <heading 2> HEADING(outline=None)
+    9.5 Evidence Bundle
+[P0249] <(none)> 
+    证据包至少包含 bundle_manifest.json、task_spec.json、graph.json、evidence.jsonl、artifact_manifest.json、split_manifest.json、verification_report.json、completion_certificate.json、merkle_proofs、anchor_proof（如有）、trusted_key_fingerprint、verify_bundle.py、README 和必要的轻量复核数据。
+[P0250] <(none)> 
+    python verify_bundle.py ./evidence_bundle --trust-store ./trusted_keys.json
+[P0251] <(none)> 
+    离线工具必须覆盖五类负例：修改证据 payload、替换公钥、删除 split_manifest、修改报告状态、破坏签名。真包通过；负例按预期拒绝。
+[P0252] <(none)> PAGE_BREAKS=1
+    
+    
+[P0253] <heading 1> HEADING(outline=None)
+    第10章  多智能体团队、角色契约与协作证据
+[P0254] <heading 2> HEADING(outline=None)
+    10.1 六个逻辑角色
+[P0255] <(none)> 
+    角色拆分依据是职责、输入证据、工具权限、失败模式和可关闭性。六个角色由 Agent Gateway 调度，可共用一个模型服务；身份由 contract_version、system policy、tool allowlist 和上下文范围共同确定。不是六个拥有独立数据库权限的常驻进程。
+[TABLE 40] rows=7 cols~=4
+  R01: 角色 | 职责 | 输入/输出 | 禁止权限
+  R02: Planner | 理解目标、选模板、提出 DAG。 | 目标/知识→ExperimentSpec、DAG Proposal。 | 写图、改状态、写证据。
+  R03: Data | 检查数据结构与质量。 | 数据引用→画像请求/异常解释。 | 改原始数据、写 E2。
+  R04: Experiment | 把配置映射为白名单模板请求。 | Spec/模板→参数化执行请求。 | 生成/执行任意代码。
+  R05: Analysis | 解释指标并提出重算请求。 | 预测引用/指标定义→复核请求。 | 自签指标证据或决定 VERIFIED。
+  R06: Recovery | 诊断错误并提出恢复计划。 | 失败事件/DAG/知识→Recovery Proposal。 | 直接改图、签 SPA。
+  R07: Verification | 提出验证计划、解释差异与缺口。 | 证据索引/规则→Verify Request。 | 写 E3、签报告/凭证。
+[P0256] <(none)> 
+    
+[P0257] <heading 2> HEADING(outline=None)
+    10.2 权限矩阵
+[TABLE 41] rows=6 cols~=6
+  R01: 角色/组件 | 读数据/知识 | 提交工具请求 | 改图 | 写状态/证据 | 签名
+  R02: 六个 LLM Agent | 按角色受限 | 白名单请求 | 仅 Planner/Recovery 提案 | 否 | 否
+  R03: StateMachine | 受限 | 不适用 | 批准/拒绝 | 仅状态 | 否
+  R04: Collector | 事件源 | 不适用 | 否 | E0/E1/E2 追加写 | 否
+  R05: Verifier | 证据/原始数据 | 独立验证执行 | 否 | E3/报告追加写 | 是
+  R06: Executor | 模板/只读数据 | 运行白名单模板 | 否 | 不写证据库 | 否
+[P0258] <(none)> 
+    
+[P0259] <heading 2> HEADING(outline=None)
+    10.3 协作证据图 CPG
+[P0260] <(none)> 
+    CPG 以“角色引用了谁产生的证据”为边，计算跨角色引用率、协作密度、角色贡献熵、无产出角色数和引用有效率。CPG 只证明信息流与协作结构，不直接代表语义质量；必须结合任务成功率、错误放行、恢复成本等主指标解释。
+[P0261] <heading 2> HEADING(outline=None)
+    10.4 Role-off 与成本控制
+[P0262] <List Bullet> 
+    分别关闭 Planner/Data/Experiment/Analysis/Recovery/Verification，其他机制、模型、预算和任务保持一致。
+[P0263] <List Bullet> 
+    比较完成率、协议违规、数据画像覆盖、指标复核请求、恢复成功率、L3 计划覆盖、成本和 CPG。
+[P0264] <List Bullet> 
+    若关闭某角色后无可解释变化，应合并或调整角色，不得为凑数保留。
+[P0265] <List Bullet> 
+    所有角色共用统一 LLM Client；设置 max_tokens、timeout、调用上限和缓存。
+[P0266] <List Bullet> 
+    模型不可用时回退模板/规则；离线模式通过表单选择模板，仍完成执行、证据、验证与签发。
+[P0267] <(none)> PAGE_BREAKS=1
+    
+    
+[P0268] <heading 1> HEADING(outline=None)
+    第11章  知识库、Self-Loop 与反馈优化
+[P0269] <heading 2> HEADING(outline=None)
+    11.1 五类知识单元
+[TABLE 42] rows=6 cols~=4
+  R01: 类型 | 内容 | 关键字段 | 使用角色
+  R02: SPEC | 实验规范、划分、种子、指标口径。 | seed_required,test_ratio,metric_defs。 | Planner/Gate/Verifier。
+  R03: TOOL | 工具契约、参数、版本差异、错误。 | tool_name,params_schema,timeout,known_errors。 | Experiment/Recovery。
+  R04: DATASET | 字段、标签、缺失模式、许可。 | dataset_hash,target,dtypes,license。 | Data/Planner。
+  R05: FAULT_CASE | 错误签名、根因、修复和验证步骤。 | signature,root_cause,fix,preconditions。 | Recovery/Analysis。
+  R06: PAPER/DOC | 论文、官方文档、规范。 | title,version,url,license,section。 | 全部角色辅助使用。
+[P0270] <(none)> 
+    
+[P0271] <heading 2> HEADING(outline=None)
+    11.2 KnowledgeUnit Schema
+[P0272] <(none)> 
+    KnowledgeUnit:
+[P0273] <(none)> 
+      kid, ktype, scope, version
+[P0274] <(none)> 
+      source_url, license, effective_at, expires_at
+[P0275] <(none)> 
+      structured, text, content_hash, supersedes
+[P0276] <(none)> 
+      status: ACTIVE | DEPRECATED | CONFLICTED
+[P0277] <(none)> 
+      created_by, reviewed_by
+[P0278] <heading 2> HEADING(outline=None)
+    11.3 五种绑定
+[TABLE 43] rows=6 cols~=3
+  R01: 绑定对象 | 注入时机 | 可测指标
+  R02: 工具 | 调用前注入参数约束和已知错误。 | 知识命中率、违规参数率。
+  R03: 模板 | DAG 构建时注入默认种子/指标/划分规范。 | 规范缺失率、默认值正确率。
+  R04: 数据集 | 画像前注入字段解释与质量规则。 | 字段识别准确率、画像覆盖率。
+  R05: Agent | 按角色限制可见知识类型。 | 无关知识比例、上下文 token。
+  R06: 基准任务 | expected_kb_hit 检查预期知识命中。 | Recall@k、MRR、版本命中率。
+[P0279] <(none)> 
+    
+[P0280] <heading 2> HEADING(outline=None)
+    11.4 知识治理
+[P0281] <List Bullet> 
+    首期 BM25/FTS5 + ktype/scope 过滤；返回 kid、version、content_hash、source_url 和命中理由。
+[P0282] <List Bullet> 
+    只增不改；修订产生新版本，旧版本 deprecated，supersedes 指向新版本。
+[P0283] <List Bullet> 
+    同一 scope 字段冲突时标记 CONFLICTED 并升级人工，不允许模型自行选择。
+[P0284] <List Bullet> 
+    过期知识降权；被引用时标 stale_kb 并要求确认。
+[P0285] <List Bullet> 
+    检索引用写 E1；知识只回答“怎么做”，不参与“做没做”的成功判定。
+[P0286] <heading 2> HEADING(outline=None)
+    11.5 FOL 三层反馈环
+[TABLE 44] rows=4 cols~=4
+  R01: 反馈环 | 周期 | 输入/动作 | 指标/证伪
+  R02: L-A 执行环 | 秒—分钟 | 失败/缺口→错误分类、有限重试、定向恢复。 | 恢复率、尝试次数、重跑数；关闭后观察退化。
+  R03: L-B 知识环 | 分钟—天 | 人工确认故障案例入库，下次相似任务注入。 | 知识命中、同类错误复发、R1/R2 差异。
+  R04: L-C 策略环 | 周/批次 | 历史结果离线网格搜索/回放，人工批准策略版本。 | 尝试次数、预算利用率、R2/R3 差异。
+[P0287] <(none)> 
+    
+[P0288] <(none)> 
+    数据只向上流（失败→案例→策略评估），参数只向下流（批准策略→阈值→执行）。首期不引入强化学习；策略更新必须版本化、可回滚、可回放。
+[P0289] <heading 2> HEADING(outline=None)
+    11.6 R1–R3 实验
+[P0290] <(none)> 
+    R1 仅执行环；R2 增加知识环；R3 再增加策略环。比较首轮通过率、平均尝试次数、同类错误二次发生率、token 成本和恢复时间。目标值可设为 R3 相对 R1 首轮通过率提升 15 个百分点，但只有实测后才能形成结论。
+[P0291] <(none)> PAGE_BREAKS=1
+    
+    
+[P0292] <heading 1> HEADING(outline=None)
+    第12章  ResearchFlow-Bench 与实验验证协议
+[P0293] <heading 2> HEADING(outline=None)
+    12.1 基准原则
+[P0294] <List Bullet> 
+    可机器判定：每个任务有输入、故障注入、expected_state、expected_gaps 和规则。
+[P0295] <List Bullet> 
+    可注入/可撤销：inject(task) 与 restore(task) 可重复、可回滚。
+[P0296] <List Bullet> 
+    可预注册：任务 JSON、攻击脚本、规则和统计脚本提前冻结。
+[P0297] <List Bullet> 
+    可追溯：每个结果回到 task_id、run_id、attempt_id、证据包和环境指纹。
+[P0298] <List Bullet> 
+    可外部复核：复现包一条命令可重出核心统计表。
+[P0299] <heading 2> HEADING(outline=None)
+    12.2 核心 60 任务
+[TABLE 45] rows=9 cols~=4
+  R01: 组别 | 数量 | 示例 | 考察
+  R02: A 正常 | 12 | 三模型分类、五折交叉验证、回归、多指标。 | 完成率/稳定性。
+  R03: B 数据异常 | 6 | 缺列、缺失率高、稀有类、重复行、编码异常。 | Data/L1/L2。
+  R04: C 代码环境 | 6 | ImportError、非法超参、内存超限、依赖缺失。 | 错误分类/恢复。
+  R05: D 工具资源 | 4 | 超时、子进程被杀、只读目录、禁网。 | Governor/资源降级。
+  R06: E 输出协议 | 4 | JSON 截断、缺字段、类型错误、路径越界。 | Schema/权限。
+  R07: F 结果异常 | 4 | 指标与混淆矩阵不符、训练集冒充测试集、运行漂移。 | L2/L3。
+  R08: G-dev | 8 | 开发可见对抗用例。 | 调试规则/回归。
+  R09: G-hold | 16 | 非规则开发者构造的核心留出变体。 | 初步泛化。
+[P0300] <(none)> 
+    
+[P0301] <heading 2> HEADING(outline=None)
+    12.3 18 类攻击族
+[TABLE 46] rows=9 cols~=3
+  R01: 攻击族 | 典型手法 | 检出依据
+  R02: 未执行/伪造 | 无产物却声称成功、手写 metrics、伪造退出码。 | E2 缺失、attempt 记录、产物检查。
+  R03: 部分执行/静默跳过 | 只执行部分模型、跳过节点、运行次数不符。 | 配置与产物集合、attempt 计数。
+  R04: 旧产物复用 | 复制旧模型/metrics、旧目录软链接。 | task/attempt 指纹、磁盘哈希、访问审计。
+  R05: 篡改 | 修改 metrics 后重算普通 SHA。 | Verifier 现场重算与签名。
+  R06: 成套伪造 | predictions 与 metrics 一起伪造。 | L2 可能通过，L3 独立重跑差异。
+  R07: 口径/泄漏 | 训练集冒充测试集、测试集调参、标签/后验字段、分组/时序泄漏。 | Split Manifest、字段白名单、五规则。
+  R08: 过程声明不符 | 声称清洗但 hash 未变、声称多次运行实际一次、假独立复现。 | 前后指纹、计数、目录访问审计。
+  R09: 权限/协议 | Agent 越权写库/私钥、引用不存在 ID、未注册工具。 | 403、协议违规、工具白名单。
+[P0302] <(none)> 
+    
+[P0303] <heading 2> HEADING(outline=None)
+    12.4 统计效度升级
+[P0304] <(none)> 
+    核心 60 任务用于机制开发、回归和四方案比较。16 个 G-hold 只能提供初步留出证据：若 0/16 错误放行，双侧 95% Clopper–Pearson 上界约 20.6%；不能声称错误率低于 5%。
+[P0305] <(none)> 
+    T2 建议增设独立盲测 G-hold-72：至少 72 个由非机制开发者构造的独立任务实例，覆盖 18 类攻击族，但不得把同一任务简单复制 4 次冒充 72 个独立样本。每个实例使用独立基础任务/数据变体/攻击参数并封存哈希。0/72 时在独立 Bernoulli 假设下双侧 95% 上界约 4.99%；仍需报告攻击家族聚类敏感性，不能泛化到未知攻击。
+[TABLE 47] rows=1 cols~=1
+  R01: 说明 ⏎ G-hold-72 是研究级增强目标，不是开发前置条件。若只完成 16 个留出样本，诚实报告区间，不通过伪重复扩大样本量。
+[P0306] <(none)> 
+    
+[P0307] <heading 2> HEADING(outline=None)
+    12.5 四方案对照
+[TABLE 48] rows=5 cols~=3
+  R01: 方案 | 架构 | 目的
+  R02: A | 单 Agent 顺序模板执行，无内部 EG/动态调度。 | 最简单执行基线。
+  R03: B | 多 Agent 固定 DAG，无动态调度。 | 检验多角色协作是否有用。
+  R04: C | 多 Agent 动态调度/恢复，无完整 EG/DC/SPA/VAS。 | 检验动态编排收益。
+  R05: D | ResearchFlow 完整机制。 | 评估综合效果。
+[P0308] <(none)> 
+    
+[P0309] <(none)> 
+    所有方案使用相同模型版本、温度、数据、划分、token、wall-clock、并发和重试规则。A/B/C 最终产物统一交同一独立评估器，避免 D 因独有验证器天然获胜。
+[P0310] <heading 2> HEADING(outline=None)
+    12.6 消融和补充实验
+[TABLE 49] rows=12 cols~=3
+  R01: 实验 | 操作 | 主指标
+  R02: Ab1 EG | 关闭内部证据门控，仅记录。 | 错误放行、缺口检出。
+  R03: Ab2 Recovery | 关闭定向恢复，失败后全量重跑。 | 重跑节点、耗时、恢复率。
+  R04: Ab3 L2-only | 只用 L1+L2 作不安全基线，仅测试构建。 | 成套伪造误判。
+  R05: X1 DC | DC+SPA 对比仅输入哈希剪枝。 | PRR、聚合漂移、DC 成本。
+  R06: X2 VAS | 随机/固定拓扑/报告优先/风险优先。 | 单位预算有效检出数。
+  R07: X3 SPA | 有/无 SPA。 | 省略可解释率、恢复成本。
+  R08: X4 权限 | 测试构建中进行越权尝试。 | 未授权成功数、审计完整率。
+  R09: X5 第三方复核 | 真包和五类负例包离线验签。 | 真包通过、负例误接收数。
+  R10: Role-off | 逐一关闭六个角色。 | 角色相关指标和 CPG。
+  R11: R1–R3 | 执行环/知识环/策略环逐层开启。 | 首轮通过、错误复发、成本。
+  R12: H1 Adapter | DeepSeek Harness 插件端到端。 | 事件映射、状态一致性、丢事件率。
+[P0311] <(none)> 
+    
+[P0312] <heading 2> HEADING(outline=None)
+    12.7 iso-budget 与结果模板
+[P0313] <List Bullet> 
+    相同模型 ID/版本/温度、统一 token 和 wall-clock 上限。
+[P0314] <List Bullet> 
+    相同并发、重试、数据和划分；L3 验证成本单列。
+[P0315] <List Bullet> 
+    报告实际 token、时长、峰值内存、内部验证与外部评估成本。
+[P0316] <List Bullet> 
+    二值指标任务级区间；连续指标配对 bootstrap；TOST 边界预注册。
+[P0317] <List Bullet> 
+    负面结果和失败任务编号必须公开。
+[TABLE 50] rows=7 cols~=6
+  R01: 指标 | A | B | C | D | 配对差异
+  R02: pass@3 / pass^3 | 未测 | 未测 | 未测 | 未测 | 未测
+  R03: 完成率/故障检出率 | 未测 | 未测 | 未测 | 未测 | 未测
+  R04: 错误放行数（24/16/72） | 未测 | 未测 | 未测 | 未测 | 未测
+  R05: 恢复率/重跑占比 | 未测 | 未测 | 未测 | 未测 | 未测
+  R06: L3 覆盖/IRC 一致率 | 未测 | 未测 | 未测 | 未测 | 未测
+  R07: token/耗时/内存 | 未测 | 未测 | 未测 | 未测 | 未测
+[P0318] <(none)> 
+    
+[P0319] <(none)> PAGE_BREAKS=1
+    
+    
+[P0320] <heading 1> HEADING(outline=None)
+    第13章  差异化定位、Harness 对标与创新点
+[P0321] <(none)> 
+    本章把项目创新主张转化为可核验的功能差异和实验任务，避免以未经证实的竞品缺失作为创新依据。
+[P0322] <heading 2> HEADING(outline=None)
+    13.1 对标原则
+[P0323] <(none)> 
+    竞品对标按公开文档、固定版本和可复现实测开展。某能力未在当前公开文档中找到，不等于产品一定没有；统一使用“公开资料确认”“需实测”“不作缺失推断”。对标目标是说明 ResearchFlow 的领域化增量，而不是宣称替代通用 Harness。
+[TABLE 51] rows=6 cols~=4
+  R01: 维度 | LobeHub（公开能力方向） | DeepSeek Harness（公开能力方向） | ResearchFlow 的领域增量
+  R02: Agent 组织 | Agent Builder、Agent Groups、外部 Agent、Tasks/Schedule。 | Agent 运行模式、子 Agent 调度与插件组合。 | 实验角色契约、证据引用约束、权限矩阵与 role-off。
+  R03: 工具插件 | Skills、Connectors、MCP、外部 Agent。 | Cordis 插件、工具/技能/会话/沙箱/存储/循环/调度/UI。 | Domain Tool Contract、受控模板执行与质量门 API。
+  R04: 知识上下文 | Resource Library、Agent Documents、Memory。 | 会话上下文及插件能力，按锁定版本核验。 | 知识单元版本化、领域绑定、冲突/过期治理。
+  R05: 轨迹回放 | 会话与任务工作流可见。 | 轨迹记录上下文、工具调用/结果、子 Agent 调度；公开能力涉及恢复、分叉和回放。 | Harness 轨迹默认 E1；真实执行 E2 由 Collector 独立观测。
+  R06: 最终判定 | 通用 Agent 工作空间/运行时能力。 | 可组合 Agent 运行时。 | 实验 DAG、L2/L3 独立验证、DC/SPA、VAS 与离线完成凭证。
+[P0324] <(none)> 
+    
+[P0325] <(none)> 
+    资料核验基准日期：2026-11-06。正式提交前需把所用官方文档页面、仓库 commit、版本号和访问日期保存到 docs/references/，并对照实际安装版本复核。
+[P0326] <heading 2> HEADING(outline=None)
+    13.2 首适配器：DeepSeek Harness Cordis
+[P0327] <(none)> 
+    将 DeepSeek Harness 作为首个真实适配对象。适配器只负责把 Harness 的会话、工具调用、结果和任务状态映射为 ResearchFlow 标准事件；不允许 Harness 插件代替 Collector 生成 E2，也不允许其改写 VerificationReport 或 CompletionCertificate。插件 API 可能变化，必须锁定 commit/包版本并执行契约测试。
+[TABLE 52] rows=7 cols~=3
+  R01: 能力 | 实施方式 | 证据映射/失败处理
+  R02: 工具注册 | 注册 submit_experiment、get_task_status、get_report、export_bundle。 | 调用请求/响应为 E1；工具失败记录 error_code。
+  R03: 事件监听 | 监听锁定版本确认的工具结果、会话事件。 | 保留 source、version、event_id、timestamp；默认 E1。
+  R04: 任务映射 | Harness session/run 与 ResearchFlow task_id 关联。 | 保存 run_id、session_id、correlation_id。
+  R05: 执行观测 | ResearchFlow Executor 执行内置模板，Collector 监听进程与产物。 | E2 只由 Collector 产生。
+  R06: 状态回传 | 回传 final_state、report_id、certificate_id。 | 只传引用；Harness 不签发凭证。
+  R07: 异常处理 | 事件幂等、乱序检测、断线重连。 | 丢失事件记 evidence_gap，不补造。
+[P0328] <(none)> 
+    
+[P0329] <heading 2> HEADING(outline=None)
+    13.3 五条核心创新点
+[TABLE 53] rows=6 cols~=3
+  R01: 创新点 | 核心机制 | 必须完成的验证
+  R02: C1 外部证据驱动状态跃迁 | E0 不推动状态；E2 Collector 观察；E3 Verifier 重跑；StateMachine 单入口。 | EG 消融、盲测错误放行、第三方离线复核。
+  R03: C2 应用层写入者隔离 | Agent Gateway 工具白名单；Collector/Verifier 单写；私钥仅 Verifier。 | 越权测试、进程权限检查、审计完整率。
+  R04: C3 DC+SPA 安全剪枝 | 经验性确定性资格、输入/环境绑定、逐项剪枝条件、省略溯源签名。 | PRR、聚合漂移、SPA 复核。
+  R05: C4 验证感知预算 | 风险特征、收益/成本、强制覆盖、策略回放。 | 四策略同预算检出效率与成本。
+  R06: C5 可移植第三方凭证 | Evidence Bundle、JCS/Ed25519、Merkle、信任锚、离线验签。 | 真包通过、负例包拒绝、独立环境复核。
+[P0330] <(none)> 
+    
+[P0331] <heading 2> HEADING(outline=None)
+    13.4 创新表述纪律
+[P0332] <List Bullet> 
+    不声称首次发明哈希链、Merkle、Ed25519、DAG、背包优化或多智能体。
+[P0333] <List Bullet> 
+    不声称 Harness 没有轨迹、回放、调度或 Agent 团队。
+[P0334] <List Bullet> 
+    不声称 L2 能证明真实执行；不声称 k 次 bit-exact 证明普遍确定性。
+[P0335] <List Bullet> 
+    不声称解决所有 Agent 幻觉；只报告已定义任务与攻击集的结果。
+[P0336] <List Bullet> 
+    将创新定位为面向 AI 实验的机制组合、证据协议、状态约束和可复核工程实现。
+[P0337] <(none)> PAGE_BREAKS=1
+    
+    
+[P0338] <heading 1> HEADING(outline=None)
+    第14章  应用场景、主线演示与产教融合价值
+[P0339] <(none)> 
+    用一条可运行实验主线贯穿任务提交、执行、故障注入、恢复、验证、凭证签发和离线复核。
+[P0340] <heading 2> HEADING(outline=None)
+    14.1 主应用场景
+[P0341] <(none)> 
+    主场景为高校机器学习实验的自动执行、异常恢复与可信复现。任务示例：使用公开表格数据集训练三个分类模型，比较指标，检查数据泄漏，生成报告，并证明指标来自本次真实执行。建议正式演示使用 Breast Cancer Wisconsin 数据集；Wine 数据集用于快速冒烟测试。数据离线预置，保存来源、许可证、版本与 SHA-256。
+[P0342] <heading 2> HEADING(outline=None)
+    14.2 主线 DAG
+[P0343] <(none)> 
+    Dataset Profile
+[P0344] <(none)> 
+       ↓
+[P0345] <(none)> 
+    SplitService + Split Manifest
+[P0346] <(none)> 
+       ↓
+[P0347] <(none)> 
+    Preprocess / Feature Contract
+[P0348] <(none)> 
+       ↓
+[P0349] <(none)> 
+    Logistic Regression | Random Forest | SVM
+[P0350] <(none)> 
+       ↓
+[P0351] <(none)> 
+    Predictions + Metrics Recompute
+[P0352] <(none)> 
+       ↓
+[P0353] <(none)> 
+    Leakage / Protocol Checks
+[P0354] <(none)> 
+       ↓
+[P0355] <(none)> 
+    Independent Replay (L3/IRC)
+[P0356] <(none)> 
+       ↓
+[P0357] <(none)> 
+    Report + Gap Matrix
+[P0358] <(none)> 
+       ↓
+[P0359] <(none)> 
+    Completion Certificate
+[P0360] <(none)> 
+       ↓
+[P0361] <(none)> 
+    Offline Bundle Verification
+[P0362] <heading 2> HEADING(outline=None)
+    14.3 现场故障注入
+[TABLE 54] rows=7 cols~=3
+  R01: 注入场景 | 系统动作 | 现场展示证据
+  R02: 未执行 | 缺少 E2，拒绝 VERIFIED。 | E0 声明、E2 缺口、最终报告状态。
+  R03: 部分执行 | 配置与产物集合不一致。 | DAG 节点、产物清单、缺口矩阵。
+  R04: 成套伪造 | L2 可能通过，L3 新目录重跑发现差异。 | L2 PASS、L3 FAIL、差异归因。
+  R05: 上游变化 | 传播失效；无 DC 节点保守重跑。 | graph_version、输入哈希、Recovery Plan。
+  R06: 资源压力 | Governor 暂停派发或降低并发。 | 资源曲线、调度事件和队列变化。
+  R07: 凭证篡改 | 离线验签失败。 | verify_bundle 错误码和退出码。
+[P0363] <(none)> 
+    
+[P0364] <heading 2> HEADING(outline=None)
+    14.4 课程核查流程
+[P0365] <List Number> 
+    教师创建任务，选择 Domain Pack、模板、规则集和必检项。
+[P0366] <List Number> 
+    学生提交配置、数据引用/哈希、模板 ID 和已有运行证据；学生自带日志仅作预检。
+[P0367] <List Number> 
+    平台使用审核过的内置模板重跑，产生 E2；包内任意代码不执行。
+[P0368] <List Number> 
+    输出 VerificationReport 和缺口清单；仅 VERIFIED 且证书有效时附完成凭证。
+[P0369] <List Number> 
+    教师查看班级汇总；学生可下载证据包自行验签并申诉。
+[P0370] <heading 2> HEADING(outline=None)
+    14.5 第二领域包
+[P0371] <(none)> 
+    T2 实现数据分析报告核查：给定 CSV 和报告，核查计数、比例、均值、分组统计和图表数据是否能从原始数据重算。只处理可机器判定的数字与口径，不评价开放式文字分析质量。
+[P0372] <heading 2> HEADING(outline=None)
+    14.6 落地凭证
+[TABLE 55] rows=7 cols~=3
+  R01: 凭证 | 获取方式 | 能证明什么
+  R02: 课程试点意向 | 任课教师/实验中心书面意向。 | 存在真实需求入口，不等于已部署。
+  R03: 脱敏核查报告 | 经知情同意的样例作业或合成数据。 | 真实任务可用性。
+  R04: 开源仓库/软著 | 按实际完成情况发布或申请。 | 软件资产；未受理不得写已申请。
+  R05: Harness 插件演示 | 插件加载、工具调用、事件映射。 | 适配工程可运行。
+  R06: 第三方复核记录 | 另一设备或未参与开发者验签。 | 外部可复核性。
+  R07: 平台对接说明 | 质量门 API 与 webhook 契约。 | 集成可能性；未联调前不写已对接。
+[P0373] <(none)> 
+    
+[P0374] <(none)> PAGE_BREAKS=1
+    
+    
+[P0375] <heading 1> HEADING(outline=None)
+    第15章  技术可行性、开发路线与质量门禁
+[P0376] <(none)> 
+    明确先做什么、做到什么程度才算完成，以及哪些功能不应提前开发。
+[P0377] <heading 2> HEADING(outline=None)
+    15.1 可行性判断
+[P0378] <(none)> 
+    项目可落地的前提是严格限制第一版范围：内置模板、单机、表格型 ML、并发 2、无 GPU。核心自研集中在编排、证据和验证；其他复用成熟组件。最难的不是调起六个 Agent，而是让任务状态、证据写入、独立验证、签名和离线复核在同一条链上保持一致。
+[P0379] <heading 2> HEADING(outline=None)
+    15.2 T0/T1/T2 交付阶段
+[TABLE 56] rows=4 cols~=4
+  R01: 阶段 | 建设目标 | 必须完成 | 阶段出口
+  R02: T0 最小可信闭环 | 证明不是 PPT。 | Task/Node Schema、DAG、StateMachine、内置模板、Executor、Collector、E0–E2、Gate、L1/L2/L3 单模板重跑、Ed25519、离线验签、最小工作台。 | 断网/无模型完成一条实验；导出证据包；第三方验签通过。
+  R03: T1 竞赛完整版 | 覆盖赛道主要能力。 | 六角色、消息协议、Scheduler/Governor、故障注入、Recovery、KB/FOL、60 任务、四方案/消融、六页工作台。 | 六项能力均有运行演示与原始证据。
+  R04: T2 差异化强化 | 证明机制贡献和外部适配。 | DC/SPA、VAS 四策略、盲测扩展、DeepSeek Harness 插件、第二 Domain Pack、第三方复核/试点。 | 创新点有对照数据，至少一个 Harness 适配可复核。
+[P0380] <(none)> 
+    
+[P0381] <heading 2> HEADING(outline=None)
+    15.3 质量门禁
+[TABLE 57] rows=9 cols~=3
+  R01: 门禁 | 通过条件 | 未通过处理
+  R02: G0 规格冻结 | 数据模型、状态机、API、错误码、证据等级和规则版本确定。 | 暂停并行开发，先统一契约。
+  R03: G1 纵向闭环 | 无模型、离线、单任务从提交到凭证全链跑通。 | 停止前端美化和新增 Agent，修复执行/证据/验证。
+  R04: G2 证据可信 | E0 不推动状态；E2 由 Collector 观察；权限拒绝通过。 | 不得对外展示 VERIFIED。
+  R05: G3 L3 独立重执行 | 新目录、独立进程、真实重跑；假复现负例拒绝。 | 缩小可 VERIFIED 模板范围。
+  R06: G4 动态调度/恢复 | 资源变化改变调度；失败能执行恢复计划。 | 只交付固定调度基线，不宣称动态优化。
+  R07: G5 实验数据可信 | 预注册、冻结哈希、四方案、原始 JSON 和统计脚本齐全。 | 缺数据保持未测。
+  R08: G6 外部复核 | 真包通过、五类负例拒绝；独立环境可验证。 | 不得宣称第三方可复核。
+  R09: G7 Harness 适配 | 固定版本插件、工具、事件映射和状态回传契约通过。 | 标注实验性/计划，不写已接入。
+[P0382] <(none)> 
+    
+[P0383] <heading 2> HEADING(outline=None)
+    15.4 技术栈与环境
+[TABLE 58] rows=9 cols~=3
+  R01: 依赖 | 建议要求 | 用途
+  R02: Python | 3.11.x，venv/锁文件。 | 后端、模板、验证脚本。
+  R03: FastAPI/Pydantic | 稳定版本锁定。 | REST 与 Schema。
+  R04: SQLite WAL | 单机数据库。 | 任务、状态、审计、证据元数据。
+  R05: NetworkX | 稳定版本。 | DAG 与拓扑排序。
+  R06: scikit-learn/pandas | 锁定版本。 | ML 模板和数据画像。
+  R07: cryptography | 支持 Ed25519。 | 签名/验签。
+  R08: Streamlit | 锁定版本。 | 工作台。
+  R09: DeepSeek Harness | 锁定 commit/npm 版本。 | 首个 Harness Adapter；预览接口需契约测试。
+[P0384] <(none)> 
+    
+[P0385] <heading 2> HEADING(outline=None)
+    15.5 开发顺序
+[P0386] <List Number> 
+    先定义 contracts：TaskSpec、NodeSpec、EvidenceRecord、VerificationReport、CompletionCertificate、HarnessEvent、DomainPack。
+[P0387] <List Number> 
+    实现 StateMachine + SQLite + audit_log，禁止其他模块直接更新状态。
+[P0388] <List Number> 
+    实现内置模板 Executor 与独立工作目录，暂不接 LLM。
+[P0389] <List Number> 
+    实现 Collector 事件队列和 E0/E1/E2 追加写。
+[P0390] <List Number> 
+    实现 Gate 与 L1/L2/L3；L3 必须真实重训/推理。
+[P0391] <List Number> 
+    实现 Ed25519/JCS/Merkle 和 verify_bundle.py，建立真包/负例包。
+[P0392] <List Number> 
+    实现 DAG Scheduler、Governor、Recovery；在真实执行日志上验证动态变化。
+[P0393] <List Number> 
+    接入六逻辑 Agent 与知识库；所有角色通过 Tool Gateway。
+[P0394] <List Number> 
+    实现 RF-Bench、四方案/消融和统计脚本；先冻结任务再跑正式数据。
+[P0395] <List Number> 
+    最后接入 DeepSeek Harness 插件和第二领域包。
+[P0396] <heading 2> HEADING(outline=None)
+    15.6 推荐仓库结构
+[P0397] <(none)> 
+    researchflow/
+[P0398] <(none)> 
+      configs/ contracts/ api/
+[P0399] <(none)> 
+      orchestration/   # dag, scheduler, state_machine, governor, recovery, vas
+[P0400] <(none)> 
+      agents/          # gateway + six logical roles
+[P0401] <(none)> 
+      executor/        # registry, worker, workspace, templates
+[P0402] <(none)> 
+      evidence/        # collector, store, chain, merkle, gate
+[P0403] <(none)> 
+      verifier/        # service, l1, l2, l3, signing, verify_bundle
+[P0404] <(none)> 
+      knowledge/ domainpacks/ bench/
+[P0405] <(none)> 
+      adapters/deepseek_harness/
+[P0406] <(none)> 
+      frontend/ data/ tests/ docs/
+[P0407] <heading 2> HEADING(outline=None)
+    15.7 Definition of Done
+[P0408] <List Bullet> 
+    每模块有 Schema、错误码、日志、单测、集成测试和使用说明。
+[P0409] <List Bullet> 
+    核心状态迁移、Gate、签名验签和剪枝判定有正例与负例。
+[P0410] <List Bullet> 
+    每个创新点有开关/对照/消融或明确边界证明。
+[P0411] <List Bullet> 
+    所有对外数字可追到原始数据；示意图明确标示。
+[P0412] <List Bullet> 
+    离线启动、断网运行、无模型回退和离线验签在独立环境复测。
+[P0413] <(none)> PAGE_BREAKS=1
+    
+    
+[P0414] <heading 1> HEADING(outline=None)
+    第16章  组织协作、职责分工与资源预算
+[P0415] <(none)> 
+    本章按责任划分，不预设团队人数。实际人员可一人承担多个模块，但每项关键交付必须有责任人和复核人。
+[TABLE 59] rows=7 cols~=3
+  R01: 责任域 | 职责 | 交付物/复核
+  R02: 架构/产品 | 范围、需求、架构决策、版本冻结。 | ADR、需求追踪矩阵；测试责任人复核。
+  R03: 编排调度 | DAG、StateMachine、Scheduler、Governor、Recovery、VAS。 | 状态日志、调度回放、恢复计划；执行/验证复核。
+  R04: 执行证据 | Executor、Workspace、Collector、Evidence Store、Merkle。 | E2、证据链、权限测试；独立复核。
+  R05: 验证基准 | L1/L2/L3、证书、证据包、RF-Bench、统计。 | 报告、原始 JSON、区间、复现脚本；盲测由非开发者构造。
+  R06: Agent/知识/适配 | 六角色、消息协议、KB、FOL、Harness Adapter。 | 角色契约、知识命中、插件代码、事件映射测试。
+  R07: 前端文档演示 | 工作台、报告、用户手册、录屏和答辩。 | 页面截图、报告样例、离线演示；非开发者走查。
+[P0416] <(none)> 
+    
+[P0417] <heading 2> HEADING(outline=None)
+    16.1 资源预算科目
+[TABLE 60] rows=6 cols~=3
+  R01: 资源项 | 用途/计价 | 控制原则
+  R02: 模型 API | 按 token/请求计费。 | 调用上限、缓存；无模型仍能跑核心闭环。
+  R03: 设备存储 | 16GB 单机、证据包、备份。 | 证据、原始数据、日志分层保存。
+  R04: 数据标注 | 公开/合成数据、攻击任务构造。 | 真实课程数据须同意和脱敏。
+  R05: 软件服务 | 依赖、时间戳、存储等。 | 开源优先，锁依赖并审许可证。
+  R06: 材料/IP | 软著、打印、演示。 | 按实际发生金额记录；未受理不得写已申请。
+[P0418] <(none)> 
+    
+[P0419] <List Bullet> 
+    基准集中运行；调试集与盲测集分离。
+[P0420] <List Bullet> 
+    DC 签发、L3 重跑和 VAS 验证成本分别报告。
+[P0421] <List Bullet> 
+    离线演示使用预置数据和模板，不依赖现场模型额度。
+[P0422] <List Bullet> 
+    超预算优先减少非关键解释和美化，不砍 E2、L3、签名和第三方复核。
+[P0423] <(none)> PAGE_BREAKS=1
+    
+    
+[P0424] <heading 1> HEADING(outline=None)
+    第17章  风险、合规、伦理与知识产权
+[TABLE 61] rows=10 cols~=4
+  R01: 风险 | 影响 | 预防/监控 | 触发动作
+  R02: 写入者隔离失效 | 可信机制失效。 | 独立进程、权限矩阵、X4。 | 停止 VERIFIED 演示，修复后重跑权限/对抗测试。
+  R03: L3 不稳定 | 无法签发可信凭证。 | 固定环境/线程/种子、Split Manifest。 | 缩小可 VERIFIED 模板范围。
+  R04: DC 误签/错误剪枝 | 保留失效结果。 | 纯函数限制、输入/环境绑定、有效期。 | 撤销 DC，回滚并强制重跑。
+  R05: VAS 失准 | 验证预算分配不佳。 | G-dev 校准、G-hold 冻结、强制覆盖。 | 回退固定/随机策略并报告。
+  R06: Harness API 变化 | 插件失效/事件丢失。 | 锁 commit、契约测试。 | 暂停适配器，Standalone 继续。
+  R07: 模型/API 费用 | 调用失败或预算超限。 | 模板回退、缓存、超时。 | 切无模型模式，不伪造执行证据。
+  R08: 现场演示翻车 | 影响工程成熟度观感。 | 离线包、预置数据、录屏备份。 | 切离线演示并区分实时/预录。
+  R09: 数据隐私/许可 | 侵权或隐私风险。 | 公开数据优先、知情同意、脱敏。 | 停止处理并按要求报告。
+  R10: 竞品对标错误 | 创新性被质疑。 | 官方版本、来源日期、避免缺失推断。 | 更新矩阵与话术。
+[P0425] <(none)> 
+    
+[P0426] <heading 2> HEADING(outline=None)
+    17.1 安全边界
+[P0427] <(none)> 
+    MVP 的安全边界是审核过的内置模板、参数化输入、受限工作目录、进程资源治理和写入者隔离，不是任意代码安全沙箱。首期不执行外部代码、不允许运行期安装依赖、不开放默认网络。未来开放用户代码时必须增加容器/microVM、只读数据挂载、网络出口策略、CPU/内存/磁盘/进程限制和供应链审计。
+[P0428] <heading 2> HEADING(outline=None)
+    17.2 数据伦理
+[P0429] <List Bullet> 
+    优先使用公开或合成数据；公开数据也记录来源、许可证、版本和哈希。
+[P0430] <List Bullet> 
+    真实课程作业需教师和学生知情同意；班级看板脱敏，不采集无关个人信息。
+[P0431] <List Bullet> 
+    不判断学生是否使用 AI，不输出 AI 作弊概率；只判断实验过程和证据是否符合公开规则。
+[P0432] <List Bullet> 
+    证据包最小化；敏感原始数据可只保留受控引用/哈希。
+[P0433] <List Bullet> 
+    提供保留期限、删除流程、访问日志和申诉渠道。
+[P0434] <heading 2> HEADING(outline=None)
+    17.3 AI 使用、IP 与开源
+[P0435] <(none)> 
+    如实说明 AI 辅助使用范围；技术决策、代码审查、实验解释和答辩由团队负责。赛事 AI 规则、代码归属、开源要求和匿名规则以组委会正式章程为准。代码许可证可评估 Apache-2.0，基准/文档可评估 CC BY 4.0，但必须先核对第三方依赖、数据集许可证和赛事 IP 条款。
+[P0436] <heading 2> HEADING(outline=None)
+    17.4 五条边界声明
+[P0437] <List Bullet> 
+    不做通用科研自动化；首期只做可机器验证的表格型 ML 实验。
+[P0438] <List Bullet> 
+    不承诺跨硬件/跨版本普遍复现；报告环境指纹与同环境重执行结果。
+[P0439] <List Bullet> 
+    不承诺抵御本机 root 或同时控制主机、数据库、私钥与锚定位置的攻击者。
+[P0440] <List Bullet> 
+    不承诺未知攻击零漏检；只报告已测任务集观察值与区间。
+[P0441] <List Bullet> 
+    不承诺生产级多租户高可用；当前目标是单机可运行、证据可复核。
+[P0442] <(none)> PAGE_BREAKS=1
+    
+    
+[P0443] <heading 1> HEADING(outline=None)
+    第18章  预期成果、验收交付与结论
+[TABLE 62] rows=11 cols~=3
+  R01: 成果 | 内容 | 验收标准
+  R02: 可运行平台 | API、DAG、调度、执行、证据、验证、报告和工作台。 | 单机一键启动；断网/无模型完成内置实验。
+  R03: 多智能体协作 | 六角色契约、消息协议、权限、CPG。 | 权限拒绝、role-off、协作日志可出示。
+  R04: 可信证据 | E0–E3、哈希链、Merkle、Gate、Report、Certificate。 | 缺口可定位；JCS/Ed25519 验签。
+  R05: 独立验证 | L1/L2/L3、Split Manifest、差异归因、verify_bundle。 | 真包通过、负例拒绝。
+  R06: 动态调度 | Scheduler、Governor、Recovery、DC/SPA、VAS。 | 资源变化触发调度；恢复日志；PRR/X2 数据。
+  R07: Harness Adapter | DeepSeek Harness Cordis 插件。 | 固定版本加载、工具和事件契约通过。
+  R08: RF-Bench | 核心 60 任务、攻击脚本、四方案、消融、统计。 | 预注册哈希、原始 JSON、统计可复算。
+  R09: 领域包 | 表格 ML；数据分析报告（T2）。 | 领域钩子契约通过。
+  R10: 技术文档 | 架构、API、Schema、威胁模型、安装和开发手册。 | 文档与代码一致。
+  R11: 演示材料 | PPT、脚本、录屏、离线证据包。 | 故障注入、拒绝、恢复、第三方验签。
+[P0444] <(none)> 
+    
+[P0445] <heading 2> HEADING(outline=None)
+    18.1 最终验收条件
+[P0446] <List Bullet> 
+    任务提交到 CompletionCertificate 的完整闭环可重复运行。
+[P0447] <List Bullet> 
+    E0 自述不能推动状态；Agent 越权写状态/证据/私钥全部被拒绝。
+[P0448] <List Bullet> 
+    L1/L2/L3 职责清楚；关键指标来源节点 L3 覆盖达标。
+[P0449] <List Bullet> 
+    随机性/副作用节点不签 DC；无 DC 不剪枝；SPA 理由可复核。
+[P0450] <List Bullet> 
+    动态调度展示依赖变化、资源水位变化和验证预算变化。
+[P0451] <List Bullet> 
+    四方案、消融和盲测数据有预注册、原始 JSON、统计脚本和区间。
+[P0452] <List Bullet> 
+    DeepSeek Harness 适配器有固定版本、插件源码和端到端测试。
+[P0453] <List Bullet> 
+    Evidence Bundle 可在独立环境离线验证；真包通过、负例拒绝。
+[P0454] <List Bullet> 
+    正式材料不含未测数字、虚构合作、未申请软著或未经确认的奖项等级。
+[TABLE 63] rows=1 cols~=1
+  R01: 最终工程原则 ⏎ 先把一条任务链做真，再把多智能体做全；先把证据链做对，再把创新点做强；先用实验说话，再用材料争取排名。
+[P0455] <(none)> 
+    
+[P0456] <(none)> PAGE_BREAKS=1
+    
+    
+[P0457] <heading 1> HEADING(outline=None)
+    附录 A  赛事要求—项目功能—验收证据追踪矩阵
+[P0458] <(none)> 
+    本矩阵依据参赛者提供的赛道通知信息整理。通知未明确的评分权重不自行补写；提交前应以组委会最新正式章程复核。
+[TABLE 64] rows=9 cols~=4
+  R01: 赛道要求/能力点 | ResearchFlow 对应模块 | 演示证据 | 缺失时的风险
+  R02: 多智能体编排 | 六逻辑角色、Agent Gateway、消息协议。 | 任务中角色调用记录、角色权限拒绝、CPG。 | 容易被质疑只是单 Agent 包装。
+  R03: Agent 团队定义 | 角色职责、工具白名单、上下文边界。 | agents.yaml、契约测试、role-off。 | 角色数量存在但无职责差异。
+  R04: 知识库定义与集成 | KnowledgeUnit、版本治理、五种绑定。 | 知识命中记录、版本冲突、过期知识处理。 | 知识库沦为静态文档上传。
+  R05: 工作流编排 | DAG Builder、StateMachine、图变更审批。 | DAG 执行、非法循环拒绝、状态迁移审计。 | 流程图只展示不执行。
+  R06: 动态调度 | Ready Scheduler、Governor、VAS。 | 资源变化/预算变化引发调度变化。 | 只做固定顺序流程。
+  R07: Self-Loop | 执行环、知识环、策略环。 | 故障注入—恢复—复核—知识回流链。 | 只有重复调用，没有反馈闭环。
+  R08: 结果验证 | EG、TLV、Completion Certificate。 | 伪造拒绝、L3 重跑、离线验签。 | 最终结果仍依赖 Agent 自述。
+  R09: 工程化落地 | 单机运行、API、报告、基准和用户手册。 | 一键启动、原始日志、证据包、录屏。 | 项目看似完整但无法现场运行。
+[P0459] <(none)> 
+    
+[TABLE 65] rows=1 cols~=1
+  R01: 评审呈现原则 ⏎ 每一项赛道能力至少准备一个“可操作动作 + 系统响应 + 原始证据 + 失败时的预期行为”，不要只展示功能截图。
+[P0460] <(none)> 
+    
+[P0461] <(none)> PAGE_BREAKS=1
+    
+    
+[P0462] <heading 1> HEADING(outline=None)
+    附录 B  创新点—现有技术—差异化证据矩阵
+[TABLE 66] rows=6 cols~=4
+  R01: 创新主张 | 已有技术基础（不据此贬低竞品） | ResearchFlow 具体增量 | 必须证明的证据
+  R02: 证据门控状态机 | 工作流状态机、实验追踪、日志系统。 | Agent 声明与真实执行证据分级；状态只由 Gate/Verifier 驱动。 | E0 不能置 VERIFIED；缺 E2/E3 时拒绝。
+  R03: 独立完成凭证 | 数字签名、哈希链、Merkle Tree。 | 把报告、规则版本、证据根、L3 覆盖和信任锚绑定成离线凭证。 | 签名载荷规范、真包/负例包、第三方验签。
+  R04: DC/SPA | 内容寻址、增量构建、缓存复用。 | 限定节点类型的经验性 DC + 当前规则/前驱/磁盘复验 + SPA 溯源。 | 剪枝风险率、漂移率、DC 失效测试。
+  R05: VAS | 风险排序、预算优化、测试优先级。 | 面向验证节点的风险×覆盖收益/成本排序，并保留强制覆盖。 | 同预算四策略对照、检出率和成本。
+  R06: 领域化 Harness 适配 | 插件、工具调用、Agent 轨迹。 | Harness 轨迹仅作 E1，受控执行事件另由 Collector 生成 E2。 | 固定版本 Adapter Contract Test。
+[P0463] <(none)> 
+    
+[P0464] <(none)> 
+    建议答辩时避免“行业首创”表述。可采用：“本项目的创新在于针对 AI 实验场景，把……组合成一条可执行、可验证、可离线复核的工程闭环，并通过对照实验检验其收益与边界。”
+[P0465] <(none)> PAGE_BREAKS=1
+    
+    
+[P0466] <heading 1> HEADING(outline=None)
+    附录 C  需求追踪与优先级清单
+[TABLE 67] rows=21 cols~=5
+  R01: ID | 需求 | 优先级 | 关联模块 | 验收方法
+  R02: FR-001 | 创建任务并校验输入 Schema。 | P0 | API/Contracts | 合法输入成功，非法输入 422。
+  R03: FR-002 | 生成 DAG 并检测循环/孤立节点。 | P0 | DAG Builder | 非法图拒绝，图版本固定。
+  R04: FR-003 | 所有状态迁移经 StateMachine。 | P0 | StateMachine | 直接写状态权限拒绝。
+  R05: FR-004 | 白名单模板执行与独立工作目录。 | P0 | Executor | 未注册模板拒绝，目录隔离。
+  R06: FR-005 | Collector 追加 E0/E1/E2。 | P0 | Evidence | 单调 event_seq、链校验通过。
+  R07: FR-006 | Gate 生成必检覆盖矩阵。 | P0 | Gate | 缺必检证据不能 PASS。
+  R08: FR-007 | L1/L2/L3 独立验证。 | P0 | Verifier | L3 新目录真实重跑。
+  R09: FR-008 | 签发/验签报告与完成凭证。 | P0 | Signing | 非 VERIFIED 不可签发。
+  R10: FR-009 | 导出 Evidence Bundle 并离线验签。 | P0 | Bundle | 真包通过、五类负例拒绝。
+  R11: FR-010 | 恢复计划与失效传播。 | P0 | Recovery | 上游变化使后代失效。
+  R12: FR-011 | Ready Scheduler 与 Governor。 | P1 | Scheduling | 依赖/资源变化改变队列。
+  R13: FR-012 | 六角色消息契约与权限。 | P1 | Agents | 越权拒绝、role-off 可测。
+  R14: FR-013 | 知识单元版本治理与检索。 | P1 | Knowledge | 版本冲突/过期命中测试。
+  R15: FR-014 | FOL 三层反馈环。 | P1 | Feedback | R1/R2/R3 对照。
+  R16: FR-015 | DC 资格和 SPA 证明。 | P1 | Recovery | 无 DC 不剪枝，DC 失效回滚。
+  R17: FR-016 | VAS 四策略预算调度。 | P1 | VAS | 同预算比较。
+  R18: FR-017 | DeepSeek Harness Adapter。 | P1 | Adapter | 固定版本端到端契约测试。
+  R19: FR-018 | RF-Bench 60 任务与统计。 | P1 | Bench | 预注册和复算脚本。
+  R20: FR-019 | G-hold-72 独立盲测扩展。 | P2 | Bench | 独立构造、哈希封存。
+  R21: FR-020 | 第二领域包。 | P2 | Domain Pack | 数据分析报告数字重算。
+[P0467] <(none)> 
+    
+[P0468] <heading 2> HEADING(outline=None)
+    C.1 非功能需求（NFR）
+[TABLE 68] rows=9 cols~=3
+  R01: ID | 要求 | 验收口径
+  R02: NFR-01 | 离线可用 | 无网络、无模型情况下运行内置模板并导出证据包。
+  R03: NFR-02 | 可解释 | 每个拒绝结果有 gap_code、evidence_id 和规则引用。
+  R04: NFR-03 | 幂等 | 重复提交/事件不产生重复任务或重复证据。
+  R05: NFR-04 | 可恢复 | 进程重启后从持久化状态安全恢复，不重复签发。
+  R06: NFR-05 | 可审计 | 状态迁移、工具请求、密钥操作均有审计记录。
+  R07: NFR-06 | 资源受控 | 并发、内存、CPU、磁盘、时长和 token 有配置上限。
+  R08: NFR-07 | 可移植 | Evidence Bundle 在无数据库环境独立验证。
+  R09: NFR-08 | 隐私最小化 | 默认不将原始课程数据放入外部模型请求。
+[P0469] <(none)> 
+    
+[P0470] <(none)> PAGE_BREAKS=1
+    
+    
+[P0471] <heading 1> HEADING(outline=None)
+    附录 D  核心数据契约与 Schema 示例
+[P0472] <(none)> 
+    以下为实现级逻辑 Schema 示例，最终以仓库 contracts/ 中的 JSON Schema/Pydantic 模型为准。字段名、枚举值和版本号一旦进入正式基准，必须冻结并进行迁移管理。
+[P0473] <heading 2> HEADING(outline=None)
+    D.1 TaskSpec
+[P0474] <(none)> 
+    {
+[P0475] <(none)> 
+      "schema_version": "1.0",
+[P0476] <(none)> 
+      "task_id": "task_<uuid>",
+[P0477] <(none)> 
+      "domain_pack": "tabular_ml@1.0.0",
+[P0478] <(none)> 
+      "goal": "Train and independently verify classifiers",
+[P0479] <(none)> 
+      "dataset_ref": {
+[P0480] <(none)> 
+        "uri": "local://datasets/breast_cancer.csv",
+[P0481] <(none)> 
+        "sha256": "<64-hex>",
+[P0482] <(none)> 
+        "license": "<license-id>"
+[P0483] <(none)> 
+      },
+[P0484] <(none)> 
+      "template_id": "classification_benchmark@1.0.0",
+[P0485] <(none)> 
+      "parameters": {
+[P0486] <(none)> 
+        "target": "diagnosis",
+[P0487] <(none)> 
+        "seed": 42,
+[P0488] <(none)> 
+        "test_size": 0.2,
+[P0489] <(none)> 
+        "models": ["logistic_regression", "random_forest", "svm"]
+[P0490] <(none)> 
+      },
+[P0491] <(none)> 
+      "ruleset_hash": "<sha256>",
+[P0492] <(none)> 
+      "limits": {
+[P0493] <(none)> 
+        "wall_time_sec": 1800,
+[P0494] <(none)> 
+        "max_workers": 2,
+[P0495] <(none)> 
+        "max_memory_mb": 4096
+[P0496] <(none)> 
+      }
+[P0497] <(none)> 
+    }
+[P0498] <heading 2> HEADING(outline=None)
+    D.2 NodeSpec
+[P0499] <(none)> 
+    {
+[P0500] <(none)> 
+      "node_id": "train_random_forest",
+[P0501] <(none)> 
+      "node_type": "ml.train.classifier",
+[P0502] <(none)> 
+      "template_id": "random_forest@1.0.0",
+[P0503] <(none)> 
+      "depends_on": ["split_dataset", "preprocess"],
+[P0504] <(none)> 
+      "input_refs": ["artifact://split_manifest"],
+[P0505] <(none)> 
+      "parameters_hash": "<sha256>",
+[P0506] <(none)> 
+      "side_effect_class": "PURE_ARTIFACT",
+[P0507] <(none)> 
+      "retry_policy": {"max_attempts": 2, "backoff_sec": 2},
+[P0508] <(none)> 
+      "required_checks": ["executor_observed", "artifact_hash", "metric_source"]
+[P0509] <(none)> 
+    }
+[P0510] <heading 2> HEADING(outline=None)
+    D.3 EvidenceRecord
+[P0511] <(none)> 
+    {
+[P0512] <(none)> 
+      "schema_version": "1.0",
+[P0513] <(none)> 
+      "evidence_id": "ev_<uuid>",
+[P0514] <(none)> 
+      "task_id": "task_<uuid>",
+[P0515] <(none)> 
+      "node_id": "train_random_forest",
+[P0516] <(none)> 
+      "attempt_id": "attempt_02",
+[P0517] <(none)> 
+      "event_seq": 17,
+[P0518] <(none)> 
+      "level": "E2",
+[P0519] <(none)> 
+      "kind": "executor_process_exit",
+[P0520] <(none)> 
+      "producer": "collector",
+[P0521] <(none)> 
+      "timestamp": "2026-11-06T09:00:00Z",
+[P0522] <(none)> 
+      "payload_hash": "<sha256>",
+[P0523] <(none)> 
+      "artifact_refs": ["artifact://model.pkl"],
+[P0524] <(none)> 
+      "prev_hash": "<sha256>",
+[P0525] <(none)> 
+      "chain_hash": "<sha256>"
+[P0526] <(none)> 
+    }
+[P0527] <heading 2> HEADING(outline=None)
+    D.4 VerificationReport 与 CompletionCertificate
+[P0528] <(none)> 
+    {
+[P0529] <(none)> 
+      "report_id": "report_<uuid>",
+[P0530] <(none)> 
+      "task_id": "task_<uuid>",
+[P0531] <(none)> 
+      "final_state": "VERIFIED",
+[P0532] <(none)> 
+      "l1_status": "PASS",
+[P0533] <(none)> 
+      "l2_status": "PASS",
+[P0534] <(none)> 
+      "l3_status": "PASS",
+[P0535] <(none)> 
+      "required_check_coverage": {
+[P0536] <(none)> 
+        "required": 12, "passed": 12, "missing": 0
+[P0537] <(none)> 
+      },
+[P0538] <(none)> 
+      "ruleset_hash": "<sha256>",
+[P0539] <(none)> 
+      "evidence_root": "<merkle-root>",
+[P0540] <(none)> 
+      "l3_coverage": 1.0,
+[P0541] <(none)> 
+      "issued_at": "2026-11-06T09:10:00Z",
+[P0542] <(none)> 
+      "key_id": "verifier-key-01",
+[P0543] <(none)> 
+      "signature": "<base64>"
+[P0544] <(none)> 
+    }
+[P0545] <(none)> 
+    {
+[P0546] <(none)> 
+      "cert_id": "cert_<uuid>",
+[P0547] <(none)> 
+      "report_id": "report_<uuid>",
+[P0548] <(none)> 
+      "final_state": "VERIFIED",
+[P0549] <(none)> 
+      "merkle_root": "<root>",
+[P0550] <(none)> 
+      "tree_size": 17,
+[P0551] <(none)> 
+      "ruleset_hash": "<sha256>",
+[P0552] <(none)> 
+      "code_hash": "<sha256>",
+[P0553] <(none)> 
+      "env_fingerprint": "<sha256>",
+[P0554] <(none)> 
+      "l3_coverage": 1.0,
+[P0555] <(none)> 
+      "skipped_nodes": [],
+[P0556] <(none)> 
+      "alg": "Ed25519",
+[P0557] <(none)> 
+      "key_id": "verifier-key-01",
+[P0558] <(none)> 
+      "key_fingerprint": "<trusted-fingerprint>",
+[P0559] <(none)> 
+      "signature": "<base64>"
+[P0560] <(none)> 
+    }
+[P0561] <heading 2> HEADING(outline=None)
+    D.5 DC 与 SPA 记录
+[P0562] <(none)> 
+    DC:
+[P0563] <(none)> 
+      dc_id, node_type, code_hash, dependency_lock_hash
+[P0564] <(none)> 
+      input_schema_hash, env_fingerprint, ruleset_hash
+[P0565] <(none)> 
+      k_runs, run_fingerprints[], output_hashes[]
+[P0566] <(none)> 
+      eligible: true|false, expires_at, signature
+[P0567] <(none)> 
+     
+[P0568] <(none)> 
+    SPA:
+[P0569] <(none)> 
+      spa_id, task_id, node_id, recovery_plan_id
+[P0570] <(none)> 
+      dc_id, predecessor_hashes, artifact_hash
+[P0571] <(none)> 
+      ruleset_hash, gate_result, skip_reason
+[P0572] <(none)> 
+      verifier_key_id, signature
+[P0573] <heading 2> HEADING(outline=None)
+    D.6 Schema 约束
+[P0574] <List Bullet> 
+    所有 ID 使用稳定前缀 + UUID；不可复用已删除 ID。
+[P0575] <List Bullet> 
+    时间统一 UTC RFC 3339；所有哈希明确算法和编码。
+[P0576] <List Bullet> 
+    JSON 禁止重复键、NaN、Infinity；字段未知时按 Schema 版本策略拒绝或显式兼容。
+[P0577] <List Bullet> 
+    数组顺序具有语义时保持原顺序；JCS 只规范化对象属性，不重排数组。
+[P0578] <List Bullet> 
+    证据对象只追加；纠错用新事件引用旧事件，不原位覆盖。
+[P0579] <List Bullet> 
+    CompletionCertificate 仅 VERIFIED 可生成；PARTIAL/FAILED/BLOCKED 只有报告，不签完成凭证。
+[P0580] <(none)> PAGE_BREAKS=1
+    
+    
+[P0581] <heading 1> HEADING(outline=None)
+    附录 E  API 请求样例、错误码与幂等规则
+[P0582] <heading 2> HEADING(outline=None)
+    E.1 创建任务
+[P0583] <(none)> 
+    POST /api/v1/tasks
+[P0584] <(none)> 
+    Idempotency-Key: demo-2026-001
+[P0585] <(none)> 
+    Content-Type: application/json
+[P0586] <(none)> 
+     
+[P0587] <(none)> 
+    {
+[P0588] <(none)> 
+      "domain_pack": "tabular_ml@1.0.0",
+[P0589] <(none)> 
+      "template_id": "classification_benchmark@1.0.0",
+[P0590] <(none)> 
+      "dataset_ref": "dataset://breast_cancer@sha256:<hash>",
+[P0591] <(none)> 
+      "parameters": {"target": "diagnosis", "seed": 42},
+[P0592] <(none)> 
+      "limits": {"max_workers": 2, "wall_time_sec": 1800}
+[P0593] <(none)> 
+    }
+[P0594] <(none)> 
+     
+[P0595] <(none)> 
+    201 Created
+[P0596] <(none)> 
+    {
+[P0597] <(none)> 
+      "task_id": "task_...",
+[P0598] <(none)> 
+      "state": "CREATED",
+[P0599] <(none)> 
+      "graph_version": 1
+[P0600] <(none)> 
+    }
+[P0601] <heading 2> HEADING(outline=None)
+    E.2 发起验证与读取凭证
+[P0602] <(none)> 
+    POST /api/v1/tasks/{task_id}/verify
+[P0603] <(none)> 
+    {
+[P0604] <(none)> 
+      "mode": "full",
+[P0605] <(none)> 
+      "requested_checks": ["L1", "L2", "L3"]
+[P0606] <(none)> 
+    }
+[P0607] <(none)> 
+     
+[P0608] <(none)> 
+    200 OK
+[P0609] <(none)> 
+    {
+[P0610] <(none)> 
+      "report_id": "report_...",
+[P0611] <(none)> 
+      "final_state": "PARTIAL",
+[P0612] <(none)> 
+      "gaps": [
+[P0613] <(none)> 
+        {"code": "L3_SOURCE_NODE_NOT_REPLAYED", "node_id": "train_svm"}
+[P0614] <(none)> 
+      ]
+[P0615] <(none)> 
+    }
+[P0616] <(none)> 
+     
+[P0617] <(none)> 
+    GET /api/v1/tasks/{task_id}/certificate
+[P0618] <(none)> 
+    409 Conflict
+[P0619] <(none)> 
+    {
+[P0620] <(none)> 
+      "error_code": "CERTIFICATE_NOT_AVAILABLE",
+[P0621] <(none)> 
+      "message": "Only VERIFIED tasks can receive a completion certificate."
+[P0622] <(none)> 
+    }
+[P0623] <heading 2> HEADING(outline=None)
+    E.3 错误码表
+[TABLE 69] rows=14 cols~=4
+  R01: 错误码 | HTTP | 含义 | 处理
+  R02: SCHEMA_INVALID | 422 | 请求字段/类型不合法。 | 按字段错误修正。
+  R03: IDEMPOTENCY_CONFLICT | 409 | 相同幂等键对应不同请求体。 | 换新键或确认请求内容。
+  R04: STATE_TRANSITION_DENIED | 409 | 状态迁移不符合状态机。 | 查询当前状态，不绕过状态机。
+  R05: TOOL_NOT_ALLOWLISTED | 403 | 工具未注册或角色无权限。 | 由管理员审核工具契约。
+  R06: EVIDENCE_REFERENCE_NOT_FOUND | 422 | 消息引用不存在 evidence_id。 | 丢弃引用并记录协议违规。
+  R07: REQUIRED_EVIDENCE_MISSING | 409 | 必检证据缺失。 | 补做真实执行/验证，不可伪造。
+  R08: RULESET_VERSION_MISMATCH | 409 | 证据与当前规则版本不匹配。 | 按当前规则重新验证。
+  R09: RESOURCE_BUDGET_EXCEEDED | 429 | 资源/验证预算不足。 | 排队、降并发或申请预算。
+  R10: RECOVERY_NOT_SAFE | 409 | 恢复或剪枝条件不成立。 | 保守重跑或人工升级。
+  R11: SIGNATURE_INVALID | 422 | 签名或信任锚验证失败。 | 拒绝凭证并保留审计。
+  R12: BUNDLE_TAMPERED | 422 | 证据包哈希/证明不一致。 | 拒绝导入。
+  R13: HARNESS_EVENT_DUPLICATE | 200 | 重复事件已处理。 | 幂等返回既有结果。
+  R14: HARNESS_EVENT_GAP | 202 | 事件序列存在缺口。 | 标记证据缺口并请求补发；不补造。
+[P0624] <(none)> 
+    
+[P0625] <heading 2> HEADING(outline=None)
+    E.4 幂等与重试规则
+[P0626] <List Bullet> 
+    任务创建以 idempotency_key + canonical request hash 为幂等边界。
+[P0627] <List Bullet> 
+    Harness 事件以 source + session_id + event_id 去重；乱序事件进入缓冲区并保留原始顺序信息。
+[P0628] <List Bullet> 
+    执行 attempt_id 每次真实执行唯一；重试不能复用旧 attempt_id。
+[P0629] <List Bullet> 
+    网络重试只重试幂等操作；签名签发通过 certificate_id 保证只签发一次。
+[P0630] <List Bullet> 
+    任何补偿动作写 audit_log，不能删除失败事件或覆盖原证据。
+[P0631] <(none)> PAGE_BREAKS=1
+    
+    
+[P0632] <heading 1> HEADING(outline=None)
+    附录 F  状态机迁移表与事件顺序
+[TABLE 70] rows=13 cols~=4
+  R01: 对象 | 当前状态 | 允许的下一状态 | 禁止/特殊条件
+  R02: Task | CREATED | PLANNING / CANCELLED | 创建后不能直接 COMPLETED。
+  R03: Task | PLANNING | READY / BLOCKED / FAILED | DAG 必须通过校验。
+  R04: Task | READY | RUNNING / CANCELLED | 至少一个节点 READY。
+  R05: Task | RUNNING | VERIFYING / FAILED / BLOCKED | 执行未结束不能验证最终完成。
+  R06: Task | VERIFYING | COMPLETED / FAILED / BLOCKED | COMPLETED 需报告 VERIFIED 和凭证。
+  R07: Node | PLANNED | READY / BLOCKED | 依赖未满足不能 READY。
+  R08: Node | READY | RUNNING / BLOCKED | 资源/权限检查通过。
+  R09: Node | RUNNING | VERIFYING / FAILED | 必须有 attempt 结束事件。
+  R10: Node | VERIFYING | VERIFIED / FAILED / BLOCKED | Gate 与 Verifier 判定。
+  R11: Node | FAILED | DIAGNOSING / BLOCKED | 恢复次数未超限。
+  R12: Node | DIAGNOSING | RECOVERING / BLOCKED | 根因/计划结构有效。
+  R13: Node | RECOVERING | READY / BLOCKED | 恢复计划执行完并复核。
+[P0633] <(none)> 
+    
+[P0634] <heading 2> HEADING(outline=None)
+    F.1 事件顺序与不变量
+[P0635] <List Bullet> 
+    event_seq 由 Collector 单调分配；并发事件先进入单写队列。
+[P0636] <List Bullet> 
+    同一 event_id 重复投递只产生一次逻辑记录；原始投递次数可另记 ingestion_log。
+[P0637] <List Bullet> 
+    状态迁移事件必须包含 previous_state、next_state、actor、reason_code、rule_version 和 correlation_id。
+[P0638] <List Bullet> 
+    状态迁移失败也写 audit_log；失败不等于证据记录成功。
+[P0639] <List Bullet> 
+    任何任务一旦签发凭证，若后续发现撤销条件，必须生成 revocation event，不得静默修改旧凭证。
+[P0640] <List Bullet> 
+    系统重启后先校验数据库、证据链和未完成 attempt，再恢复调度；不得默认把 RUNNING 改成 COMPLETED。
+[P0641] <heading 2> HEADING(outline=None)
+    F.2 核心不变量
+[TABLE 71] rows=9 cols~=2
+  R01: 不变量 | 断言
+  R02: I-01 | Agent 不能直接写 Task/Node 状态。
+  R03: I-02 | E0/E1 不能单独满足执行类必检项。
+  R04: I-03 | Verifier 与 Executor 工作目录分离。
+  R05: I-04 | 报告指标来源节点必须达到规定 L3 覆盖。
+  R06: I-05 | 无有效 DC 的节点不能被 SPA 跳过。
+  R07: I-06 | 签名载荷包含规则版本、证据根和状态。
+  R08: I-07 | 非 VERIFIED 报告不产生 CompletionCertificate。
+  R09: I-08 | 离线验签使用外部可信指纹，不信任证书自带公钥。
+[P0642] <(none)> 
+    
+[P0643] <(none)> PAGE_BREAKS=1
+    
+    
+[P0644] <heading 1> HEADING(outline=None)
+    附录 G  基准任务格式、预注册与统计报告模板
+[P0645] <heading 2> HEADING(outline=None)
+    G.1 单个 BenchCase
+[P0646] <(none)> 
+    {
+[P0647] <(none)> 
+      "case_id": "F-1-003",
+[P0648] <(none)> 
+      "family": "unexecuted_claim",
+[P0649] <(none)> 
+      "split": "G-dev",
+[P0650] <(none)> 
+      "base_task_id": "base-classification-03",
+[P0651] <(none)> 
+      "mutation": "remove_executor_attempt_and_keep_agent_claim",
+[P0652] <(none)> 
+      "expected_state": "BLOCKED",
+[P0653] <(none)> 
+      "expected_gap_codes": ["EXECUTION_EVIDENCE_MISSING"],
+[P0654] <(none)> 
+      "restore_strategy": "restore_fixture_snapshot",
+[P0655] <(none)> 
+      "seed": 20261106,
+[P0656] <(none)> 
+      "case_hash": "<sha256>"
+[P0657] <(none)> 
+    }
+[P0658] <heading 2> HEADING(outline=None)
+    G.2 预注册清单
+[TABLE 72] rows=12 cols~=2
+  R01: 字段 | 要求
+  R02: protocol_version | 基准协议版本。
+  R03: task_manifest_hash | 任务清单整体哈希。
+  R04: attack_script_hashes | 每个攻击脚本哈希。
+  R05: ruleset_hash | Gate/Verifier 规则版本哈希。
+  R06: model_id/version | 模型供应商、模型 ID、版本或快照。
+  R07: generation_params | temperature、top_p、max_tokens 等。
+  R08: environment_fingerprint | OS、Python、依赖锁、CPU、线程变量。
+  R09: budget | token、wall-clock、验证预算、并发和重试。
+  R10: random_seeds | 所有随机种子与生成顺序。
+  R11: analysis_script_hash | 统计分析脚本哈希。
+  R12: blind_test_seal | 盲测构造者、封存时间和访问控制记录。
+[P0659] <(none)> 
+    
+[P0660] <heading 2> HEADING(outline=None)
+    G.3 结果记录字段
+[P0661] <(none)> 
+    run_id, case_id, system_variant, repetition, seed
+[P0662] <(none)> 
+    expected_state, observed_state, false_accept, false_reject
+[P0663] <(none)> 
+    l1_status, l2_status, l3_status, l3_coverage
+[P0664] <(none)> 
+    recovery_success, rerun_nodes, skipped_nodes, prr
+[P0665] <(none)> 
+    wall_time_sec, token_in, token_out, peak_rss_mb
+[P0666] <(none)> 
+    verifier_cost_sec, bundle_hash, environment_fingerprint
+[P0667] <heading 2> HEADING(outline=None)
+    G.4 统计报告必须包含
+[P0668] <List Bullet> 
+    任务级分母、成功数、失败数、缺失数及精确置信区间。
+[P0669] <List Bullet> 
+    错误放行和错误拒绝分别统计；不得合并成一个 accuracy。
+[P0670] <List Bullet> 
+    pass@3 与 pass^3 的定义和计算方式；重复运行不能冒充独立任务。
+[P0671] <List Bullet> 
+    配对差异、效应量、置信区间、检验方法和多重比较校正。
+[P0672] <List Bullet> 
+    任务家族聚类敏感性分析；盲测样本构造和封存说明。
+[P0673] <List Bullet> 
+    实际 token、时长、峰值 RSS、验证开销和失败任务编号。
+[P0674] <List Bullet> 
+    所有表格由原始 JSON 与固定统计脚本自动生成。
+[TABLE 73] rows=1 cols~=1
+  R01: 盲测纪律 ⏎ 开发者不得在正式盲测运行前读取 G-hold-72 的攻击细节；若盲测被用于调规则，该批数据即转为开发集，必须重新构造新的盲测集。
+[P0675] <(none)> 
+    
+[P0676] <(none)> PAGE_BREAKS=1
+    
+    
+[P0677] <heading 1> HEADING(outline=None)
+    附录 H  现场演示脚本与答辩问题库
+[P0678] <heading 2> HEADING(outline=None)
+    H.1 建议 8 分钟演示流程
+[TABLE 74] rows=9 cols~=4
+  R01: 时间 | 演示动作 | 讲解重点 | 必须出现的画面/证据
+  R02: 0:00–0:45 | 介绍任务与问题。 | Agent 声称完成不等于实验真实完成。 | 任务目标、DAG、规则集。
+  R03: 0:45–1:45 | 提交 ML 任务并运行。 | 六角色分工；内置模板真正执行。 | Agent 角色事件、Executor 进程、E2。
+  R04: 1:45–2:45 | 查看调度与资源。 | 依赖驱动 READY；资源水位影响并发。 | 队列变化、Governor 日志。
+  R05: 2:45–3:45 | 注入“未执行/旧产物”故障。 | 系统不接受 E0 自述或旧文件。 | 缺口矩阵、BLOCKED。
+  R06: 3:45–5:00 | 注入成套伪造或口径错误。 | L2 自洽仍不代表真实；L3 独立重跑。 | L2/L3 状态、差异归因。
+  R07: 5:00–6:00 | 触发恢复。 | Recovery 根据受影响子图保守重跑。 | 恢复计划、attempt_id、资源变化。
+  R08: 6:00–7:00 | 生成报告与凭证。 | 只有 VERIFIED 才签发。 | CompletionCertificate、签名字段。
+  R09: 7:00–8:00 | 拷贝证据包到独立环境离线验签。 | 不依赖原数据库或模型。 | 真包通过；篡改包拒绝。
+[P0679] <(none)> 
+    
+[P0680] <heading 2> HEADING(outline=None)
+    H.2 现场备份策略
+[P0681] <List Bullet> 
+    准备一套已验证离线数据和预生成证据包，现场仍要区分实时运行与预录演示。
+[P0682] <List Bullet> 
+    预先验证端口、依赖、路径、数据库迁移、演示账号和屏幕分辨率。
+[P0683] <List Bullet> 
+    若 Harness 服务不可用，切 Standalone 模式，不把预录画面说成实时联调。
+[P0684] <List Bullet> 
+    若现场模型 API 不可用，使用无模型模板执行；不伪造 Agent 轨迹。
+[P0685] <List Bullet> 
+    至少保留一条可在 2 分钟内完成的 Wine 冒烟任务。
+[P0686] <heading 2> HEADING(outline=None)
+    H.3 高概率答辩问题
+[TABLE 75] rows=9 cols~=2
+  R01: 问题 | 建议回答结构
+  R02: 你们与 Agent Harness 有什么不同？ | Harness 提供通用运行时；ResearchFlow 是实验领域质量控制层，重点是 E2/E3、L3、证据门控、恢复剪枝与离线凭证。
+  R03: 哈希链是否能防止所有篡改？ | 不能。它提高篡改可发现性；完全控制主机、密钥和锚定位置的攻击者不在 MVP 威胁模型内。
+  R04: 为什么还要 L3？ | L1 检查完整，L2 检查自洽；成套伪造可同时通过两者，L3 在新目录从原始数据真实重跑。
+  R05: 为什么不是所有节点都重跑？ | 成本较高；仅对符合严格 DC 条件的纯节点考虑 SPA，所有剪枝都有证明，无 DC 保守重跑。
+  R06: DC 是否证明确定性？ | 不是普遍证明，只是限定节点类型、输入、代码、依赖和环境下的经验性资格。
+  R07: VAS 会不会漏掉高风险项？ | 强制验证集合不可被预算优化排除；VAS 只排序可选验证项，并用同预算实验对比。
+  R08: 项目是否能在普通电脑运行？ | 首期按单机、16GB、无 GPU、并发 2、内置表格 ML 模板设计；最终以目标设备实测报告为准。
+  R09: AI 会不会自己编造证据？ | Agent 没有证据库写权限；E2 来自 Collector，E3 来自独立 Verifier，凭证由 Verifier 签名。
+[P0687] <(none)> 
+    
+[P0688] <(none)> PAGE_BREAKS=1
+    
+    
+[P0689] <heading 1> HEADING(outline=None)
+    附录 I  可直接交给 Codex / WorkBuddy 的开发总指令
+[TABLE 76] rows=1 cols~=1
+  R01: 使用方式 ⏎ 建议先让开发代理读取本策划书并执行只读审计，再按 T0 → T1 → T2 分阶段实现。不要一次性要求“全部开发完成”，也不要允许它在未运行测试时声称完成。
+[P0690] <(none)> 
+    
+[P0691] <heading 2> HEADING(outline=None)
+    I.1 第一步：只读审计与计划模式
+[P0692] <(none)> 
+    你是 ResearchFlow 3.1 的首席架构师与资深 Python 工程师。
+[P0693] <(none)> 
+    请先读取项目策划书《ResearchFlow 3.1 v4.3.0 全面升级版》，
+[P0694] <(none)> 
+    并检查当前仓库、运行环境和已有代码。
+[P0695] <(none)> 
+     
+[P0696] <(none)> 
+    本轮只做只读审计和实施计划，不修改文件、不安装依赖、不删除内容。
+[P0697] <(none)> 
+    输出：
+[P0698] <(none)> 
+    1. 当前仓库结构、入口、依赖、测试和启动方式；
+[P0699] <(none)> 
+    2. 已实现/部分实现/未实现的功能映射到 FR-001 至 FR-020；
+[P0700] <(none)> 
+    3. 与策划书冲突的架构、状态、权限、证据和 Schema；
+[P0701] <(none)> 
+    4. T0 最小可信闭环的模块依赖图；
+[P0702] <(none)> 
+    5. 风险最高的 10 个技术问题；
+[P0703] <(none)> 
+    6. 按可验证里程碑拆分的实施计划，每项包含文件、接口、测试和验收标准；
+[P0704] <(none)> 
+    7. 明确哪些需求不应在 T0 开发。
+[P0705] <(none)> 
+    严禁猜测仓库内容；所有判断引用真实文件路径和代码位置。
+[P0706] <heading 2> HEADING(outline=None)
+    I.2 第二步：T0 实施指令
+[P0707] <(none)> 
+    在我确认审计计划后，开始实现 T0 最小可信闭环。
+[P0708] <(none)> 
+    硬性原则：
+[P0709] <(none)> 
+    - 先 contracts，再 StateMachine，再 Executor/Collector，再 Verifier，再签名与离线验签；
+[P0710] <(none)> 
+    - 不先开发六个 Agent，不先做复杂前端，不先接 Harness；
+[P0711] <(none)> 
+    - 只执行审核过的内置表格 ML 模板，不执行任意用户代码；
+[P0712] <(none)> 
+    - Agent/LLM 不得写状态、证据库、报告或私钥；
+[P0713] <(none)> 
+    - E0/E1 不能满足执行类必检项；E2 由 Collector 观察；E3 由独立 Verifier 产生；
+[P0714] <(none)> 
+    - L3 必须在新目录、独立进程、从原始数据重新训练/推理；
+[P0715] <(none)> 
+    - 只有 VERIFIED 才能签发 CompletionCertificate；
+[P0716] <(none)> 
+    - verify_bundle.py 必须独立于数据库和模型运行。
+[P0717] <(none)> 
+    每完成一个纵向里程碑：
+[P0718] <(none)> 
+    1. 运行单元、集成和负例测试；
+[P0719] <(none)> 
+    2. 展示变更文件与关键 diff；
+[P0720] <(none)> 
+    3. 输出真实命令、退出码和测试结果；
+[P0721] <(none)> 
+    4. 更新 docs/IMPLEMENTATION_STATUS.md；
+[P0722] <(none)> 
+    5. 不得将未测项目标记为完成。
+[P0723] <(none)> 
+    若遇到设计冲突，先列出选项与影响，暂停等待确认，不得自行弱化可信边界。
+[P0724] <heading 2> HEADING(outline=None)
+    I.3 第三步：T1/T2 扩展指令
+[P0725] <(none)> 
+    T0 验收通过后，再按顺序扩展：
+[P0726] <(none)> 
+    T1：六逻辑角色与消息契约 → 知识库版本治理/FOL → Scheduler/Governor/Recovery
+[P0727] <(none)> 
+    → RF-Bench 核心 60 任务 → 四方案/消融 → 工作台与演示。
+[P0728] <(none)> 
+    T2：DC/SPA → VAS 四策略 → G-hold-72 独立盲测 → DeepSeek Harness Adapter
+[P0729] <(none)> 
+    → 第二 Domain Pack → 第三方复核。
+[P0730] <(none)> 
+     
+[P0731] <(none)> 
+    每个模块必须有 feature flag、Schema 版本、错误码、审计日志、正例/负例测试。
+[P0732] <(none)> 
+    不要把多角色数量当作创新证据；必须做 role-off。
+[P0733] <(none)> 
+    不要把轨迹当 E2；Harness 轨迹默认 E1。
+[P0734] <(none)> 
+    不要把哈希链称为绝对不可篡改。
+[P0735] <(none)> 
+    不要把 k 次 bit-exact 称为数学确定性证明。
+[P0736] <(none)> 
+    不要为了让测试通过而修改 expected result 或盲测样本。
+[P0737] <(none)> 
+    每阶段结束先出验收报告，再进入下一阶段。
+[P0738] <heading 2> HEADING(outline=None)
+    I.4 开发代理每轮交付格式
+[TABLE 77] rows=7 cols~=2
+  R01: 项目 | 必须给出的内容
+  R02: 完成范围 | 对应 FR ID、提交/修改的文件路径。
+  R03: 设计变化 | ADR 或明确说明无变化。
+  R04: 运行结果 | 真实命令、退出码、测试总数、失败数。
+  R05: 证据 | 日志、JSON、截图、证据包路径。
+  R06: 风险 | 未完成项、边界、已知缺陷。
+  R07: 下一步 | 最多 3 项，按依赖排序。
+[P0739] <(none)> 
+    
+[P0740] <(none)> PAGE_BREAKS=1
+    
+    
+[P0741] <heading 1> HEADING(outline=None)
+    附录 J  T0 开发启动清单与逐项验收表
+[P0742] <(none)> 
+    建议把本附录作为开发看板的第一批任务。顺序按依赖排列；只有完成并通过验收的项目才能勾选。
+[TABLE 78] rows=15 cols~=5
+  R01: 序号 | 任务 | 完成定义 | 验证方式 | 状态
+  R02: 01 | 创建仓库与环境锁定 | Python、依赖、目录、配置、启动脚本固定。 | 干净环境安装并启动。 | 待开发
+  R03: 02 | 冻结核心 contracts | TaskSpec、NodeSpec、Evidence、Report、Certificate。 | Schema 正反例。 | 待开发
+  R04: 03 | SQLite 与 StateMachine | 状态单入口、审计表、迁移校验。 | 非法迁移拒绝。 | 待开发
+  R05: 04 | DAG Builder | 拓扑、循环、孤立节点、图版本。 | 非法图拒绝。 | 待开发
+  R06: 05 | 内置数据与 ML 模板 | 离线数据、固定模板、参数校验。 | Wine 冒烟任务。 | 待开发
+  R07: 06 | Executor | 独立目录、子进程、超时、退出码、资源采集。 | 超时进程树清理。 | 待开发
+  R08: 07 | Collector | E0/E1/E2 追加写、event_seq、哈希链。 | 重复/乱序/篡改测试。 | 待开发
+  R09: 08 | Gate | 必检覆盖矩阵、缺口码、规则版本。 | 缺证据不能 PASS。 | 待开发
+  R10: 09 | Verifier L1/L2 | 文件、哈希、指标重算、数据规则。 | 旧产物/错误指标负例。 | 待开发
+  R11: 10 | Verifier L3 | 新目录真实重训/推理。 | 成套伪造拒绝。 | 待开发
+  R12: 11 | Ed25519/JCS/Merkle | 报告/凭证签名、信任锚。 | 标准向量/负例。 | 待开发
+  R13: 12 | Evidence Bundle | 清单、证明、离线工具、README。 | 另一目录/设备验签。 | 待开发
+  R14: 13 | 最小工作台 | 任务、DAG、证据、报告。 | 用户走查。 | 待开发
+  R15: 14 | 端到端验收 | 无模型、断网、单机完成全链。 | 清洁环境重复三次。 | 待开发
+[P0743] <(none)> 
+    
+[TABLE 79] rows=1 cols~=1
+  R01: 现在可以开始开发吗？ ⏎ 可以开始，但建议从 T0 开始，不要同时铺开全部 18 章功能。第一条验收目标是：一条内置 ML 任务从创建、执行、Collector 采证、Verifier 独立重跑，到签发凭证并由离线工具验签，完整跑通。
+[P0744] <(none)> 
+    
+[P0745] <(none)> PAGE_BREAKS=1
+    
+    
+[P0746] <heading 1> HEADING(outline=None)
+    附录 K  标准、技术文档与参考资料清单
+[P0747] <(none)> 
+    以下列出实现时应优先查阅的规范/官方资料入口。具体依赖版本、网页内容和许可条款应在开发时保存快照；本清单不等同于已完成法律审查或赛事规则核验。
+[TABLE 80] rows=13 cols~=3
+  R01: 主题 | 参考资料/标准 | 用途
+  R02: JSON 规范化 | RFC 8785 — JSON Canonicalization Scheme (JCS)；https://www.rfc-editor.org/rfc/rfc8785 | 签名载荷规范化；对象键排序，数组顺序保持。
+  R03: 数字签名 | RFC 8032 — Edwards-Curve Digital Signature Algorithm (EdDSA)；https://www.rfc-editor.org/rfc/rfc8032 | Ed25519 签名与验签。
+  R04: Merkle Tree | RFC 9162 — Certificate Transparency Version 2.0；https://www.rfc-editor.org/rfc/rfc9162 | 参考 Merkle Tree 域分离与 inclusion proof 结构。
+  R05: Python | Python 官方文档；https://docs.python.org/3/ | 运行时、子进程、路径、类型与标准库。
+  R06: API | FastAPI 官方文档；https://fastapi.tiangolo.com/ | REST API、依赖注入和测试客户端。
+  R07: 数据校验 | Pydantic 官方文档；https://docs.pydantic.dev/ | Schema 与数据契约。
+  R08: 数据库 | SQLite 官方文档；https://www.sqlite.org/docs.html | WAL、事务、锁和备份。
+  R09: DAG | NetworkX 官方文档；https://networkx.org/documentation/stable/ | 图结构、拓扑排序和依赖分析。
+  R10: ML 模板 | scikit-learn 用户指南；https://scikit-learn.org/stable/user_guide.html | 数据划分、模型、指标和 Pipeline。
+  R11: Agent Harness | DeepSeek Harness 官方仓库/文档（按实际锁定版本存档）。 | Cordis 插件与事件契约。
+  R12: Agent 平台对标 | LobeHub 官方仓库/文档（按实际锁定版本存档）。 | Agent、工具、知识与任务能力对标。
+  R13: 赛事信息 | 未来杯官方活动页及组委会最新正式通知。 | 赛道要求、提交格式、评分规则和 IP 条款。
+[P0748] <(none)> 
+    
+[P0749] <heading 2> HEADING(outline=None)
+    K.1 开发前必须归档
+[P0750] <List Bullet> 
+    赛事通知原图/PDF、官方活动页快照、组委会补充通知和提交模板。
+[P0751] <List Bullet> 
+    依赖 lockfile、Python 版本、操作系统版本、Harness commit/包版本。
+[P0752] <List Bullet> 
+    RFC 8785、RFC 8032、RFC 9162 规范文本及实现测试向量。
+[P0753] <List Bullet> 
+    数据集来源页、许可证、原始文件哈希和预处理脚本。
+[P0754] <List Bullet> 
+    竞品对标所用官方文档页面、访问日期、版本/commit 和具体引用位置。
+[SECTION] pgSz w=12240 h=15840 orient=None; pgMar top=1077 right=1134 bottom=1020 left=1191 header=454 footer=454 gutter=0

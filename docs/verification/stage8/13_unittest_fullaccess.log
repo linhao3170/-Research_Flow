@@ -1,0 +1,43 @@
+RUN_AT=2026-11-08T13:13:13.2932316+08:00
+POLICY=danger-full-access; APPROVALS=never-ask (runtime snapshot 2026-11-08T13:10+08:00)
+COMMAND=& "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" -m unittest discover -s tests -v
+python.exe : test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_te
+mporary_files) ... ok
+所在位置 行:1 字符: 539
++ ... =Get-Date; $out = & $py -m unittest discover -s tests -v 2>&1; $code= ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_atomic_wri...y_files) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker) ... ok
+test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero) ... ok
+test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check) ... ok
+test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails) ... ok
+test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_command
+s_and_evidence) ... ok
+test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails) ... ok
+test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails) ... ok
+test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails) ... ok
+test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails) ... ok
+test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check) ... ok
+test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check) ... ok
+test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails) ... ok
+test_missing_state_file_returns_nonzero (test_state_sync.StateSyncTests.test_missing_state_file_returns_nonzero) ... ok
+test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails) ... ok
+test_python_baseline_is_31116_64bit (test_state_sync.StateSyncTests.test_python_baseline_is_31116_64bit) ... ok
+test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes) ... ok
+test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes) ... ok
+test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passes) ... 
+ok
+test_repository_state_passes (test_state_sync.StateSyncTests.test_repository_state_passes) ... ok
+test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails) ... ok
+test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails) ... ok
+test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 3.196s
+
+OK
+
+EXIT=0
+DURATION_SEC=3.331

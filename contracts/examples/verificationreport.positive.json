@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "report_id": "report_7d1e2f3a-4b5c-4d6e-8f90-a1b2c3d4e5f6",
+  "task_id": "task_3f2c9a1e-0b7d-4c55-9a4e-1f6b2d8c7a10",
+  "final_state": "VERIFIED",
+  "l1_status": "PASS",
+  "l2_status": "PASS",
+  "l3_status": "PASS",
+  "required_check_coverage": {
+    "required": 12,
+    "passed": 12,
+    "missing": 0
+  },
+  "ruleset_hash": "0b1d3f5a7c9e2b4d6f8a0c1e3b5d7f9a2c4e6b8d0f1a3c5e7b9d2f4a6c8e0b1d",
+  "evidence_root": "5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+  "l3_coverage": 1.0,
+  "issued_at": "2026-11-09T09:05:00Z",
+  "key_id": "dev-ed25519-2026-11",
+  "signature": "c2lnbmF0dXJlLXN5bnRoZXRpYy1leGFtcGxlLTAwMDE="
+}

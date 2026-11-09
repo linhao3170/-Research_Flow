@@ -1,0 +1,15 @@
+TIME=2026-11-08T13:26:15.2402245+08:00
+POLICY=workspace-write
+COMMAND=& "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" -c "import tempfile,os; d=tempfile.mkdtemp(dir=r'D:\ResearchFlow-project'); p=os.path.join(d,'probe.txt'); open(p,'w').write('x'); print('OK',p)"
+--- STDOUT/STDERR (verbatim) ---
+python.exe : Traceback (most recent call last):
+所在位置 行:1 字符: 592
++ ... `""; $out = & $py -c "import tempfile,os; d=tempfile.mkdtemp(dir=r'D: ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "<string>", line 1, in <module>
+PermissionError: [Errno 13] Permission denied: 'D:\\ResearchFlow-project\\tmpavet2qv9\\probe.txt'
+EXIT=1
+RESULT=PERMISSION_ERROR

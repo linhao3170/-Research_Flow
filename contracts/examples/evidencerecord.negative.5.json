@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "evidence_id": "ev_9a1b2c3d-4e5f-4a6b-8c7d-0e1f2a3b4c5d",
+  "task_id": "task_3f2c9a1e-0b7d-4c55-9a4e-1f6b2d8c7a10",
+  "node_id": "train_random_forest",
+  "attempt_id": "attempt_02",
+  "event_seq": 17,
+  "level": "E2",
+  "kind": "executor_process_exit",
+  "producer": "collector",
+  "timestamp": "2026-11-09T17:00:00+08:00",
+  "payload_hash": "2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a",
+  "artifact_refs": [
+    "artifact://model.pkl"
+  ],
+  "prev_hash": "3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b",
+  "chain_hash": "4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c"
+}

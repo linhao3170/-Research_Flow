@@ -1,0 +1,36 @@
+CHECK_OK=Դ�ļ�����
+CHECK_OK=�����в����ڣ������Ǿɱ��ݣ�
+before_path=C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml
+before_bytes=1200
+before_lines=43
+before_last_byte=10
+before_sha256=664CE561366D925DDA1AE382528565218ABB20072211DD36562F4D3CB894FFD8
+CHECK_OK=Դ�ļ� 1200 �ֽ�
+CHECK_OK=Դ�ļ� SHA256=664C��FFD8
+backup_path=C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml.bak-20261108-stage6
+backup_bytes=1200
+backup_lines=43
+backup_last_byte=10
+backup_sha256=664CE561366D925DDA1AE382528565218ABB20072211DD36562F4D3CB894FFD8
+CHECK_OK=���� 1200 �ֽ�
+CHECK_OK=���� SHA256=664C��FFD8
+CHECK_OK=������Դ�ļ����ֽ���ͬ
+BACKUP_RESULT=OK
+CHECK_OK=源文件存在
+CHECK_OK=备份存在
+CHECK_OK=备份 1200 字节
+CHECK_OK=备份 SHA256=664C…FFD8
+CHECK_OK=追加前源文件与备份逐字节相同
+after_bytes=1462
+after_lines=52
+after_last_byte=10
+after_sha256=6FF6F1FCB6CAE8F732F221710D9E4FFD5C6DF1E26F6EFDADE75F4B9B536159E1
+prefix_equal_backup=True
+CHECK_OK=大小=1462
+CHECK_OK=行数=52
+CHECK_OK=末尾换行
+CHECK_OK=SHA256=6FF6…59E1
+CHECK_OK=前1200字节与备份一致
+CHECK_OK=无BOM
+CHECK_OK=无CRLF
+APPEND_RESULT=OK

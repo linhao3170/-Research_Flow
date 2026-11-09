@@ -1,0 +1,729 @@
+{
+  "manifest_version": "1.0",
+  "contract_version": "1.0",
+  "generated_by": "docs/verification/g0/build_examples.py",
+  "data_classification": "synthetic-example",
+  "note": "全部为合成样例：不含真实实验数据、不含密钥、不含个人信息；不得作为实验结果引用。",
+  "cases": [
+    {
+      "contract": "taskspec",
+      "file": "taskspec.positive.json",
+      "expect": "valid",
+      "layer": "schema",
+      "keyword": null,
+      "pointer": null,
+      "covers": "05 §2.2 正例；决议 9 dataset_ref 对象形态",
+      "note": "合成正例；schema 校验与已登记语义检查均须通过"
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.1.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "05 §2.3 缺 schema_version → 422",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.2.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.schema_version",
+      "covers": "05 §1.2 未知 MAJOR 必须拒绝",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.3.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "type",
+      "pointer": "$.dataset_ref",
+      "covers": "决议 9：API 收到字符串 dataset_ref 必须 422",
+      "note": "附录 E.1 的字符串样例；ADR-002 统一为对象形态"
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.4.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "maximum",
+      "pointer": "$.limits.max_workers",
+      "covers": "05 §2.3 并发超第一版上限 2",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.5.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "additionalProperties",
+      "pointer": "$",
+      "covers": "05 §2.3 未知顶层字段拒绝",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.6.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minItems",
+      "pointer": "$.parameters.models",
+      "covers": "05 §2.3 models 空数组拒绝",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.7.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.dataset_ref.uri",
+      "covers": "05 §2.3 T0 断网，网络 URI 拒绝",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.8.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.dataset_ref.sha256",
+      "covers": "05 §2.1 哈希必须 64 位小写十六进制",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.9.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.task_id",
+      "covers": "05 §1.4 ID 必须带稳定前缀与 UUID",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.10.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "exclusiveMinimum",
+      "pointer": "$.limits.wall_time_sec",
+      "covers": "05 §2.1 wall_time_sec 必须 >0",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.11.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.template_id",
+      "covers": "05 §2.1 模板标识必须 name@MAJOR.MINOR.PATCH",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.12.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minLength",
+      "pointer": "$.dataset_ref.license",
+      "covers": "05 §2.1 license 非空",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.13.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "exclusiveMaximum",
+      "pointer": "$.parameters.test_size",
+      "covers": "05 §2.1 test_size 开区间 (0,1)",
+      "note": ""
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.14.json",
+      "expect": "invalid",
+      "layer": "json",
+      "keyword": "duplicate-key",
+      "pointer": "$",
+      "covers": "05 §1.3 禁止重复键",
+      "note": "原始文本重复 goal 键；RFC 8259 层拒绝"
+    },
+    {
+      "contract": "taskspec",
+      "file": "taskspec.negative.15.json",
+      "expect": "invalid",
+      "layer": "json",
+      "keyword": "non-finite-number",
+      "pointer": "$",
+      "covers": "05 §1.3 禁止 NaN/Infinity",
+      "note": "原始文本含 NaN；RFC 8259 层拒绝"
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.positive.json",
+      "expect": "valid",
+      "layer": "schema",
+      "keyword": null,
+      "pointer": null,
+      "covers": "05 §3.2 正例；决议 2 已补 schema_version",
+      "note": "合成正例；schema 校验与已登记语义检查均须通过"
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.1.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "决议 2：NodeSpec 必须含 schema_version",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.2.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.schema_version",
+      "covers": "05 §1.2 未知 MINOR 需告警；本 schema 冻结 1.0",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.3.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "enum",
+      "pointer": "$.side_effect_class",
+      "covers": "OQ-CT-09 候选枚举外取值拒绝",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.4.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minItems",
+      "pointer": "$.required_checks",
+      "covers": "05 §3.3 必检项空数组拒绝",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.5.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minimum",
+      "pointer": "$.retry_policy.max_attempts",
+      "covers": "05 §3.1 max_attempts >=1",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.6.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minimum",
+      "pointer": "$.retry_policy.backoff_sec",
+      "covers": "05 §3.1 backoff_sec 不得为负",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.7.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.node_id",
+      "covers": "05 §3.1 node_id 不得含路径分隔符",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.8.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "additionalProperties",
+      "pointer": "$",
+      "covers": "05 §3.1 未声明字段拒绝",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.9.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.parameters_hash",
+      "covers": "05 §3.1 parameters_hash 必须 64 位十六进制",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.10.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "uniqueItems",
+      "pointer": "$.depends_on",
+      "covers": "05 §3.3 重复前驱拒绝",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.11.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "05 §3.1 retry_policy 必填",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.12.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.input_refs[0]",
+      "covers": "05 §3.1 input_refs 必须 artifact:// 引用",
+      "note": ""
+    },
+    {
+      "contract": "nodespec",
+      "file": "nodespec.negative.13.json",
+      "expect": "invalid",
+      "layer": "semantic",
+      "keyword": "SEM-NS-01",
+      "pointer": "$.depends_on",
+      "covers": "05 §3.3 自依赖拒绝（JSON Schema 无法表达，见 SEM-NS-01）",
+      "note": "结构合法，仅语义检查拒绝"
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.positive.json",
+      "expect": "valid",
+      "layer": "schema",
+      "keyword": null,
+      "pointer": null,
+      "covers": "05 §4.2 正例",
+      "note": "合成正例；schema 校验与已登记语义检查均须通过"
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.1.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "05 §4.1 schema_version 必填",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.2.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "enum",
+      "pointer": "$.level",
+      "covers": "05 §4.1 等级仅 E0–E3",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.3.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.producer",
+      "covers": "05 §4.3 E2 不得由 Agent 产出",
+      "note": "level->producer 由 allOf/if-then 固化"
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.4.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minimum",
+      "pointer": "$.event_seq",
+      "covers": "附录 F.1 event_seq 从 1 起",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.5.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.timestamp",
+      "covers": "05 §1.3 时间必须 UTC（Z 或 +00:00）",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.6.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.prev_hash",
+      "covers": "05 §1.3 哈希小写十六进制",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.7.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "05 §4.1 kind 必填",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.8.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.artifact_refs[0]",
+      "covers": "05 §4.1 artifact_refs 必须 artifact:// 引用",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.9.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "additionalProperties",
+      "pointer": "$",
+      "covers": "05 §1.3 未声明字段不得静默纳入",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.10.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.evidence_id",
+      "covers": "05 §1.4 evidence_id 必须 ev_+UUID",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.11.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "type",
+      "pointer": "$.event_seq",
+      "covers": "05 §4.1 event_seq 必须是整数",
+      "note": ""
+    },
+    {
+      "contract": "evidencerecord",
+      "file": "evidencerecord.negative.12.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "enum",
+      "pointer": "$.kind",
+      "covers": "01 §4.3 E0 只能承载 agent_claim",
+      "note": "level->kind 由 allOf/if-then 固化"
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.positive.json",
+      "expect": "valid",
+      "layer": "schema",
+      "keyword": null,
+      "pointer": null,
+      "covers": "05 §5.2 正例；决议 2 已补 schema_version",
+      "note": "合成正例；schema 校验与已登记语义检查均须通过"
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.1.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "决议 2：VerificationReport 必须含 schema_version",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.2.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.schema_version",
+      "covers": "05 §1.2 版本格式 MAJOR.MINOR",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.3.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "enum",
+      "pointer": "$.final_state",
+      "covers": "05 §5.1 四态，COMPLETED 属 Task 状态",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.4.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "enum",
+      "pointer": "$.l1_status",
+      "covers": "OQ-CT-03 候选枚举外取值拒绝",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.5.json",
+      "expect": "invalid",
+      "layer": "semantic",
+      "keyword": "SEM-VR-01",
+      "pointer": "$.required_check_coverage",
+      "covers": "05 §5.2 passed 不得大于 required（SEM-VR-01）",
+      "note": "结构合法，算术不变量拒绝"
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.6.json",
+      "expect": "invalid",
+      "layer": "semantic",
+      "keyword": "SEM-VR-01",
+      "pointer": "$.required_check_coverage",
+      "covers": "05 §5.1 missing 必须等于 required-passed（SEM-VR-01）",
+      "note": "结构合法，算术不变量拒绝"
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.7.json",
+      "expect": "invalid",
+      "layer": "semantic",
+      "keyword": "SEM-VR-02",
+      "pointer": "$.final_state",
+      "covers": "AGENTS §4.10 VERIFIED 必须有完整必检证据（SEM-VR-02）",
+      "note": "结构合法，语义检查拒绝"
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.8.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "maximum",
+      "pointer": "$.l3_coverage",
+      "covers": "05 §5.1 l3_coverage 闭区间 [0,1]",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.9.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.signature",
+      "covers": "05 §5.1 signature 必须 base64",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.10.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.ruleset_hash",
+      "covers": "05 §5.1 ruleset_hash 64 位十六进制",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.11.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "additionalProperties",
+      "pointer": "$",
+      "covers": "05 §1.3 未声明字段拒绝",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.12.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.report_id",
+      "covers": "05 §1.4 report_id 必须 report_+UUID",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.13.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "05 §5.1 覆盖矩阵必填",
+      "note": ""
+    },
+    {
+      "contract": "verificationreport",
+      "file": "verificationreport.negative.14.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.issued_at",
+      "covers": "05 §5.1 签发时间必须 UTC",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.positive.json",
+      "expect": "valid",
+      "layer": "schema",
+      "keyword": null,
+      "pointer": null,
+      "covers": "05 §6.2 正例；决议 2 已补 schema_version 与 issued_at",
+      "note": "合成正例；schema 校验与已登记语义检查均须通过"
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.1.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "决议 2：CompletionCertificate 必须含 schema_version",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.2.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.schema_version",
+      "covers": "05 §1.2 版本格式 MAJOR.MINOR",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.3.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "required",
+      "pointer": "$",
+      "covers": "决议 2：证书必须补 issued_at",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.4.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.issued_at",
+      "covers": "05 §1.3 时间必须 UTC",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.5.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.final_state",
+      "covers": "05 §6.1 证书仅 VERIFIED",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.6.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "const",
+      "pointer": "$.alg",
+      "covers": "05 §6.1 算法固定 Ed25519",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.7.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "maxItems",
+      "pointer": "$.skipped_nodes",
+      "covers": "05 §6.2 T0 无 SPA，skipped_nodes 必须为空",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.8.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "minimum",
+      "pointer": "$.tree_size",
+      "covers": "05 §6.1 tree_size >=1",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.9.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "maximum",
+      "pointer": "$.l3_coverage",
+      "covers": "05 §6.1 l3_coverage 闭区间 [0,1]",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.10.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.signature",
+      "covers": "05 §6.1 signature 必须 base64",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.11.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.key_fingerprint",
+      "covers": "I-08 指纹必须 64 位十六进制",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.12.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "pattern",
+      "pointer": "$.report_id",
+      "covers": "05 §6.1 report_id 必须 report_+UUID",
+      "note": ""
+    },
+    {
+      "contract": "completioncertificate",
+      "file": "completioncertificate.negative.13.json",
+      "expect": "invalid",
+      "layer": "schema",
+      "keyword": "additionalProperties",
+      "pointer": "$",
+      "covers": "05 §1.3 未声明字段拒绝",
+      "note": ""
+    }
+  ]
+}

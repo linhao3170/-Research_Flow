@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://researchflow.invalid/contracts/completioncertificate/1.0/completioncertificate.schema.json",
+  "title": "CompletionCertificate v1.0",
+  "description": "ResearchFlow 完成凭证。来源：策划书附录 D.4；字段规则见 docs/design/05_CONTRACTS_AND_STATES.md §6。schema_version 与 issued_at 由用户 2026-11-09 决议补入（ADR-003）；签名载荷必须包含 schema_version。",
+  "$comment": "T0 无 SPA，skipped_nodes 必须为空数组（maxItems=0）；T2 引入 DC/SPA 时按 MAJOR 升版并配 ADR，不得在本版内放宽。tree_size 与证据条数、merkle_root 与报告 evidence_root 的一致性属跨文档不变量，由 Verifier/verify_bundle 校验。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "cert_id",
+    "report_id",
+    "final_state",
+    "merkle_root",
+    "tree_size",
+    "ruleset_hash",
+    "code_hash",
+    "env_fingerprint",
+    "l3_coverage",
+    "skipped_nodes",
+    "alg",
+    "key_id",
+    "key_fingerprint",
+    "signature",
+    "issued_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "description": "契约版本，本版固定 1.0；必须进入签名载荷。",
+      "const": "1.0"
+    },
+    "cert_id": {
+      "description": "稳定前缀 cert_ + UUID；唯一，只签发一次。",
+      "type": "string",
+      "pattern": "^cert_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "report_id": {
+      "description": "来源报告；必须存在且为 VERIFIED。",
+      "type": "string",
+      "pattern": "^report_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "final_state": {
+      "description": "仅 VERIFIED（附录 D.6 / P0133）。",
+      "const": "VERIFIED"
+    },
+    "merkle_root": {
+      "description": "证据 Merkle 根；必须等于报告 evidence_root。",
+      "$ref": "#/$defs/sha256"
+    },
+    "tree_size": {
+      "description": "证据叶子数；必须与证据条数一致。",
+      "type": "integer",
+      "minimum": 1
+    },
+    "ruleset_hash": {
+      "description": "规则版本；必须与报告一致。",
+      "$ref": "#/$defs/sha256"
+    },
+    "code_hash": {
+      "description": "执行代码快照哈希。",
+      "$ref": "#/$defs/sha256"
+    },
+    "env_fingerprint": {
+      "description": "环境指纹；必须与 E2 记录一致。",
+      "$ref": "#/$defs/sha256"
+    },
+    "l3_coverage": {
+      "description": "L3 覆盖，闭区间 [0,1]。",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "skipped_nodes": {
+      "description": "SPA 跳过节点；T0 必须为空数组（无 DC/SPA）。",
+      "type": "array",
+      "maxItems": 0,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+      }
+    },
+    "alg": {
+      "description": "签名算法，固定 Ed25519。",
+      "const": "Ed25519"
+    },
+    "key_id": {
+      "description": "签名密钥标识；必须未撤销。",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "key_fingerprint": {
+      "description": "公钥指纹；必须命中包外信任锚（I-08）。",
+      "$ref": "#/$defs/sha256"
+    },
+    "signature": {
+      "description": "Ed25519 签名，base64；载荷见 05 §1.5。",
+      "type": "string",
+      "minLength": 4,
+      "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+    },
+    "issued_at": {
+      "description": "签发时间，UTC RFC 3339。",
+      "$ref": "#/$defs/rfc3339Utc"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rfc3339Utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,9})?(Z|\\+00:00)$"
+    }
+  }
+}

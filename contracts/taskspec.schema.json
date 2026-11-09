@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://researchflow.invalid/contracts/taskspec/1.0/taskspec.schema.json",
+  "title": "TaskSpec v1.0",
+  "description": "ResearchFlow 任务规格。来源：策划书附录 D.1；字段规则见 docs/design/05_CONTRACTS_AND_STATES.md §2。本文件是 G0 冻结 v1.0，不是 T0 实现。",
+  "$comment": "OQ-CT-08（parameters 是否按模板强类型）未裁决：本文件只约束已知键 target/seed/test_size/models；模板自定义键由模板 Schema 层校验（未知参数默认拒绝在该层实现），因此 parameters.additionalProperties 取 true 并在此登记理由。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "domain_pack",
+    "goal",
+    "dataset_ref",
+    "template_id",
+    "parameters",
+    "ruleset_hash",
+    "limits"
+  ],
+  "properties": {
+    "schema_version": {
+      "description": "契约版本，本版固定 1.0。未知 MAJOR 必须拒绝（05 §1.2）。",
+      "const": "1.0"
+    },
+    "task_id": {
+      "description": "稳定前缀 + UUID；全局唯一，不可复用（附录 D.6）。",
+      "type": "string",
+      "pattern": "^task_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "domain_pack": {
+      "description": "已注册域包标识 name@MAJOR.MINOR.PATCH。",
+      "$ref": "#/$defs/nameVersion"
+    },
+    "goal": {
+      "description": "目标描述；仅描述目标，不参与判定。",
+      "type": "string",
+      "minLength": 1
+    },
+    "dataset_ref": {
+      "description": "数据集引用对象（uri/sha256/license）。字符串形态按 SCHEMA_INVALID 拒绝，见 ADR-002。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "sha256", "license"],
+      "properties": {
+        "uri": {
+          "description": "本地 URI；T0 断网，不接受网络 URI，不得逃逸受限目录。",
+          "type": "string",
+          "pattern": "^local://[A-Za-z0-9][A-Za-z0-9._/-]*$"
+        },
+        "sha256": {
+          "description": "数据文件 SHA-256，小写十六进制。",
+          "$ref": "#/$defs/sha256"
+        },
+        "license": {
+          "description": "许可证 ID；非空，来源可追溯。",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.+-]*$"
+        }
+      }
+    },
+    "template_id": {
+      "description": "内置模板标识；必须在白名单注册表存在。",
+      "$ref": "#/$defs/nameVersion"
+    },
+    "parameters": {
+      "description": "模板参数容器。已知键见下；模板自定义键由模板 Schema 校验（OQ-CT-08）。",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "target": {
+          "description": "标签列名。",
+          "type": "string",
+          "minLength": 1
+        },
+        "seed": {
+          "description": "随机种子；必须记录到 Split Manifest。",
+          "type": "integer",
+          "minimum": 0
+        },
+        "test_size": {
+          "description": "测试集比例，开区间 (0,1)。",
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1
+        },
+        "models": {
+          "description": "白名单模型名；空数组与重复项拒绝。",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        }
+      }
+    },
+    "ruleset_hash": {
+      "description": "规则集版本哈希；必须与 Gate 使用的规则版本一致。",
+      "$ref": "#/$defs/sha256"
+    },
+    "limits": {
+      "description": "执行上限；超过即终止并记录。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wall_time_sec", "max_workers", "max_memory_mb"],
+      "properties": {
+        "wall_time_sec": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "max_workers": {
+          "description": "第一版并发上限 2（§5.4）；实测后才能宣称达成。",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "max_memory_mb": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nameVersion": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*@\\d+\\.\\d+\\.\\d+$"
+    }
+  }
+}

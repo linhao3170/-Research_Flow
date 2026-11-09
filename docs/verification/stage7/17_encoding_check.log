@@ -1,0 +1,21 @@
+STAGE7 ENCODING CHECK (UTF-8 no BOM / LF / trailing newline)
+
+OK	docs/reference/SOURCE_REGISTER.md	utf8=True	bom=False	CR=0	LF=191	trailing_lf=True
+OK	docs/reference/CONFLICT_REPORT.md	utf8=True	bom=False	CR=0	LF=178	trailing_lf=True
+OK	docs/PROJECT_OVERVIEW.md	utf8=True	bom=False	CR=0	LF=187	trailing_lf=True
+OK	docs/ARCHITECTURE.md	utf8=True	bom=False	CR=0	LF=613	trailing_lf=True
+OK	docs/GLOSSARY.md	utf8=True	bom=False	CR=0	LF=165	trailing_lf=True
+OK	docs/DEVELOPMENT_WORKFLOW.md	utf8=True	bom=False	CR=0	LF=258	trailing_lf=True
+OK	docs/MEMORY_GUIDE.md	utf8=True	bom=False	CR=0	LF=172	trailing_lf=True
+OK	docs/MCP_CATALOG.md	utf8=True	bom=False	CR=0	LF=182	trailing_lf=True
+OK	docs/SECURITY_POLICY.md	utf8=True	bom=False	CR=0	LF=278	trailing_lf=True
+OK	docs/SKILL_CATALOG.md	utf8=True	bom=False	CR=0	LF=166	trailing_lf=True
+OK	docs/verification/stage7/STAGE7_REPORT.md	utf8=True	bom=False	CR=0	LF=286	trailing_lf=True
+OK	docs/verification/stage7/06_page_map_attempt.md	utf8=True	bom=False	CR=0	LF=51	trailing_lf=True
+OK	docs/state/project_state.json	utf8=True	bom=False	CR=0	LF=247	trailing_lf=True
+OK	docs/CHANGELOG_DEV.md	utf8=True	bom=False	CR=0	LF=148	trailing_lf=True
+OK	docs/SESSION_HANDOFF.md	utf8=True	bom=False	CR=0	LF=370	trailing_lf=True
+OK	README.md	utf8=True	bom=False	CR=0	LF=83	trailing_lf=True
+
+FILES=16 BAD=0
+RESULT=PASS

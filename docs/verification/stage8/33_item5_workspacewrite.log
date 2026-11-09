@@ -1,0 +1,12 @@
+TIME=2026-11-08T13:26:28.2800653+08:00
+POLICY=workspace-write
+--- WORKSPACE WRITE/READ/DELETE ---
+WRITE_EXISTS=True
+READ_BACK=WORKSPACE_WRITE_OK
+CLEANUP_OK=True
+--- OUTSIDE WRITE ATTEMPT ---
+TARGET=C:\Users\Administrator\stage8_outside_probe.txt
+WRITE_RESULT=DENIED
+ERROR_TYPE=System.Management.Automation.MethodInvocationException
+ERROR_MESSAGE=使用“3”个参数调用“WriteAllText”时发生异常:“对路径“C:\Users\Administrator\stage8_outside_probe.txt”的访问被拒绝。”
+TARGET_EXISTS=False

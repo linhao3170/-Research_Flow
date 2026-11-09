@@ -1,0 +1,9 @@
+﻿COMMAND: & $py -X utf8 docs/verification/g0/check_links_g0.py <15 files>
+FILES: docs/G0/01_BASELINE_AND_TERMS.md,docs/G0/08_OPEN_QUESTIONS_AND_FREEZE.md,docs/PRD/02_REQUIREMENT_TRACEABILITY.md,docs/PRD/03_PRD_T0.md,docs/design/04_ARCHITECTURE.md,docs/design/05_CONTRACTS_AND_STATES.md,docs/design/06_DATA_AND_API.md,docs/design/07_T0_PLAN_AND_GATES.md,contracts/README.md,docs/verification/g0/09_dependency_matrix.md,docs/verification/g0/17_version_freeze_report.md,docs/ADR/README.md,docs/ADR/ADR-007-t0-workbench-scope.md,docs/CHANGELOG_DEV.md,docs/SESSION_HANDOFF.md
+PYTHON: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+EXIT: 0
+
+G0 LINK CHECK (read-only) ROOT=D:\ResearchFlow-project
+FILES=15 LINKS_CHECKED=87 BROKEN=0
+RESULT=PASS
+

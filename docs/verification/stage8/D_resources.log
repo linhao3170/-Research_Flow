@@ -1,0 +1,26 @@
+TIME=2026-11-08T13:28:02.8881591+08:00
+--- DISK ---
+DRIVE=C USED_GB=141.03 FREE_GB=259.66
+DRIVE=D USED_GB=60.06 FREE_GB=439.94
+--- MEMORY SAMPLES (3 x 2s) ---
+SAMPLE=1 TOTAL_GB=15.74 FREE_GB=6.78 USED_PERCENT=56.9
+SAMPLE=2 TOTAL_GB=15.74 FREE_GB=6.75 USED_PERCENT=57.1
+SAMPLE=3 TOTAL_GB=15.74 FREE_GB=6.77 USED_PERCENT=57
+--- TOP 5 PROCESSES BY WORKING SET ---
+
+   Id ProcessName      WS_MB
+   -- -----------      -----
+ 2268 chrome           612.4
+20368 DeepSeek Harness 381.6
+ 2364 chrome           217.9
+ 7212 DeepSeek Harness   188
+ 6124 chrome           124.9
+
+
+
+--- PROJECT ---
+PROJECT_BYTES=7577992
+PROJECT_FILES=194
+STAGE8_EVIDENCE_FILES=43
+PROBE_DIR_EXISTS=True
+NOTE=Probe dir retained for permission diagnosis. No parallel agent fleet; one subagent model probe only.

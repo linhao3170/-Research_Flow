@@ -1,0 +1,79 @@
+CONTRACTS_VALIDATE root=D:\ResearchFlow-project python=3.11.16 engine=builtin-2020-12-subset
+[PASS] taskspec               schema   taskspec.positive.json             通过
+[PASS] taskspec               schema   taskspec.negative.1.json           required @ $
+[PASS] taskspec               schema   taskspec.negative.2.json           const @ $.schema_version
+[PASS] taskspec               schema   taskspec.negative.3.json           type @ $.dataset_ref
+[PASS] taskspec               schema   taskspec.negative.4.json           maximum @ $.limits.max_workers
+[PASS] taskspec               schema   taskspec.negative.5.json           additionalProperties @ $
+[PASS] taskspec               schema   taskspec.negative.6.json           minItems @ $.parameters.models
+[PASS] taskspec               schema   taskspec.negative.7.json           pattern @ $.dataset_ref.uri
+[PASS] taskspec               schema   taskspec.negative.8.json           pattern @ $.dataset_ref.sha256
+[PASS] taskspec               schema   taskspec.negative.9.json           pattern @ $.task_id
+[PASS] taskspec               schema   taskspec.negative.10.json          exclusiveMinimum @ $.limits.wall_time_sec
+[PASS] taskspec               schema   taskspec.negative.11.json          pattern @ $.template_id
+[PASS] taskspec               schema   taskspec.negative.12.json          minLength @ $.dataset_ref.license
+[PASS] taskspec               schema   taskspec.negative.13.json          exclusiveMaximum @ $.parameters.test_size
+[PASS] taskspec               json     taskspec.negative.14.json          duplicate-key @ $
+[PASS] taskspec               json     taskspec.negative.15.json          non-finite-number @ $
+[PASS] nodespec               schema   nodespec.positive.json             通过
+[PASS] nodespec               schema   nodespec.negative.1.json           required @ $
+[PASS] nodespec               schema   nodespec.negative.2.json           const @ $.schema_version
+[PASS] nodespec               schema   nodespec.negative.3.json           enum @ $.side_effect_class
+[PASS] nodespec               schema   nodespec.negative.4.json           minItems @ $.required_checks
+[PASS] nodespec               schema   nodespec.negative.5.json           minimum @ $.retry_policy.max_attempts
+[PASS] nodespec               schema   nodespec.negative.6.json           minimum @ $.retry_policy.backoff_sec
+[PASS] nodespec               schema   nodespec.negative.7.json           pattern @ $.node_id
+[PASS] nodespec               schema   nodespec.negative.8.json           additionalProperties @ $
+[PASS] nodespec               schema   nodespec.negative.9.json           pattern @ $.parameters_hash
+[PASS] nodespec               schema   nodespec.negative.10.json          uniqueItems @ $.depends_on
+[PASS] nodespec               schema   nodespec.negative.11.json          required @ $
+[PASS] nodespec               schema   nodespec.negative.12.json          pattern @ $.input_refs[0]
+[PASS] nodespec               semantic nodespec.negative.13.json          SEM-NS-01 @ $.depends_on
+[PASS] evidencerecord         schema   evidencerecord.positive.json       通过
+[PASS] evidencerecord         schema   evidencerecord.negative.1.json     required @ $
+[PASS] evidencerecord         schema   evidencerecord.negative.2.json     enum @ $.level
+[PASS] evidencerecord         schema   evidencerecord.negative.3.json     const @ $.producer
+[PASS] evidencerecord         schema   evidencerecord.negative.4.json     minimum @ $.event_seq
+[PASS] evidencerecord         schema   evidencerecord.negative.5.json     pattern @ $.timestamp
+[PASS] evidencerecord         schema   evidencerecord.negative.6.json     pattern @ $.prev_hash
+[PASS] evidencerecord         schema   evidencerecord.negative.7.json     required @ $
+[PASS] evidencerecord         schema   evidencerecord.negative.8.json     pattern @ $.artifact_refs[0]
+[PASS] evidencerecord         schema   evidencerecord.negative.9.json     additionalProperties @ $
+[PASS] evidencerecord         schema   evidencerecord.negative.10.json    pattern @ $.evidence_id
+[PASS] evidencerecord         schema   evidencerecord.negative.11.json    type @ $.event_seq
+[PASS] evidencerecord         schema   evidencerecord.negative.12.json    enum @ $.kind
+[PASS] verificationreport     schema   verificationreport.positive.json   通过
+[PASS] verificationreport     schema   verificationreport.negative.1.json required @ $
+[PASS] verificationreport     schema   verificationreport.negative.2.json const @ $.schema_version
+[PASS] verificationreport     schema   verificationreport.negative.3.json enum @ $.final_state
+[PASS] verificationreport     schema   verificationreport.negative.4.json enum @ $.l1_status
+[PASS] verificationreport     semantic verificationreport.negative.5.json SEM-VR-01 @ $.required_check_coverage
+[PASS] verificationreport     semantic verificationreport.negative.6.json SEM-VR-01 @ $.required_check_coverage
+[PASS] verificationreport     semantic verificationreport.negative.7.json SEM-VR-02 @ $.final_state
+[PASS] verificationreport     schema   verificationreport.negative.8.json maximum @ $.l3_coverage
+[PASS] verificationreport     schema   verificationreport.negative.9.json pattern @ $.signature
+[PASS] verificationreport     schema   verificationreport.negative.10.json pattern @ $.ruleset_hash
+[PASS] verificationreport     schema   verificationreport.negative.11.json additionalProperties @ $
+[PASS] verificationreport     schema   verificationreport.negative.12.json pattern @ $.report_id
+[PASS] verificationreport     schema   verificationreport.negative.13.json required @ $
+[PASS] verificationreport     schema   verificationreport.negative.14.json pattern @ $.issued_at
+[PASS] completioncertificate  schema   completioncertificate.positive.json 通过
+[PASS] completioncertificate  schema   completioncertificate.negative.1.json required @ $
+[PASS] completioncertificate  schema   completioncertificate.negative.2.json const @ $.schema_version
+[PASS] completioncertificate  schema   completioncertificate.negative.3.json required @ $
+[PASS] completioncertificate  schema   completioncertificate.negative.4.json pattern @ $.issued_at
+[PASS] completioncertificate  schema   completioncertificate.negative.5.json const @ $.final_state
+[PASS] completioncertificate  schema   completioncertificate.negative.6.json const @ $.alg
+[PASS] completioncertificate  schema   completioncertificate.negative.7.json maxItems @ $.skipped_nodes
+[PASS] completioncertificate  schema   completioncertificate.negative.8.json minimum @ $.tree_size
+[PASS] completioncertificate  schema   completioncertificate.negative.9.json maximum @ $.l3_coverage
+[PASS] completioncertificate  schema   completioncertificate.negative.10.json pattern @ $.signature
+[PASS] completioncertificate  schema   completioncertificate.negative.11.json pattern @ $.key_fingerprint
+[PASS] completioncertificate  schema   completioncertificate.negative.12.json pattern @ $.report_id
+[PASS] completioncertificate  schema   completioncertificate.negative.13.json additionalProperties @ $
+CONTRACT completioncertificate  cases=14  pass=14  fail=0   PASS
+CONTRACT evidencerecord         cases=13  pass=13  fail=0   PASS
+CONTRACT nodespec               cases=14  pass=14  fail=0   PASS
+CONTRACT taskspec               cases=16  pass=16  fail=0   PASS
+CONTRACT verificationreport     cases=15  pass=15  fail=0   PASS
+SUMMARY contracts=5 cases=72 pass=72 fail=0 exit=0

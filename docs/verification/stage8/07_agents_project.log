@@ -1,0 +1,15 @@
+TIME=2026-11-08T13:14:16.1941600+08:00
+PATH=D:\ResearchFlow-project\AGENTS.md
+BYTES=10528
+SHA256=50C3437862B9ADD89566F9082FD95ECC722A10EB4B366261A4F2B20DE996EDC9
+LAST_WRITE=2026-11-08T11:54:47.9759303+08:00
+--- SESSION EVIDENCE ---
+Current session system prompt contains: 'Instructions from: AGENTS.md' and the full workspace rules.
+# AGENTS.md — ResearchFlow 项目规则
+
+> 项目：ResearchFlow
+> 适用范围：`D:\ResearchFlow-project` 及其全部子目录
+> 版本：阶段 5 基线（2026-11-08）
+> 地位：本文件是本项目的主要规则来源。`$DSH_HOME/AGENTS.md`（实际路径 `C:\Users\Administrator\.dsh\AGENTS.md`）当前不存在；如未来创建，只放跨项目通用纪律，不重复本项目内容。
+> 优先级：用户当前明确指令 > 本文件 > 其他项目文档。若本文件与已冻结架构、策划书或 ADR 冲突，先停止并报告，不得自行取舍。
+

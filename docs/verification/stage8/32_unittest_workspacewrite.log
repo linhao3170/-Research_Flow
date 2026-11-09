@@ -1,0 +1,1472 @@
+TIME=2026-11-08T13:26:38.5112670+08:00
+POLICY=workspace-write
+COMMAND=& "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" -m unittest discover -s tests -v
+--- OUTPUT (verbatim, may be long) ---
+python.exe : test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_te
+mporary_files) ... ERROR
+所在位置 行:1 字符: 502
++ ... =Get-Date; $out = & $py -m unittest discover -s tests -v 2>&1; $code= ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_atomic_wri...iles) ... ERROR:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_temporary_files
+) ... ERROR
+test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker) ... ERROR
+test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker) ... ERROR
+test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero) ... ERROR
+test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero) ... ERROR
+test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check) ... ER
+ROR
+test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check) ... ER
+ROR
+test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails) ... ERROR
+test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails) ... ERROR
+test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_command
+s_and_evidence) ... ERROR
+test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_command
+s_and_evidence) ... ERROR
+test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails) ... ERROR
+test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails) ... ERROR
+test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails) ... ERROR
+test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails) ... ERROR
+test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails) ... ERROR
+test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails) ... ERROR
+test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails) ... ERROR
+test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails) ... ERROR
+test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check) ... ERROR
+test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check) ... ERROR
+test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check) ... ER
+ROR
+test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check) ... ER
+ROR
+test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails) ... ERROR
+test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails) ... ERROR
+test_missing_state_file_returns_nonzero (test_state_sync.StateSyncTests.test_missing_state_file_returns_nonzero) ... ER
+ROR
+test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails) ... ERROR
+test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails) ... ERROR
+test_python_baseline_is_31116_64bit (test_state_sync.StateSyncTests.test_python_baseline_is_31116_64bit) ... ERROR
+test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes) ... ERROR
+test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes) ... ERROR
+test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes) ... ERROR
+test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes) ... ERROR
+test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passes) ... 
+ERROR
+test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passes) ... 
+ERROR
+test_repository_state_passes (test_state_sync.StateSyncTests.test_repository_state_passes) ... ERROR
+test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails) ... ERROR
+test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails) ... ERROR
+test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails) ... ERROR
+test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails) ... ERROR
+test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes) ... ERROR
+test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes) ... ERROR
+
+======================================================================
+ERROR: test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_temporar
+y_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_czeg7p99\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 345, in test_atomic_write_leaves_no_temporary_files
+    write_state(self.root, make_state())
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_czeg7p99\
+\docs'
+
+======================================================================
+ERROR: test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_temporar
+y_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_czeg7p99'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_czeg7p99'
+
+======================================================================
+ERROR: test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_6i0p25d0\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 253, in test_blocked_task_requires_blocker
+    write_state(self.root, make_state(tasks=[task]))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_6i0p25d0\
+\docs'
+
+======================================================================
+ERROR: test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_6i0p25d0'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_6i0p25d0'
+
+======================================================================
+ERROR: test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_y9wz2z83\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 356, in test_corrupt_json_returns_nonzero
+    write_state(self.root, '{"schema_version": "1.0",')
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_y9wz2z83\
+\docs'
+
+======================================================================
+ERROR: test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_y9wz2z83'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_y9wz2z83'
+
+======================================================================
+ERROR: test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_razyuh1k\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 334, in test_crlf_in_generated_file_fails_check
+    write_state(self.root, make_state())
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_razyuh1k\
+\docs'
+
+======================================================================
+ERROR: test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_razyuh1k'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_razyuh1k'
+
+======================================================================
+ERROR: test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_8hid2vvw\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 228, in test_cycle_dependency_fails
+    write_state(self.root, make_state(tasks=tasks))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_8hid2vvw\
+\docs'
+
+======================================================================
+ERROR: test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_8hid2vvw'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_8hid2vvw'
+
+======================================================================
+ERROR: test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_
+commands_and_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_ytki8tbz\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 261, in test_done_task_requires_test_commands_and_evide
+nce
+    write_state(self.root, make_state(tasks=[task]))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_ytki8tbz\
+\docs'
+
+======================================================================
+ERROR: test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_
+commands_and_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_ytki8tbz'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_ytki8tbz'
+
+======================================================================
+ERROR: test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_5venalqs\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 198, in test_duplicate_task_id_fails
+    write_state(self.root, make_state(tasks=tasks))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_5venalqs\
+\docs'
+
+======================================================================
+ERROR: test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_5venalqs'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_5venalqs'
+
+======================================================================
+ERROR: test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_fy18z2po\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 205, in test_invalid_depends_on_fails
+    write_state(
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_fy18z2po\
+\docs'
+
+======================================================================
+ERROR: test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_fy18z2po'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_fy18z2po'
+
+======================================================================
+ERROR: test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_9bd5sgts\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 190, in test_invalid_phase_fails
+    write_state(self.root, make_state(tasks=[make_task(phase="T9")]))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_9bd5sgts\
+\docs'
+
+======================================================================
+ERROR: test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_9bd5sgts'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_9bd5sgts'
+
+======================================================================
+ERROR: test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_mswz41fh\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 183, in test_invalid_task_status_fails
+    write_state(self.root, make_state(tasks=[make_task(status="FINISHED")]))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_mswz41fh\
+\docs'
+
+======================================================================
+ERROR: test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_mswz41fh'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_mswz41fh'
+
+======================================================================
+ERROR: test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_ylb4sa8t\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 311, in test_manual_edit_fails_check
+    write_state(self.root, make_state())
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_ylb4sa8t\
+\docs'
+
+======================================================================
+ERROR: test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_ylb4sa8t'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_ylb4sa8t'
+
+======================================================================
+ERROR: test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_1mr6_b57\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 324, in test_missing_generated_file_fails_check
+    write_state(self.root, make_state())
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_1mr6_b57\
+\docs'
+
+======================================================================
+ERROR: test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_1mr6_b57'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_1mr6_b57'
+
+======================================================================
+ERROR: test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c__bfv3i99\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 176, in test_missing_required_field_fails
+    write_state(self.root, state)
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync__bfv3i99\
+\docs'
+
+======================================================================
+ERROR: test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync__bfv3i99'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync__bfv3i99'
+
+======================================================================
+ERROR: test_missing_state_file_returns_nonzero (test_state_sync.StateSyncTests.test_missing_state_file_returns_nonzero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_f995sbot'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_f995sbot'
+
+======================================================================
+ERROR: test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_dktzevbm\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 245, in test_pass_gate_without_evidence_fails
+    write_state(self.root, make_state(gates=gates))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_dktzevbm\
+\docs'
+
+======================================================================
+ERROR: test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_dktzevbm'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_dktzevbm'
+
+======================================================================
+ERROR: test_python_baseline_is_31116_64bit (test_state_sync.StateSyncTests.test_python_baseline_is_31116_64bit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_pkrhgvqw'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_pkrhgvqw'
+
+======================================================================
+ERROR: test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_39bng4_e\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 272, in test_render_then_check_passes
+    write_state(self.root, make_state())
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_39bng4_e\
+\docs'
+
+======================================================================
+ERROR: test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_39bng4_e'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_39bng4_e'
+
+======================================================================
+ERROR: test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_002z7s0x\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 290, in test_render_with_task_detail_passes
+    write_state(self.root, make_state(tasks=[task]))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_002z7s0x\
+\docs'
+
+======================================================================
+ERROR: test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_002z7s0x'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_002z7s0x'
+
+======================================================================
+ERROR: test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passe
+s)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_nc2v2bg9\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 376, in test_repository_render_then_check_passes
+    write_state(self.root, copied)
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_nc2v2bg9\
+\docs'
+
+======================================================================
+ERROR: test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passe
+s)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_nc2v2bg9'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_nc2v2bg9'
+
+======================================================================
+ERROR: test_repository_state_passes (test_state_sync.StateSyncTests.test_repository_state_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_x5x8mxym'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_x5x8mxym'
+
+======================================================================
+ERROR: test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c__p6o51rm\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 215, in test_self_dependency_fails
+    write_state(
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync__p6o51rm\
+\docs'
+
+======================================================================
+ERROR: test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync__p6o51rm'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync__p6o51rm'
+
+======================================================================
+ERROR: test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_x2fi9zjl\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 236, in test_unknown_top_level_field_fails
+    write_state(self.root, state)
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_x2fi9zjl\
+\docs'
+
+======================================================================
+ERROR: test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_x2fi9zjl'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_x2fi9zjl'
+
+======================================================================
+ERROR: test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 3] ϵͳ�Ҳ���ָ����·����: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_syn
+c_rn8au5nc\\docs\\state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 163, in test_valid_state_passes
+    write_state(self.root, make_state(tasks=[make_task()]))
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 105, in write_state
+    path.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1120
+, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\pathlib.py", line 1116
+, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_rn8au5nc\
+\docs'
+
+======================================================================
+ERROR: test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 636, 
+in _rmtree_unsafe
+    os.rmdir(path)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_rn8au5nc'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ResearchFlow-project\tests\test_state_sync.py", line 140, in tearDown
+    self._temporary_directory.cleanup()
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 947
+, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 929
+, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 787, 
+in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\shutil.py", line 638, 
+in _rmtree_unsafe
+    onerror(os.rmdir, path, sys.exc_info())
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 890
+, in onerror
+    _resetperms(path)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 287
+, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\tempfile.py", line 278
+, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] �ܾ����ʡ�: 'C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-UhJ0KU\\rf_state_sync_rn8au5nc'
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.349s
+
+FAILED (errors=43)
+EXIT=1
+DURATION_SEC=0.525

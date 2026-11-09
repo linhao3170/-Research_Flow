@@ -1,0 +1,53 @@
+Stage 5 final validation
+time=2026-11-08T11:59:40.184477+08:00
+python=C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+
+=== skills structure ===
+command: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe scripts/validate_skills.py
+Skill root: D:\ResearchFlow-project\.agents\skills
+PASS researchflow-onboarding: bytes=6282 lines=122 sha256=F1F4208CC737CA3F5BA11CA48EFD2136743F848DD56B2352DF2D4444085EBBD9
+PASS researchflow-spec-driven-development: bytes=5583 lines=92 sha256=223D9AAA3F38D53C334DB355045C1C4441085796912FEFA03B7DBCC910A1840E
+PASS researchflow-prompt-workflow: bytes=4988 lines=94 sha256=E40730B9C45F98DD344F6FBD0A5E7C80A29F77361F36673BB75F6C2B3E13BFF2
+PASS researchflow-contracts-api: bytes=5417 lines=95 sha256=A8CF120B4466225316A5B7326A6E46258BD6FCF28EEB7EF56DAE8ADE65FD3116
+PASS researchflow-python-backend: bytes=5473 lines=95 sha256=C763314FFBB82C0936663839DA92CFC66DDB2119AFB8BC225214E3DD6D00D777
+PASS researchflow-dag-state-machine: bytes=5619 lines=99 sha256=5795F10F5222FC648213DF9E1C335FC3B72B90D712D168C1D26F18C2963A4F2C
+PASS researchflow-evidence-security: bytes=6009 lines=102 sha256=E656CBADA7B5DE27FC9F634CD7E00EA4AE782EC0C18FF73E3557E94A1F6C13CE
+PASS researchflow-testing-benchmark: bytes=5370 lines=98 sha256=D630AE54E68FEA558525968CC8085944E41C03B7E0902A4F168998F8BF860BD5
+PASS researchflow-memory-handoff: bytes=5639 lines=114 sha256=3D77BA6FD5BC3DF6BE54B1CC0B00D44BB72F5CFF2EEF1C979218F06792BB8118
+
+OK: 9 个 Skill 结构校验通过。
+exit_code=0
+
+=== unittest ===
+command: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe -m unittest discover -s tests -v
+
+test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_temporary_files) ... ok
+test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker) ... ok
+test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero) ... ok
+test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check) ... ok
+test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails) ... ok
+test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_commands_and_evidence) ... ok
+test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails) ... ok
+test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails) ... ok
+test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails) ... ok
+test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails) ... ok
+test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check) ... ok
+test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check) ... ok
+test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails) ... ok
+test_missing_state_file_returns_nonzero (test_state_sync.StateSyncTests.test_missing_state_file_returns_nonzero) ... ok
+test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails) ... ok
+test_python_baseline_is_31116_64bit (test_state_sync.StateSyncTests.test_python_baseline_is_31116_64bit) ... ok
+test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes) ... ok
+test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes) ... ok
+test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passes) ... ok
+test_repository_state_passes (test_state_sync.StateSyncTests.test_repository_state_passes) ... ok
+test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails) ... ok
+test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails) ... ok
+test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 3.342s
+
+OK
+exit_code=0
+

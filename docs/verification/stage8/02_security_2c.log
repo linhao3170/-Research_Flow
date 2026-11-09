@@ -1,0 +1,39 @@
+TIME=2026-11-08T13:14:14.2352185+08:00
+TARGET=C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml
+TARGET_BYTES=1462
+TARGET_SHA256=6FF6F1FCB6CAE8F732F221710D9E4FFD5C6DF1E26F6EFDADE75F4B9B536159E1
+BLOCK session-log-deepseek line=27
+  - id: session-log-deepseek
+    name: "@deepseek-ai/dsh-session-log-deepseek"
+    config:
+      enabled: false
+  - id: session-telemetry-otel
+    name: "@deepseek-ai/dsh-session-telemetry-otel"
+    config:
+      mode: DISABLED
+BLOCK session-telemetry-otel line=31
+  - id: session-telemetry-otel
+    name: "@deepseek-ai/dsh-session-telemetry-otel"
+    config:
+      mode: DISABLED
+  - id: web-fetch-http
+    name: "@deepseek-ai/dsh-web-fetch-http"
+    disabled: true
+  - id: agent-default-model
+BLOCK web-fetch-http line=35
+  - id: web-fetch-http
+    name: "@deepseek-ai/dsh-web-fetch-http"
+    disabled: true
+  - id: agent-default-model
+    name: "@deepseek-ai/dsh-agent-default-model"
+    config:
+      provider: deepseek-official
+      model: deepseek-flash
+--- BACKUP ---
+BACKUP=C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml.bak-20261108-stage6
+BACKUP_EXISTS=True
+BACKUP_BYTES=1200
+BACKUP_SHA256=664CE561366D925DDA1AE382528565218ABB20072211DD36562F4D3CB894FFD8
+--- CITED STAGE6 EVIDENCE ---
+docs/verification/stage6/07_post_write_verify.log lines 12-18
+docs/verification/stage6/08_apply_result.md section 4

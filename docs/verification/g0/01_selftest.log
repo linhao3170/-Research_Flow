@@ -1,0 +1,12 @@
+CONTRACTS_SELFTEST root=D:\ResearchFlow-project python=3.11.16
+[PASS] selftest.01 const 通过: 通过
+[PASS] selftest.02 const 拒绝: $.v const: 期望常量 '1.0'，实际 '2.0'
+[PASS] selftest.03 required 拒绝: $ required: 缺少必填字段 'v'
+[PASS] selftest.04 additionalProperties 拒绝: $ additionalProperties: 不允许未声明字段 'extra'
+[PASS] selftest.05 pattern 拒绝: $.h pattern: 'ABCD' 不匹配 '^[0-9a-f]{4}$'
+[PASS] selftest.06 if/then 拒绝: $.producer const: 期望常量 'collector'，实际 'agent'
+[PASS] selftest.07 maxItems 拒绝: $.a maxItems: 元素数 1 > 0
+[PASS] selftest.08 uniqueItems 拒绝: $.a uniqueItems: 元素 1 与 0 重复
+[PASS] selftest.09 format 接受合法 RFC 3339（UTC 约束由 pattern 承担）: 通过  # format 只判断 RFC 3339 合法性；是否 UTC 由 pattern 拒绝
+[PASS] selftest.10 format 拒绝非法日历日期: $.t format: '2026-13-01T00:00:00Z' 不是 RFC 3339 date-time
+SELFTEST 10/10 PASS

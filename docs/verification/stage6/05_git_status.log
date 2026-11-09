@@ -1,0 +1,59 @@
+﻿Stage 6 workspace status (final after apply)
+time=2026-11-08T12:37:44+08:00
+--- branch ---
+main
+--- commit_count ---
+0
+--- status ---
+?? .agents/
+?? .gitattributes
+?? .gitignore
+?? AGENTS.md
+?? README.md
+?? "ResearchFlow_3.1_\351\241\271\347\233\256\347\255\226\345\210\222\344\271\246_v4.3.1_\345\256\214\346\225\264\345\274\200\345\217\221\347\211\210.docx"
+?? contracts/
+?? docs/
+?? researchflow/
+?? scripts/
+?? tests/
+--- checks ---
+venv_exists=False
+skills_gitkeep_exists=False
+profile_patch_bytes=1462
+profile_patch_sha256=6FF6F1FCB6CAE8F732F221710D9E4FFD5C6DF1E26F6EFDADE75F4B9B536159E1
+backup_bytes=1200
+backup_sha256=664CE561366D925DDA1AE382528565218ABB20072211DD36562F4D3CB894FFD8
+--- researchflow ---
+
+Name     Length
+----     ------
+.gitkeep      0
+
+
+
+--- stage6 files ---
+
+Name                         Length
+----                         ------
+00_mcp_capability.md           7261
+00_mcp_source.log              5412
+01_context7_probe.log          1388
+01_context7_probe.md           5116
+02_config_diff_proposal.md     6979
+02_config_snapshot.log          747
+03_decision.md                 5857
+03_state_sync.log              1170
+04_secret_scan.log              276
+05_git_status.log              1570
+06_apply.log                   1303
+06_apply_summary.log            483
+07_post_write_verify.log        631
+08_apply_result.md             5220
+09_state_sync_after_done.log   2362
+10_verify_script.log            632
+apply_context7_patch.py        6023
+context7_probe.py              5103
+inspect_mcp_client.py          5975
+
+
+

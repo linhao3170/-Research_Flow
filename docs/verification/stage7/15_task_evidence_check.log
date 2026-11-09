@@ -1,0 +1,69 @@
+STAGE7 TASK EVIDENCE CHECK
+STATE=D:\ResearchFlow-project\docs\state\project_state.json
+
+[T-SKILLS-001] status=DONE
+  OK   docs/verification/stage5/00_discovery.md
+  OK   docs/verification/stage5/01_structure.log
+  OK   docs/verification/stage5/02_secret_scan.log
+  OK   docs/verification/stage5/03_invocation_tests.md
+  OK   docs/verification/stage5/04_state_sync.log
+  OK   docs/verification/stage5/05_validation.log
+  OK   docs/verification/stage5/06_structure_negative.log
+  OK   docs/verification/stage5/07_repo_secret_scan.log
+  OK   docs/SKILL_CATALOG.md
+
+[T-MCP-001] status=DONE
+  OK   docs/verification/stage6/00_mcp_capability.md
+  OK   docs/verification/stage6/01_context7_probe.md
+  OK   docs/verification/stage6/02_config_diff_proposal.md
+  OK   docs/verification/stage6/03_decision.md
+  OK   docs/verification/stage6/08_apply_result.md
+  OK   docs/verification/stage6/00_mcp_source.log
+  OK   docs/verification/stage6/01_context7_probe.log
+  OK   docs/verification/stage6/02_config_snapshot.log
+  OK   docs/verification/stage6/03_state_sync.log
+  OK   docs/verification/stage6/04_secret_scan.log
+  OK   docs/verification/stage6/05_git_status.log
+  OK   docs/verification/stage6/06_apply.log
+  OK   docs/verification/stage6/06_apply_summary.log
+  OK   docs/verification/stage6/07_post_write_verify.log
+  OK   docs/verification/stage6/09_state_sync_after_done.log
+  OK   docs/verification/stage6/10_verify_script.log
+  OK   docs/verification/stage6/inspect_mcp_client.py
+  OK   docs/verification/stage6/context7_probe.py
+  OK   docs/verification/stage6/apply_context7_patch.py
+
+[T-DOCS-001] status=IN_REVIEW
+  OK   docs/reference/SOURCE_REGISTER.md
+  OK   docs/reference/CONFLICT_REPORT.md
+  OK   docs/PROJECT_OVERVIEW.md
+  OK   docs/ARCHITECTURE.md
+  OK   docs/GLOSSARY.md
+  OK   docs/DEVELOPMENT_WORKFLOW.md
+  OK   docs/MEMORY_GUIDE.md
+  OK   docs/MCP_CATALOG.md
+  OK   docs/SECURITY_POLICY.md
+  OK   docs/SKILL_CATALOG.md
+  OK   docs/verification/stage7/STAGE7_REPORT.md
+  OK   docs/verification/stage7/00_extract.log
+  OK   docs/verification/stage7/01_docx_properties.txt
+  OK   docs/verification/stage7/02_docx_body.txt
+  OK   docs/verification/stage7/03_docx_outline.txt
+  OK   docs/verification/stage7/04_docx_version_scan.txt
+  OK   docs/verification/stage7/05_docx_tables.txt
+  OK   docs/verification/stage7/07_version_strings.txt
+  OK   docs/verification/stage7/09_inventory.log
+  OK   docs/verification/stage7/06_page_map_attempt.md
+  OK   docs/verification/stage7/13_secret_scan.log
+  OK   docs/verification/stage7/14_link_check.log
+  OK   docs/verification/stage7/15_task_evidence_check.log
+  OK   docs/verification/stage7/16_final_inventory.log
+  OK   docs/verification/stage7/extract_docx.py
+  OK   docs/verification/stage7/verify_version_strings.py
+  OK   docs/verification/stage7/scan_secrets.py
+  OK   docs/verification/stage7/check_links.py
+  OK   docs/verification/stage7/check_task_evidence.py
+
+CHECKED=57
+MISSING=0
+RESULT=PASS

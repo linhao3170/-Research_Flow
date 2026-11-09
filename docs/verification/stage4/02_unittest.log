@@ -1,0 +1,38 @@
+﻿# 02_unittest
+命令: "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" -m unittest discover -s tests -v
+工作目录: D:\ResearchFlow-project
+开始时间: 2026-11-08T11:37:10+08:00
+解释器: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+---- stdout ----
+
+---- stderr ----
+test_atomic_write_leaves_no_temporary_files (test_state_sync.StateSyncTests.test_atomic_write_leaves_no_temporary_files) ... ok
+test_blocked_task_requires_blocker (test_state_sync.StateSyncTests.test_blocked_task_requires_blocker) ... ok
+test_corrupt_json_returns_nonzero (test_state_sync.StateSyncTests.test_corrupt_json_returns_nonzero) ... ok
+test_crlf_in_generated_file_fails_check (test_state_sync.StateSyncTests.test_crlf_in_generated_file_fails_check) ... ok
+test_cycle_dependency_fails (test_state_sync.StateSyncTests.test_cycle_dependency_fails) ... ok
+test_done_task_requires_test_commands_and_evidence (test_state_sync.StateSyncTests.test_done_task_requires_test_commands_and_evidence) ... ok
+test_duplicate_task_id_fails (test_state_sync.StateSyncTests.test_duplicate_task_id_fails) ... ok
+test_invalid_depends_on_fails (test_state_sync.StateSyncTests.test_invalid_depends_on_fails) ... ok
+test_invalid_phase_fails (test_state_sync.StateSyncTests.test_invalid_phase_fails) ... ok
+test_invalid_task_status_fails (test_state_sync.StateSyncTests.test_invalid_task_status_fails) ... ok
+test_manual_edit_fails_check (test_state_sync.StateSyncTests.test_manual_edit_fails_check) ... ok
+test_missing_generated_file_fails_check (test_state_sync.StateSyncTests.test_missing_generated_file_fails_check) ... ok
+test_missing_required_field_fails (test_state_sync.StateSyncTests.test_missing_required_field_fails) ... ok
+test_missing_state_file_returns_nonzero (test_state_sync.StateSyncTests.test_missing_state_file_returns_nonzero) ... ok
+test_pass_gate_without_evidence_fails (test_state_sync.StateSyncTests.test_pass_gate_without_evidence_fails) ... ok
+test_python_baseline_is_31116_64bit (test_state_sync.StateSyncTests.test_python_baseline_is_31116_64bit) ... ok
+test_render_then_check_passes (test_state_sync.StateSyncTests.test_render_then_check_passes) ... ok
+test_render_with_task_detail_passes (test_state_sync.StateSyncTests.test_render_with_task_detail_passes) ... ok
+test_repository_render_then_check_passes (test_state_sync.StateSyncTests.test_repository_render_then_check_passes) ... ok
+test_repository_state_passes (test_state_sync.StateSyncTests.test_repository_state_passes) ... ok
+test_self_dependency_fails (test_state_sync.StateSyncTests.test_self_dependency_fails) ... ok
+test_unknown_top_level_field_fails (test_state_sync.StateSyncTests.test_unknown_top_level_field_fails) ... ok
+test_valid_state_passes (test_state_sync.StateSyncTests.test_valid_state_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 3.392s
+
+OK
+---- exit code ----
+0

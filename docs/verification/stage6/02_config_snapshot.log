@@ -1,0 +1,25 @@
+﻿path=C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml
+exists=True
+bytes=1200
+sha256=664CE561366D925DDA1AE382528565218ABB20072211DD36562F4D3CB894FFD8
+line_count=43
+crlf=0 lf_only=43 last_byte=10
+contains_context7=False
+contains_mcp=False
+--- profile files ---
+
+Name                Length LastWriteTime      
+----                ------ -------------      
+cordis.patch.yml      1200 2026/11/7 22:44:53 
+cordis.yml             223 2026/11/8 10:54:01 
+package.json           211 2026/10/20 14:31:18
+pnpm-workspace.yaml     61 2026/10/20 14:31:18
+
+
+
+--- last 5 lines ---
+  name: "@deepseek-ai/dsh-agent-default-model"
+  config:
+    provider: deepseek-official
+    model: deepseek-flash
+    reasoningEffort: max

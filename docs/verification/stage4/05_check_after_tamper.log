@@ -1,0 +1,23 @@
+﻿# 05_check_after_tamper
+命令: "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" scripts\state_sync.py check
+工作目录: D:\ResearchFlow-project
+开始时间: 2026-11-08T11:37:17+08:00
+解释器: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+---- stdout ----
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=f4415b10fadbbf198f6da5a0c79043b42eac6cf58e108ebe36587f57faa4fe07
+---- stderr ----
+[FAIL] docs/PROJECT_STATE.md：内容与 JSON 渲染结果不一致
+  预期 SHA256：457c0967ec242746af9bf04f12c0cedad1152c1a6f20b434c677a32f33d9b389
+  实际 SHA256：58110011652b42a3a570bc4a9f8f8e6f8f32dec3565b0de6b635354d8106f0e0
+  --- 预期（JSON 渲染）
+  +++ 实际（docs/PROJECT_STATE.md）
+  @@ -47,3 +47,5 @@
+   ---
+   
+   本文件只反映 `project_state.json` 的当前内容，不构成开发完成声明。
+  +
+  +TAMPER-EVIDENCE-STAGE4
+检查失败：1 个生成文件与 project_state.json 不一致。
+修复方式：修改 docs/state/project_state.json 后运行 `state_sync.py render`；不要手工编辑生成文件。
+---- exit code ----
+1

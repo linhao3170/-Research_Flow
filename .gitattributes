@@ -1,0 +1,17 @@
+# ============================================================
+# ResearchFlow .gitattributes
+# 目的：固定文本换行，保证 state_sync.py check 的逐字节比较
+#       在 Windows（core.autocrlf=true）与其他环境一致。
+# ============================================================
+
+* text=auto
+
+# 生成文件、脚本、契约与文档统一 LF
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# 二进制文档不参与换行转换
+*.docx binary

@@ -1,0 +1,72 @@
+STAGE7 DOCX VERSION STRING EVIDENCE (read-only)
+PATH=D:\ResearchFlow-project\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx
+SIZE_BYTES=111209
+SHA256=9E54168FB1B553294ECB88E2E3F5C8CE878EE699FCF07E37D531A68C195CCB3A
+
+[word/document.xml]
+  token='v4.3.1' count=0
+  token='v4.3.0' count=6
+    ...2010/wordprocessingShape" mc:Ignorable="w14 wp14"> ResearchFlow 3.1 v4.3.0 <w:rFonts w:ascii=...
+    ...eastAsia="Microsoft YaHei"/> v4.3.0 · 全面升级版 <w:tblW w:type="a...
+    ...Microsoft YaHei"/> v4.3.0 全面升级版开发基线 <w:tc...
+    ...ing w:after="20"/> v4.3.0 的实质升级 <w:tblW w:type="aut...
+    ...eastAsia="Microsoft YaHei"/> v4.3.0 修订 <w:t...
+    ...l="0"/> 请先读取项目策划书《ResearchFlow 3.1 v4.3.0 全面升级版》， <w:spacing w:after="10" w:line="240" w:lineRule="aut...
+  token='v4.2' count=2
+    ...oft YaHei"/> 用户提供的 v4.2 定稿级清洗稿；保留 18 章主干、核心机制与实验体系。 </...
+    ...eastAsia="Microsoft YaHei"/> v4.2 风险/不足 <w:vAlign w:v...
+  token='4.3.1' count=0
+  token='4.3.0' count=6
+    ...010/wordprocessingShape" mc:Ignorable="w14 wp14"> ResearchFlow 3.1 v4.3.0 <w:rFonts w:ascii=...
+    ...astAsia="Microsoft YaHei"/> v4.3.0 · 全面升级版 <w:tblW w:type="a...
+    ...icrosoft YaHei"/> v4.3.0 全面升级版开发基线 <w:tc...
+    ...ng w:after="20"/> v4.3.0 的实质升级 <w:tblW w:type="aut...
+    ...astAsia="Microsoft YaHei"/> v4.3.0 修订 <w:t...
+    ...="0"/> 请先读取项目策划书《ResearchFlow 3.1 v4.3.0 全面升级版》， <w:spacing w:after="10" w:line="240" w:lineRule="aut...
+
+[word/header1.xml]
+  token='v4.3.1' count=0
+  token='v4.3.0' count=1
+    .../> ResearchFlow 3.1 | 策划书与工程开发基线 v4.3.0...
+  token='v4.2' count=0
+  token='4.3.1' count=0
+  token='4.3.0' count=1
+    ...> ResearchFlow 3.1 | 策划书与工程开发基线 v4.3.0...
+
+[word/footer1.xml]
+  token='v4.3.1' count=0
+  token='v4.3.0' count=0
+  token='v4.2' count=0
+  token='4.3.1' count=0
+  token='4.3.0' count=0
+
+[docProps/core.xml]
+  token='v4.3.1' count=0
+  token='v4.3.0' count=1
+    ...s:xsi="http://www.w3.org/2001/XMLSchema-instance"> ResearchFlow 3.1 项目策划书与工程开发基线 v4.3.0 面向 AI 实验的可信多智能体编排、动态调度与独立验证平台 ResearchFlow...
+  token='v4.2' count=0
+  token='4.3.1' count=0
+  token='4.3.0' count=1
+    ...:xsi="http://www.w3.org/2001/XMLSchema-instance"> ResearchFlow 3.1 项目策划书与工程开发基线 v4.3.0 面向 AI 实验的可信多智能体编排、动态调度与独立验证平台 ResearchFlow...
+
+[docProps/app.xml]
+  token='v4.3.1' count=0
+  token='v4.3.0' count=0
+  token='v4.2' count=0
+  token='4.3.1' count=0
+  token='4.3.0' count=0
+
+[FILENAME]
+  token='v4.3.1' count=1
+  token='v4.3.0' count=0
+  token='v4.2' count=0
+  token='4.3.1' count=1
+  token='4.3.0' count=0
+
+[EXTRACTED_TEXT 02_docx_body.txt]
+  token='v4.3.1' count=0
+  token='v4.3.0' count=6
+  token='v4.2' count=2
+  token='4.3.1' count=0
+  token='4.3.0' count=6
+

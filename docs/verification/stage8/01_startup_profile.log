@@ -1,0 +1,39 @@
+TIME=2026-11-08T13:13:54.2221227+08:00
+WORKSPACE=D:\ResearchFlow-project
+GUI_URL=http://127.0.0.1:62627
+--- PROCESS (DeepSeek Harness) ---
+
+   Id ProcessName      Path                                      StartTime         
+   -- -----------      ----                                      ---------         
+ 5896 DeepSeek Harness D:\deepseek_harness1\DeepSeek Harness.exe 2026/11/8 12:24:21
+ 6384 DeepSeek Harness D:\deepseek_harness1\DeepSeek Harness.exe 2026/11/8 12:24:21
+ 7212 DeepSeek Harness D:\deepseek_harness1\DeepSeek Harness.exe 2026/11/8 12:24:21
+13624 DeepSeek Harness D:\deepseek_harness1\DeepSeek Harness.exe 2026/11/8 12:24:21
+20368 DeepSeek Harness D:\deepseek_harness1\DeepSeek Harness.exe 2026/11/8 12:24:21
+21908 DeepSeek Harness D:\deepseek_harness1\DeepSeek Harness.exe 2026/11/8 13:13:53
+
+
+
+PROCESS_COUNT=6
+--- ENV (selected, DSH_SESSION_ID omitted) ---
+DSH_HOME=C:\Users\Administrator\.dsh
+DSH_PROFILE=desktop
+DSH_PROFILE_DIR=C:\Users\Administrator\.dsh\profiles\desktop
+DSH_WEB_URL=http://127.0.0.1:62627
+--- EXE ---
+
+
+Length        : 246343656
+LastWriteTime : 2026/11/4 17:30:40
+FullName      : D:\deepseek_harness1\DeepSeek Harness.exe
+
+
+
+
+--- GUI PROBE ---
+HTTP_STATUS=401_UNAUTHORIZED (server reachable; auth required)
+HTTP_ERROR=远程服务器返回错误: (401) 未经授权。
+--- POLICY SNAPSHOT ---
+FILE_POLICY=danger-full-access
+APPROVALS=disabled/never-ask
+POLICY_CHANGED_NOTE=Runtime context at 2026-11-08T13:10+08:00 superseded start-of-stage snapshot (workspace-write/ask). Change was user-initiated; agent did not request escalation.

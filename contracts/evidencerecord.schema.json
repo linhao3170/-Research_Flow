@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://researchflow.invalid/contracts/evidencerecord/1.0/evidencerecord.schema.json",
+  "title": "EvidenceRecord v1.0",
+  "description": "ResearchFlow 证据记录。来源：策划书附录 D.3；字段规则见 docs/design/05_CONTRACTS_AND_STATES.md §4。证据只追加，纠错用新记录引用旧 evidence_id。",
+  "$comment": "kind 枚举已于 2026-11-10 按 v1.0 现值冻结（7 值；新增成员按 MINOR，删除或改语义按 MAJOR），并把 01 §4.3 的等级语义固化为 level→kind、level→producer 的机器约束。OQ-CT-10（首条 prev_hash 约定）未裁决，本文件只要求 64 位小写十六进制，不强制创世值。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "task_id",
+    "node_id",
+    "attempt_id",
+    "event_seq",
+    "level",
+    "kind",
+    "producer",
+    "timestamp",
+    "payload_hash",
+    "prev_hash",
+    "chain_hash"
+  ],
+  "properties": {
+    "schema_version": {
+      "description": "契约版本，本版固定 1.0。",
+      "const": "1.0"
+    },
+    "evidence_id": {
+      "description": "稳定前缀 ev_ + UUID；唯一，不可复用。",
+      "type": "string",
+      "pattern": "^ev_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "task_id": {
+      "description": "所属任务；必须存在。",
+      "type": "string",
+      "pattern": "^task_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "node_id": {
+      "description": "所属节点；必须存在于任务图。",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "attempt_id": {
+      "description": "执行 attempt；必须存在且与 Executor 记录一致。",
+      "type": "string",
+      "pattern": "^attempt_[0-9]{2,}$"
+    },
+    "event_seq": {
+      "description": "任务内单调递增且唯一；缺口/回退拒绝（附录 F.1）。",
+      "type": "integer",
+      "minimum": 1
+    },
+    "level": {
+      "description": "证据等级；来源类别，不是信任分（01 §4.3）。",
+      "enum": ["E0", "E1", "E2", "E3"]
+    },
+    "kind": {
+      "description": "证据类型。v1.0 冻结 T0 最小集合（7 值）；按 MINOR 可变：新增成员升 MINOR，删除或改语义升 MAJOR。",
+      "enum": [
+        "agent_claim",
+        "tool_invocation",
+        "harness_trace",
+        "executor_launch",
+        "executor_process_exit",
+        "artifact_observed",
+        "verifier_recheck"
+      ]
+    },
+    "producer": {
+      "description": "实际写入组件；必须与等级匹配（E0–E2 为 collector，E3 为 verifier）。",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "timestamp": {
+      "description": "UTC RFC 3339 时间；允许时钟偏差但必须记录。",
+      "$ref": "#/$defs/rfc3339Utc"
+    },
+    "payload_hash": {
+      "description": "payload 哈希；必须与实际 payload 一致。",
+      "$ref": "#/$defs/sha256"
+    },
+    "artifact_refs": {
+      "description": "产物引用；引用必须存在。",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^artifact://[A-Za-z0-9][A-Za-z0-9._/-]*$"
+      }
+    },
+    "prev_hash": {
+      "description": "上一条 chain_hash；首条为约定值（OQ-CT-10 待定）。",
+      "$ref": "#/$defs/hash64"
+    },
+    "chain_hash": {
+      "description": "由规范化记录计算的链哈希。",
+      "$ref": "#/$defs/hash64"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "level": { "const": "E0" } },
+        "required": ["level"]
+      },
+      "then": {
+        "properties": {
+          "producer": { "const": "collector" },
+          "kind": { "enum": ["agent_claim"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "level": { "const": "E1" } },
+        "required": ["level"]
+      },
+      "then": {
+        "properties": {
+          "producer": { "const": "collector" },
+          "kind": { "enum": ["tool_invocation", "harness_trace"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "level": { "const": "E2" } },
+        "required": ["level"]
+      },
+      "then": {
+        "properties": {
+          "producer": { "const": "collector" },
+          "kind": {
+            "enum": ["executor_launch", "executor_process_exit", "artifact_observed"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "level": { "const": "E3" } },
+        "required": ["level"]
+      },
+      "then": {
+        "properties": {
+          "producer": { "const": "verifier" },
+          "kind": { "enum": ["verifier_recheck"] }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hash64": {
+      "description": "64 位小写十六进制；不限定创世值。",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rfc3339Utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,9})?(Z|\\+00:00)$"
+    }
+  }
+}

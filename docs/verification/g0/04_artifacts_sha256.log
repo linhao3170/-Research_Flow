@@ -1,0 +1,37 @@
+G0 ARTIFACT SHA256 (2026-11-09)
+ROOT=D:\ResearchFlow-project
+ALGORITHM=sha256  ENCODING=utf-8  EOL=lf
+
+b3601c6077f9cdd7b08ee967a561209b718dd9e0f19838559af1f2e5eeeb7186     4622  contracts/taskspec.schema.json
+c05b725d3208a62eb66d2cbf06d876b5b0d325d94c161704a1f42afe361ff84e     3495  contracts/nodespec.schema.json
+72c7395b630418490fa11e80ec67569e62f150efee56c223884f806c469db589     5209  contracts/evidencerecord.schema.json
+127f37342dfd143acb49c860df1152eb04f30b45da6b918f1ec5e6df12963d6a     4481  contracts/verificationreport.schema.json
+71abc245c32915912d51ef2861796dcb1d18facd7029587733f06fc8f0bb4e0d     3861  contracts/completioncertificate.schema.json
+7766973405a6a045f065f9186cec0ddcedb1ab9ac6fd855171fb16061df5cee3    21439  contracts/examples/manifest.json
+6969106d28c54661f759d64a6afcc80565660d2c83e2aa5093615217acb54bed     3657  contracts/README.md
+fc2ee8568d375e5181db1aa0d94294fbd92a080fb6a3a684d562c800337a1cb6    35731  scripts/validate_contracts.py
+985e7753e25948504461c077202cd3b58fc3bd2a97d842cb3fda3bc2cdfa4b47    22385  docs/verification/g0/build_examples.py
+d7facdc3a8f7820ad1f73a4a24c8c6cb44cdd9f32a99f44664e5052e6cdbf4ce     3468  docs/verification/g0/check_terms.py
+1090a50f4875da42f3e67e82593ed476dcdde262b4689f8a3067a9a878102409     2163  docs/verification/g0/check_links_g0.py
+27859f44d95acef9bc63aa49ba698a81a84deb1d4905b3ec0772886335397f83     6448  docs/verification/g0/research_versions.py
+c06ea70a1c4967b0b0991d07c1d500ddfcba6ee353b16da7cb735842aceadc61     5091  docs/verification/g0/05_git_baseline_report.md
+24bf3e619b7f4c1bf52add83192f119024b751d87cf255bab21d0c77c01b2a0f     8611  docs/verification/g0/09_dependency_matrix.md
+967423e51ac5f89d3ff41e0aefd8b2189b82b99b2e1154c38b9536b862cde167    27229  docs/G0/01_BASELINE_AND_TERMS.md
+062a964926e23a1c21c8d8d51fdf60692462f3150dabbb4b79ece4c051d999f0    24917  docs/PRD/02_REQUIREMENT_TRACEABILITY.md
+8f31a300f4044d497028d3ad84754dec4aa23df3e988c1186e6149cde3710017    16034  docs/PRD/03_PRD_T0.md
+de9807415cf9faf37cea390b888adc5cd86e5e3563b65868622ae4441d3e142b    18077  docs/design/04_ARCHITECTURE.md
+890e1cdb5e32ea36a374450c906522338873b58e7d1b315f1ccb1898628b802a    39244  docs/design/05_CONTRACTS_AND_STATES.md
+5828f2ea19629f39716054b581a2c70deb961cf60efbed63c7149c0ee3a28ec1    24108  docs/design/06_DATA_AND_API.md
+dc62ddbab5100232c5e6de7bce8619e49013e342893dd445e49296f163f59556    22792  docs/design/07_T0_PLAN_AND_GATES.md
+a4c8b1712c0a927a9f4c7587c38b713164c80ec5bad82982fcae93913eafc1d8    18115  docs/G0/08_OPEN_QUESTIONS_AND_FREEZE.md
+be42ce73692e28f53b976943b021cc2b5dbf2cccf5646a6145298fb2838b0d7f     2133  docs/ADR/README.md
+de764d8efe72aa0bf0797546200384586271e2bb7dfbc0840399dee2a90605ea     2342  docs/ADR/ADR-001-invalidated-node-state.md
+f20fdc39ba385ced95463e9f2c776a5b91b88164e5204ee18c20900a4ef0c4f7     2386  docs/ADR/ADR-002-dataset-ref-object.md
+39c8193b8a67276bb8056026eb989feda493194e5d98f9fdecdc7aab1a1e2d91     2747  docs/ADR/ADR-003-schema-version-and-issued-at.md
+a8d38bca99d62e126524eb860e87cc3b06a4a73b908c881ec4f17530e34c423c     3428  docs/ADR/ADR-004-t0-recovery-boundary.md
+69830ff0bd323a51c2f6b57d41e46a1acd14a2742756d081b3470b8f5a4af3b3     2597  docs/ADR/ADR-005-failed-transition-audit.md
+a5af7436a03c024efcc82ea484aa8346a7a11c763d2f60275defc757b0545dbb     2666  docs/ADR/ADR-006-t0-api-and-loopback-auth.md
+630d963494ba70444367ab122fc5fec43bb5bd43e99dc7f77ad90e9f79fd2e2b     1884  docs/ADR/ADR-007-t0-workbench-scope.md
+4bfb212e88c98a782d17f831e149339a533c4b9b212f6175f80dc3fb98347caa     3265  docs/verification/stage7/SUPERSEDED_NOTICE.md
+ee2e202a75fc6447ea6a3c4594dab95b2fae2c19440749bb1261e229495897e0    38060  docs/CHANGELOG_DEV.md
+02fec8911fbd859b6bc0263f5b238097adb310f8d9a3311353aadc5469c87e77    39866  docs/SESSION_HANDOFF.md

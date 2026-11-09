@@ -1,0 +1,166 @@
+DEPENDENCY RESEARCH (read-only; no install, no venv, no lock)
+TARGET_PYTHON=3.11.16  PLATFORM=win_amd64
+
+##### fastapi
+latest=0.162.2 latest_requires_python='>=3.10'
+chosen=0.162.2 requires_python='>=3.10'
+wheel=fastapi-0.162.2-py3-none-any.whl
+wheel_size_mb=0.14
+dep=starlette>=0.46.0
+dep=pydantic>=2.9.0
+dep=typing-extensions>=4.8.0
+dep=typing-inspection>=0.4.2
+dep=annotated-doc>=0.0.2
+dep=opentelemetry-api>=1.44.0
+
+##### pydantic
+latest=2.14.3 latest_requires_python='>=3.10'
+chosen=2.14.3 requires_python='>=3.10'
+wheel=pydantic-2.14.3-py3-none-any.whl
+wheel_size_mb=0.47
+dep=annotated-types>=0.6.0
+dep=pydantic-core==2.50.4
+dep=typing-extensions>=4.16.0
+dep=typing-inspection>=0.4.4
+
+##### networkx
+latest=3.7 latest_requires_python='!=3.14.1,>=3.12'
+chosen=3.6.1 requires_python='!=3.14.1,>=3.11'
+wheel=networkx-3.6.1-py3-none-any.whl
+wheel_size_mb=1.97
+skipped=3.7 reason=requires_python '!=3.14.1,>=3.12' 不允许 3.11
+
+##### pandas
+latest=3.1.1 latest_requires_python='>=3.11'
+chosen=3.1.1 requires_python='>=3.11'
+wheel=pandas-3.1.1-cp311-cp311-win_amd64.whl
+wheel_size_mb=10.47
+dep=numpy>=2.0.2; python_version < "3.14"
+dep=numpy>=2.3.3; python_version >= "3.14"
+dep=python-dateutil>=2.9.0
+dep=tzdata; sys_platform == "win32"
+dep=tzdata; sys_platform == "emscripten"
+
+##### scikit-learn
+latest=1.9.1 latest_requires_python='>=3.11'
+chosen=1.9.1 requires_python='>=3.11'
+wheel=scikit_learn-1.9.1-cp311-cp311-win_amd64.whl
+wheel_size_mb=7.94
+dep=numpy>=1.24.1
+dep=scipy>=1.10.0
+dep=joblib>=1.4.0
+dep=narwhals>=2.0.1
+dep=threadpoolctl>=3.5.0
+
+##### cryptography
+latest=50.0.2 latest_requires_python='!=3.9.0,!=3.9.1,>=3.9'
+chosen=50.0.2 requires_python='!=3.9.0,!=3.9.1,>=3.9'
+wheel=cryptography-50.0.2-cp311-abi3-win_amd64.whl
+wheel_size_mb=3.65
+dep=cffi>=2.0.0; platform_python_implementation != "PyPy"
+dep=typing-extensions>=4.13.2; python_full_version < "3.11"
+
+##### streamlit
+latest=1.67.0 latest_requires_python='>=3.11'
+chosen=1.67.0 requires_python='>=3.11'
+wheel=streamlit-1.67.0-py3-none-any.whl
+wheel_size_mb=10.72
+dep=altair!=5.4.0,!=5.4.1,<7,>=5.0.0
+dep=click<9,>=7.0
+dep=numpy<3,>=1.25.0
+dep=packaging>=20
+dep=pandas<4,>=1.5.3
+dep=pillow<14,>=9.2.0
+dep=pydeck<1,>=0.8.0b4
+dep=protobuf<8,>=5.26.1
+dep=pyarrow!=25.0.0,<27,>=12.0.0
+dep=requests<3,>=2.27
+dep=typing-extensions<5,>=4.10.0
+dep=starlette<2,>=0.46.0
+dep=uvicorn<1,>=0.30.0
+dep=anyio<5,>=4.0.0
+dep=python-multipart<1,>=0.0.10
+dep=websockets<18,>=12.0.0
+dep=itsdangerous<3,>=2.1.2
+dep=watchdog<8,>=2.1.5; platform_system != "Darwin"
+
+##### pytest
+latest=9.2.0 latest_requires_python='>=3.10'
+chosen=9.2.0 requires_python='>=3.10'
+wheel=pytest-9.2.0-py3-none-any.whl
+wheel_size_mb=0.39
+dep=colorama>=0.4; sys_platform == "win32"
+dep=exceptiongroup>=1; python_version < "3.11"
+dep=iniconfig>=2
+dep=packaging>=24
+dep=pluggy<2,>=1.6
+dep=pygments>=2.15
+dep=tomli>=2; python_version < "3.11"
+
+##### uv
+latest=0.13.7 latest_requires_python='>=3.8'
+chosen=0.13.7 requires_python='>=3.8'
+wheel=uv-0.13.7-py3-none-win_amd64.whl
+wheel_size_mb=14.62
+
+##### numpy
+latest=2.5.4 latest_requires_python='>=3.12'
+chosen=2.4.6 requires_python='>=3.11'
+wheel=numpy-2.4.6-cp311-cp311-win_amd64.whl
+wheel_size_mb=12.02
+skipped=2.5.4 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+skipped=2.5.3 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+skipped=2.5.2 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+skipped=2.5.1 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+skipped=2.5.0 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+
+##### scipy
+latest=1.18.1 latest_requires_python='>=3.12'
+chosen=1.17.1 requires_python='>=3.11'
+wheel=scipy-1.17.1-cp311-cp311-win_amd64.whl
+wheel_size_mb=34.91
+skipped=1.18.1 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+skipped=1.18.0 reason=requires_python '>=3.12' 不允许 3.11; 无 win_amd64 兼容 wheel
+dep=numpy<2.7,>=1.26.4
+
+##### pydantic-core
+latest=2.50.4 latest_requires_python='>=3.10'
+chosen=2.50.4 requires_python='>=3.10'
+wheel=pydantic_core-2.50.4-cp311-cp311-win_amd64.whl
+wheel_size_mb=2.15
+dep=typing-extensions>=4.16.0
+
+##### cffi
+latest=2.1.1 latest_requires_python='>=3.10'
+chosen=2.1.1 requires_python='>=3.10'
+wheel=cffi-2.1.1-cp311-cp311-win_amd64.whl
+wheel_size_mb=0.18
+dep=pycparser; implementation_name != "PyPy"
+
+##### starlette
+latest=1.10.0 latest_requires_python='>=3.11'
+chosen=1.10.0 requires_python='>=3.11'
+wheel=starlette-1.10.0-py3-none-any.whl
+wheel_size_mb=0.08
+dep=anyio<5,>=4.0.0
+dep=typing-extensions>=4.10.0; python_version < "3.13"
+
+##### pyarrow
+latest=26.0.1 latest_requires_python='>=3.11'
+chosen=26.0.1 requires_python='>=3.11'
+wheel=pyarrow-26.0.1-cp311-cp311-win_amd64.whl
+wheel_size_mb=27.69
+
+##### pillow
+latest=13.0.0 latest_requires_python='>=3.11'
+chosen=13.0.0 requires_python='>=3.11'
+wheel=pillow-13.0.0-cp311-cp311-win_amd64.whl
+wheel_size_mb=6.94
+
+##### protobuf
+latest=7.36.2 latest_requires_python='>=3.10'
+chosen=7.36.2 requires_python='>=3.10'
+wheel=protobuf-7.36.2-cp310-abi3-win_amd64.whl
+wheel_size_mb=0.44
+
+RESULT=OK

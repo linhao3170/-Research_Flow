@@ -1,0 +1,8 @@
+TIME=2026-11-08T13:35:46.7308130+08:00
+--- DESIGN BASELINE (project-context.md) ---
+32:| 运行环境 | Windows 11 单机；16GB 内存；CPU-only |
+33:| 并发 | 上限 2；必须实测后才能宣称达成 |
+97:- 不做 GPU 集群、分布式执行、多机高可用。
+123:- 16GB 内存与“并发 2”是设计约束；并发能力尚未实测，不得宣称已达成。
+--- CLAIMS OF VERIFIED CONCURRENCY ---
+CLAIM_HITS=0

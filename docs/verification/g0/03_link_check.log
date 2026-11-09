@@ -1,0 +1,3 @@
+G0 LINK CHECK (read-only) ROOT=D:\ResearchFlow-project
+FILES=20 LINKS_CHECKED=77 BROKEN=0
+RESULT=PASS

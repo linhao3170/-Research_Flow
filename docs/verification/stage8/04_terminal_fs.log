@@ -1,0 +1,21 @@
+TIME=2026-11-08T13:14:32.3316874+08:00
+WORKSPACE=D:\ResearchFlow-project
+--- READ-ONLY COMMANDS ---
+COMMAND=Get-Location
+OUTPUT=D:\ResearchFlow-project
+COMMAND=& "C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe" --version
+OUTPUT=Python 3.11.16
+EXIT=0
+COMMAND=git status --porcelain=v1
+EXIT=0
+OUTPUT_LINES=11
+COMMAND=Get-ChildItem docs
+OUTPUT=ADR, design, memory, PRD, reference, state, verification
+--- WORKSPACE WRITE/READ/DELETE (own temp file) ---
+WRITE_EXISTS=True
+READ_BACK=WORKSPACE_WRITE_OK
+SHA256=96D997C23E487C5461686CF1ACB752018F74D5BB481B4F1C6E028B8E299B6B7C
+CLEANUP_OK=True
+--- OUT-OF-WORKSPACE WRITE ---
+NOT_ATTEMPTED: current policy is danger-full-access; an out-of-workspace write would be an unauthorized modification, so no attempt was made.
+CONFINEMENT_VERDICT=NOT_ENFORCED_BY_CURRENT_POLICY

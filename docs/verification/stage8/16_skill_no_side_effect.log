@@ -1,0 +1,9 @@
+TIME=2026-11-08T13:15:37.4404516+08:00
+TEST=3 skill invocations with no business side effects
+SKILLS=researchflow-evidence-security,researchflow-contracts-api,researchflow-dag-state-machine
+BEFORE_FILE_COUNT=167
+BEFORE_AGGREGATE_SHA256=22d26124f98fab861dd4909f973c13839b8188bb0981be0d95d8ec29a9edc972
+AFTER_FILE_COUNT=167
+AFTER_AGGREGATE_SHA256=22d26124f98fab861dd4909f973c13839b8188bb0981be0d95d8ec29a9edc972
+MATCH=True
+NOTE=The log file itself was written after both snapshots, so it is not part of the comparison.

@@ -1,0 +1,54 @@
+﻿# 00_environment
+采集时间: 2026-11-08T11:32:37+08:00
+工作目录: D:\ResearchFlow-project
+
+## OS / 硬件
+OS: Microsoft Windows 11 专业版 10.0.22631 Build 22631 64 位
+RAM_GB: 15.74
+CPU: 13th Gen Intel(R) Core(TM) i7-13620H / cores=10 / logical=16
+Disk:
+  C: free=259.08GB used=141.61GB
+  D: free=439.95GB used=60.05GB
+
+## Python 基线
+version: 3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]
+executable: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+arch: 64bit
+pip 26.2.1 from C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\Lib\site-packages\pip (python 3.11)
+
+venv_exists: False
+
+## 禁止使用的解释器
+PATH python: C:\Program Files\Python312\python.exe
+Python 3.12.0
+py -3.11:
+version: 3.11.0 (main, Oct 24 2022, 18:13:38) [MSC v.1933 32 bit (Intel)]
+executable: C:\Program Files (x86)\Python311-32\python.exe
+arch: 32bit
+
+## 工具链
+uv 0.12.16 (761ff1379 2026-09-17 x86_64-pc-windows-msvc)
+git version 2.46.0.windows.1
+git_branch: main
+git_commit_count: 0
+git_user_name: <empty>
+git_user_email: <empty>
+git_core_autocrlf: true
+v20.17.0
+pnpm_path: C:\Users\Administrator\AppData\Roaming\npm\pnpm.cmd
+12.5.1
+powershell: 5.1.22621.2506
+
+## DSH / AGENTS
+DSH_HOME: C:\Users\Administrator\.dsh
+DSH_PROFILE: desktop
+DSH_PROFILE_DIR: C:\Users\Administrator\.dsh\profiles\desktop
+DSH_AGENTS_HOME: ''
+global_AGENTS_exists: False
+project_AGENTS_exists: True
+standard preset mount:
+  name: '@deepseek-ai/dsh-agent-instructions'
+  config:
+    maxBytes: 65536
+
+说明：项目 AGENTS 已在当前会话实际加载，且重写后收到 Updated instructions 刷新；详见 SESSION_HANDOFF / AGENTS。

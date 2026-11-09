@@ -1,0 +1,157 @@
+STAGE7 DOCX OUTLINE (heading styles / outline levels / TOC paragraphs)
+PATH=D:\ResearchFlow-project\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx
+SHA256=9E54168FB1B553294ECB88E2E3F5C8CE878EE699FCF07E37D531A68C195CCB3A
+
+P0011	style=heading 1	outline=None	文档控制与升级说明
+P0013	style=heading 2	outline=None	v4.3.0 的实质升级
+P0015	style=heading 1	outline=None	摘要
+P0020	style=heading 1	outline=None	阅读导航
+P0023	style=heading 1	outline=None	第1章  项目概述与参赛定位
+P0025	style=heading 2	outline=None	1.1 一句话定位
+P0028	style=heading 2	outline=None	1.2 赛道能力映射
+P0031	style=heading 2	outline=None	1.3 通知中可确认的赛事信息
+P0035	style=heading 2	outline=None	1.4 三条核心技术主线
+P0037	style=heading 2	outline=None	1.5 用户与价值
+P0040	style=heading 2	outline=None	1.6 状态声明
+P0043	style=heading 1	outline=None	第2章  背景与立项依据
+P0044	style=heading 2	outline=None	2.1 Agent 从回答走向执行
+P0046	style=heading 2	outline=None	2.2 政策与教育背景
+P0048	style=heading 2	outline=None	2.3 学术背景与相关工作
+P0050	style=heading 2	outline=None	2.4 教学场景：过程质量保障
+P0054	style=heading 1	outline=None	第3章  问题定义、需求分析与威胁模型
+P0055	style=heading 2	outline=None	3.1 核心判定对象
+P0059	style=heading 2	outline=None	3.2 虚假完成的七种形态
+P0061	style=heading 2	outline=None	3.3 用户需求
+P0063	style=heading 2	outline=None	3.4 威胁模型与信任边界
+P0065	style=heading 2	outline=None	3.5 三个可靠性命题
+P0069	style=heading 2	outline=None	3.6 可重复性承诺
+P0072	style=heading 1	outline=None	第4章  建设目标、指标体系与验收口径
+P0073	style=heading 2	outline=None	4.1 总体目标
+P0075	style=heading 2	outline=None	4.2 核心验收指标
+P0077	style=heading 2	outline=None	4.3 统计纪律
+P0084	style=heading 2	outline=None	4.4 明确不做
+P0093	style=heading 1	outline=None	第5章  总体方案与系统架构
+P0094	style=heading 2	outline=None	5.1 五条不可协商的架构原则
+P0096	style=heading 2	outline=None	5.2 六层架构
+P0098	style=heading 2	outline=None	5.3 数据流
+P0114	style=heading 2	outline=None	5.4 运行进程与资源预算
+P0117	style=heading 2	outline=None	5.5 技术选型
+P0119	style=heading 2	outline=None	5.6 架构取舍
+P0125	style=heading 2	outline=None	5.7 Domain Pack
+P0128	style=heading 1	outline=None	第6章  功能架构、状态机与接口设计
+P0129	style=heading 2	outline=None	6.1 功能组与优先级
+P0131	style=heading 2	outline=None	6.2 四类状态机
+P0134	style=heading 2	outline=None	6.3 消息协议
+P0136	style=heading 2	outline=None	6.4 REST API
+P0138	style=heading 2	outline=None	6.5 工作台六页
+P0140	style=heading 2	outline=None	6.6 配置文件
+P0152	style=heading 2	outline=None	6.7 测试策略
+P0155	style=heading 1	outline=None	第7章  核心机制一：证据门控 EG 与完成凭证
+P0156	style=heading 2	outline=None	7.1 E0–E3 证据等级
+P0158	style=heading 2	outline=None	7.2 Gate 规则
+P0169	style=heading 2	outline=None	7.3 哈希链与 Merkle
+P0171	style=heading 2	outline=None	7.4 完成凭证与报告
+P0173	style=heading 2	outline=None	7.5 JCS + Ed25519 规范
+P0179	style=heading 2	outline=None	7.6 密钥生命周期与锚定
+P0181	style=heading 2	outline=None	7.7 失败边界
+P0188	style=heading 1	outline=None	第8章  核心机制二：DC、SPA、安全恢复与动态调度
+P0189	style=heading 2	outline=None	8.1 四个决策组件
+P0191	style=heading 2	outline=None	8.2 DC：确定性资格凭证
+P0195	style=heading 2	outline=None	8.3 SPA：省略溯源凭证
+P0201	style=heading 2	outline=None	8.4 定向恢复算法
+P0215	style=heading 2	outline=None	8.5 Ready Scheduler
+P0219	style=heading 2	outline=None	8.6 Governor 资源感知
+P0221	style=heading 2	outline=None	8.7 VAS 验证感知调度
+P0230	style=heading 2	outline=None	8.8 四种验证预算策略
+P0232	style=heading 2	outline=None	8.9 图变更审批与降级
+P0235	style=heading 1	outline=None	第9章  独立验证、可重复执行与第三方复核
+P0236	style=heading 2	outline=None	9.1 TLV 三级验证
+P0238	style=heading 2	outline=None	9.2 L2 数据泄漏五规则
+P0240	style=heading 2	outline=None	9.3 L3 独立重执行步骤
+P0246	style=heading 2	outline=None	9.4 等价性判定
+P0248	style=heading 2	outline=None	9.5 Evidence Bundle
+P0253	style=heading 1	outline=None	第10章  多智能体团队、角色契约与协作证据
+P0254	style=heading 2	outline=None	10.1 六个逻辑角色
+P0257	style=heading 2	outline=None	10.2 权限矩阵
+P0259	style=heading 2	outline=None	10.3 协作证据图 CPG
+P0261	style=heading 2	outline=None	10.4 Role-off 与成本控制
+P0268	style=heading 1	outline=None	第11章  知识库、Self-Loop 与反馈优化
+P0269	style=heading 2	outline=None	11.1 五类知识单元
+P0271	style=heading 2	outline=None	11.2 KnowledgeUnit Schema
+P0278	style=heading 2	outline=None	11.3 五种绑定
+P0280	style=heading 2	outline=None	11.4 知识治理
+P0286	style=heading 2	outline=None	11.5 FOL 三层反馈环
+P0289	style=heading 2	outline=None	11.6 R1–R3 实验
+P0292	style=heading 1	outline=None	第12章  ResearchFlow-Bench 与实验验证协议
+P0293	style=heading 2	outline=None	12.1 基准原则
+P0299	style=heading 2	outline=None	12.2 核心 60 任务
+P0301	style=heading 2	outline=None	12.3 18 类攻击族
+P0303	style=heading 2	outline=None	12.4 统计效度升级
+P0307	style=heading 2	outline=None	12.5 四方案对照
+P0310	style=heading 2	outline=None	12.6 消融和补充实验
+P0312	style=heading 2	outline=None	12.7 iso-budget 与结果模板
+P0320	style=heading 1	outline=None	第13章  差异化定位、Harness 对标与创新点
+P0322	style=heading 2	outline=None	13.1 对标原则
+P0326	style=heading 2	outline=None	13.2 首适配器：DeepSeek Harness Cordis
+P0329	style=heading 2	outline=None	13.3 五条核心创新点
+P0331	style=heading 2	outline=None	13.4 创新表述纪律
+P0338	style=heading 1	outline=None	第14章  应用场景、主线演示与产教融合价值
+P0340	style=heading 2	outline=None	14.1 主应用场景
+P0342	style=heading 2	outline=None	14.2 主线 DAG
+P0362	style=heading 2	outline=None	14.3 现场故障注入
+P0364	style=heading 2	outline=None	14.4 课程核查流程
+P0370	style=heading 2	outline=None	14.5 第二领域包
+P0372	style=heading 2	outline=None	14.6 落地凭证
+P0375	style=heading 1	outline=None	第15章  技术可行性、开发路线与质量门禁
+P0377	style=heading 2	outline=None	15.1 可行性判断
+P0379	style=heading 2	outline=None	15.2 T0/T1/T2 交付阶段
+P0381	style=heading 2	outline=None	15.3 质量门禁
+P0383	style=heading 2	outline=None	15.4 技术栈与环境
+P0385	style=heading 2	outline=None	15.5 开发顺序
+P0396	style=heading 2	outline=None	15.6 推荐仓库结构
+P0407	style=heading 2	outline=None	15.7 Definition of Done
+P0414	style=heading 1	outline=None	第16章  组织协作、职责分工与资源预算
+P0417	style=heading 2	outline=None	16.1 资源预算科目
+P0424	style=heading 1	outline=None	第17章  风险、合规、伦理与知识产权
+P0426	style=heading 2	outline=None	17.1 安全边界
+P0428	style=heading 2	outline=None	17.2 数据伦理
+P0434	style=heading 2	outline=None	17.3 AI 使用、IP 与开源
+P0436	style=heading 2	outline=None	17.4 五条边界声明
+P0443	style=heading 1	outline=None	第18章  预期成果、验收交付与结论
+P0445	style=heading 2	outline=None	18.1 最终验收条件
+P0457	style=heading 1	outline=None	附录 A  赛事要求—项目功能—验收证据追踪矩阵
+P0462	style=heading 1	outline=None	附录 B  创新点—现有技术—差异化证据矩阵
+P0466	style=heading 1	outline=None	附录 C  需求追踪与优先级清单
+P0468	style=heading 2	outline=None	C.1 非功能需求（NFR）
+P0471	style=heading 1	outline=None	附录 D  核心数据契约与 Schema 示例
+P0473	style=heading 2	outline=None	D.1 TaskSpec
+P0498	style=heading 2	outline=None	D.2 NodeSpec
+P0510	style=heading 2	outline=None	D.3 EvidenceRecord
+P0527	style=heading 2	outline=None	D.4 VerificationReport 与 CompletionCertificate
+P0561	style=heading 2	outline=None	D.5 DC 与 SPA 记录
+P0573	style=heading 2	outline=None	D.6 Schema 约束
+P0581	style=heading 1	outline=None	附录 E  API 请求样例、错误码与幂等规则
+P0582	style=heading 2	outline=None	E.1 创建任务
+P0601	style=heading 2	outline=None	E.2 发起验证与读取凭证
+P0623	style=heading 2	outline=None	E.3 错误码表
+P0625	style=heading 2	outline=None	E.4 幂等与重试规则
+P0632	style=heading 1	outline=None	附录 F  状态机迁移表与事件顺序
+P0634	style=heading 2	outline=None	F.1 事件顺序与不变量
+P0641	style=heading 2	outline=None	F.2 核心不变量
+P0644	style=heading 1	outline=None	附录 G  基准任务格式、预注册与统计报告模板
+P0645	style=heading 2	outline=None	G.1 单个 BenchCase
+P0658	style=heading 2	outline=None	G.2 预注册清单
+P0660	style=heading 2	outline=None	G.3 结果记录字段
+P0667	style=heading 2	outline=None	G.4 统计报告必须包含
+P0677	style=heading 1	outline=None	附录 H  现场演示脚本与答辩问题库
+P0678	style=heading 2	outline=None	H.1 建议 8 分钟演示流程
+P0680	style=heading 2	outline=None	H.2 现场备份策略
+P0686	style=heading 2	outline=None	H.3 高概率答辩问题
+P0689	style=heading 1	outline=None	附录 I  可直接交给 Codex / WorkBuddy 的开发总指令
+P0691	style=heading 2	outline=None	I.1 第一步：只读审计与计划模式
+P0706	style=heading 2	outline=None	I.2 第二步：T0 实施指令
+P0724	style=heading 2	outline=None	I.3 第三步：T1/T2 扩展指令
+P0738	style=heading 2	outline=None	I.4 开发代理每轮交付格式
+P0741	style=heading 1	outline=None	附录 J  T0 开发启动清单与逐项验收表
+P0746	style=heading 1	outline=None	附录 K  标准、技术文档与参考资料清单
+P0749	style=heading 2	outline=None	K.1 开发前必须归档

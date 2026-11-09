@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://researchflow.invalid/contracts/verificationreport/1.0/verificationreport.schema.json",
+  "title": "VerificationReport v1.0",
+  "description": "ResearchFlow 验证报告。来源：策划书附录 D.4；字段规则见 docs/design/05_CONTRACTS_AND_STATES.md §5。schema_version 由用户 2026-11-09 决议补入（ADR-003）；签名载荷必须包含 schema_version。",
+  "$comment": "l1/l2/l3_status 枚举已于 2026-11-10 按 v1.0 现值冻结（PASS/FAIL/SKIP/NOT_RUN 四值；新增成员按 MINOR，删除或改语义按 MAJOR）。覆盖率算术（passed<=required、missing==required-passed）与 VERIFIED⇒missing==0 无法用 JSON Schema 表达，由 semantic 检查 SEM-VR-01/02 承担；L3 覆盖阈值来自规则集，属 Gate 职责，不在本文件。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "task_id",
+    "final_state",
+    "l1_status",
+    "l2_status",
+    "l3_status",
+    "required_check_coverage",
+    "ruleset_hash",
+    "evidence_root",
+    "l3_coverage",
+    "issued_at",
+    "key_id",
+    "signature"
+  ],
+  "properties": {
+    "schema_version": {
+      "description": "契约版本，本版固定 1.0；必须进入签名载荷。",
+      "const": "1.0"
+    },
+    "report_id": {
+      "description": "稳定前缀 report_ + UUID；唯一。",
+      "type": "string",
+      "pattern": "^report_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^task_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "final_state": {
+      "description": "四态；仅 VERIFIED 可签发凭证（附录 D.6 / P0133）。",
+      "enum": ["VERIFIED", "PARTIAL", "FAILED", "BLOCKED"]
+    },
+    "l1_status": {
+      "description": "过程完整性结论。v1.0 冻结四值；按 MINOR 可变：新增成员升 MINOR，删除或改语义升 MAJOR。",
+      "enum": ["PASS", "FAIL", "SKIP", "NOT_RUN"]
+    },
+    "l2_status": {
+      "description": "结果自洽结论。v1.0 冻结四值；按 MINOR 可变：新增成员升 MINOR，删除或改语义升 MAJOR。",
+      "enum": ["PASS", "FAIL", "SKIP", "NOT_RUN"]
+    },
+    "l3_status": {
+      "description": "独立重执行结论。v1.0 冻结四值；按 MINOR 可变；必须与 l3_coverage 一致。",
+      "enum": ["PASS", "FAIL", "SKIP", "NOT_RUN"]
+    },
+    "required_check_coverage": {
+      "description": "必检项覆盖计数。算术不变量由 SEM-VR-01 校验。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "passed", "missing"],
+      "properties": {
+        "required": {
+          "description": "规则集声明的必检项总数。",
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed": {
+          "description": "覆盖并通过的必检项数；不得大于 required。",
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing": {
+          "description": "缺口数；必须等于 required - passed。",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ruleset_hash": {
+      "description": "签发时使用的规则版本；必须与 Gate 一致。",
+      "$ref": "#/$defs/sha256"
+    },
+    "evidence_root": {
+      "description": "证据 Merkle 根；必须与证据链计算一致。",
+      "$ref": "#/$defs/sha256"
+    },
+    "l3_coverage": {
+      "description": "报告指标来源节点的 L3 覆盖，闭区间 [0,1]；阈值由规则集决定。",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "issued_at": {
+      "description": "签发时间，UTC RFC 3339；不得早于证据时间。",
+      "$ref": "#/$defs/rfc3339Utc"
+    },
+    "key_id": {
+      "description": "签名密钥标识；必须存在且未撤销。",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "signature": {
+      "description": "Ed25519 签名，base64；载荷见 05 §1.5。",
+      "type": "string",
+      "minLength": 4,
+      "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rfc3339Utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,9})?(Z|\\+00:00)$"
+    }
+  }
+}

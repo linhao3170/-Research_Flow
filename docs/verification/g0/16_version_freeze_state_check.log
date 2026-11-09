@@ -1,0 +1,8 @@
+﻿COMMAND: & $py -X utf8 scripts/state_sync.py check
+PYTHON: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+EXIT: 0
+
+[OK] docs/PROJECT_STATE.md  sha256=5ed583c6db7c73e4cc8e6cb9f8bb2ff4cd1033a28e8454020aa66eee528ff77e
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=421c8c9989f72676afa36b0b3a08a4c2da1f3b4a47bdad790f80fc2852c6e7dc
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+

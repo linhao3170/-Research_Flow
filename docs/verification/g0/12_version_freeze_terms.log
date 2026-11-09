@@ -1,0 +1,183 @@
+﻿COMMAND: & $py -X utf8 docs/verification/g0/check_terms.py
+PYTHON: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+EXIT: 0
+
+G0 TERM CONSISTENCY CHECK (read-only)
+ROOT=D:\ResearchFlow-project
+FILES=docs/PRD/02_REQUIREMENT_TRACEABILITY.md,docs/PRD/03_PRD_T0.md,docs/design/04_ARCHITECTURE.md,docs/design/05_CONTRACTS_AND_STATES.md,docs/design/06_DATA_AND_API.md,docs/design/07_T0_PLAN_AND_GATES.md
+
+file                                        schema_version    INVALIDATED       plan_hash         dataset_ref       
+--------------------------------------------------------------------------------------------------------------------
+docs/PRD/02_REQUIREMENT_TRACEABILITY.md     2                 1                 0                 1                 
+docs/PRD/03_PRD_T0.md                       3                 4                 0                 0                 
+docs/design/04_ARCHITECTURE.md              0                 2                 0                 0                 
+docs/design/05_CONTRACTS_AND_STATES.md      30                15                11                12                
+docs/design/06_DATA_AND_API.md              6                 1                 14                9                 
+docs/design/07_T0_PLAN_AND_GATES.md         0                 7                 7                 0                 
+
+OCCURRENCES
+
+[docs/PRD/02_REQUIREMENT_TRACEABILITY.md] schema_version = 2
+  L6: > 候选期 v0.2 变更：`FR-008` 验收方法/证据列补 `schema_version`（const `"1.0"`）、证书 `issued_at` 与签名载荷覆盖，并引用 `contracts/` 与 72 例中的对应反例；§4.4 的 `RecoveryPlan` 行同步为已决。**FR 编号、优先级、阶段、阈值均未改**。
+  L69: | `FR-008` | 附录 C / TABLE 67 R09 / P0466；§7.4 / TABLE 32；§7.5 | 签发/验签报告与完成凭证。 | P0 | T0 | Signing / Verifier | FR-006、FR-007；NFR-05 | 入：VerificationReport、证据根、规则版本、私钥；出：签名报告、CompletionCertificate、验签结果；非 VERIFIED 不签 | 非 V…
+
+[docs/PRD/02_REQUIREMENT_TRACEABILITY.md] INVALIDATED = 1
+  L71: | `FR-010` | 附录 C / TABLE 67 R11 / P0466；§8.4 / P0201–P0214；附录 F / TABLE 70 | 恢复计划与失效传播。 | P0 | T0 最小 + T1 完整 | Recovery / StateMachine | T0：FR-002、FR-003、FR-004、FR-005、FR-006；T1 完整另依 FR-011 | T0：入 上游变化/失效节点 + DAG/证据；出 失…
+
+[docs/PRD/02_REQUIREMENT_TRACEABILITY.md] dataset_ref = 1
+  L62: | `FR-001` | 附录 C / TABLE 67 R02 / P0466；§6.4 / TABLE 28；附录 E.1 | 创建任务并校验输入 Schema。 | P0 | T0 | API / Contracts | NFR-03 | 入：TaskSpec（task_id、goal、dataset_ref、template_id、parameters、ruleset_hash、limits）；出：持久化任务、校验错误（422）…
+
+[docs/PRD/03_PRD_T0.md] schema_version = 3
+  L6: > 候选期 v0.2 变更：`US-T0-13` 与其 §3.1 第 9 步同步补 `schema_version`（const `"1.0"`）、证书 `issued_at`、签名载荷覆盖；**故事范围、边界与验收阈值未改**。
+  L83: | `US-T0-13` | 平台集成方 | 作为集成方，我希望只有 `VERIFIED` 才签发凭证，以便凭证可信 | `VERIFIED` 报告签发报告与证书；报告与证书均含 `schema_version`（const `"1.0"`）与 `issued_at`，签名载荷含 `schema_version`、规则版本/证据根/状态 | `PARTIAL`/`FAILED`/`BLOCKED` 不签发；改报告状态、换公钥、破签名验签…
+  L125: | 9 | 签发 | `VERIFIED` 报告 + 证书；两者含 `schema_version`/`issued_at`，签名载荷含 `schema_version`、规则版本/证据根/状态 | `fr-008/certificate.json` |
+
+[docs/PRD/03_PRD_T0.md] INVALIDATED = 4
+  L24: - 状态迁移守卫与 `INVALIDATED` 细节：见 ⑤。
+  L48: | 失效传播 | 上游变化使后代 `INVALIDATED`，计划冻结，保守重跑，stale 证据被 Gate 拒绝 |
+  L96: | `US-T0-16` | 科研人员 | 作为科研人员，我希望上游变化使后代失效，以便不误用旧结论 | 上游输入/参数/代码/环境/规则变化后，受影响后代进入 `INVALIDATED` | 未受影响兄弟节点不得被标记失效；stale 证据被 Gate 拒绝 | 直接/间接受影响后代、已 `VERIFIED` 节点 | `FR-010`（T0 最小） | G2 |
+  L133: | 1 | 上游输入/参数/代码/环境/规则变化 | 计算受影响后代并标记 `INVALIDATED` | `fr-010/invalidated.jsonl` |
+
+[docs/design/04_ARCHITECTURE.md] INVALIDATED = 2
+  L205: → StateMachine: VERIFIED → INVALIDATED
+  L207: → StateMachine: INVALIDATED → READY
+
+[docs/design/05_CONTRACTS_AND_STATES.md] schema_version = 30
+  L9: > 硬约束：**不新增策划书没有的字段**；缺字段一律记 `OQ`，由用户在 ⑧ 裁决后再写入 Schema。本版新增的 `schema_version`/`issued_at` 与三组枚举均来自用户决议，逐条标注来源。
+  L18: | `NodeSpec` | 附录 D.2 / P0499–P0509 | 完整（决议 2 补 `schema_version`） | **可冻结**；`contracts/nodespec.schema.json` |
+  L20: | `VerificationReport` | 附录 D.4 / P0528–P0544 | 完整（决议 2 补 `schema_version`；状态枚举已按 v1.0 冻结） | **可冻结**；`contracts/verificationreport.schema.json` |
+  L21: | `CompletionCertificate` | 附录 D.4 / P0545–P0560 | 完整（决议 2 补 `schema_version`、`issued_at`） | **可冻结**；`contracts/completioncertificate.schema.json` |
+  L29: 1. 每个契约必须有 `schema_version`，格式 `MAJOR.MINOR`；本版冻结值统一为 `"1.0"`，并在 `contracts/*.schema.json` 中以 `const: "1.0"` 落地。
+  L35: 6. **`schema_version` 必须进入签名载荷**（用户决议 2）：报告与证书签名均把 `schema_version` 作为白名单字段参与 JCS 规范化；验签方必须比对本地支持的 `MAJOR`，未知 `MAJOR` 一律拒绝。这样可阻止把 V1 载荷重放到 V2 验签器，或把 V2 产物降级当 V1 使用。详见 §1.5。
+  L49: | 签名载荷 | 含 `schema_version`、规则版本、证据根、状态；字段白名单 + 域分离前缀 | §7.5 / P0173–P0178；`AGENTS.md` §4.10；决议 2 |
+  L69: | `VerificationReport` | `schema_version`、`report_id`、`task_id`、`final_state`、`l1_status`、`l2_status`、`l3_status`、`required_check_coverage`、`ruleset_hash`、`evidence_root`、`l3_coverage`、`issued_at`、`key_id` | `RF-REPORT-V…
+  L70: | `CompletionCertificate` | `schema_version`、`cert_id`、`report_id`、`final_state`、`merkle_root`、`tree_size`、`ruleset_hash`、`code_hash`、`env_fingerprint`、`l3_coverage`、`skipped_nodes`、`alg`、`key_id`、`key_fingerprint`、`issu…
+  L75: 2. `schema_version` 必须参与签名且必须被验签方比对；这是防跨版本重放的唯一机器可检查手段（决议 2 附加要求）。
+  L98: | `schema_version` | string | 是 | `MAJOR.MINOR`，本版 `1.0` | 非 `1.0` 拒绝（本 schema 为 1.0 专用；MINOR 升级另发 schema） | D.1 |
+  L122: "schema_version": "1.0",
+  L138: | 缺 `schema_version` | 422 |
+  L139: | `schema_version: "2.0"` | 拒绝（未知 MAJOR） |
+  L174: | `schema_version` | string | **是** | `1.0` | 不匹配拒绝；决议 2 补入，记 `ADR-003` | 决议 2 |
+  L208: - `schema_version` 已由决议 2 加入并作为 `1.0` 起点（不改变既有字段语义）。
+  L217: | `schema_version` | string | 是 | `1.0` | 不匹配拒绝 | D.3 |
+  L238: "schema_version": "1.0",
+  L311: | `schema_version` | string | **是** | `1.0` | 不匹配拒绝；决议 2 补入，记 `ADR-003`；必须进入签名载荷 | 决议 2 |
+  L355: | `schema_version` | string | **是** | `1.0` | 不匹配拒绝；决议 2 补入，记 `ADR-003`；必须进入签名载荷 | 决议 2 |
+  L371: 已落为机器可执行的用例：`contracts/examples/completioncertificate.negative.{1..13}.json`，其中包含决议 2 的两条（缺 `schema_version`、缺 `issued_at`）与 T0 的一条（`skipped_nodes` 非空）。
+  L405: | `schema_version` | 未定义 | `OQ-CT-07` |
+  L527: | I-06 | 签名载荷包含规则版本、证据根和状态（`schema_version` 的补充见 I-13） | 签名/验签 |
+  L534: | **I-13** | **报告与证书签名载荷必须含 `schema_version`；验签方拒绝未知 `MAJOR`** | Signing / Verifier（决议 2） |
+  L546: | 补 `schema_version`（`NodeSpec`/`VerificationReport`/`CompletionCertificate`）与证书 `issued_at` | `MINOR`；本版作为 `1.0` 起点 | **是**（`ADR-003`） |
+  L554: | `OQ-CT-01` | `NodeSpec` 是否补 `schema_version` | **已关闭**（决议 2） | 必填，`const "1.0"` |
+  L557: | `OQ-CT-04` | `VerificationReport` 是否补 `schema_version` | **已关闭**（决议 2） | 必填，且进入签名载荷 |
+  L558: | `OQ-CT-05` | `CompletionCertificate` 是否补 `schema_version`、`issued_at` | **已关闭**（决议 2） | 两者必填，均进入签名载荷 |
+  L589: | v0.2 | 2026-11-09 | 按用户 10 项决议：补三个 `schema_version` 与证书 `issued_at`（§1.2、§3、§5、§6）、新增签名载荷白名单（§1.5）、`dataset_ref` 对象化（§2.4）、`kind`/`side_effect_class`/状态枚举候选（§3、§4.5、§5）、`INVALIDATED → READY` 三条件守卫（§9.3）、T0 不复用 Recovery…
+  L590: | v0.3 | 2026-11-09 | 定向修订 3 处：① §1.2 增补 `const "1.0"` 与 MINOR 兼容的实现口径（1.0 schema 只接受 1.0，MINOR 升级另发 schema）；② §2.1 `TaskSpec.schema_version` 校验列改为“非 `1.0` 拒绝”；③ 版本记录 §2.5→§2.4 误引修正。**字段、枚举、状态机、守卫均未改** | 候选，已被 v1.0 冻结取代 …
+
+[docs/design/05_CONTRACTS_AND_STATES.md] INVALIDATED = 15
+  L417: 【用户决议 B1】Node 新增 `INVALIDATED`，因此 Node 状态为 **10 个**。
+  L443: | `VERIFIED` | `INVALIDATED` | 上游输入/前驱/图版本/规则版本变化；证据判定 stale | 写失效记录；**不删除证据** | **B1 / ADR-001** |
+  L444: | `INVALIDATED` | `READY` | 三条全部满足：① 计划文件存在于内容寻址路径；② `sha256(文件字节) == plan_hash`，且与 `audit_log` 冻结记录一致；③ 冻结事件早于本次重跑（决议 5） | 写 `nodes.plan_id`/`nodes.plan_hash` + `audit_log` | **B1 / ADR-001 / 决议 5** |
+  L448: - `VERIFIED → READY`（跳过 `INVALIDATED`）
+  L449: - `INVALIDATED → VERIFYING`、`INVALIDATED → VERIFIED`、`INVALIDATED → FAILED`
+  L453: 【已决议 · `OQ-CT-11`】`INVALIDATED → READY` 的计划引用形态由决议 5 关闭：**存 `plan_id` + `plan_hash`**，不是自由文本、也不只存 audit 事件 ID。守卫必须同时校验：
+  L461: 【`OQ-CT-12`】`INVALIDATED` 重复失效是否幂等仍未裁决。本版建议：节点已是 `INVALIDATED` 时，重复失效只**追加** `evidence_invalidations` 记录（引用新的 stale `evidence_id` 与变更原因），不重复执行 `VERIFIED → INVALIDATED` 迁移、不回滚状态；幂等性以追加记录可追溯为准，待 ⑦ 实现前确认。
+  L476: T0 只用三样东西表达“恢复”：`evidence_invalidations`（追加失效，见 I-11 与 ⑥ §1.3）、内容寻址的冻结计划文件（`plan_id`/`plan_hash`、不签名、不进七契约、不对外）、`INVALIDATED → READY` 守卫（§9.3）。下表状态值**不得出现在 T0 代码或 DB 枚举中**。
+  L507: | `plan_id` / `plan_hash` | **仅 `INVALIDATED → READY` 必填**（决议 5）；其余迁移禁止携带 |
+  L530: | **I-09** | **`INVALIDATED` 只从 `VERIFIED` 进入，且只能回 `READY`** | StateMachine（B1 / ADR-001） |
+  L533: | **I-12** | **`INVALIDATED → READY` 必须同时满足计划存在、`plan_hash` 一致、先冻结后重跑** | StateMachine（决议 5） |
+  L544: | 新增状态或迁移边 | `MAJOR`（状态机版本） | **是**（如 B1 的 `INVALIDATED` 已配 `ADR-001`） |
+  L564: | `OQ-CT-11` | `INVALIDATED → READY` 计划引用形态 | **已关闭**（决议 5） | `plan_id` + `plan_hash`；守卫三条件（§9.3） |
+  L565: | `OQ-CT-12` | `INVALIDATED` 重复失效幂等 | 开放 | 建议只追加 `evidence_invalidations`，不重复迁移 |
+  L589: | v0.2 | 2026-11-09 | 按用户 10 项决议：补三个 `schema_version` 与证书 `issued_at`（§1.2、§3、§5、§6）、新增签名载荷白名单（§1.5）、`dataset_ref` 对象化（§2.4）、`kind`/`side_effect_class`/状态枚举候选（§3、§4.5、§5）、`INVALIDATED → READY` 三条件守卫（§9.3）、T0 不复用 Recovery…
+
+[docs/design/05_CONTRACTS_AND_STATES.md] plan_hash = 11
+  L444: | `INVALIDATED` | `READY` | 三条全部满足：① 计划文件存在于内容寻址路径；② `sha256(文件字节) == plan_hash`，且与 `audit_log` 冻结记录一致；③ 冻结事件早于本次重跑（决议 5） | 写 `nodes.plan_id`/`nodes.plan_hash` + `audit_log` | **B1 / ADR-001 / 决议 5** |
+  L453: 【已决议 · `OQ-CT-11`】`INVALIDATED → READY` 的计划引用形态由决议 5 关闭：**存 `plan_id` + `plan_hash`**，不是自由文本、也不只存 audit 事件 ID。守卫必须同时校验：
+  L455: 1. 计划文件存在于内容寻址路径（文件名 = `plan_hash`），且可读；
+  L456: 2. `sha256(文件字节) == plan_hash`，且该 `plan_hash` 与 `audit_log` 中本次失效的冻结记录一致；
+  L474: 【决议 6】T0 **不复用**本状态机：没有 `PROPOSED`/`APPROVED`，没有 Agent 提案，没有人工审批环节。T0 的恢复路径必须**确定性、可重放**：给定同一输入哈希、图版本、规则版本与失效集合，`plan_hash` 必须唯一且可复算。
+  L476: T0 只用三样东西表达“恢复”：`evidence_invalidations`（追加失效，见 I-11 与 ⑥ §1.3）、内容寻址的冻结计划文件（`plan_id`/`plan_hash`、不签名、不进七契约、不对外）、`INVALIDATED → READY` 守卫（§9.3）。下表状态值**不得出现在 T0 代码或 DB 枚举中**。
+  L486: 【已决议 · `OQ-CT-13`】T0 不复用完整状态机；完整 Recovery 状态机与 G4 均留 T1。T0 的确定性要求由 `WP-R` 的测试证明（⑦）：同输入两次生成同一 `plan_hash`、计划文件不可改写、守卫三条件各有负例。
+  L507: | `plan_id` / `plan_hash` | **仅 `INVALIDATED → READY` 必填**（决议 5）；其余迁移禁止携带 |
+  L533: | **I-12** | **`INVALIDATED → READY` 必须同时满足计划存在、`plan_hash` 一致、先冻结后重跑** | StateMachine（决议 5） |
+  L564: | `OQ-CT-11` | `INVALIDATED → READY` 计划引用形态 | **已关闭**（决议 5） | `plan_id` + `plan_hash`；守卫三条件（§9.3） |
+  L581: | — | 计划文件存在、`plan_hash` 一致、先冻结后重跑 | StateMachine 守卫 + `WP-R` | ⑦ `WP-R` |
+
+[docs/design/05_CONTRACTS_AND_STATES.md] dataset_ref = 12
+  L102: | `dataset_ref.uri` | string | 是 | 本地 URI，示例 `local://datasets/...` | 不得逃逸受限目录；不得为网络 URI（T0 断网） | D.1 + §17.1 |
+  L103: | `dataset_ref.sha256` | string | 是 | 64 位小写十六进制 | 与文件实际哈希一致 | D.1 |
+  L104: | `dataset_ref.license` | string | 是 | 许可证 ID | 非空；来源可追溯 | D.1 + §17.2 |
+  L126: "dataset_ref": {"uri": "local://datasets/breast_cancer.csv", "sha256": "<64-hex>", "license": "CC-BY-4.0"},
+  L140: | `dataset_ref` 为字符串（附录 E.1 形态） | 422 `SCHEMA_INVALID`，`field_path=dataset_ref`，消息写明期望 `{uri,sha256,license}`（决议 9 / `ADR-002`） |
+  L141: | `dataset_ref.sha256` 与实际文件不符 | 拒绝，返回字段路径 |
+  L146: | `dataset_ref.uri` 为 `https://...` | T0 拒绝（断网约束） |
+  L150: ### 2.4 `dataset_ref` 形态（决议 9 / `ADR-002`）
+  L152: `TaskSpec.dataset_ref` 与 API 请求统一为对象 `{uri, sha256, license}`（附录 D.1）。附录 E.1 的字符串样例 `dataset://breast_cancer@sha256:<hash>` **不再作为契约形态**：API 收到字符串必须返回 422 并指明期望对象形态，不得静默解析成对象。该偏离记 `ADR-002`。
+  L156: - 字段只增不改；`dataset_ref` 若未来支持多数据集，应新增 `dataset_refs` 数组并升 `MINOR`，不得改变 `dataset_ref` 语义。
+  L547: | `dataset_ref` 由字符串 URI 改为对象（API 层统一） | 在 `1.0` 冻结前完成，不产生契约版本变更 | **是**（`ADR-002`） |
+  L589: | v0.2 | 2026-11-09 | 按用户 10 项决议：补三个 `schema_version` 与证书 `issued_at`（§1.2、§3、§5、§6）、新增签名载荷白名单（§1.5）、`dataset_ref` 对象化（§2.4）、`kind`/`side_effect_class`/状态枚举候选（§3、§4.5、§5）、`INVALIDATED → READY` 三条件守卫（§9.3）、T0 不复用 Recovery…
+
+[docs/design/06_DATA_AND_API.md] schema_version = 6
+  L54: schema_version    TEXT NOT NULL,
+  L67: schema_version    TEXT NOT NULL,
+  L141: schema_version    TEXT NOT NULL,
+  L157: schema_version    TEXT NOT NULL,
+  L288: "schema_version": "1.0",
+  L414: | 契约版本 | 与 05 的 `schema_version` 同步；DB 版本独立编号；`tasks`/`nodes`/`reports`/`certificates` 均存契约版本列 |
+
+[docs/design/06_DATA_AND_API.md] INVALIDATED = 1
+  L216: | 恢复计划执行（`INVALIDATED → READY`） | 守卫三项校验（只读）→ `nodes` 更新 + `audit_log(result=OK)` | **是** | 守卫任一不满足 → 独立事务写 `DENIED`，状态不变 |
+
+[docs/design/06_DATA_AND_API.md] plan_hash = 14
+  L22: | 恢复计划存储 | **内容寻址文件** `<root>/recovery_plans/<plan_hash>.json`，不入库、不签名、不对外 | 决议 3 |
+  L44: 4. **恢复计划不入库**（决议 3）：`RecoveryPlan` 是 T0 内部不可变产物，存为**内容寻址文件**（文件名 = `sha256`，即 `plan_hash`），DB 只存 `nodes.plan_id`/`nodes.plan_hash` 与 `audit_log` 的冻结记录。原 v0.1 的 `recovery_plans` 表**删除**；不得以“库里存一份”替代内容寻址文件。
+  L73: plan_hash         TEXT,
+  L76: CHECK ((plan_id IS NULL AND plan_hash IS NULL)
+  L77: OR (plan_id IS NOT NULL AND plan_hash IS NOT NULL))
+  L117: plan_hash         TEXT,
+  L133: plan_hash         TEXT,
+  L175: -- （路径 <store>/recovery_plans/<plan_hash>.json，文件名即 sha256），
+  L176: -- DB 只保留 nodes.plan_id / nodes.plan_hash 与 audit_log 的冻结记录；计划正文不入库。
+  L203: | `idx_audit_plan(plan_hash)` | 计划冻结/守卫校验追溯 |
+  L215: | 恢复计划冻结 | ① 内容寻址文件写入并 fsync；② `audit_log(result=OK, plan_id, plan_hash)`；③ 不迁移状态 | 文件与审计**不跨事务**，按 ①→② 顺序 | ② 失败：文件成孤儿（按 hash 可回收），不写节点计划字段，不认为已冻结 |
+  L250: 4. **恢复计划不占表权限**（决议 3）：`WP-R` 只写内容寻址文件 + `audit_log`，并把 `plan_id`/`plan_hash` 交给 StateMachine 写入 `nodes`；不得新增 `recovery_plans` 表或把计划正文塞进 `audit_log` 的自由文本字段。
+  L416: | 计划文件 | 内容寻址文件不参与 DB 迁移；更换存储根目录不影响 `plan_hash`（文件名仍是哈希） |
+  L456: | v0.2 | 2026-11-09 | 删除 `recovery_plans` 表、计划改内容寻址文件（决议 3）；`evidence_invalidations` 强制引用 stale 证据（决议 4）；`nodes` 增 `plan_id`/`plan_hash`（决议 5）；`audit_log` 增 `plan_id`/`plan_hash`/`error_code`（决议 5/7）；失败迁移独立事务 `DENIED`（决议…
+
+[docs/design/06_DATA_AND_API.md] dataset_ref = 9
+  L8: > API 部分：路径、方法、状态码、错误码、幂等规则来自 §6.4 / TABLE 28 与附录 E / TABLE 69，属 `【策划书】`；候选期 v0.2 的两处偏离（`dataset_ref` 对象化、T0 关闭 `POST /recover`）来自用户决议，逐条标注，现随 v1.0 冻结。
+  L292: "dataset_ref": {
+  L311: **`dataset_ref` 形态（决议 9 / `ADR-002`）**：统一为对象 `{uri, sha256, license}`（附录 D.1）。附录 E.1 的字符串样例 `dataset://breast_cancer@sha256:<hash>` 偏离 D.1，本版不采用；收到字符串必须 `422` 并指明期望形态，**不得**自动解析：
+  L316: "message": "dataset_ref must be an object with fields uri, sha256, license.",
+  L317: "field_path": "dataset_ref",
+  L321: `【已关闭 · OQ-API-2】` API 与 `TaskSpec` 的 `dataset_ref` 形态不一致由决议 9 关闭：API 接受对象形式，与 D.1 一致；偏离 E.1 已记 `ADR-002`，负例见 `contracts/examples/taskspec.negative.3.json`。
+  L376: - `dataset_ref` 字符串形态、未知顶层字段、缺必填统一归 `SCHEMA_INVALID`（422），**不新增错误码**；附录 E.3 的 13 条错误码保持不变。
+  L429: | `OQ-API-2` | `dataset_ref` 在 API 与 TaskSpec 中的形态不一致 | **已关闭**（决议 9） | 统一对象形态；字符串 422；`ADR-002` |
+  L456: | v0.2 | 2026-11-09 | 删除 `recovery_plans` 表、计划改内容寻址文件（决议 3）；`evidence_invalidations` 强制引用 stale 证据（决议 4）；`nodes` 增 `plan_id`/`plan_hash`（决议 5）；`audit_log` 增 `plan_id`/`plan_hash`/`error_code`（决议 5/7）；失败迁移独立事务 `DENIED`（决议…
+
+[docs/design/07_T0_PLAN_AND_GATES.md] INVALIDATED = 7
+  L110: | 目标 | 迁移脚本、单写者状态机、成功/失败双路审计、非法迁移拒绝、`INVALIDATED` 迁移与守卫 |
+  L113: | 出口 | 合法迁移成功并写 `OK` 审计；非法迁移/旁路写库被拒；**失败迁移回滚后 `DENIED` 记录仍存在**；审计二次失败降级 stderr 且被测试捕获；`INVALIDATED` 两条边按守卫执行 |
+  L118: | 风险 | 双事务语义写错会“失败无审计”；`INVALIDATED` 守卫依赖 `WP-R` 的计划文件约定，需接口先对齐 |
+  L266: | 交付 | 失效传播、计划生成器（纯函数）、内容寻址写入（临时文件 + fsync + rename）、`audit_log` 冻结记录、`INVALIDATED → READY` 守卫、重跑编排 |
+  L267: | 出口 | 上游变化 → 受影响后代 `INVALIDATED`；**同输入两次生成同一 `plan_hash`**；计划文件不可改写；守卫三条件（文件缺失 / hash 不符 / 先重跑后冻结）各有一条 `DENIED` 负例；受影响后代全部重跑；包内 stale 证据不满足必检项；T0 代码与 DB 中不出现 `PROPOSED`/`APPROVED` |
+  L309: | `T0-UT-SM-*` | `FR-003`、`INVALIDATED` | 单元 | `tests/t0/test_fr_003*` |
+  L473: | v0.2 | 2026-11-09 | `WP-02` 改为“schema→Pydantic 落地”（⑨ 已在 G0 完成）；`WP-03` 增失败双事务审计与 `INVALIDATED` 守卫；`WP-08` 增失效记录驱动的 stale 判定；`WP-R` 增确定性计划与三条守卫负例；测试矩阵新增 4 类；G0 通过条件纳入 ⑨ 与真实退出码；DoD 附加 3 条；风险表更新 | 候选，已被 v1.0 冻结取代 |
+
+[docs/design/07_T0_PLAN_AND_GATES.md] plan_hash = 7
+  L111: | 入口 | `WP-02` 完成；06 表结构确认（含 `plan_id`/`plan_hash`、`error_code`） |
+  L267: | 出口 | 上游变化 → 受影响后代 `INVALIDATED`；**同输入两次生成同一 `plan_hash`**；计划文件不可改写；守卫三条件（文件缺失 / hash 不符 / 先重跑后冻结）各有一条 `DENIED` 负例；受影响后代全部重跑；包内 stale 证据不满足必检项；T0 代码与 DB 中不出现 `PROPOSED`/`APPROVED` |
+  L270: | 证据 | `docs/verification/t0/wp-r/{invalidated.jsonl,plan_hash_repeat.json,plan_store.json,plan_missing_denied.log,plan_hash_mismatch_denied.log,plan_not_frozen_denied.log,rerun.jsonl,stale_reject.log}` |
+  L272: | 风险 | 失效范围过宽/过窄；计划正文含时间戳/随机序导致 `plan_hash` 不稳定；与 T1 完整 Recovery 的边界 |
+  L274: 计划确定性约束（决议 6）：计划正文只含受影响节点、原因、输入/图版本、规则版本等可复算字段；**生成时间不得进入计划正文或 `plan_hash`**，`frozen_at` 只写 `audit_log`。节点顺序按确定性拓扑序排序，不得依赖字典/集合迭代顺序。
+  L314: | `T0-UT-REC-*` | 决议 6：计划 `plan_hash` 确定性复算 + 守卫三条件负例 | 单元 | `tests/t0/test_fr_010_minimal*` |
+  L447: | 计划 `plan_hash` 不稳定 | 守卫误拒或形同虚设 | 计划正文排除时间戳/随机序；`WP-R` 两次生成比对 |
+
+ASSERTIONS
+A1 no-string-dataset_ref: PASS
+A2 plan_hash-with-plan_id: PASS
+A3 schema_version-1.0: PASS
+
+TERMS_RESULT=PASS
+

@@ -1,0 +1,9 @@
+TIME=2026-11-08T13:27:04.1421741+08:00
+PROBE_DIR=D:\ResearchFlow-project\tmpavet2qv9
+EXISTS=True
+ATTRIBUTES=Directory
+CREATION_TIME=2026-11-08T13:26:15.3573305+08:00
+CHILD_COUNT=0
+ACL_OWNER=BUILTIN\Administrators
+ACL_SDDL=O:BAG:S-1-5-21-1949332924-3136565402-4270302221-513D:P(A;OICI;FA;;;OW)(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)
+NOTE=Directory intentionally retained for user's DSH permission diagnostic; not deleted.

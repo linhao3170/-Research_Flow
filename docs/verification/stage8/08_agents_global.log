@@ -1,0 +1,6 @@
+TIME=2026-11-08T13:14:16.2081639+08:00
+PATH=C:\Users\Administrator\.dsh\AGENTS.md
+EXISTS=False
+PATH=C:\Users\Administrator\.agents\AGENTS.md
+EXISTS=False
+SESSION_EVIDENCE=No 'Instructions from: C:\Users\Administrator\.dsh\AGENTS.md' in system prompt; project AGENTS is the only loaded instruction file.

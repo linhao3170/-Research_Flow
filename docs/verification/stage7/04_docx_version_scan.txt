@@ -1,0 +1,86 @@
+STAGE7 DOCX VERSION/DATE KEYWORD SCAN
+PATH=D:\ResearchFlow-project\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx
+SHA256=9E54168FB1B553294ECB88E2E3F5C8CE878EE699FCF07E37D531A68C195CCB3A
+FORMAT: location | style | matched terms | text
+
+P0001 | style= | hits=['v4.3.0', '4.3.0'] | ResearchFlow 3.1 v4.3.0
+P0007 | style= | hits=['v4.3.0', '4.3.0'] | v4.3.0 · 全面升级版
+P0013 | style=heading 2 | hits=['v4.3.0', '4.3.0'] | v4.3.0 的实质升级
+P0056 | style= | hits=['版本'] | 将一次实验表示为 G=(V,E)，V 为任务节点，E 为依赖边；任务目标 g、执行轨迹 τ、Agent 声明 δ、证据集合 𝓔、规则版本 ρ、环境指纹 φ。
+P0058 | style= | hits=['版本'] | 声明 δ 只提供待核查主张，不构成成功证据。只有符合规则的 E2/E3 证据、链校验、规则版本、无未解释冲突和所需 L3 覆盖共同成立时，报告才允许为 VERIFIED。
+P0088 | style=List Bullet | hits=['版本'] | 不宣称跨硬件/跨版本普遍复现；首期目标为同软件环境下独立重执行。
+P0143 | style= | hits=['版本'] |   gates.yaml         # 必检项、证据等级、规则版本
+P0148 | style= | hits=['版本'] |   harness.yaml       # Adapter 版本、事件映射、认证
+P0159 | style= | hits=['版本'] | 每个 Domain Pack 声明 RequiredChecks。Gate 为每项生成 coverage row：required_check_id、evidence_ids、level、producer、hash_status、l3_status、result。任何必检项缺失、哈希不一致、规则版本不匹配或冲突未解释，均不能 VERIFIED。
+P0177 | style=List Bullet | hits=['版本'] | 签名字段采用版本化白名单；未知字段不得静默纳入或忽略；Schema 升级必须提高版本号。
+P0186 | style=List Bullet | hits=['版本'] | 签名无效、公钥不受信、Merkle 根不一致或规则版本不符时，不签发/不接受凭证。
+P0192 | style= | hits=['版本'] | DC 不是数学意义上的普遍确定性证明，而是对某节点类型、固定输入结构、代码版本、依赖锁、环境指纹和规则版本，在受控条件下观察到 k 次跨进程、跨目录 bit-exact 一致的经验性资格。仅纯函数、无外部副作用、输入可完整枚举的节点可申请。
+P0196 | style=List Bullet | hits=['版本'] | 节点类型存在有效 DC，且输入结构、代码、环境和规则版本与当前一致。
+P0282 | style=List Bullet | hits=['版本', '修订'] | 只增不改；修订产生新版本，旧版本 deprecated，supersedes 指向新版本。
+P0288 | style= | hits=['版本'] | 数据只向上流（失败→案例→策略评估），参数只向下流（批准策略→阈值→执行）。首期不引入强化学习；策略更新必须版本化、可回滚、可回放。
+P0309 | style= | hits=['版本'] | 所有方案使用相同模型版本、温度、数据、划分、token、wall-clock、并发和重试规则。A/B/C 最终产物统一交同一独立评估器，避免 D 因独有验证器天然获胜。
+P0313 | style=List Bullet | hits=['版本'] | 相同模型 ID/版本/温度、统一 token 和 wall-clock 上限。
+P0323 | style= | hits=['版本'] | 竞品对标按公开文档、固定版本和可复现实测开展。某能力未在当前公开文档中找到，不等于产品一定没有；统一使用“公开资料确认”“需实测”“不作缺失推断”。对标目标是说明 ResearchFlow 的领域化增量，而不是宣称替代通用 Harness。
+P0325 | style= | hits=['版本', '日期', '2026-11', '2026-11-06'] | 资料核验基准日期：2026-11-06。正式提交前需把所用官方文档页面、仓库 commit、版本号和访问日期保存到 docs/references/，并对照实际安装版本复核。
+P0327 | style= | hits=['版本'] | 将 DeepSeek Harness 作为首个真实适配对象。适配器只负责把 Harness 的会话、工具调用、结果和任务状态映射为 ResearchFlow 标准事件；不允许 Harness 插件代替 Collector 生成 E2，也不允许其改写 VerificationReport 或 CompletionCertificate。插件 API 可能变化，必须锁定 commit/包版本并执行契约测试。
+P0341 | style= | hits=['版本'] | 主场景为高校机器学习实验的自动执行、异常恢复与可信复现。任务示例：使用公开表格数据集训练三个分类模型，比较指标，检查数据泄漏，生成报告，并证明指标来自本次真实执行。建议正式演示使用 Breast Cancer Wisconsin 数据集；Wine 数据集用于快速冒烟测试。数据离线预置，保存来源、许可证、版本与 SHA-256。
+P0429 | style=List Bullet | hits=['版本'] | 优先使用公开或合成数据；公开数据也记录来源、许可证、版本和哈希。
+P0438 | style=List Bullet | hits=['版本'] | 不承诺跨硬件/跨版本普遍复现；报告环境指纹与同环境重执行结果。
+P0452 | style=List Bullet | hits=['版本'] | DeepSeek Harness 适配器有固定版本、插件源码和端到端测试。
+P0472 | style= | hits=['版本'] | 以下为实现级逻辑 Schema 示例，最终以仓库 contracts/ 中的 JSON Schema/Pydantic 模型为准。字段名、枚举值和版本号一旦进入正式基准，必须冻结并进行迁移管理。
+P0521 | style= | hits=['2026-11', '2026-11-06'] |   "timestamp": "2026-11-06T09:00:00Z",
+P0541 | style= | hits=['2026-11', '2026-11-06'] |   "issued_at": "2026-11-06T09:10:00Z",
+P0576 | style=List Bullet | hits=['版本'] | JSON 禁止重复键、NaN、Infinity；字段未知时按 Schema 版本策略拒绝或显式兼容。
+P0584 | style= | hits=['2026-00'] | Idempotency-Key: demo-2026-001
+P0693 | style= | hits=['v4.3.0', '4.3.0'] | 请先读取项目策划书《ResearchFlow 3.1 v4.3.0 全面升级版》，
+P0726 | style= | hits=['版本'] | T1：六逻辑角色与消息契约 → 知识库版本治理/FOL → Scheduler/Governor/Recovery
+P0731 | style= | hits=['版本'] | 每个模块必须有 feature flag、Schema 版本、错误码、审计日志、正例/负例测试。
+P0747 | style= | hits=['版本'] | 以下列出实现时应优先查阅的规范/官方资料入口。具体依赖版本、网页内容和许可条款应在开发时保存快照；本清单不等同于已完成法律审查或赛事规则核验。
+P0751 | style=List Bullet | hits=['版本'] | 依赖 lockfile、Python 版本、操作系统版本、Harness commit/包版本。
+P0754 | style=List Bullet | hits=['版本', '日期'] | 竞品对标所用官方文档页面、访问日期、版本/commit 和具体引用位置。
+TABLE 01 R06 | hits=['版本', '日期', '2026 年 11'] | 版本日期 | 2026 年 11 月 6 日
+TABLE 02 R02 | hits=['版本'] | 产品版本 | ResearchFlow 3.1
+TABLE 02 R03 | hits=['v4.3.0', '4.3.0', '版本'] | 策划书版本 | v4.3.0 全面升级版开发基线
+TABLE 02 R04 | hits=['v4.2'] | 底稿 | 用户提供的 v4.2 定稿级清洗稿；保留 18 章主干、核心机制与实验体系。
+TABLE 03 R01 | hits=['v4.2', 'v4.3.0', '4.3.0', '修订'] | 升级维度 | v4.2 风险/不足 | v4.3.0 修订
+TABLE 03 R04 | hits=['版本'] | 真实集成 | Adapter 主要停留在接口设想。 | DeepSeek Harness Cordis 插件作为首个参考适配器；锁定版本并做契约测试。
+TABLE 06 R02 | hits=['版本'] | 知识库 | 五类 KnowledgeUnit、版本治理、绑定检索、引用留痕、故障案例回流。 | Schema、检索命中、版本冲突测试、节点引用知识 ID。
+TABLE 15 R05 | hits=['版本'] | 平台集成方 | REST API、Webhook、Harness Adapter。 | 版本兼容、幂等、认证和审计。
+TABLE 18 R12 | hits=['版本'] | 适配器一致性 | Harness 事件映射、任务提交和状态同步通过率。 | 关键契约测试全部通过。 | 固定版本 Adapter Contract Test。
+TABLE 19 R01 | hits=['版本'] | 数据纪律 ⏎ 本章数值是拟验收目标，不是实测成绩。只有能追溯到 run_id、原始 JSON、日志、版本和复核脚本的数字才可标记为实测。
+TABLE 24 R03 | hits=['版本'] | required_checks | 声明领域必检项与规则版本。 | 规则可机器判定且有测试。
+TABLE 24 R05 | hits=['版本'] | knowledge_seeds | 领域规范、工具说明、故障案例。 | 来源、许可、版本和 hash 齐全。
+TABLE 25 R03 | hits=['版本'] | DAG 编排 | 节点/边、拓扑、循环检测、图版本。 | P0 | 非法图拒绝，图版本可回放。
+TABLE 25 R10 | hits=['版本'] | 知识/FOL | 五类知识、版本、绑定、反馈。 | P1 | 命中率、冲突、过期测试。
+TABLE 28 R04 | hits=['版本'] | GET /api/v1/tasks/{id}/graph | DAG、状态、指纹、DC/SPA。 | 409 图版本冲突。
+TABLE 30 R03 | hits=['版本'] | 契约 | Agent 消息、API、Domain Pack、Adapter。 | Schema/版本不匹配失败。
+TABLE 42 R03 | hits=['版本'] | TOOL | 工具契约、参数、版本差异、错误。 | tool_name,params_schema,timeout,known_errors。 | Experiment/Recovery。
+TABLE 43 R06 | hits=['版本'] | 基准任务 | expected_kb_hit 检查预期知识命中。 | Recall@k、MRR、版本命中率。
+TABLE 44 R04 | hits=['版本'] | L-C 策略环 | 周/批次 | 历史结果离线网格搜索/回放，人工批准策略版本。 | 尝试次数、预算利用率、R2/R3 差异。
+TABLE 51 R04 | hits=['版本'] | 知识上下文 | Resource Library、Agent Documents、Memory。 | 会话上下文及插件能力，按锁定版本核验。 | 知识单元版本化、领域绑定、冲突/过期治理。
+TABLE 52 R03 | hits=['版本'] | 事件监听 | 监听锁定版本确认的工具结果、会话事件。 | 保留 source、version、event_id、timestamp；默认 E1。
+TABLE 57 R02 | hits=['版本'] | G0 规格冻结 | 数据模型、状态机、API、错误码、证据等级和规则版本确定。 | 暂停并行开发，先统一契约。
+TABLE 57 R09 | hits=['版本'] | G7 Harness 适配 | 固定版本插件、工具、事件映射和状态回传契约通过。 | 标注实验性/计划，不写已接入。
+TABLE 58 R03 | hits=['版本'] | FastAPI/Pydantic | 稳定版本锁定。 | REST 与 Schema。
+TABLE 58 R05 | hits=['版本'] | NetworkX | 稳定版本。 | DAG 与拓扑排序。
+TABLE 58 R06 | hits=['版本'] | scikit-learn/pandas | 锁定版本。 | ML 模板和数据画像。
+TABLE 58 R08 | hits=['版本'] | Streamlit | 锁定版本。 | 工作台。
+TABLE 58 R09 | hits=['版本'] | DeepSeek Harness | 锁定 commit/npm 版本。 | 首个 Harness Adapter；预览接口需契约测试。
+TABLE 59 R02 | hits=['版本'] | 架构/产品 | 范围、需求、架构决策、版本冻结。 | ADR、需求追踪矩阵；测试责任人复核。
+TABLE 61 R10 | hits=['版本', '日期'] | 竞品对标错误 | 创新性被质疑。 | 官方版本、来源日期、避免缺失推断。 | 更新矩阵与话术。
+TABLE 62 R07 | hits=['版本'] | Harness Adapter | DeepSeek Harness Cordis 插件。 | 固定版本加载、工具和事件契约通过。
+TABLE 64 R04 | hits=['版本'] | 知识库定义与集成 | KnowledgeUnit、版本治理、五种绑定。 | 知识命中记录、版本冲突、过期知识处理。 | 知识库沦为静态文档上传。
+TABLE 66 R03 | hits=['版本'] | 独立完成凭证 | 数字签名、哈希链、Merkle Tree。 | 把报告、规则版本、证据根、L3 覆盖和信任锚绑定成离线凭证。 | 签名载荷规范、真包/负例包、第三方验签。
+TABLE 66 R06 | hits=['版本'] | 领域化 Harness 适配 | 插件、工具调用、Agent 轨迹。 | Harness 轨迹仅作 E1，受控执行事件另由 Collector 生成 E2。 | 固定版本 Adapter Contract Test。
+TABLE 67 R03 | hits=['版本'] | FR-002 | 生成 DAG 并检测循环/孤立节点。 | P0 | DAG Builder | 非法图拒绝，图版本固定。
+TABLE 67 R14 | hits=['版本'] | FR-013 | 知识单元版本治理与检索。 | P1 | Knowledge | 版本冲突/过期命中测试。
+TABLE 67 R18 | hits=['版本'] | FR-017 | DeepSeek Harness Adapter。 | P1 | Adapter | 固定版本端到端契约测试。
+TABLE 69 R08 | hits=['版本'] | RULESET_VERSION_MISMATCH | 409 | 证据与当前规则版本不匹配。 | 按当前规则重新验证。
+TABLE 71 R07 | hits=['版本'] | I-06 | 签名载荷包含规则版本、证据根和状态。
+TABLE 72 R02 | hits=['版本'] | protocol_version | 基准协议版本。
+TABLE 72 R05 | hits=['版本'] | ruleset_hash | Gate/Verifier 规则版本哈希。
+TABLE 72 R06 | hits=['版本'] | model_id/version | 模型供应商、模型 ID、版本或快照。
+TABLE 78 R05 | hits=['版本'] | 04 | DAG Builder | 拓扑、循环、孤立节点、图版本。 | 非法图拒绝。 | 待开发
+TABLE 78 R09 | hits=['版本'] | 08 | Gate | 必检覆盖矩阵、缺口码、规则版本。 | 缺证据不能 PASS。 | 待开发
+TABLE 80 R11 | hits=['版本'] | Agent Harness | DeepSeek Harness 官方仓库/文档（按实际锁定版本存档）。 | Cordis 插件与事件契约。
+TABLE 80 R12 | hits=['版本'] | Agent 平台对标 | LobeHub 官方仓库/文档（按实际锁定版本存档）。 | Agent、工具、知识与任务能力对标。

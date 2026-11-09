@@ -1,0 +1,6 @@
+﻿COMMAND: & $py -X utf8 scripts/state_sync.py validate
+PYTHON: C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
+EXIT: 0
+
+OK: project_state.json 校验通过。阶段=G0_PREPARATION，任务=5，门禁 PASS=0/8，阻塞=3。
+
