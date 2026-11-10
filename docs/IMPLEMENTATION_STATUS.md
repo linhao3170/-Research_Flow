@@ -13,8 +13,8 @@
 | `READY` | 就绪 | 0 |
 | `IN_PROGRESS` | 进行中 | 0 |
 | `BLOCKED` | 阻塞 | 0 |
-| `IN_REVIEW` | 评审中 | 1 |
-| `DONE` | 完成 | 5 |
+| `IN_REVIEW` | 评审中 | 0 |
+| `DONE` | 完成 | 6 |
 | `DEFERRED` | 延期 | 0 |
 | **合计** | — | **6** |
 
@@ -284,9 +284,9 @@
 ### `T-WP-01-001` T0 WP-01 仓库与环境锁定
 
 - 阶段：`T0`
-- 状态：`IN_REVIEW` 评审中
+- 状态：`DONE` 完成
 - 依赖：`T-G0-001`
-- 更新时间：2026-11-10T21:55:00+08:00
+- 更新时间：2026-11-10T22:16:00+08:00
 - 阻塞：无
 - 验收标准：
   - .venv 由 uv 托管 CPython 3.11.16 创建；sys.version 含 3.11.16 且 platform.architecture()[0] 为 64bit
@@ -324,6 +324,8 @@
   - `docs/verification/t0/wp-01/make_evidence.py`
   - `docs/verification/t0/wp-01/make_evidence.log`
   - `docs/verification/t0/wp-01/state_sync.log`
+  - `docs/verification/t0/wp-01/30_wp01_acceptance.md`
+  - `docs/verification/t0/wp-01/state_sync_acceptance.log`
 
 ## 3. 阶段门禁明细
 

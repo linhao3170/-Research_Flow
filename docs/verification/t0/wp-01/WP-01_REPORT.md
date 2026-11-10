@@ -2,7 +2,7 @@
 
 > 日期：2026-11-10（Asia/Shanghai）。
 > 范围：只做 Python 解释器、虚拟环境、依赖安装与锁文件；**未写任何 ResearchFlow 业务代码**。
-> 状态：`IN_REVIEW`，等待用户验收；验收前不进入 `WP-02`。
+> 状态：`DONE`（用户 2026-11-10 验收通过，记录见 [`30_wp01_acceptance.md`](30_wp01_acceptance.md)）。
 > 矩阵：[`docs/verification/g0/09_dependency_matrix.md`](../../g0/09_dependency_matrix.md)（v1.0，2026-11-10 锁定）。
 > 计划：[`docs/design/07_T0_PLAN_AND_GATES.md`](../../../design/07_T0_PLAN_AND_GATES.md) §2.1。
 

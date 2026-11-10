@@ -352,3 +352,18 @@
   - `last_verified_commit` 保持 `null`；未按未经指令的方式改写。
   - `.venv`、`.uv-cache` 不纳入 Git；`requirements.in`、`requirements.lock` 纳入版本控制。
 - 相关文件：`requirements.in`、`requirements.lock`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/verification/t0/wp-01/*`、`docs/memory/environment.md`、`docs/memory/project-context.md`、`docs/SESSION_HANDOFF.md`。
+
+### 2026-11-10 · T0 · WP-01 验收通过
+
+- 变更：
+  - 用户逐项裁决四项待决事项：`T-WP-01-001` → `DONE`；`.venv` 502.3 MB 超估算一事接受为已知偏差；`last_verified_commit` → `19c337f350fead30efd52c222356ad6248a3f937`；T0 里程碑暂不指定，保持 `M0_GOVERNANCE_BASELINE`。
+  - `project_state.json`：`T-WP-01-001.status=DONE`、`updated_at=2026-11-10T22:16:00+08:00`，`evidence_paths` 增补 `30_wp01_acceptance.md` 与 `state_sync_acceptance.log`；顶层 `last_verified_commit` 由 `null` 更新为 `19c337f`；`current_milestone` 未改。
+  - 新增 [`docs/verification/t0/wp-01/30_wp01_acceptance.md`](verification/t0/wp-01/30_wp01_acceptance.md)：四项裁决、7 条验收标准逐条对账、体积偏差处置、未随验收改变的事项。
+  - `09_dependency_matrix.md` §4 增补 WP-01 实测体积/耗时与“接受为已知偏差”的裁决记录；`WP-01_REPORT.md` 状态行由 `IN_REVIEW` 改为 `DONE`。
+- 原因：用户 2026-11-10 验收 `T-WP-01-001`，并就体积、`last_verified_commit`、里程碑编号作出明确选择。
+- 验证：
+  - `state_sync.py validate|render|check` 均 exit 0；完整 stdout 见 `docs/verification/t0/wp-01/state_sync_acceptance.log`。
+  - `PROJECT_STATE.md` SHA256 `{state_hash[:16]}…`，`IMPLEMENTATION_STATUS.md` SHA256 `{status_hash[:16]}…`。
+- 影响/后续：解除“验收前不进入 WP-02”的限制，进入 `WP-02` 核心契约落地；`BLK-003` 仍 `OPEN` / `MEDIUM`，13b 仍 `NOT VERIFIED`，2D 未单独执行。
+- 相关文件：`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/verification/t0/wp-01/30_wp01_acceptance.md`、`docs/verification/t0/wp-01/state_sync_acceptance.log`、`docs/verification/g0/09_dependency_matrix.md`、`docs/verification/t0/wp-01/WP-01_REPORT.md`、`docs/SESSION_HANDOFF.md`。
+- 架构变化：无（仅研发状态与文档更新，未触及运行时契约与代码）。

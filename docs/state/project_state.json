@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "ResearchFlow",
-  "updated_at": "2026-11-10T21:55:00+08:00",
+  "updated_at": "2026-11-10T22:16:00+08:00",
   "current_phase": "T0",
   "current_milestone": "M0_GOVERNANCE_BASELINE",
   "tasks": [
@@ -297,7 +297,7 @@
       "task_id": "T-WP-01-001",
       "title": "T0 WP-01 仓库与环境锁定",
       "phase": "T0",
-      "status": "IN_REVIEW",
+      "status": "DONE",
       "depends_on": [
         "T-G0-001"
       ],
@@ -338,9 +338,11 @@
         "docs/verification/t0/wp-01/size_and_timing.md",
         "docs/verification/t0/wp-01/make_evidence.py",
         "docs/verification/t0/wp-01/make_evidence.log",
-        "docs/verification/t0/wp-01/state_sync.log"
+        "docs/verification/t0/wp-01/state_sync.log",
+        "docs/verification/t0/wp-01/30_wp01_acceptance.md",
+        "docs/verification/t0/wp-01/state_sync_acceptance.log"
       ],
-      "updated_at": "2026-11-10T21:55:00+08:00",
+      "updated_at": "2026-11-10T22:16:00+08:00",
       "blocker": null
     }
   ],
@@ -491,5 +493,5 @@
       "resolution": null
     }
   ],
-  "last_verified_commit": null
+  "last_verified_commit": "19c337f350fead30efd52c222356ad6248a3f937"
 }
