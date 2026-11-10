@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "ResearchFlow",
-  "updated_at": "2026-11-10T22:16:00+08:00",
+  "updated_at": "2026-11-10T22:45:00+08:00",
   "current_phase": "T0",
   "current_milestone": "M0_GOVERNANCE_BASELINE",
   "tasks": [
@@ -343,6 +343,51 @@
         "docs/verification/t0/wp-01/state_sync_acceptance.log"
       ],
       "updated_at": "2026-11-10T22:16:00+08:00",
+      "blocker": null
+    },
+    {
+      "task_id": "T-WP-02-001",
+      "title": "T0 WP-02 核心契约落地（schema → Pydantic/API）",
+      "phase": "T0",
+      "status": "DONE",
+      "depends_on": [
+        "T-WP-01-001"
+      ],
+      "acceptance_criteria": [
+        "5 份冻结 schema 落成 Pydantic v2 模型；properties/required/enum/const/pattern/additionalProperties 与 schema 逐节点一致",
+        "72 个冻结用例在模型层的接受/拒绝结论与 schema 层完全一致（5 正例接受，67 反例拒绝），且反例断言拒绝原因",
+        "schema 无法表达的跨字段约束在模型层实现：level→producer/kind、SEM-NS-01、SEM-VR-01、SEM-VR-02",
+        "重复键与 NaN/Infinity 在 JSON 层拒绝，不进入模型",
+        "API 绑定 TaskSpec 创建；422 统一返回 SCHEMA_INVALID + field_path + correlation_id，dataset_ref 字符串形态与文档文案一致",
+        "按决议 8 不注册 POST /recover，访问返回 404；幂等同键同体 201、同键异体 409",
+        "validate_contracts.py 与全量 pytest 仍 exit 0；证据齐全；未实现部分（状态机/持久化/其余端点）已如实标注"
+      ],
+      "test_commands": [
+        "& .venv/Scripts/python.exe scripts/validate_contracts.py --selftest",
+        "& .venv/Scripts/python.exe scripts/validate_contracts.py",
+        "& .venv/Scripts/python.exe scripts/check_model_parity.py",
+        "& .venv/Scripts/python.exe -m pytest tests -q"
+      ],
+      "evidence_paths": [
+        "researchflow/contracts/models.py",
+        "researchflow/contracts/parsing.py",
+        "researchflow/api/app.py",
+        "scripts/check_model_parity.py",
+        "tests/test_contract_models.py",
+        "tests/test_api_422.py",
+        "conftest.py",
+        "docs/verification/t0/wp-02/WP-02_REPORT.md",
+        "docs/verification/t0/wp-02/model_parity.json",
+        "docs/verification/t0/wp-02/model_parity.log",
+        "docs/verification/t0/wp-02/schema_validation.log",
+        "docs/verification/t0/wp-02/contracts_selftest.log",
+        "docs/verification/t0/wp-02/model_validation.log",
+        "docs/verification/t0/wp-02/api_422.log",
+        "docs/verification/t0/wp-02/full_suite.log",
+        "docs/verification/t0/wp-02/40_wp02_acceptance.md",
+        "docs/verification/t0/wp-02/state_sync.log"
+      ],
+      "updated_at": "2026-11-10T22:45:00+08:00",
       "blocker": null
     }
   ],

@@ -14,9 +14,9 @@
 | `IN_PROGRESS` | 进行中 | 0 |
 | `BLOCKED` | 阻塞 | 0 |
 | `IN_REVIEW` | 评审中 | 0 |
-| `DONE` | 完成 | 6 |
+| `DONE` | 完成 | 7 |
 | `DEFERRED` | 延期 | 0 |
-| **合计** | — | **6** |
+| **合计** | — | **7** |
 
 ## 2. 任务明细
 
@@ -326,6 +326,45 @@
   - `docs/verification/t0/wp-01/state_sync.log`
   - `docs/verification/t0/wp-01/30_wp01_acceptance.md`
   - `docs/verification/t0/wp-01/state_sync_acceptance.log`
+
+### `T-WP-02-001` T0 WP-02 核心契约落地（schema → Pydantic/API）
+
+- 阶段：`T0`
+- 状态：`DONE` 完成
+- 依赖：`T-WP-01-001`
+- 更新时间：2026-11-10T22:45:00+08:00
+- 阻塞：无
+- 验收标准：
+  - 5 份冻结 schema 落成 Pydantic v2 模型；properties/required/enum/const/pattern/additionalProperties 与 schema 逐节点一致
+  - 72 个冻结用例在模型层的接受/拒绝结论与 schema 层完全一致（5 正例接受，67 反例拒绝），且反例断言拒绝原因
+  - schema 无法表达的跨字段约束在模型层实现：level→producer/kind、SEM-NS-01、SEM-VR-01、SEM-VR-02
+  - 重复键与 NaN/Infinity 在 JSON 层拒绝，不进入模型
+  - API 绑定 TaskSpec 创建；422 统一返回 SCHEMA_INVALID + field_path + correlation_id，dataset_ref 字符串形态与文档文案一致
+  - 按决议 8 不注册 POST /recover，访问返回 404；幂等同键同体 201、同键异体 409
+  - validate_contracts.py 与全量 pytest 仍 exit 0；证据齐全；未实现部分（状态机/持久化/其余端点）已如实标注
+- 测试命令：
+  - `& .venv/Scripts/python.exe scripts/validate_contracts.py --selftest`
+  - `& .venv/Scripts/python.exe scripts/validate_contracts.py`
+  - `& .venv/Scripts/python.exe scripts/check_model_parity.py`
+  - `& .venv/Scripts/python.exe -m pytest tests -q`
+- 证据路径：
+  - `researchflow/contracts/models.py`
+  - `researchflow/contracts/parsing.py`
+  - `researchflow/api/app.py`
+  - `scripts/check_model_parity.py`
+  - `tests/test_contract_models.py`
+  - `tests/test_api_422.py`
+  - `conftest.py`
+  - `docs/verification/t0/wp-02/WP-02_REPORT.md`
+  - `docs/verification/t0/wp-02/model_parity.json`
+  - `docs/verification/t0/wp-02/model_parity.log`
+  - `docs/verification/t0/wp-02/schema_validation.log`
+  - `docs/verification/t0/wp-02/contracts_selftest.log`
+  - `docs/verification/t0/wp-02/model_validation.log`
+  - `docs/verification/t0/wp-02/api_422.log`
+  - `docs/verification/t0/wp-02/full_suite.log`
+  - `docs/verification/t0/wp-02/40_wp02_acceptance.md`
+  - `docs/verification/t0/wp-02/state_sync.log`
 
 ## 3. 阶段门禁明细
 

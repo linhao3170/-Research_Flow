@@ -1,0 +1,15 @@
+$ .venv/Scripts/python.exe scripts/state_sync.py validate
+OK: project_state.json 校验通过。阶段=T0，任务=7，门禁 PASS=1/8，阻塞=3。
+[exit code: 0]
+
+$ .venv/Scripts/python.exe scripts/state_sync.py render
+已生成 docs/PROJECT_STATE.md  sha256=096130298a153690c2f7373440b84744adaa1131ed767f1f4b775d0dab7c6cc8
+已生成 docs/IMPLEMENTATION_STATUS.md  sha256=9fd641b5465daa09b2bbeeb30e277aad19bb6636f0d5b92387a321381e507e31
+OK: 已生成 2 个文件。
+[exit code: 0]
+
+$ .venv/Scripts/python.exe scripts/state_sync.py check
+[OK] docs/PROJECT_STATE.md  sha256=096130298a153690c2f7373440b84744adaa1131ed767f1f4b775d0dab7c6cc8
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=9fd641b5465daa09b2bbeeb30e277aad19bb6636f0d5b92387a321381e507e31
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+[exit code: 0]

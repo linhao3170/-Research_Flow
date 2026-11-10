@@ -16,6 +16,46 @@
 
 ## 交接记录
 
+### 2026-11-10 · T0 · WP-02 验收通过
+
+- 本次完成：
+  - 用户验收 `T-WP-02-001`，状态转 `DONE`；验收记录见 `docs/verification/t0/wp-02/40_wp02_acceptance.md`。
+  - `state_sync.py validate|render|check` 均 exit 0；`PROJECT_STATE.md` 与 `IMPLEMENTATION_STATUS.md` 已随状态重新生成。
+- 未完成：
+  - `WP-03`（SQLite + StateMachine + audit_log）未启动，等待用户指令。
+  - `BLK-003` 仍 `OPEN` / `MEDIUM`；13b 仍 `NOT VERIFIED`；2D 未单独执行。
+- 已知问题/风险：
+  - API 的 `state` 字段当前来自临时内存注册表，WP-03 接入 `StateMachine` 时必须替换，不得沿用。
+- 下一步：
+  - 若用户下达指令，按 ⑦ §2.3 启动 `WP-03`；否则停在验收完成状态。
+- 待用户确认：
+  - 无。
+- 相关文件/命令：
+  - `docs/verification/t0/wp-02/WP-02_REPORT.md`、`docs/verification/t0/wp-02/40_wp02_acceptance.md`。
+
+### 2026-11-10 · T0 · WP-02 核心契约落地完成 · 等待验收
+
+- 本次完成：
+  - 5 份冻结 schema 落成 Pydantic v2 模型（严格模式），并实现 schema 无法表达的跨字段约束：`level→producer/kind`、`SEM-NS-01`、`SEM-VR-01/02`。
+  - RFC 8259 严格解析层：重复键、`NaN`/`Infinity`、非法 UTF-8 在进入模型前拒绝。
+  - API 绑定 `POST /api/v1/tasks` 与 422 字段路径映射（`SCHEMA_INVALID` + `field_path` + `correlation_id`）；按决议 8 不注册 `/recover`。
+  - `check_model_parity.py`：72 例行为一致 + 5 契约结构一致，`result=PASS`。
+  - 测试：模型 89 项、API 13 项、全量 125 项全部通过。
+  - `project_state.json`：新增 `T-WP-02-001`，状态 `IN_REVIEW`；`state_sync.py` 三条命令 exit 0。
+- 未完成：
+  - `T-WP-02-001` 尚未验收；未进入 `WP-03`。
+  - 状态机、SQLite、其余 API 端点、启动守卫未实现（属后续工作包）。
+  - `BLK-003` 仍 `OPEN` / `MEDIUM`；13b 仍 `NOT VERIFIED`；2D 未单独执行。
+- 已知问题/风险：
+  - API 返回的 `state="CREATED"` 来自临时内存注册表，是响应形态绑定，不是状态机；不得据此宣称运行时状态迁移已实现。
+  - 模型错误消息为 pydantic 英文，仅 `dataset_ref` 使用 06 §4.2 固定文案；422 结构不受影响。
+- 下一步：
+  - 待用户验收 `T-WP-02-001`；通过后按 ⑦ 进入 `WP-03`（SQLite + StateMachine + audit_log）。
+- 待用户确认：
+  - 无（2026-11-10 已验收通过并授权提交）。
+- 相关文件/命令：
+  - `docs/verification/t0/wp-02/WP-02_REPORT.md`；`& .venv/Scripts/python.exe scripts/check_model_parity.py`；`& .venv/Scripts/python.exe -m pytest tests -q`。
+
 ### 2026-11-10 · T0 · WP-01 验收通过 · 进入 WP-02
 
 - 本次完成：
@@ -31,7 +71,7 @@
 - 下一步：
   - 按 ⑦ §2.2 完成 5 份 schema → Pydantic v2 模型、schema↔模型差异检查、API 请求/响应绑定与 422 字段路径映射。
 - 待用户确认：
-  - 本次提交授权。
+  - 本次提交授权（已于 2026-11-10 授权并提交 `678d2e8`）。
 - 相关文件/命令：
   - `docs/state/project_state.json`、`docs/verification/t0/wp-01/30_wp01_acceptance.md`；`.venv/Scripts/python.exe scripts/state_sync.py validate|render|check`。
 

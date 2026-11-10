@@ -367,3 +367,38 @@
 - 影响/后续：解除“验收前不进入 WP-02”的限制，进入 `WP-02` 核心契约落地；`BLK-003` 仍 `OPEN` / `MEDIUM`，13b 仍 `NOT VERIFIED`，2D 未单独执行。
 - 相关文件：`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/verification/t0/wp-01/30_wp01_acceptance.md`、`docs/verification/t0/wp-01/state_sync_acceptance.log`、`docs/verification/g0/09_dependency_matrix.md`、`docs/verification/t0/wp-01/WP-01_REPORT.md`、`docs/SESSION_HANDOFF.md`。
 - 架构变化：无（仅研发状态与文档更新，未触及运行时契约与代码）。
+
+### 2026-11-10 · T0 · WP-02 核心契约落地
+
+- 变更：
+  - 新增 [`researchflow/contracts/models.py`](researchflow/contracts/models.py)：5 份冻结 schema 的 Pydantic v2 模型；严格模式（`strict=True` + `extra="forbid"`）对应 JSON Schema 的类型与 `additionalProperties` 语义。
+  - 新增 [`researchflow/contracts/parsing.py`](researchflow/contracts/parsing.py)：RFC 8259 严格解析，拒绝重复键、`NaN`/`Infinity`、非法 UTF-8。
+  - 新增 [`researchflow/api/app.py`](researchflow/api/app.py)：`POST /api/v1/tasks` 契约绑定、422 统一错误体（`SCHEMA_INVALID` + `field_path` + `correlation_id`）、幂等、`GET /tasks/{id}`、`/healthz`、`/readyz`；按决议 8 不注册 `/recover`。
+  - 新增 [`scripts/check_model_parity.py`](scripts/check_model_parity.py)：行为 + 结构双层一致性检查，产出 `model_parity.json`。
+  - 新增 [`tests/test_contract_models.py`](tests/test_contract_models.py)（89 项）与 [`tests/test_api_422.py`](tests/test_api_422.py)（13 项）。
+  - `project_state.json`：新增 `T-WP-02-001`，状态 `IN_REVIEW`；`current_phase` 仍 `T0`，`current_milestone` 未改。
+- 原因：用户 2026-11-10 验收 WP-01 后批准直接进入 WP-02；按 ⑦ §2.2 与 ⑨ v1.0 把 schema 落成模型并绑定 API。
+- 验证：
+  - `validate_contracts.py --selftest` → `SELFTEST 10/10 PASS`，exit 0。
+  - `validate_contracts.py` → `contracts=5 cases=72 pass=72 fail=0`，exit 0。
+  - `check_model_parity.py` → `agree=72 disagree=0 structure_problems=0 result=PASS`，exit 0。
+  - `pytest tests` → `125 passed`，exit 0（模型 89 + API 13 + 既有 23）。
+  - `state_sync.py validate|render|check` → 均 exit 0；`PROJECT_STATE.md` SHA256 `032858c586d9acda…`，`IMPLEMENTATION_STATUS.md` SHA256 `8f759dea8430d744…`。
+- 影响/后续：
+  - `T-WP-02-001` 为 `IN_REVIEW`，验收前不进入 `WP-03`。
+  - API 的 `state` 字段是 06 §4.2 响应形态绑定，底层为临时内存注册表，**不是状态机**；状态机与 SQLite 在 WP-03 接管。
+  - `graph`／`evidence`／`verify`／`report`／`certificate` 端点、启动守卫未实现，已在报告中登记。
+  - `BLK-003` 仍 `OPEN` / `MEDIUM`；13b 仍 `NOT VERIFIED`；2D 未单独执行。
+- 相关文件：`researchflow/contracts/*`、`researchflow/api/*`、`scripts/check_model_parity.py`、`tests/test_contract_models.py`、`tests/test_api_422.py`、`conftest.py`、`docs/verification/t0/wp-02/*`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/SESSION_HANDOFF.md`。
+- 架构变化：无。契约 schema 未修改；新增的是契约的模型实现与 HTTP 绑定。API 的临时注册表已明确标注为 WP-03 前的存根，不构成架构决策。
+
+### 2026-11-10 · T0 · WP-02 验收通过
+
+- 变更：
+  - 用户验收 `T-WP-02-001`：状态 `IN_REVIEW` → `DONE`；`updated_at=2026-11-10T22:45:00+08:00`；`evidence_paths` 增补验收记录与状态同步日志。
+  - 新增 [`docs/verification/t0/wp-02/40_wp02_acceptance.md`](verification/t0/wp-02/40_wp02_acceptance.md)：7 条验收标准逐条对账、复核命令与真实结果、边界确认。
+- 原因：用户 2026-11-10 选择"验收通过并提交"。
+- 验证：`state_sync.py validate|render|check` 均 exit 0；`PROJECT_STATE.md` SHA256 `096130298a153690…`，`IMPLEMENTATION_STATUS.md` SHA256 `9fd641b5465daa09…`。
+- 影响/后续：`T-WP-02-001` 关闭；WP-03（SQLite + StateMachine + audit_log）可启动，但需用户另行指令。
+- 相关文件：`docs/state/project_state.json`、`docs/verification/t0/wp-02/40_wp02_acceptance.md`、`docs/verification/t0/wp-02/state_sync.log`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/SESSION_HANDOFF.md`。
+- 架构变化：无。
