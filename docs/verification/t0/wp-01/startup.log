@@ -1,0 +1,5 @@
+== WP-01 uvicorn startup smoke ==
+time=2026-11-10T21:51:09.2108119+08:00
+STARTUP_RESULT (200, '{"ok":true}')
+STARTUP_OK
+startup_exit=0

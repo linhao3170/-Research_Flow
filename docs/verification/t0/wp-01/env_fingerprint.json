@@ -1,0 +1,32 @@
+{
+  "captured_at": "2026-11-10T21:54:56+08:00",
+  "python": {
+    "version": "3.11.16",
+    "implementation": "CPython",
+    "architecture": "64bit",
+    "compiler": "MSC v.1944 64 bit (AMD64)",
+    "executable": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+    "sqlite_version": "3.53.1"
+  },
+  "project": {
+    "root": "D:\\ResearchFlow-project",
+    "venv": "D:\\ResearchFlow-project\\.venv",
+    "venv_size_bytes": 502349269,
+    "venv_file_count": 12655
+  },
+  "uv": {
+    "version": "0.12.16",
+    "cache_dir": "D:\\ResearchFlow-project\\.uv-cache",
+    "cache_size_bytes": 473658225,
+    "cache_file_count": 10811
+  },
+  "lock": {
+    "path": "requirements.lock",
+    "sha256": "1fd7a9d9774fb2409f9b39b18ae839c350d5adfd42a61593d6c3bbbf6e68660b",
+    "packages": 58
+  },
+  "direct_input": {
+    "path": "requirements.in",
+    "sha256": "3cd028c72edfafe9acbaee755bfc761e6eee2856e31fa4c4155aad6a9295535d"
+  }
+}

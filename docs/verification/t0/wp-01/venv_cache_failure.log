@@ -1,0 +1,7 @@
+== reproduce default-cache failure ==
+time=2026-11-10T21:55:14.3615325+08:00
+UV_CACHE_DIR_set=False
+error: Failed to initialize cache at `C:\Users\Administrator\AppData\Local\uv\cache`
+  cause: failed to open file `C:\Users\Administrator\AppData\Local\uv\cache\sdists-v9\.git`: 拒绝访问。 (os error 5)
+venv_cachefail_exit=2
+partial_absent=True

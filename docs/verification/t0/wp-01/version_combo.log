@@ -1,0 +1,8 @@
+== version combo ==
+time=2026-11-10T21:52:09.9351800+08:00
+numpy=2.4.6
+scipy=1.17.1
+pandas=3.1.1
+sklearn=1.9.1
+NUMPY_RANGE_OK=True
+combo_exit=0

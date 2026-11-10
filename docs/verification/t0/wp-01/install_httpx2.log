@@ -1,0 +1,6 @@
+Resolved 7 packages in 6.42s
+Prepared 3 packages in 6.27s
+Installed 3 packages in 18ms
+ + httpcore2==2.16.0
+ + httpx2==2.16.0
+ + truststore==0.10.5

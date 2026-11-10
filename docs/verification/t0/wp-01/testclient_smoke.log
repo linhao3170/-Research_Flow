@@ -1,0 +1,6 @@
+== WP-01 TestClient smoke ==
+time=2026-11-10T21:49:28.3174325+08:00
+python=3.11.16
+starlette=1.10.0
+TESTCLIENT_OK 200 {'ok': True}
+testclient_exit=0

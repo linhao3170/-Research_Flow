@@ -325,3 +325,30 @@
   - `BLK-003` 保持 `OPEN` / `MEDIUM`；13b 仍 `NOT VERIFIED`；2D 未单独执行。
   - `last_verified_commit` 保持 `null`；用户未下达更新指令，未自行改写。
 - 相关文件：`AGENTS.md`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`scripts/state_sync.py`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/state/G0_DECISION_LIST.md`、`docs/verification/g0/18*`–`22*`、`docs/verification/g0/check_gate_decision.py`、`docs/verification/stage8/20_git_rollback.md`、`docs/verification/stage8/STAGE8_REPORT.md`、`docs/memory/project-context.md`、`docs/SESSION_HANDOFF.md`。
+
+### 2026-11-10 · T0 · WP-01 仓库与环境锁定
+
+- 变更：
+  - 用 uv 创建 `.venv`：`uv venv --python 3.11.16 .venv`；首次因默认缓存目录 `C:\Users\Administrator\AppData\Local\uv\cache` 在工作区沙箱外而失败（首次工具捕获 exit 1；复现 uv exit 2），设 `UV_CACHE_DIR=D:\ResearchFlow-project\.uv-cache` 后成功（exit 0，0.51 s）。
+  - 解释器指纹：`3.11.16` + `64bit`；`.venv\Scripts\python.exe` 为 3.11.16（MSC v.1944 64 bit）。
+  - 按矩阵安装 16 个直接 pin；解析 55 个包、安装 46.10 s；`uv pip check` 全部兼容。
+  - 矩阵外新增 `httpx2==2.16.0`（用户 2026-11-10 批准）：starlette 1.10.0 的 `TestClient` 要求 `httpx2` 而非 `httpx`；同时安装 `httpcore2==2.16.0`、`truststore==0.10.5`。
+  - 生成 `requirements.in`（直接清单）与 `requirements.lock`（58 个精确 pin）；干净环境 `.venv-repro` 从锁文件安装并 TestClient 200，43.95 s，已删除。
+  - 逐项核对：矩阵内 16 包与 SQLite 全部一致；starlette `1.10.0` 与矩阵一致，TestClient 通过后**不回退**；uv 工具版本 `0.12.16` 与矩阵 `0.13.7` 不一致，保留原因已记录（工具不进入 `.venv`，矩阵注明由 WP-01 决定）。
+  - `.venv` 实测 502,349,269 字节（502.3 MB），高于矩阵估算 350–450 MB 上限 52.3 MB（+11.6%）；安装主路径 59.48 s。矩阵无耗时估算，未编造对比。
+  - `project_state.json`：`current_phase` 转 `T0`；新增 `T-WP-01-001`，状态 `IN_REVIEW`，等待用户验收；`current_milestone` 保持 `M0_GOVERNANCE_BASELINE`（G0 文档未定义 T0 里程碑编号，未自行发明）；G1–G7 仍 `NOT_STARTED`。
+  - `researchflow/` 仍只有 `.gitkeep`；未写业务代码、未建数据库、未写 API、未做模板。
+- 原因：按用户 2026-11-10 指令进入 T0 `WP-01`，只锁定解释器与依赖；`httpx2` 缺失是真实冒烟发现的矩阵遗漏，先报告并获批准后才安装。
+- 验证：
+  - `.venv\Scripts\python.exe -c "import sys,platform;print(sys.version,platform.architecture()[0])"` → `3.11.16 ... 64bit`，exit 0。
+  - `uv pip check --python .venv/Scripts/python.exe` → `All installed packages are compatible`，exit 0。
+  - TestClient：`TESTCLIENT_OK 200 {'ok': True}`，exit 0。
+  - 8 模块导入 + numpy/scipy/pandas/sklearn 组合：`2.4.6 / 1.17.1 / 3.1.1 / 1.9.1`，numpy 区间 PASS，exit 0。
+  - uvicorn 实际启动：`STARTUP_OK`，HTTP 200 `{"ok":true}`，exit 0。
+  - `state_sync.py validate|render|check` → 均 exit 0；`PROJECT_STATE.md` SHA256 `756d1f5f…3967`，`IMPLEMENTATION_STATUS.md` SHA256 `1bca2b36…ed4b`。
+- 影响/后续：
+  - `T-WP-01-001` 为 `IN_REVIEW`，验收前不进入 `WP-02`；T0 业务代码仍未开始。
+  - `BLK-003` 保持 `OPEN` / `MEDIUM`；13b 仍 `NOT VERIFIED`；2D 未单独执行。
+  - `last_verified_commit` 保持 `null`；未按未经指令的方式改写。
+  - `.venv`、`.uv-cache` 不纳入 Git；`requirements.in`、`requirements.lock` 纳入版本控制。
+- 相关文件：`requirements.in`、`requirements.lock`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/verification/t0/wp-01/*`、`docs/memory/environment.md`、`docs/memory/project-context.md`、`docs/SESSION_HANDOFF.md`。

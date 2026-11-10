@@ -16,6 +16,41 @@
 
 ## 交接记录
 
+### 2026-11-10 · T0 · WP-01 仓库与环境锁定完成 · 等待验收
+
+- 本次完成：
+  - `.venv` 由 uv 创建，解释器 `3.11.16` + `64bit`；SQLite `3.53.1`。
+  - 矩阵内 16 个直接 pin 安装；`uv pip check` 全部兼容；`requirements.in` + `requirements.lock`（58 包）纳入版本控制。
+  - 矩阵外 `httpx2==2.16.0` 经用户 2026-11-10 批准后安装（starlette 1.10.0 TestClient 要求），传递依赖 `httpcore2`、`truststore`。
+  - TestClient `200 {'ok': True}`；uvicorn 实际启动 200；8 模块导入与 numpy 区间通过；干净环境从锁文件复现通过。
+  - starlette 实测 `1.10.0` 与矩阵一致，**不回退**；uv 工具 `0.12.16` 与矩阵 `0.13.7` 的偏差已记录。
+  - `.venv` 502.3 MB，高于矩阵估算 350–450 MB 上限 52.3 MB；安装主路径 59.48 s。
+  - `project_state.json`：`current_phase=T0`；`T-WP-01-001=IN_REVIEW`；`current_milestone` 保持 `M0_GOVERNANCE_BASELINE`。
+- 未完成：
+  - `T-WP-01-001` 尚未验收；未进入 `WP-02`；T0 业务代码未开始。
+  - 13b 仍 `NOT VERIFIED`；2D 未单独执行；`BLK-003` OPEN / MEDIUM。
+  - `last_verified_commit` 仍 `null`。
+- 已知问题/风险：
+  - `.venv` 体积超出矩阵估算上限，原因是完整闭包 + Windows 二进制 wheel + 新增 `httpx2`；已如实记录。
+  - `.uv-cache` 实测 473.7 MB，为 uv 本地解压缓存，不是网络下载字节；未拿它冒充下载量。
+  - uv 版本偏差与矩阵外 `httpx2` 均由用户批准/记录，无静默变更。
+- 实际测试命令与结果：
+  - `uv venv --python 3.11.16 .venv` → 首次缓存失败；设 `UV_CACHE_DIR` 后 exit 0，0.51 s。
+  - `& .venv/Scripts/python.exe -c "import sys,platform;print(sys.version,platform.architecture()[0])"` → `3.11.16 ... 64bit`，exit 0。
+  - `uv pip install` 16 pins → exit 0，46.10 s。
+  - `uv pip check` → 全部兼容，exit 0。
+  - TestClient → `TESTCLIENT_OK 200`，exit 0；uvicorn → `STARTUP_OK`，exit 0。
+  - `uv pip install -r requirements.lock`（干净 `.venv-repro`）→ TestClient 200，43.95 s，已删除。
+  - `state_sync.py validate|render|check` → 均 exit 0；PROJECT_STATE `756d1f5f…3967`，IMPLEMENTATION_STATUS `1bca2b36…ed4b`。
+- 下一步（等待用户）：
+  1. 验收 `WP-01` 环境与依赖；确认后 `T-WP-01-001` 可由 `IN_REVIEW` 转 `DONE`。
+  2. 验收通过后再批准 `WP-02`；不得连做。
+  3. 如需 T0 里程碑编号，请指定；当前未自行发明。
+- 待用户确认：
+  - `.venv` 502.3 MB 超出矩阵估算是否接受。
+  - `T-WP-01-001` 是否转 `DONE`；`last_verified_commit` 是否更新。
+- 相关文件/命令：`requirements.in`、`requirements.lock`、`docs/verification/t0/wp-01/WP-01_REPORT.md`、`env_fingerprint.json`、`dependency_resolution.txt`、`testclient_smoke.log`、`startup.log`、`size_and_timing.md`、`docs/state/project_state.json`、`docs/CHANGELOG_DEV.md`。
+
 ### 2026-11-10 · G0 PASS · Git 回滚补测 · 阶段 8 第 20 项关闭
 
 - 本次完成：

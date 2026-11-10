@@ -1,0 +1,7 @@
+# starlette 实测与回退判断
+
+- 矩阵版本：`1.10.0`；实测版本：`1.10.0`；结论：**一致**。
+- FastAPI：`0.162.2`。
+- TestClient 冒烟：通过（200 {"ok": true}）。
+- 回退判断：**不回退**。失败原因不是 starlette 1.x 与 FastAPI 不兼容，而是缺少 starlette 1.10.0 TestClient 所需的 `httpx2`；经用户批准安装 `httpx2==2.16.0` 后冒烟通过。
+- 证据：`testclient_smoke.log`、`install_httpx2.log`。

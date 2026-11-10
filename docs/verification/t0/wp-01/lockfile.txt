@@ -1,0 +1,8 @@
+# WP-01 锁文件摘要
+
+- 路径：`requirements.lock`
+- SHA256：`1fd7a9d9774fb2409f9b39b18ae839c350d5adfd42a61593d6c3bbbf6e68660b`
+- 锁定包数：58
+- 直接依赖清单：`requirements.in`，SHA256 `3cd028c72edfafe9acbaee755bfc761e6eee2856e31fa4c4155aad6a9295535d`
+- 安装验证：`uv pip install -r requirements.lock` → exit 0，`Checked 58 packages`
+- 干净环境复现：`.venv-repro` 从锁文件安装 → TestClient 200，43.95 s，已删除

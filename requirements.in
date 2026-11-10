@@ -1,0 +1,26 @@
+# ResearchFlow T0 · WP-01 直接依赖（矩阵锁定 2026-11-10）
+# 解释器：CPython 3.11.16（64 位，uv 托管）
+# 说明：以下版本与 docs/verification/g0/09_dependency_matrix.md 逐项对应；
+#       httpx2 为 2026-11-10 用户批准的矩阵外新增项，仅用于 FastAPI TestClient。
+
+fastapi==0.162.2
+pydantic==2.14.3
+networkx==3.6.1
+pandas==3.1.1
+scikit-learn==1.9.1
+cryptography==50.0.2
+streamlit==1.67.0
+pytest==9.2.0
+
+# 关键传递依赖（显式 pin，避免解析漂移）
+numpy==2.4.6
+scipy==1.17.1
+pydantic-core==2.50.4
+starlette==1.10.0
+cffi==2.1.1
+pyarrow==26.0.1
+pillow==13.0.0
+protobuf==7.36.2
+
+# 矩阵外新增（用户 2026-11-10 批准；starlette 1.10.0 TestClient 要求 httpx2）
+httpx2==2.16.0

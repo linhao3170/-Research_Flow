@@ -1,6 +1,6 @@
 # environment.md — 已核实环境、版本与配置摘要
 
-> 核验时间：2026-11-08 11:25–12:36（阶段 4–6）；阶段 7 追加 12:41 起（资料抽取与工具限制）
+> 核验时间：2026-11-08 11:25–12:36（阶段 4–6）；阶段 7 追加 12:41 起（资料抽取与工具限制）；2026-11-10 WP-01 追加环境与依赖实测。
 > 核验方式：本机 PowerShell 命令实测 + 项目文件检查。
 > 安全边界：本文件不记录任何密钥、令牌、凭据内容或 Session 标识；`C:\Users\Administrator\.dsh\.credentials.yaml` 未被读取。
 > 标记规则：只有命令实测结果写入“已核实”；推断或待定内容写入“待核实”。
@@ -39,9 +39,9 @@
 
 ### 2.3 项目虚拟环境
 
-- `D:\ResearchFlow-project\.venv`：**不存在**。
-- 本阶段未创建虚拟环境、未安装任何第三方依赖；`state_sync.py` 与测试只使用标准库。
-- 后续如创建 `.venv`，必须由上述 3.11.16（64 位）解释器创建，并在记忆与状态中登记。
+- `D:\ResearchFlow-project\.venv`：**已创建（2026-11-10，WP-01）**；`.venv\Scripts\python.exe` 实测 `3.11.16` + `64bit`。
+- WP-01 之前未创建虚拟环境、未安装第三方依赖；`state_sync.py` 与测试只使用标准库。
+- 后续如重建 `.venv`，必须由上述 3.11.16（64 位）解释器或 uv 的 `--python 3.11.16` 创建，并在记忆与状态中登记。
 - 资料抽取说明：阶段 4 使用 DSH 自带 Python 环境（含 `python-docx 1.2.0`）读取策划书 DOCX，仅用于抽取章节与表格；该环境未用于项目脚本、测试或交付代码。
 - 阶段 7 的 DOCX 全文抽取改用项目 Python 3.11.16（64 位）+ 标准库（`zipfile` / `xml.etree`），脚本为 `docs/verification/stage7/extract_docx.py`；未使用 `python-docx` 写文件，未修改原件。
 - 阶段 7 尝试用 Microsoft Word COM 只读获取页码：Word 进程启动阶段阻塞，未完成分页；未修改文档；未安装 LibreOffice/WPS。因此页码标注“不可用”，引用改用章节 + 段落锚点。
@@ -49,7 +49,25 @@
 ### 2.4 uv
 
 - 版本：`uv 0.12.16 (761ff1379 2026-09-17 x86_64-pc-windows-msvc)`。
-- 用途：提供项目 Python 3.11.16 基线；本阶段未用 uv 安装依赖。
+- 用途：提供项目 Python 3.11.16 基线；2026-11-10 WP-01 用其创建 `.venv`、安装依赖并生成锁文件。
+- 矩阵列出的 `uv 0.13.7` 未安装/未升级；原因与偏差见 §2.5 与 `docs/verification/t0/wp-01/dependency_resolution.txt`。
+
+### 2.5 WP-01 环境实测（2026-11-10）
+
+| 项 | 实测 |
+|---|---|
+| 创建命令 | `uv venv --python 3.11.16 .venv` |
+| uv | `0.12.16`；缓存目录改为 `D:\ResearchFlow-project\.uv-cache`（默认缓存目录在工作区沙箱外，首次失败） |
+| `.venv` 解释器 | `D:\ResearchFlow-project\.venv\Scripts\python.exe`；3.11.16 / 64bit |
+| SQLite | `3.53.1` |
+| 直接依赖 | 16 个矩阵内 pin + `httpx2==2.16.0`（用户 2026-11-10 批准，TestClient 用） |
+| 锁文件 | `requirements.lock`，58 个精确 pin；`requirements.in` 为直接清单 |
+| `.venv` 体积 | 502,349,269 字节（502.3 MB）；矩阵估算 350–450 MB，超出上限 52.3 MB（+11.6%） |
+| 安装耗时 | venv 0.51 s + 矩阵包 46.10 s + httpx2 12.87 s = 59.48 s |
+| 冒烟 | FastAPI `TestClient` 200；uvicorn 实际启动 200；8 个模块导入成功 |
+| 证据 | `docs/verification/t0/wp-01/` |
+
+`uv` 版本与矩阵列的 0.13.7 不一致，按“工具、是否升级由 WP-01 决定”保留 0.12.16，偏差已记录。
 
 ## 3. Git 与版本控制
 
@@ -57,17 +75,17 @@
 |---|---|
 | Git | `git version 2.46.0.windows.1` |
 | 当前分支 | `main` |
-| commit 数 | 0（`git rev-list --count --all`） |
-| `user.name` | 未配置（空） |
-| `user.email` | 未配置（空） |
+| commit 数 | 3（截至 WP-01 提交；以 `git rev-list --count --all` 为准） |
+| `user.name` | `ResearchFlow Dev`（仅本仓库 `--local`） |
+| `user.email` | `dev@researchflow.local`（仅本仓库 `--local`） |
 | `core.autocrlf` | `true` |
 | 仓库根 | `D:\ResearchFlow-project` |
 
 影响：
 
-- 未配置 Git 身份，**不能提交**；提交前必须询问用户，不得自行设置。
-- `core.autocrlf=true` 可能在检出时把文本转为 CRLF，破坏“逐字节一致”的 `state_sync.py check`。因此仓库需要 `.gitattributes` 明确将生成文件、Python、JSON、Markdown 固定为 LF。
-- 本阶段不执行 `git add` / `git commit`。
+- Git 身份仅在本仓库配置：`user.name=ResearchFlow Dev`、`user.email=dev@researchflow.local`；全局身份仍为空。提交前仍须由用户批准，不得自行扩大提交范围。
+- `core.autocrlf=true` 可能在检出时把文本转为 CRLF，破坏“逐字节一致”的 `state_sync.py check`。`.gitattributes` 已将 Python、JSON、Markdown、日志固定为 LF，并把 `.gitattributes` 自身固定为 LF。
+- 阶段 4–8 未执行 `git add` / `git commit`；2026-11-10 按用户指令建立 G0 基线、G0 PASS 与 WP-01 提交（以 `git log` 为准）。
 
 ## 4. Node.js 与 pnpm
 
@@ -154,8 +172,9 @@
 ## 7. 网络与依赖状态
 
 - 阶段 5 及以前未主动测试外网连通性；阶段 6 对 `https://mcp.context7.com/mcp` 做了无凭据只读探测，并按批准接入该端点（匿名额度）。查询只含公开库名与技术问题。项目仍保持“不默认开放网络”的设计约束，未新增其他外网依赖。
-- 未安装 Python / Node 依赖，未创建锁文件。
-- 阶段 5 的 Skills 为 Markdown + YAML frontmatter，结构校验脚本只用 Python 标准库，不依赖 `.venv`。
+- 2026-11-10 WP-01 通过 PyPI 安装 58 个 Python 包（含 `httpx2`）并生成 `requirements.lock`；这是受控安装，不等于运行期默认开放网络。
+- Node 依赖未安装；本阶段未运行 pnpm。
+- 阶段 5 的 Skills 为 Markdown + YAML frontmatter，结构校验脚本只用 Python 标准库；WP-01 后项目脚本可使用 `.venv`。
 - 未接入 LLM，未调用模型 API。
 - 未部署 Docker、本地大模型或数据库。
 
@@ -185,7 +204,7 @@ Test-Path 'C:\Users\Administrator\.dsh\AGENTS.md'
 
 ## 9. 待核实
 
-- `.venv` 仍未创建；阶段 5 未安装依赖。后续如创建，必须由 3.11.16（64 位）解释器创建并登记。
-- 项目最终采用的依赖版本（FastAPI / Pydantic / SQLite / NetworkX / scikit-learn / pandas / cryptography 等）尚未锁定。
+- `.venv` 已创建（2026-11-10 WP-01，3.11.16/64bit），见 §2.5；未做干净机器复现（本机缓存预热）。
+- 依赖版本已按矩阵锁定并写入 `requirements.lock`；`uv` 工具版本 0.12.16 与矩阵 0.13.7 的偏差已记录。
 - 并发 2 与 16GB 内存下的实际资源峰值尚未实测。
 - 外网在离线演示环境中的默认策略，需在 T0 验收方案中确认。

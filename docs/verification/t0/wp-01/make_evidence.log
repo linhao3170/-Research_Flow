@@ -1,0 +1,9 @@
+== make_evidence ==
+time=2026-11-10T21:51:43.8219609+08:00
+ENV_EVIDENCE=OK
+venv_bytes=502349269 venv_files=12655
+cache_bytes=473658225 cache_files=10811
+lock_packages=58
+mismatches=[('uv', '0.13.7', '0.12.16', '矩阵 §2；工具，不进入 .venv')]
+numpy_ok=True
+make_evidence_exit=0

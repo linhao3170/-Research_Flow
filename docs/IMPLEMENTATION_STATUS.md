@@ -13,10 +13,10 @@
 | `READY` | 就绪 | 0 |
 | `IN_PROGRESS` | 进行中 | 0 |
 | `BLOCKED` | 阻塞 | 0 |
-| `IN_REVIEW` | 评审中 | 0 |
+| `IN_REVIEW` | 评审中 | 1 |
 | `DONE` | 完成 | 5 |
 | `DEFERRED` | 延期 | 0 |
-| **合计** | — | **5** |
+| **合计** | — | **6** |
 
 ## 2. 任务明细
 
@@ -280,6 +280,50 @@
   - `docs/verification/stage8/D_resources.log`
   - `docs/state/G0_DECISION_LIST.md`
   - `docs/verification/stage8/STAGE8_REPORT.md`
+
+### `T-WP-01-001` T0 WP-01 仓库与环境锁定
+
+- 阶段：`T0`
+- 状态：`IN_REVIEW` 评审中
+- 依赖：`T-G0-001`
+- 更新时间：2026-11-10T21:55:00+08:00
+- 阻塞：无
+- 验收标准：
+  - .venv 由 uv 托管 CPython 3.11.16 创建；sys.version 含 3.11.16 且 platform.architecture()[0] 为 64bit
+  - 矩阵内 16 个直接 pin 与 SQLite 逐项核对；uv 工具版本偏差单独记录原因，无静默升级
+  - httpx2==2.16.0 仅在用户 2026-11-10 批准后安装，并记录 starlette 1.10.0 的 TestClient 约束
+  - requirements.lock 锁定 58 个包；干净环境从锁文件复现安装并 TestClient 200
+  - TestClient 最小端点返回 200；starlette 1.10.0 与矩阵一致、不回退；8 个模块导入与 numpy [2.0.2,2.7) 区间通过
+  - .venv 体积与耗时实测并对照矩阵估算；超出估算的偏差如实记录，不用估算值回填
+  - researchflow/ 仍只有 .gitkeep；未写业务代码、未建数据库、未写 API、未做模板；证据齐全
+- 测试命令：
+  - `& .venv/Scripts/python.exe -c "import sys,platform;print(sys.version,platform.architecture()[0])"`
+  - `uv pip check --python .venv/Scripts/python.exe`
+  - `& .venv/Scripts/python.exe -c "import fastapi,pydantic,networkx,pandas,sklearn,cryptography,streamlit,pytest,numpy,scipy"`
+  - `uv pip install -r requirements.lock --python .venv/Scripts/python.exe`
+  - `& .venv/Scripts/python.exe docs/verification/t0/wp-01/make_evidence.py`
+- 证据路径：
+  - `requirements.in`
+  - `requirements.lock`
+  - `docs/verification/t0/wp-01/WP-01_REPORT.md`
+  - `docs/verification/t0/wp-01/env_fingerprint.json`
+  - `docs/verification/t0/wp-01/dependency_resolution.txt`
+  - `docs/verification/t0/wp-01/dependency_resolution_dryrun.log`
+  - `docs/verification/t0/wp-01/install.log`
+  - `docs/verification/t0/wp-01/install_httpx2.log`
+  - `docs/verification/t0/wp-01/venv_cache_failure.log`
+  - `docs/verification/t0/wp-01/lockfile.txt`
+  - `docs/verification/t0/wp-01/pip_check.log`
+  - `docs/verification/t0/wp-01/pip_list.log`
+  - `docs/verification/t0/wp-01/testclient_smoke.log`
+  - `docs/verification/t0/wp-01/starlette_resolution.txt`
+  - `docs/verification/t0/wp-01/version_combo.log`
+  - `docs/verification/t0/wp-01/startup.log`
+  - `docs/verification/t0/wp-01/clean_room_install.log`
+  - `docs/verification/t0/wp-01/size_and_timing.md`
+  - `docs/verification/t0/wp-01/make_evidence.py`
+  - `docs/verification/t0/wp-01/make_evidence.log`
+  - `docs/verification/t0/wp-01/state_sync.log`
 
 ## 3. 阶段门禁明细
 

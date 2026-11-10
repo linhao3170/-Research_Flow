@@ -1,0 +1,16 @@
+== clean-room lock reinstall ==
+time=2026-11-10T21:50:13.6590509+08:00
+Using CPython 3.11.16
+Creating virtual environment at: .venv-repro
+Activate with: .venv-repro\Scripts\activate
+repro_venv_exit=0
+ + tzdata==2026.6
+ + urllib3==2.8.0
+ + uvicorn==0.54.0
+ + watchdog==7.1.0
+ + websockets==17.4
+repro_install_exit=0
+REPRO_TESTCLIENT_OK 200 {'ok': True} numpy 2.4.6
+repro_smoke_exit=0
+repro_elapsed_sec=43.95
+repro_removed=True
