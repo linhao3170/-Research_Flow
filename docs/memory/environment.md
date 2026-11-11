@@ -5,6 +5,8 @@
 > 安全边界：本文件不记录任何密钥、令牌、凭据内容或 Session 标识；`C:\Users\Administrator\.dsh\.credentials.yaml` 未被读取。
 > 标记规则：只有命令实测结果写入“已核实”；推断或待定内容写入“待核实”。
 
+当前状态以 docs/state/project_state.json 为准。
+
 ## 1. 操作系统与硬件
 
 | 项目 | 已核实值 | 备注 |
@@ -40,17 +42,17 @@
 ### 2.3 项目虚拟环境
 
 - `D:\ResearchFlow-project\.venv`：**已创建（2026-11-10，WP-01）**；`.venv\Scripts\python.exe` 实测 `3.11.16` + `64bit`。
-- WP-01 之前未创建虚拟环境、未安装第三方依赖；`state_sync.py` 与测试只使用标准库。
+- WP-01 之前为无虚拟环境、无第三方依赖状态（历史）；`state_sync.py` 与测试只使用标准库。
 - 后续如重建 `.venv`，必须由上述 3.11.16（64 位）解释器或 uv 的 `--python 3.11.16` 创建，并在记忆与状态中登记。
 - 资料抽取说明：阶段 4 使用 DSH 自带 Python 环境（含 `python-docx 1.2.0`）读取策划书 DOCX，仅用于抽取章节与表格；该环境未用于项目脚本、测试或交付代码。
 - 阶段 7 的 DOCX 全文抽取改用项目 Python 3.11.16（64 位）+ 标准库（`zipfile` / `xml.etree`），脚本为 `docs/verification/stage7/extract_docx.py`；未使用 `python-docx` 写文件，未修改原件。
-- 阶段 7 尝试用 Microsoft Word COM 只读获取页码：Word 进程启动阶段阻塞，未完成分页；未修改文档；未安装 LibreOffice/WPS。因此页码标注“不可用”，引用改用章节 + 段落锚点。
+- 阶段 7 尝试用 Microsoft Word COM 只读获取页码：Word 进程启动阶段阻塞，分页未完成（历史）；文档未改动；LibreOffice/WPS 未采用（历史）。因此页码标注“不可用”，引用改用章节 + 段落锚点。
 
 ### 2.4 uv
 
 - 版本：`uv 0.12.16 (761ff1379 2026-09-17 x86_64-pc-windows-msvc)`。
 - 用途：提供项目 Python 3.11.16 基线；2026-11-10 WP-01 用其创建 `.venv`、安装依赖并生成锁文件。
-- 矩阵列出的 `uv 0.13.7` 未安装/未升级；原因与偏差见 §2.5 与 `docs/verification/t0/wp-01/dependency_resolution.txt`。
+- 矩阵列出的 `uv 0.13.7` 未采用/未升级（历史）；原因与偏差见 §2.5 与 `docs/verification/t0/wp-01/dependency_resolution.txt`。
 
 ### 2.5 WP-01 环境实测（2026-11-10）
 
@@ -75,7 +77,7 @@
 |---|---|
 | Git | `git version 2.46.0.windows.1` |
 | 当前分支 | `main` |
-| commit 数 | 3（截至 WP-01 提交；以 `git rev-list --count --all` 为准） |
+| commit 数 | 以 `git rev-list --count --all` 为准 |
 | `user.name` | `ResearchFlow Dev`（仅本仓库 `--local`） |
 | `user.email` | `dev@researchflow.local`（仅本仓库 `--local`） |
 | `core.autocrlf` | `true` |
@@ -85,7 +87,7 @@
 
 - Git 身份仅在本仓库配置：`user.name=ResearchFlow Dev`、`user.email=dev@researchflow.local`；全局身份仍为空。提交前仍须由用户批准，不得自行扩大提交范围。
 - `core.autocrlf=true` 可能在检出时把文本转为 CRLF，破坏“逐字节一致”的 `state_sync.py check`。`.gitattributes` 已将 Python、JSON、Markdown、日志固定为 LF，并把 `.gitattributes` 自身固定为 LF。
-- 阶段 4–8 未执行 `git add` / `git commit`；2026-11-10 按用户指令建立 G0 基线、G0 PASS 与 WP-01 提交（以 `git log` 为准）。
+- 阶段 4–8 未执行 `git add` / `git commit`；2026-11-10 按用户指令建立 G0 基线、G0 裁决与 WP-01 提交（以 `git log` 为准）。
 
 ## 4. Node.js 与 pnpm
 
@@ -96,7 +98,7 @@
 | pnpm 路径 | `C:\Users\Administrator\AppData\Roaming\npm\pnpm.cmd` |
 | PowerShell 约束 | 必须使用 `pnpm.cmd`；`pnpm.ps1` 被执行策略拦截 |
 
-本阶段未运行 pnpm，未安装任何 Node 依赖。
+本阶段未运行 pnpm；Node 依赖保持为空（截至 2026-11-11）。
 
 ## 5. PowerShell
 
@@ -121,7 +123,7 @@
 - `desktop` Profile 的 host plane 通过 `dsh-web-app/cordis.patch.yml` 将 `agent-instructions` 标记为 `disabled: true`，这是为了把 Agent 层插件交给每个会话的 preset 挂载。
 - DSH 默认 preset 为 `standard`；其配置在 `C:\Users\Administrator\.dsh\profiles\node_modules\@deepseek-ai\dsh\config\agent-presets\standard\agent.cordis.yml` 第 30–31 行重新挂载 `@deepseek-ai/dsh-agent-instructions`。
 - 本会话启动时的系统提示已包含 “Instructions from: AGENTS.md”，且重写 `AGENTS.md` 后收到 “Updated instructions from: AGENTS.md”，内容为新版本。**结论：项目 AGENTS 已实际加载并刷新。**
-- 全局 `C:\Users\Administrator\.dsh\AGENTS.md` 不存在；本阶段未创建、未修改。如未来确有必要，须单独审批，方案见 `docs/reference/GLOBAL_AGENTS_PROPOSAL.md`。
+- 全局 `C:\Users\Administrator\.dsh\AGENTS.md` 仍不存在（截至 2026-11-11）；本阶段未做创建或修改。如未来确有必要，须单独审批，方案见 `docs/reference/GLOBAL_AGENTS_PROPOSAL.md`。
 
 ### 6.2 Skills 发现机制（阶段 5 核实）
 
@@ -173,7 +175,7 @@
 
 - 阶段 5 及以前未主动测试外网连通性；阶段 6 对 `https://mcp.context7.com/mcp` 做了无凭据只读探测，并按批准接入该端点（匿名额度）。查询只含公开库名与技术问题。项目仍保持“不默认开放网络”的设计约束，未新增其他外网依赖。
 - 2026-11-10 WP-01 通过 PyPI 安装 58 个 Python 包（含 `httpx2`）并生成 `requirements.lock`；这是受控安装，不等于运行期默认开放网络。
-- Node 依赖未安装；本阶段未运行 pnpm。
+- Node 依赖保持为空；本阶段未运行 pnpm。
 - 阶段 5 的 Skills 为 Markdown + YAML frontmatter，结构校验脚本只用 Python 标准库；WP-01 后项目脚本可使用 `.venv`。
 - 未接入 LLM，未调用模型 API。
 - 未部署 Docker、本地大模型或数据库。

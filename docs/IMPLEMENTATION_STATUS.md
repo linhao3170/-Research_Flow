@@ -13,10 +13,10 @@
 | `READY` | 就绪 | 0 |
 | `IN_PROGRESS` | 进行中 | 0 |
 | `BLOCKED` | 阻塞 | 0 |
-| `IN_REVIEW` | 评审中 | 0 |
+| `IN_REVIEW` | 评审中 | 1 |
 | `DONE` | 完成 | 7 |
 | `DEFERRED` | 延期 | 0 |
-| **合计** | — | **7** |
+| **合计** | — | **8** |
 
 ## 2. 任务明细
 
@@ -190,6 +190,24 @@
   - `docs/verification/stage6/07_post_write_verify.log`
   - `docs/verification/stage6/09_state_sync_after_done.log`
   - `docs/verification/stage6/10_verify_script.log`
+
+### `T-PSEUDO-001` P0 伪代码规格阶段（P1–P10，当前至 P6）
+
+- 阶段：`T0`
+- 状态：`IN_REVIEW` 评审中
+- 依赖：`T-WP-02-001`
+- 更新时间：2026-11-11T18:10:00+08:00
+- 阻塞：无
+- 验收标准：
+  - P1–P7 覆盖 T0 全链路且逐阶段验收
+  - P8–P10 覆盖 T1/T2
+  - 冻结审计通过
+- 测试命令：
+  - `ast.parse 语法自检`
+  - `人工验收`
+- 证据路径：
+  - `design/pseudocode/00_BASELINE/PHASE_RULES.md`
+  - `design/pseudocode/OPEN_QUESTIONS.md`
 
 ### `T-SKILLS-001` 建立项目级 Skills 系统并验证发现、加载与调用
 
@@ -489,7 +507,7 @@
 
 - 状态：`OPEN` 未解决
 - 严重度：`MEDIUM` 中
-- 描述：23 个用例在 workspace-write 下全部在 setUp 阶段失败，共 43 个 error，均为 PermissionError/WinError 5，无断言失败。用户 2026-11-08 用 DSH 权限诊断工具检查 D:\ResearchFlow-project\tmpavet2qv9，结论 NOT_THIS_CLASS：WRITE_DAC / WRITE_OWNER 均具备，无缺失权限、无需清理的第三方授权项；FIXED=0，未做任何改动，无需回滚。报告：C:\Users\Administrator\AppData\Local\ResearchFlow\acl-diagnostics\acl-report-559f7ffa05844dce8e62ba3238f77f3b.jsonl。机制：沙箱进程新建子目录时得到令牌默认权限，项目根上的沙箱授权未传播下去，因此能建目录、不能写入；这是环境侧授权传播问题，不是仓库权限损坏。不得手工改 ACL、不得再跑第二遍诊断。备注：DSH 沙箱未向运行期新建子目录传播授权；已排除 ACL 损坏，非项目缺陷。
+- 描述：23 个用例在 workspace-write 下全部在 setUp 阶段失败，共 43 个 error，均为 PermissionError/WinError 5，无断言失败。用户 2026-11-08 用 DSH 权限诊断工具检查 D:\ResearchFlow-project\tmpavet2qv9，结论 NOT_THIS_CLASS：WRITE_DAC / WRITE_OWNER 均具备，无缺失权限、无需清理的第三方授权项；FIXED=0，未做任何改动，无需回滚。报告：C:\Users\Administrator\AppData\Local\ResearchFlow\acl-diagnostics\acl-report-559f7ffa05844dce8e62ba3238f77f3b.jsonl。机制：沙箱进程新建子目录时得到令牌默认权限，项目根上的沙箱授权未传播下去，因此能建目录、不能写入；这是环境侧授权传播问题，不是仓库权限损坏。不得手工改 ACL、不得再跑第二遍诊断。备注：DSH 沙箱未向运行期新建子目录传播授权；已排除 ACL 损坏，非项目缺陷。 2026-11-11 复核：会话策略在复核期间由 workspace-write 切换为 danger-full-access；按本轮铁律未运行 pytest/unittest。最小写入探针：Python `tempfile.mkdtemp(dir=D:/ResearchFlow-project)` 后写 `probe.txt`，exit 0（PROBE_WRITE=OK），未复现 2026-11-08 的 workspace-write 写入失败；测试套件本轮未复核，BLK-003 维持 OPEN，历史证据不删除。
 - 影响任务：`T-STAGE8-001`
 - 打开时间：2026-11-08T13:10:00+08:00
 - 处理记录：未解决

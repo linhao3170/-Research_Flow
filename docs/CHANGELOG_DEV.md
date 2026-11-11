@@ -402,3 +402,32 @@
 - 影响/后续：`T-WP-02-001` 关闭；WP-03（SQLite + StateMachine + audit_log）可启动，但需用户另行指令。
 - 相关文件：`docs/state/project_state.json`、`docs/verification/t0/wp-02/40_wp02_acceptance.md`、`docs/verification/t0/wp-02/state_sync.log`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/SESSION_HANDOFF.md`。
 - 架构变化：无。
+
+### 2026-11-10 · 工程经验库快照 v1.0
+
+- 新增 `docs/knowledge/ENGINEERING_LESSONS.md`：从阶段 3B–WP-02 记录提炼 14 条工程教训，均带来源锚点或 commit SHA。
+- 范围：只读审计；未修改业务代码、契约、`AGENTS.md`、ADR、`project_state.json`；未移动或删除历史文件。
+- 验证：逐条核对来源路径/行号；文件 184 行（≤250）；未新增规则，状态仍以 `project_state.json` 为准。
+- 架构变化：无（文档治理快照）。
+
+### 2026-11-11 · P0 · 伪代码 P1–P6 冻结与状态对账
+
+- 变更：
+  - 建立 `design/pseudocode/` P1–P6 基线并纳入版本控制：仅暂存 83 个文件（M01–M12 79 + `00_BASELINE` 3 + `OPEN_QUESTIONS.md` 1），提交 `1c9a104`，`83 files changed, 39146 insertions(+)`。
+  - 新增 [`design/pseudocode/STAGE_LOG.md`](design/pseudocode/STAGE_LOG.md) 与 [`design/pseudocode/INDEX.md`](design/pseudocode/INDEX.md)：P1–P6 六条阶段日志、12 模块索引；P1 标已验收（2026-11-11），P2–P6 标待验收。
+  - `project_state.json`：`last_verified_commit` 由 `19c337f` 修正为 `1c9a104`；新增 `T-PSEUDO-001`（T0 / `IN_REVIEW` / 依赖 `T-WP-02-001`），未把 P2–P6 标为 `DONE`。
+  - `BLK-003` 复核：会话策略在复核期间由 `workspace-write` 切换为 `danger-full-access`；按本轮铁律未运行 `pytest`/`unittest`；最小写入探针 exit 0，未复现 2026-11-08 的写入失败；阻塞保留 `OPEN`，历史描述未删除。
+  - `environment.md` 6 处与 `MEMORY_GUIDE.md` 1 处“未…”措辞按“历史/当前”逐条处置（历史加“（历史）”，当前改为无过期措辞）；`check_docs_drift` 由 WARNING=8 降为 0。
+  - `docs/knowledge/ENGINEERING_LESSONS.md` 纳入 Git 跟踪；`Memory.md` 已有指向它的索引行，未重复添加。
+  - `AGENTS.md`：§0/§2 读取顺序改为 `project_state.json` 先于 `Memory.md`；§7 改名“写入顺序”并拆为 state → 同步 → CHANGELOG → 交接 → 稳定记忆；`project-context.md` 描述改为背景、不维护当前进度。
+  - `docs/memory/*`：`Memory.md` 去掉“最近更新/是否已核验”列与时间戳；`project-context.md` 删除当前阶段/任务/门禁段，改为背景与历史；`architecture-decisions.md` 改为 G0 已冻结、ADR 共 7 份；`environment.md` 增加状态指针、commit 数改为动态；`references.md` 增加状态指针与 G0 PASS 引用；`MEMORY_GUIDE.md` 与两个 Skill 的读/写顺序同步为 AGENTS §0/§7。
+- 原因：用户明令执行 P0 冻结与对账；在两次提交授权内固定 P1–P6 伪代码基线、修正状态漂移并补齐索引。
+- 验证：
+  - `git show --numstat HEAD`：83 文件 / 39,146 行。
+  - `state_sync.py validate|render|check`：均 exit 0（任务 8，门禁 PASS=1/8，阻塞 3）。
+  - `scripts/check_docs_drift.py`：ERROR=0，WARNING=0，exit 0。
+- 影响/后续：
+  - P7/P8 产物（M13/M14/M17/M18）未纳入本次提交，保持未跟踪；P2–P6 仍需逐阶段验收。
+  - `last_verified_commit` 指向 `1c9a104`；第二次提交后 HEAD 前移，`check_docs_drift` 会提示该字段与 HEAD 不一致（WARNING，exit 0），属预期。
+- 相关文件：`design/pseudocode/*`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/memory/environment.md`、`docs/MEMORY_GUIDE.md`、`docs/SESSION_HANDOFF.md`。
+- 架构变化：无。仅伪代码规格、状态看板与文档治理；未改 `contracts/`、`researchflow/`、`docs/design/`、`docs/ADR/`。

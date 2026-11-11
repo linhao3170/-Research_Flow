@@ -5,12 +5,14 @@
 > 依据：`AGENTS.md` §1、§2、§6、§7；[`memory/Memory.md`](memory/Memory.md)；`researchflow-memory-handoff` Skill
 > 原则：只记录可核对事实；未知标“待核实”；不把聊天记录、推测或计划当成项目事实。
 
+当前状态以 docs/state/project_state.json 为准。
+
 ## 1. 记忆系统的分层
 
 | 层 | 文件/目录 | 回答什么问题 | 谁维护 |
 |---|---|---|---|
 | 规则层 | [`AGENTS.md`](../AGENTS.md) | 项目规则、架构约束、环境限制、范围 | 用户批准后更新 |
-| 记忆索引 | [`memory/Memory.md`](memory/Memory.md) | 有哪些记忆文件、何时读、是否核验 | 任务收尾时更新 |
+| 记忆索引 | [`memory/Memory.md`](memory/Memory.md) | 有哪些记忆文件、何时读 | 任务收尾时更新 |
 | 长期记忆 | [`memory/project-context.md`](memory/project-context.md)、[`architecture-decisions.md`](memory/architecture-decisions.md)、[`environment.md`](memory/environment.md)、[`references.md`](memory/references.md)、[`feedback-and-lessons.md`](memory/feedback-and-lessons.md) | 稳定项目事实、架构约束、环境、来源、教训 | 只在事实确认后更新 |
 | 研发状态 | [`state/project_state.json`](state/project_state.json) | 当前阶段、任务、门禁、阻塞、最近验证提交 | 唯一机器可读事实源 |
 | 生成视图 | [`PROJECT_STATE.md`](PROJECT_STATE.md)、[`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) | 状态的可读视图 | 只由 `state_sync.py render` 生成，禁止手改 |
@@ -22,21 +24,13 @@
 
 ## 2. 新会话读取顺序
 
-1. 确认系统提示包含 `Instructions from: AGENTS.md`；没有则先报告，不凭记忆执行。
-2. 读 [`memory/Memory.md`](memory/Memory.md)。
-3. 读 [`state/project_state.json`](state/project_state.json)：`current_phase`、`current_milestone`、`tasks`、`stage_gates`、`blockers`、`last_verified_commit`。
-4. 读 [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) 最新一条。
-5. 按任务读相关记忆子文件/PRD/架构/ADR/契约/测试文档；不要一次加载全部。
-6. 需要时加载对应 Skill（按名称，不把全文写入 `AGENTS.md`）。
-7. 做一致性检查：JSON 与生成 Markdown 是否一致；`DONE` 是否有真实测试/证据；`PASS` 是否有证据路径；`last_verified_commit` 是否有真实 commit。
-
-> 阶段 7 的实际读取顺序：AGENTS → Memory → project_state → SESSION_HANDOFF → references/project-context/architecture-decisions → 只读抽取 DOCX。
+读取顺序见 AGENTS.md §0。
 
 ## 3. 什么信息放哪里
 
 | 信息 | 放哪里 | 不放哪里 |
 |---|---|---|
-| 项目目标、范围、当前基线 | `memory/project-context.md` | `CHANGELOG` 之外的临时笔记 |
+| 项目目标、范围、设计原因、历史阶段 | `memory/project-context.md` | `CHANGELOG` 之外的临时笔记 |
 | 稳定架构约束、ADR 索引 | `memory/architecture-decisions.md`、`docs/ADR/` | 聊天记录、`PROJECT_STATE.md` |
 | 本机环境、版本、配置摘要 | `memory/environment.md` | 密钥、令牌、凭据、Session 标识 |
 | 资料来源、引用、版本冲突 | `memory/references.md`、`reference/SOURCE_REGISTER.md`、`reference/CONFLICT_REPORT.md` | 正文摘要冒充原文 |
@@ -50,13 +44,13 @@
 
 ```text
 1. 确认已完成/未完成/改动文件/真实测试
-2. 更新 docs/memory/*（只写已确认事实；未知标“待核实”）
-3. 更新 docs/state/project_state.json
-4. & $py scripts/state_sync.py validate
-5. & $py scripts/state_sync.py render
-6. & $py scripts/state_sync.py check
-7. 追加 docs/CHANGELOG_DEV.md
-8. 更新 docs/SESSION_HANDOFF.md（最新置顶）
+2. 更新 docs/state/project_state.json
+3. & $py scripts/state_sync.py validate
+4. & $py scripts/state_sync.py render
+5. & $py scripts/state_sync.py check
+6. 追加 docs/CHANGELOG_DEV.md
+7. 更新 docs/SESSION_HANDOFF.md（最新置顶）
+8. 只将稳定事实写入 docs/memory/*
 9. 输出交接摘要，停止；不自动 commit
 ```
 
@@ -132,7 +126,7 @@ $py = 'C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-
 
 - 不写“应该通过”“大概完成”；
 - 未运行测试就写“未测”；
-- 没有 commit 就写“0 commit”；
+- 没有 commit 就写“提交数为零”；
 - 不把下一步写成已批准。
 
 参考：`researchflow-memory-handoff/references/handoff-template.md`。

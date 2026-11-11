@@ -35,9 +35,11 @@ description: Use when starting a new ResearchFlow session, resuming work, or whe
 
 ## 3. 执行步骤
 
+读取顺序见 AGENTS.md §0。
+
 1. **确认规则来源**：记录 AGENTS 是否已加载；若加载，记录其版本或最近修改时间。
-2. **读记忆索引**：只读 `docs/memory/Memory.md`，按任务选择子文件，不一次加载全部记忆。
-3. **读机器状态**：读取 `docs/state/project_state.json`，提取 `current_phase`、`current_milestone`、`tasks`、`stage_gates`、`blockers`、`last_verified_commit`、`updated_at`。
+2. **读机器状态**：读取 `docs/state/project_state.json`，提取 `current_phase`、`current_milestone`、`tasks`、`stage_gates`、`blockers`、`last_verified_commit`、`updated_at`。
+3. **读记忆索引**：只读 `docs/memory/Memory.md`，按任务选择子文件，不一次加载全部记忆。
 4. **读生成视图**：读取 `docs/PROJECT_STATE.md` 与 `docs/IMPLEMENTATION_STATUS.md`，只用于快速概览；发现与 JSON 不一致时以 JSON 为准，并报告 `check` 可能失败。
 5. **读交接记录**：读取 `docs/SESSION_HANDOFF.md` 最新一条记录，提取上次完成、未完成、已知风险和待确认事项。
 6. **核对 Git 事实**：运行只读命令：

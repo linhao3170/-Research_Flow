@@ -19,6 +19,8 @@ description: Use when finishing a substantial task or session, updating project 
 
 ## 2. 输入与前置检查
 
+开始前先运行 `state_sync.py check` 与 `scripts/check_docs_drift.py`；任一非 0 即停止并报告。
+
 1. 本任务实际完成了什么、未完成什么、改动了哪些文件，已有命令/日志证据。
 2. 已确认哪些信息稳定且具有长期复用价值，哪些只是临时状态。
 3. 已确认当前分支、commit 数、工作区变更；`last_verified_commit` 是否有真实 commit 支撑。
@@ -30,14 +32,16 @@ description: Use when finishing a substantial task or session, updating project 
 
 ## 3. 执行步骤
 
+写入顺序见 AGENTS.md §7。
+
 1. **分类信息**：
    - 稳定项目事实 → 对应 `docs/memory/` 子文件。
    - 临时进度/门禁/阻塞 → `docs/state/project_state.json`。
    - 技术决策 → `docs/ADR/`（若已建立）或先提案。
    - 本次变更与验证 → `docs/CHANGELOG_DEV.md`。
    - 会话交接 → `docs/SESSION_HANDOFF.md`。
-2. **更新记忆**：只写已确认事实；未知标“待核实”；同步“最近更新”日期。
-3. **更新状态 JSON**：修改 `current_phase`、任务、门禁、阻塞、`last_verified_commit` 等字段；不编造任务，不提前 PASS。
+2. **更新状态 JSON**：修改 `current_phase`、任务、门禁、阻塞、`last_verified_commit` 等字段；不编造任务，不提前 PASS。
+3. **更新记忆**：只写已确认事实；未知标“待核实”。
 4. **运行状态同步**（使用项目 Python 绝对路径）：
 
    ```powershell

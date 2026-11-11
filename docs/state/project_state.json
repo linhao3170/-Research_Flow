@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "ResearchFlow",
-  "updated_at": "2026-11-10T22:45:00+08:00",
+  "updated_at": "2026-11-11T18:10:00+08:00",
   "current_phase": "T0",
   "current_milestone": "M0_GOVERNANCE_BASELINE",
   "tasks": [
@@ -389,6 +389,30 @@
       ],
       "updated_at": "2026-11-10T22:45:00+08:00",
       "blocker": null
+    },
+    {
+      "task_id": "T-PSEUDO-001",
+      "title": "P0 伪代码规格阶段（P1–P10，当前至 P6）",
+      "phase": "T0",
+      "status": "IN_REVIEW",
+      "depends_on": [
+        "T-WP-02-001"
+      ],
+      "acceptance_criteria": [
+        "P1–P7 覆盖 T0 全链路且逐阶段验收",
+        "P8–P10 覆盖 T1/T2",
+        "冻结审计通过"
+      ],
+      "test_commands": [
+        "ast.parse 语法自检",
+        "人工验收"
+      ],
+      "evidence_paths": [
+        "design/pseudocode/00_BASELINE/PHASE_RULES.md",
+        "design/pseudocode/OPEN_QUESTIONS.md"
+      ],
+      "updated_at": "2026-11-11T18:10:00+08:00",
+      "blocker": null
     }
   ],
   "stage_gates": {
@@ -528,7 +552,7 @@
     {
       "blocker_id": "BLK-003",
       "title": "测试套件环境阻塞（workspace-write 临时目录/工作区子目录写入）",
-      "description": "23 个用例在 workspace-write 下全部在 setUp 阶段失败，共 43 个 error，均为 PermissionError/WinError 5，无断言失败。用户 2026-11-08 用 DSH 权限诊断工具检查 D:\\ResearchFlow-project\\tmpavet2qv9，结论 NOT_THIS_CLASS：WRITE_DAC / WRITE_OWNER 均具备，无缺失权限、无需清理的第三方授权项；FIXED=0，未做任何改动，无需回滚。报告：C:\\Users\\Administrator\\AppData\\Local\\ResearchFlow\\acl-diagnostics\\acl-report-559f7ffa05844dce8e62ba3238f77f3b.jsonl。机制：沙箱进程新建子目录时得到令牌默认权限，项目根上的沙箱授权未传播下去，因此能建目录、不能写入；这是环境侧授权传播问题，不是仓库权限损坏。不得手工改 ACL、不得再跑第二遍诊断。备注：DSH 沙箱未向运行期新建子目录传播授权；已排除 ACL 损坏，非项目缺陷。",
+      "description": "23 个用例在 workspace-write 下全部在 setUp 阶段失败，共 43 个 error，均为 PermissionError/WinError 5，无断言失败。用户 2026-11-08 用 DSH 权限诊断工具检查 D:\\ResearchFlow-project\\tmpavet2qv9，结论 NOT_THIS_CLASS：WRITE_DAC / WRITE_OWNER 均具备，无缺失权限、无需清理的第三方授权项；FIXED=0，未做任何改动，无需回滚。报告：C:\\Users\\Administrator\\AppData\\Local\\ResearchFlow\\acl-diagnostics\\acl-report-559f7ffa05844dce8e62ba3238f77f3b.jsonl。机制：沙箱进程新建子目录时得到令牌默认权限，项目根上的沙箱授权未传播下去，因此能建目录、不能写入；这是环境侧授权传播问题，不是仓库权限损坏。不得手工改 ACL、不得再跑第二遍诊断。备注：DSH 沙箱未向运行期新建子目录传播授权；已排除 ACL 损坏，非项目缺陷。 2026-11-11 复核：会话策略在复核期间由 workspace-write 切换为 danger-full-access；按本轮铁律未运行 pytest/unittest。最小写入探针：Python `tempfile.mkdtemp(dir=D:/ResearchFlow-project)` 后写 `probe.txt`，exit 0（PROBE_WRITE=OK），未复现 2026-11-08 的 workspace-write 写入失败；测试套件本轮未复核，BLK-003 维持 OPEN，历史证据不删除。",
       "status": "OPEN",
       "severity": "MEDIUM",
       "affected_tasks": [
@@ -538,5 +562,5 @@
       "resolution": null
     }
   ],
-  "last_verified_commit": "19c337f350fead30efd52c222356ad6248a3f937"
+  "last_verified_commit": "1c9a10461c50c02058ce28be8b4b09c0c8870e80"
 }

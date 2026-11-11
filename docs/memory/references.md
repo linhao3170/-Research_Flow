@@ -4,6 +4,8 @@
 > 核验状态：策划书已做全文只读抽取（754/754 段落、80/80 表格）；文件大小与 SHA256 已复核。**版本冲突已由用户 2026-11-08 决议关闭**：内容基线为文档内部 v4.3.0，文件名 v4.3.1 仅为标签；`BLK-002` 已关闭。
 > 证据规则：外部资料、官方网页、模型输出和第三方材料默认不是可信证据；只有经过声明的验证流程，才能用于“已实测 / 已验证”结论。
 
+当前状态以 docs/state/project_state.json 为准。
+
 ## 1. 项目主文档
 
 ### R-01 ResearchFlow 3.1 项目策划书
@@ -47,7 +49,7 @@
 | §17.1 安全边界 | 执行/网络安全 |
 | 附录 D/E/F/G/J | Schema、API、状态机、基准、T0 清单 |
 
-**待核实**：该版本是否已被用户书面确认为唯一冻结基线。在确认前，不得把其中的目标数字当作最终验收合同，也不得据此宣布 G0 通过。
+版本基线已由用户 2026-11-08 确认；门禁裁决见 project_state.json。
 
 ## 2. 赛事与外部资料
 
@@ -85,7 +87,7 @@
 | R-20 | 阶段 7 冲突报告 | `docs/reference/CONFLICT_REPORT.md` | v4.3.1/v4.3.0 冲突、飞书/赛事资料缺失、方案与推荐 |
 | R-21 | 阶段 7 只读抽取与版本证据 | `docs/verification/stage7/` | 754 段/80 表全文、`v4.3.1` 在文档内计数 0、页码不可用说明 |
 | R-22 | 阶段 8 综合验收报告与证据 | `docs/verification/stage8/STAGE8_REPORT.md`、`docs/verification/stage8/` | 26 项验收、运行态证据、FAIL/NOT VERIFIED、资源与安全审计 |
-| R-23 | G0 裁决清单（阶段 9 准备） | `docs/state/G0_DECISION_LIST.md` | 版本项已决；剩余 FR-010 边界、开发顺序、P1/T2 错位 3 项 |
+| R-23 | G0 裁决清单（阶段 9 准备） | `docs/state/G0_DECISION_LIST.md` | 已裁决，见 docs/verification/g0/19_g0_pass_decision.md |
 
 ## 4. 引用纪律
 

@@ -9,8 +9,8 @@
 ## 0. 每次任务开始前的指令自检
 
 1. 确认本 `AGENTS.md` 已由 DSH 的 `agent-instructions` 加载；未加载时先报告，不得凭记忆执行。
-2. 先读 `docs/memory/Memory.md`，按索引只加载与当前任务相关的记忆子文件。
-3. 再读 `docs/state/project_state.json`，确认当前阶段、里程碑、门禁、阻塞项与 `last_verified_commit`。
+2. 先读 `docs/state/project_state.json`，确认当前阶段、里程碑、门禁、阻塞项与 `last_verified_commit`。
+3. 再读 `docs/memory/Memory.md`，按索引只加载与当前任务相关的记忆子文件。
 4. 根据任务读取相关 PRD、架构、ADR、契约与测试文档；不要一次性注入全部文档或全部 Skill 全文。
 5. 复杂任务先只读探索并形成计划；跨模块、Schema、数据库、状态机、安全边界或冻结架构变更，先提交方案与 diff 计划，等待确认后再改。
 
@@ -30,8 +30,8 @@
 ## 2. 任务工作流
 
 1. 确认 AGENTS 指令已经加载。
-2. 先读取 `docs/memory/Memory.md`。
-3. 再读取 `docs/state/project_state.json`。
+2. 先读取 `docs/state/project_state.json`。
+3. 再读取 `docs/memory/Memory.md`。
 4. 根据任务读取相关记忆子文件、PRD、架构、ADR 和测试文档。
 5. 根据任务调用对应 Skill，不把全部 Skill 全文注入上下文。
 6. 复杂任务先只读探索并形成计划。
@@ -104,7 +104,7 @@
 ## 7. 记忆、状态与文档职责
 
 - `docs/memory/Memory.md`：记忆索引，只做导航，不复制聊天记录。
-- `docs/memory/project-context.md`：项目目标、边界、当前基线。
+- `docs/memory/project-context.md`：项目目标、边界、设计原因、历史阶段、长期约束；不维护当前进度。
 - `docs/memory/architecture-decisions.md`：稳定架构约束与 ADR 索引。
 - `docs/memory/feedback-and-lessons.md`：用户反馈、失败经验与教训。
 - `docs/memory/environment.md`：已核实环境、版本与配置摘要；不得保存密钥。
@@ -116,7 +116,7 @@
 - `docs/ADR/`：架构决策记录；未记录 ADR 的架构变更视为未批准。
 - `docs/reference/`：外部资料与引用索引；外部资料默认不是可信证据。
 
-状态更新顺序：
+写入顺序：
 
 1. 修改 `docs/state/project_state.json`。
 2. 使用 §3 的 Python 3.11.16 绝对路径（下称 `$py`）依次运行：
@@ -127,7 +127,9 @@
    & $py scripts/state_sync.py check
    ```
 
-3. 追加 `docs/CHANGELOG_DEV.md`，更新 `docs/SESSION_HANDOFF.md`。
+3. 追加 `docs/CHANGELOG_DEV.md`。
+4. 更新 `docs/SESSION_HANDOFF.md`。
+5. 只将稳定事实写入 `docs/memory/*`。
 
 ## 8. 验证与证据规则
 

@@ -1,8 +1,10 @@
-# project-context.md — 项目目标、边界与当前基线
+# project-context.md — 项目目标、边界与背景
 
 > 更新时间：2026-11-08（阶段 7；阶段 8 复核）
-> 核验状态：部分核验。项目定位、第一版范围与 T0 出口已与策划书**内部 v4.3.0**（文件名标签 v4.3.1；`BLK-002` 已关闭）的 §1.1、§4.4、§15.2 对照；用户已于 2026-11-08 确认内部 v4.3.0 为内容基线，v4.3.1 仅为文件名标签。
+> 核验状态：背景文档，不含当前状态。
 > 本文件不是需求合同；需求以后续评审通过的 PRD / 契约 / ADR 为准。
+
+当前状态以 docs/state/project_state.json 为准。
 
 ## 1. 项目定位
 
@@ -43,17 +45,7 @@ ResearchFlow 3.1 是面向 AI 实验任务的可信多智能体编排、动态�
 
 “不得擅自扩大范围。”任何范围变更必须先获得用户明确批准并记录 ADR。
 
-## 4. 阶段与门禁基线（当前）
-
-- 当前阶段：`T0`（G0 已于 2026-11-10 PASS；`WP-01` 环境与依赖锁定已完成，状态 `IN_REVIEW`，等待用户验收；未写业务代码）。
-- 当前里程碑：`M0_GOVERNANCE_BASELINE`（项目记忆、状态同步、协作规则、Skills、资料基线、工作站验收）；G0 文档未定义 T0 里程碑编号，未自行发明新 ID。
-- 阶段 4 建立可审计的治理与状态系统；阶段 5 建立九个项目级 Skills；阶段 6 接入 Context7 MCP；阶段 7 完成策划书全文抽取、来源登记、冲突报告与知识文档；阶段 8 完成工作站 26 项验收、策略恢复补验与验收，未开发 ResearchFlow 业务代码；2026-11-10 用户宣布 G0 PASS，并进入 T0 `WP-01` 环境锁定。
-- 研发看板任务：`T-SKILLS-001` 已 `DONE`（阶段 5 验收通过）；`T-MCP-001` 已 `DONE`；`T-DOCS-001` 已 `DONE`（阶段 8 按用户决议关闭版本冲突）；`T-STAGE8-001`（阶段 8 综合验收）已 `DONE`（用户 2026-11-08 验收通过）；`T-G0-001`（G0 规格冻结文档包）已 `DONE`（用户 2026-11-10 宣布 G0 PASS）；`T-WP-01-001`（T0 仓库与环境锁定）为 `IN_REVIEW`，等待验收。这不表示 T0 业务功能已开始或完成。
-- G0：**PASS**（用户 2026-11-10；证据 `docs/verification/g0/19_g0_pass_decision.md`）；G1–G7：`NOT_STARTED`；不得提前标记 PASS。
-- `last_verified_commit`：`null`；在真实 commit 经测试验证前保持为空。
-- `BLK-002`：**已关闭**（`RESOLVED`）；内容基线为文档内部 v4.3.0，文件名 v4.3.1 仅为标签。
-- `BLK-003`：**OPEN / MEDIUM**；DSH 权限诊断结论 `NOT_THIS_CLASS`（`FIXED=0`，未改任何 ACL），机制为“沙箱未向运行期新建子目录传播授权”，非仓库 ACL 损坏、非项目缺陷。workspace-write 下 23 项测试仍 43 errors，13b 维持 NOT VERIFIED；代码正确性测试可在单独批准的 full-access 会话运行，但结果不得用于第 5/6/23 项或安全项。`tmpavet2qv9` 为空目录，阶段 9 开始时只删除该目录。
-- 阶段 6 备份 `cordis.patch.yml.bak-20261108-stage6`：保留，至少到阶段 8 验收结束。
+## 4. 阶段与门禁基线（背景）
 
 G0–G7 的名称与通过条件（摘自策划书内部 v4.3.0 §15.3 质量门禁表，作为门禁索引）：
 
@@ -68,7 +60,7 @@ G0–G7 的名称与通过条件（摘自策划书内部 v4.3.0 §15.3 质量门
 | G6 | 外部复核 | 真包通过、五类负例拒绝；独立环境可验证 |
 | G7 | Harness 适配 | 固定版本插件、工具、事件映射和状态回传契约通过 |
 
-当前 G0 已 PASS、G1–G7 未开始。任何 PASS 必须有真实证据路径，且由 `scripts/state_sync.py` 校验；PASS 门禁还必须记录裁决人与裁决日期。
+任何 PASS 必须有真实证据路径，且由 `scripts/state_sync.py` 校验；PASS 门禁还必须记录裁决人与裁决日期。
 
 ## 5. 交付主线（T0 视角）
 
@@ -102,24 +94,17 @@ T0 必须覆盖的能力（策划书内部 v4.3.0 §15.2 T0/T1/T2 交付阶段�
 
 来源：策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002`）§4.4。
 
-## 7. 当前仓库基线
+## 7. 仓库基线历史（阶段 4–7）
 
-- 分支：`main`。
-- commit：尚无（`git rev-list --count --all` 为 0）。
-- 已有内容：目录骨架、`.gitignore`、占位文档、策划书 DOCX。
-- 尚无：ResearchFlow 业务代码、`contracts/` 契约、`.venv`、依赖锁文件。
 - 阶段 4 新增：项目 `AGENTS.md`、记忆索引与子文件、研发状态 JSON、状态同步脚本、测试与真实日志。
 - 阶段 5 新增：`.agents/skills/` 下九个 ResearchFlow Skill、`docs/SKILL_CATALOG.md`、`scripts/validate_skills.py` 与 `docs/verification/stage5/` 证据。
 - 阶段 6 新增：`docs/verification/stage6/`（MCP 能力、Context7 接入、写入校验与真实调用）；`cordis.patch.yml` 已写入 context7（1,462 字节）。
 - 阶段 7 新增：`docs/PROJECT_OVERVIEW.md`、`ARCHITECTURE.md`、`GLOSSARY.md`、`DEVELOPMENT_WORKFLOW.md`、`MEMORY_GUIDE.md`、`MCP_CATALOG.md`、`SECURITY_POLICY.md`；`docs/reference/SOURCE_REGISTER.md`、`CONFLICT_REPORT.md`；`docs/verification/stage7/` 只读抽取与版本证据。
-- 尚未开发：ResearchFlow 业务代码、`contracts/` 契约、运行时数据库/StateMachine、`.venv`、依赖锁文件。
 
 ## 8. 待核实
 
-- 策划书基线版本：**已确认**（2026-11-08）。内容基线 = 文档内部 v4.3.0；文件名 v4.3.1 仅为标签；`BLK-002` 已关闭。版本已定不等于 G0 已通过；G0 仍有 FR-010 边界、开发顺序、P1/T2 错位 3 项待裁决（见 `docs/state/G0_DECISION_LIST.md`）。
 - 飞书 AI 开发说明：项目内未落地；如作为优先级 2 来源，需用户提供导出件。
 - 赛事官方章程的完整要求；策划书 §1.3 记录“官方动态页本次读取未返回完整章程”，项目内无通知原图/章程文件；不得自行推断评分权重、页数、匿名要求等。
-- 产品 PRD、详细 Schema、API 契约、错误码表尚未建立，属于 G0 范围。
 - 16GB 内存与“并发 2”是设计约束；并发能力尚未实测，不得宣称已达成。
 - DOCX 无可信页码；来源引用使用章节 + `P####`/`TABLE ##` 锚点。
 
