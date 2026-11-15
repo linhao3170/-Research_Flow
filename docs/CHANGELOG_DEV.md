@@ -657,3 +657,15 @@
 - 影响/后续：仓库实际公开，若需私有须由用户在 GitHub 侧调整；P9/P10 仍为 `BLOCKED` 草稿，不构成验收或开发批准；T1 未启动。推送结果、远端 SHA 与干净快照验证见后续收尾条目。
 - 相关文件：`.gitattributes`、`.gitignore`、`docs/state/project_state.json`、`docs/verification/publication/2026-11-15/**`、`docs/verification/budget/BUDGET_LEDGER.md`、`docs/SESSION_HANDOFF.md`。
 - **无架构变化**：仅发布准备、忽略/换行规则、状态与文档治理；未改业务实现、冻结契约、Schema、迁移、状态边或门禁。
+
+### 2026-11-15 · T0 · 首次提交已推送并通过远端干净快照验证
+
+- 结果：内容提交 `35ab02bfe3d54799acb40e9a2ff632661d853111`（1783 files，+204801/−366）于 2026-11-15T11:27:17+08:00 创建并普通推送至 `origin/main`；本地 HEAD、`git ls-remote origin refs/heads/main` 与 GitHub API `commits/main` 三方 SHA 一致。作者 `ResearchFlow Dev <dev@researchflow.local>`，全局身份仍为空。
+- 干净快照：在 `runtime/clean-verify-20261115` 从远端克隆（14.34 MB，HEAD 同为 `35ab02b`）；`state_sync.py validate` / `check` exit 0（`PROJECT_STATE.md` SHA256 `54ce63d1…`、`IMPLEMENTATION_STATUS.md` `c7b8d16f…` 逐字节一致）；`validate_contracts.py` 72/72 exit 0；`verify_bundle.py -E` 对 run_1..3 三次 `VERIFIED`、exit 0、`trust_anchor_source=external`、32 证据/必检 8/8/L3 1.0。该结果同时验证了 `-text` 字节入库修复：若按文本归一化，包内 manifest 哈希与新克隆字节不一致。
+- 可见性：GitHub API `private=false`、`visibility=public`、`default_branch=main`；从空仓库首推，页面 SHA 与本地一致。该事实与“按私有仓库预期核对”不符，已在交接明示，未修改仓库可见性设置。
+- 并行写入：收尾期间发现未跟踪文件 `docs/goals/GOAL_02_EXECUTION_GUIDE.md`（11:22 由其他会话创建，内容涉及 Goal 2/T1 启动）。本轮未暂存、未修改、未提交该文件，也不据此启动 T1；提交前核查跟踪文件的工作区改动为 0。
+- 预算：本轮无新增用户确认的开发消耗；15.00 元仍为同一批一次性记录，不重复累计，不推算余额。
+- 状态：`T-PUBLISH-001` 转 `DONE`；`last_verified_commit` 仍为 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`（未用 HEAD 冒充；351 项全量未在提交快照上重跑），`check_docs_drift.py` 因此仍为 ERROR=0/WARNING=1（已知）。
+- 影响/后续：`BLK-003` 仍 OPEN；G6 仍 `IN_PROGRESS`（仅 G6-T0 满足）；G4/G5/G7 未启动；T1 未启动。公开仓库如需转私有由用户在 GitHub 侧调整。
+- 相关文件：`docs/verification/publication/2026-11-15/**`、`docs/state/project_state.json`、`docs/SESSION_HANDOFF.md`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`。
+- **无架构变化**：仅发布、状态与文档治理；未改业务实现、冻结契约或门禁。

@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-15T11:23:56.467570+08:00",
+  "date": "2026-11-15T11:32:27.608527+08:00",
   "mode": "staged",
   "command": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe -B D:\\ResearchFlow-project\\docs\\verification\\publication\\2026-11-15\\audit_snapshot.py staged",
   "python": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
   "cwd": "D:\\ResearchFlow-project",
-  "head": "309083e715cb59a1f0c181d95df44e1946ffbaa5",
-  "file_count": 2165,
-  "total_bytes": 15022754,
+  "head": "35ab02bfe3d54799acb40e9a2ff632661d853111",
+  "file_count": 2176,
+  "total_bytes": 15047347,
   "findings": [],
   "limitation": "Pattern and path scan plus manual scope review; not proof that no secret can exist.",
   "manifest": [
@@ -1212,8 +1212,8 @@
     },
     {
       "path": "docs/CHANGELOG_DEV.md",
-      "bytes": 91715,
-      "sha256": "6045c04191a50871e89ffb8ec911c54de7448648e69aef2d43f32be460a71ae1"
+      "bytes": 94095,
+      "sha256": "0c27ea3a2ea4458453616ff3ba7512bcefc52a20e52e3f6be89801c359495d26"
     },
     {
       "path": "docs/DEVELOPMENT_WORKFLOW.md",
@@ -1237,8 +1237,8 @@
     },
     {
       "path": "docs/IMPLEMENTATION_STATUS.md",
-      "bytes": 78046,
-      "sha256": "c7b8d16f7fcf82ed73b4514eabaef55334dc84725509c5be916288a488942fb0"
+      "bytes": 79112,
+      "sha256": "568239f536ae497a0dcc0d9a1f40786e93c2ef914d06e3955ae59a32955e3a5e"
     },
     {
       "path": "docs/MCP_CATALOG.md",
@@ -1272,8 +1272,8 @@
     },
     {
       "path": "docs/PROJECT_STATE.md",
-      "bytes": 12220,
-      "sha256": "54ce63d1c323391e29bac0c5b4ba646209b82e3187072903c5513573960238b6"
+      "bytes": 12210,
+      "sha256": "8d7b730ae593799ace0ba3a5346f0252c37844767823115cf73baa39342fa960"
     },
     {
       "path": "docs/SECURITY_POLICY.md",
@@ -1282,8 +1282,8 @@
     },
     {
       "path": "docs/SESSION_HANDOFF.md",
-      "bytes": 85047,
-      "sha256": "acea53d63fa5bf922f0c1ec0c8d75e31460eb0922efd40a91226819efdf33610"
+      "bytes": 87669,
+      "sha256": "3d1368afd38a807a16bbb786ef9772e48b3180e279b4d243fdc89d0c0622b90a"
     },
     {
       "path": "docs/SKILL_CATALOG.md",
@@ -1462,8 +1462,8 @@
     },
     {
       "path": "docs/state/project_state.json",
-      "bytes": 88740,
-      "sha256": "cc81f3c977975f27205e36fd5086fbfcdff196af0a141eb3b5befe8f6f4dae10"
+      "bytes": 89871,
+      "sha256": "f6028fceb261c128013b3c7585b7e6a8b8cb43bc229c2aa45f93772d4ae2629c"
     },
     {
       "path": "docs/state/runtime_states.md",
@@ -1641,9 +1641,64 @@
       "sha256": "1bc4f7325adfcad580b7d7a7e7ebb9cfa488cf16a7d70c79e02af1cf420b4d84"
     },
     {
+      "path": "docs/verification/publication/2026-11-15/07_commit_push.log",
+      "bytes": 903,
+      "sha256": "6f1c97aaeb9befb98f7c2d21fac282c4697c92e3ea6e8b0ec76f4b7ac3e035e9"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/08_clean_state_validate.log",
+      "bytes": 395,
+      "sha256": "5f8298ef47e44989d37be3901fbe208d746935010106f0ce64563a4becc82f1f"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/09_clean_state_check.log",
+      "bytes": 522,
+      "sha256": "ec15d71a80c1710bfcd7d9b4b3a3ce3885ba70dd312c9bc5b8ee5781bbacbd13"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/10_clean_contracts.log",
+      "bytes": 7763,
+      "sha256": "49df1e406b16d0f0d8ef079583f3c83bc5bbc9eeab665ab3c50383bea52f6602"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/11_clean_verify_run1.log",
+      "bytes": 987,
+      "sha256": "30289c406c7c4f80ef73402637fdd0ae54cedd2c2314f00e39ea8965dbb01c0a"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/12_clean_verify_run2.log",
+      "bytes": 987,
+      "sha256": "0c4c249f5026c544f579f5f63be3e3269714840b2721e7a8163763cc78803195"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/13_clean_verify_run3.log",
+      "bytes": 987,
+      "sha256": "4fd5edf14bf791ce0f61ea2cadd3db9013f6e9c9cf83478cf274186410832ab9"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/14_final_state_validate.log",
+      "bytes": 365,
+      "sha256": "0b6f882d3e915ec3d1648937c3cb170928da0efe90707f619067588d4346d05d"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/15_final_state_render.log",
+      "bytes": 469,
+      "sha256": "c876830b43de5d00cd7a0df02c78c071a676cf364d744f9ff41e6c65d17cf0cd"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/16_final_state_check.log",
+      "bytes": 492,
+      "sha256": "bc4079c5b51f8c0774dcd22210467c1df0436ffa53aba79af41c9274be3a6838"
+    },
+    {
+      "path": "docs/verification/publication/2026-11-15/17_final_docs_drift.log",
+      "bytes": 457,
+      "sha256": "c6325e226a9662ea0970c57a390211bd5619ae5e6ee2d9761788ca637b5bd6e9"
+    },
+    {
       "path": "docs/verification/publication/2026-11-15/PUBLISH_HANDOFF.md",
-      "bytes": 9585,
-      "sha256": "f47020304435bde59954354a3b1deecf75845273b5dfa11425ac2f305b511fa0"
+      "bytes": 11299,
+      "sha256": "a30f041d70912bddc8a037a50fd52c35c93c67011f7bec60dbebb78b40c67c3b"
     },
     {
       "path": "docs/verification/publication/2026-11-15/audit_snapshot.py",
@@ -1652,8 +1707,8 @@
     },
     {
       "path": "docs/verification/publication/2026-11-15/staged_audit.json",
-      "bytes": 497637,
-      "sha256": "c8d37b31c875b2d9804e4d2d9ecabc79d75cd18be651ba2fac7282314b24114a"
+      "bytes": 499000,
+      "sha256": "fff88b77e4621df57c929f20c3aa61e0557231c4765978e7c6d275118a9d2296"
     },
     {
       "path": "docs/verification/publication/2026-11-15/state_sync_final.log",

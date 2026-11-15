@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "project_name": "ResearchFlow",
-  "updated_at": "2026-11-15T11:25:00+08:00",
+  "updated_at": "2026-11-15T11:32:00+08:00",
   "current_phase": "T0",
   "current_milestone": "M1_T0_TRUSTED_LOOP",
   "tasks": [
@@ -1167,7 +1167,7 @@
       "task_id": "T-PUBLISH-001",
       "title": "T0 首次普通提交、推送与干净快照验证",
       "phase": "T0",
-      "status": "IN_PROGRESS",
+      "status": "DONE",
       "depends_on": [
         "T-PUBLISH-PREP-001",
         "T-T0-ACCEPT-001"
@@ -1181,7 +1181,8 @@
         "契约 10/10 与 72/72、state_sync validate/render/check、docs drift 均为本次真实运行；历史 351 passed 仅作历史证据，不写成本次重跑",
         "普通 commit 与普通 push 成功，本地与远端 main 的 SHA 一致；未 force push、未删除既有工作、未修改验收标准",
         "在新临时目录克隆远端快照，验证状态校验入口与离线验签入口",
-        "按 MEMORY_CLOSEOUT 同步状态、日志、交接与稳定记忆；T1 未启动"
+        "按 MEMORY_CLOSEOUT 同步状态、日志、交接与稳定记忆；T1 未启动",
+        "结果（2026-11-15）：内容提交 35ab02bfe3d54799acb40e9a2ff632661d853111 已推送，本地/远端/GitHub API 三方 SHA 一致；远端快照 14.34 MB，state_sync validate/check 与契约 72/72 exit 0，run_1..3 离线验签三次 VERIFIED（trust_anchor_source=external）"
       ],
       "test_commands": [
         "git ls-remote --heads origin",
@@ -1204,9 +1205,20 @@
         "docs/verification/publication/2026-11-15/03_state_validate.log",
         "docs/verification/publication/2026-11-15/04_state_render.log",
         "docs/verification/publication/2026-11-15/05_state_check.log",
-        "docs/verification/publication/2026-11-15/06_docs_drift.log"
+        "docs/verification/publication/2026-11-15/06_docs_drift.log",
+        "docs/verification/publication/2026-11-15/07_commit_push.log",
+        "docs/verification/publication/2026-11-15/08_clean_state_validate.log",
+        "docs/verification/publication/2026-11-15/09_clean_state_check.log",
+        "docs/verification/publication/2026-11-15/10_clean_contracts.log",
+        "docs/verification/publication/2026-11-15/11_clean_verify_run1.log",
+        "docs/verification/publication/2026-11-15/12_clean_verify_run2.log",
+        "docs/verification/publication/2026-11-15/13_clean_verify_run3.log",
+        "docs/verification/publication/2026-11-15/14_final_state_validate.log",
+        "docs/verification/publication/2026-11-15/15_final_state_render.log",
+        "docs/verification/publication/2026-11-15/16_final_state_check.log",
+        "docs/verification/publication/2026-11-15/17_final_docs_drift.log"
       ],
-      "updated_at": "2026-11-15T11:25:00+08:00",
+      "updated_at": "2026-11-15T11:32:00+08:00",
       "blocker": null
     }
   ],

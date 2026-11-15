@@ -11,10 +11,10 @@
 |---|---|---|
 | `BACKLOG` | 待办 | 0 |
 | `READY` | 就绪 | 0 |
-| `IN_PROGRESS` | 进行中 | 1 |
+| `IN_PROGRESS` | 进行中 | 0 |
 | `BLOCKED` | 阻塞 | 0 |
 | `IN_REVIEW` | 评审中 | 1 |
-| `DONE` | 完成 | 27 |
+| `DONE` | 完成 | 28 |
 | `DEFERRED` | 延期 | 0 |
 | **合计** | — | **29** |
 
@@ -367,9 +367,9 @@
 ### `T-PUBLISH-001` T0 首次普通提交、推送与干净快照验证
 
 - 阶段：`T0`
-- 状态：`IN_PROGRESS` 进行中
+- 状态：`DONE` 完成
 - 依赖：`T-PUBLISH-PREP-001`、`T-T0-ACCEPT-001`
-- 更新时间：2026-11-15T11:25:00+08:00
+- 更新时间：2026-11-15T11:32:00+08:00
 - 阻塞：无
 - 验收标准：
   - 准确远端 https://github.com/linhao3170/-Research_Flow.git（前导连字符保留），远端无既有分支；可见性经 GitHub API 核实为公开并如实报告与私有预期的差异
@@ -381,6 +381,7 @@
   - 普通 commit 与普通 push 成功，本地与远端 main 的 SHA 一致；未 force push、未删除既有工作、未修改验收标准
   - 在新临时目录克隆远端快照，验证状态校验入口与离线验签入口
   - 按 MEMORY_CLOSEOUT 同步状态、日志、交接与稳定记忆；T1 未启动
+  - 结果（2026-11-15）：内容提交 35ab02bfe3d54799acb40e9a2ff632661d853111 已推送，本地/远端/GitHub API 三方 SHA 一致；远端快照 14.34 MB，state_sync validate/check 与契约 72/72 exit 0，run_1..3 离线验签三次 VERIFIED（trust_anchor_source=external）
 - 测试命令：
   - `git ls-remote --heads origin`
   - `& .venv/Scripts/python.exe -B docs/verification/publication/2026-11-15/audit_snapshot.py staged`
@@ -402,6 +403,17 @@
   - `docs/verification/publication/2026-11-15/04_state_render.log`
   - `docs/verification/publication/2026-11-15/05_state_check.log`
   - `docs/verification/publication/2026-11-15/06_docs_drift.log`
+  - `docs/verification/publication/2026-11-15/07_commit_push.log`
+  - `docs/verification/publication/2026-11-15/08_clean_state_validate.log`
+  - `docs/verification/publication/2026-11-15/09_clean_state_check.log`
+  - `docs/verification/publication/2026-11-15/10_clean_contracts.log`
+  - `docs/verification/publication/2026-11-15/11_clean_verify_run1.log`
+  - `docs/verification/publication/2026-11-15/12_clean_verify_run2.log`
+  - `docs/verification/publication/2026-11-15/13_clean_verify_run3.log`
+  - `docs/verification/publication/2026-11-15/14_final_state_validate.log`
+  - `docs/verification/publication/2026-11-15/15_final_state_render.log`
+  - `docs/verification/publication/2026-11-15/16_final_state_check.log`
+  - `docs/verification/publication/2026-11-15/17_final_docs_drift.log`
 
 ### `T-PUBLISH-PREP-001` T0 GitHub 提交范围审核与 Harness 交接（未提交/未推送）
 

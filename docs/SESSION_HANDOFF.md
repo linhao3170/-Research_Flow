@@ -3,6 +3,19 @@
 > 会话交接文件。每次大任务结束前更新；最新交接置于最上方。
 > 只记录已确认事实与真实测试结果；未确认内容标记“待核实”。
 
+## 2026-11-15 · T0 · 首次提交与推送完成，远端干净快照验证通过
+
+- 授权与执行：用户授权普通 commit + push 已验收 T0，本轮由 Harness 执行（Codex 未代执行）；此前“暂不 commit”作废。未启动 T1。
+- 远端与可见性：`https://github.com/linhao3170/-Research_Flow.git`（前导连字符保留），空仓库起步；**实际为公开仓库**（GitHub API `private=false`、`visibility=public`），与此前“按私有仓库预期”不符；已报告，未修改可见性设置。
+- 提交：`35ab02bfe3d54799acb40e9a2ff632661d853111`，1783 files（+204801/−366），身份 `ResearchFlow Dev <dev@researchflow.local>`，全局身份仍为空。
+- 推送：`git push -u origin main` exit 0（8.1 s，`* [new branch] main -> main`）；本地 HEAD、`git ls-remote origin refs/heads/main`、GitHub API `commits/main` 三方 SHA 一致；未 force push、未改写历史。
+- 干净快照：`runtime/clean-verify-20261115`（远端克隆，14.34 MB，HEAD 同上）；required entries 齐全，无 `.venv`、`runtime/`、SQLite 或私钥文件。`state_sync.py validate` / `check` exit 0；`validate_contracts.py` 72/72；`verify_bundle.py -E` 三次 `VERIFIED`（external trust anchor、32 证据、必检 8/8、L3 1.0）。
+- 关键修复：`.gitattributes` 对 `docs/verification/t0/e2e/**` 与 `docs/verification/t0/g6-t0/**` 设 `-text`，按原始字节入库，避免 CRLF→LF 归一化导致新克隆离线验签失败（修正前 run_1 有 34/65 文件字节不一致，修正后 1427/1427 一致）。
+- 验证口径：本轮真实运行契约 10/10、72/72、`state_sync` validate/render/check、`docs drift` ERROR=0/WARNING=1、索引与 7 个历史提交秘密扫描 0 findings；**历史 351 passed 未重跑**，不写成本轮通过；`last_verified_commit` 未改成 HEAD（仍 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`）。
+- 并行写入：收尾期间其他会话创建了未跟踪的 `docs/goals/GOAL_02_EXECUTION_GUIDE.md`；未暂存、未提交，本会话未据其启动 T1。
+- 剩余限制：`BLK-003` 仍 OPEN（全部测试在 danger-full-access 下）；完整 G6/G4/G5/G7 未启动；工作台单页/无下载/不展示失效原因；断网非 OS 级、L3 非跨机；开发 API 余额仍未核实。仓库如需私有由用户操作。
+- 下一步：用户决定是否将仓库转私有、是否启动 T1；若启动，先读 `docs/goals/GOAL_02_COMPETITIVE_PRODUCT.md` 与 `MEMORY_CLOSEOUT`，按既有审批推进。本条目的文档收尾变更作为普通提交推送，其哈希以 `git log` 与远端 `main` 为准。
+
 ## 2026-11-15 · T0 提交审核完成，交由 Harness 提交
 
 - 最新授权：用户要求提交 T0，并指定 **Harness 负责常规实施、commit 和 push；Codex 负责核心审核、方案判断及部分难点开发**。此前“验收 T0，暂不 commit”仅为历史记录；本次提交已获授权，不等于 T1 开工授权。

@@ -60,3 +60,14 @@ P7/P8 设计可按已验收记录提交。P9（M15/M16）、P10（M19）仍 **BL
 - 本次真实运行（解释器 `D:\ResearchFlow-project\.venv\Scripts\python.exe`，3.11.16/64bit）：`validate_contracts.py --selftest` 10/10、`validate_contracts.py` 72/72、`state_sync.py validate/render/check` 均 exit 0、`check_docs_drift.py` ERROR=0/WARNING=1（`last_verified_commit` 与 HEAD 差异，已知）；日志 `01_*.log`–`06_*.log`。历史全量 351 passed（395.66 s）本次未重跑，不写成本轮通过，也不据此改写 `last_verified_commit`。
 - 预算口径：15.00 元为同一批用户确认的开发消耗，只计一次；本轮提交/推送不新增用户确认消耗，不推算累计余额与 185 元。
 - 推送与干净快照验证结果：见下文“推送与验证”记录。
+
+## 推送与验证（2026-11-15）
+
+- 提交：`35ab02bfe3d54799acb40e9a2ff632661d853111`，1783 个文件变更（+204801 / −366），作者 `ResearchFlow Dev <dev@researchflow.local>`。
+- 推送：`git push -u origin main` exit 0（8.1 s，`* [new branch] main -> main`）；本地 HEAD、`git ls-remote origin refs/heads/main`、GitHub API `commits/main` 三方 SHA 一致。未 force push、未改写历史。
+- 干净快照：从远端克隆到 `runtime/clean-verify-20261115`（14.34 MB，HEAD 同上）。必要入口齐全：README、`requirements.in/.lock`、`docs/state/project_state.json`、生成状态页、run_1 Bundle 与包外 `trust_store.json`、`verify_bundle.py`、`tests/t0`；无 `.venv`、`runtime/`、SQLite/WAL/SHM、私钥文件。
+- 入口验证：`state_sync.py validate` exit 0；`state_sync.py check` exit 0（两条生成文件逐字节一致）；`validate_contracts.py` 72/72 exit 0；`verify_bundle.py -E` 对 run_1..3 三次 `VERIFIED`（exit 0、`trust_anchor_source=external`、32 证据、必检 8/8、L3 1.0）。
+- 日志：`07_commit_push.log`、`08_clean_state_validate.log`–`13_clean_verify_run3.log`；收尾检查 `14_*`–`17_*`。
+- 可见性：GitHub API `private=false`、`visibility=public`；空仓库起始。若需私有，由用户在 GitHub 设置中调整，本会话未改。
+- 收尾期间并行写入：其他会话创建了未跟踪的 `docs/goals/GOAL_02_EXECUTION_GUIDE.md`；本轮未暂存/未提交该文件，也未据此启动 T1。
+- 未解决：`last_verified_commit` 保持 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`（351 项全量未在提交快照上重跑）；`BLK-003` OPEN；完整 G6/G4/G5/G7 未启动；预算余额未核实。
