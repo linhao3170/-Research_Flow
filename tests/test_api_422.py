@@ -24,8 +24,9 @@ TASK_ID_RE = re.compile(
 
 
 @pytest.fixture()
-def client() -> TestClient:
-    return TestClient(create_app())
+def client(tmp_path: Path):
+    with TestClient(create_app(db_path=tmp_path / "api422.db")) as test_client:
+        yield test_client
 
 
 def test_healthz(client: TestClient) -> None:

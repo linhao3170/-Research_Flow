@@ -1,0 +1,121 @@
+﻿timestamp=2026-11-11T22:53:44.9905334+08:00
+cwd=D:\ResearchFlow-project
+branch=main
+head=309083e715cb59a1f0c181d95df44e1946ffbaa5
+commit_count=7
+--- git status --porcelain=v1 ---
+ M design/pseudocode/INDEX.md
+ M design/pseudocode/OPEN_QUESTIONS.md
+ M design/pseudocode/STAGE_LOG.md
+?? design/pseudocode/M13_scheduler/
+?? design/pseudocode/M14_recovery/
+?? design/pseudocode/M15_dcspa/
+?? design/pseudocode/M16_vas/
+?? design/pseudocode/M17_agents/
+?? design/pseudocode/M18_knowledge/
+?? design/pseudocode/M19_api/
+?? reports/
+--- tracked diff stat ---
+ design/pseudocode/INDEX.md          |  7 +++++--
+ design/pseudocode/OPEN_QUESTIONS.md | 30 ++++++++++++++++++++++++++++++
+ design/pseudocode/STAGE_LOG.md      | 12 +++++++++++-
+ 3 files changed, 46 insertions(+), 3 deletions(-)
+--- candidate processes ---
+
+
+ProcessId   : 15624
+Name        : powershell.exe
+CommandLine : C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NoProfile -NonInteractive -Command "[C
+              onsole]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); $OutputEncoding = [System.Text.UTF8Enc
+              oding]::new($false); $ErrorActionPreference = 'Stop'
+              $logDir = 'reports/remediation/logs'
+              $backupDir = 'reports/remediation/backup_before'
+              New-Item -ItemType Directory -Force -Path $logDir, $backupDir | Out-Null
+              $baseline = Join-Path $logDir '00_baseline.txt'
+              $lines = @()
+              $lines += \"timestamp=$(Get-Date -Format o)\"
+              $lines += \"cwd=$(Get-Location)\"
+              $lines += \"branch=$(git branch --show-current)\"
+              $lines += \"head=$(git rev-parse HEAD)\"
+              $lines += \"commit_count=$(git rev-list --count --all)\"
+              $lines += '--- git status --porcelain=v1 ---'
+              $lines += (git status --porcelain=v1)
+              $lines += '--- tracked diff stat ---'
+              $lines += (git diff --stat)
+              $lines += '--- candidate processes ---'
+              $lines += (Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'ResearchFlow|pytest|unit
+              test|python' } | Select-Object ProcessId,Name,CommandLine | Format-List | Out-String)
+              $lines += '--- cache/temp inventory ---'
+              $cachePaths = @('.pytest_cache','__pycache__','researchflow/__pycache__','tests/__pycache__','tmp/unittes
+              t-temp','tmpavet2qv9')
+              foreach ($p in $cachePaths) {
+                if (Test-Path -LiteralPath $p) {
+                  $files = Get-ChildItem -LiteralPath $p -Recurse -File -ErrorAction SilentlyContinue
+                  $lines += \"$p exists files=$($files.Count) bytes=$(($files | Measure-Object Length -Sum).Sum)\"
+                } else { $lines += \"$p absent\" }
+              }
+              $lines += '--- sha256 planned files ---'
+              $planned = @(
+               'researchflow/api/app.py','tests/test_api_422.py','docs/state/project_state.json',
+               'design/pseudocode/INDEX.md','design/pseudocode/STAGE_LOG.md','design/pseudocode/OPEN_QUESTIONS.md',
+               'design/pseudocode/00_BASELINE/PHASE_RULES.md',
+               'design/pseudocode/M01_contracts/MODULE.md','design/pseudocode/M03_config_env/MODULE.md',
+               'design/pseudocode/M13_scheduler/MODULE.md','design/pseudocode/M14_recovery/MODULE.md',
+               'design/pseudocode/M15_dcspa/MODULE.md','design/pseudocode/M16_vas/MODULE.md',
+               'design/pseudocode/M17_agents/MODULE.md','design/pseudocode/M18_knowledge/MODULE.md',
+               'README.md','docs/DEVELOPMENT_WORKFLOW.md','docs/SESSION_HANDOFF.md','AGENTS.md',
+               'docs/PROJECT_OVERVIEW.md','docs/ARCHITECTURE.md','docs/state/G0_DECISION_LIST.md'
+              )
+              foreach ($p in $planned) {
+                if (Test-Path -LiteralPath $p) {
+                  $h = (Get-FileHash -Algorithm SHA256 -LiteralPath $p).Hash.ToLowerInvariant()
+                  $lines += \"$h  $p\"
+                } else { $lines += \"MISSING  $p\" }
+              }
+              $lines | Set-Content -LiteralPath $baseline -Encoding utf8
+              $backupTargets = @(
+               'design/pseudocode/M13_scheduler/MODULE.md','design/pseudocode/M14_recovery/MODULE.md',
+               'design/pseudocode/M15_dcspa/MODULE.md','design/pseudocode/M16_vas/MODULE.md',
+               'design/pseudocode/M17_agents/MODULE.md','design/pseudocode/M18_knowledge/MODULE.md'
+              )
+              foreach ($rel in $backupTargets) {
+                $dest = Join-Path $backupDir $rel
+                New-Item -ItemType Directory -Force -Path (Split-Path $dest) | Out-Null
+                Copy-Item -LiteralPath $rel -Destination $dest -Force
+              }
+              Write-Output \"BASELINE_WRITTEN=$baseline\"
+              Get-Content -LiteralPath $baseline -TotalCount 60"
+
+
+
+
+--- cache/temp inventory ---
+.pytest_cache exists files=4 bytes=12253
+__pycache__ exists files=1 bytes=757
+researchflow/__pycache__ exists files=1 bytes=237
+tests/__pycache__ exists files=5 bytes=115985
+tmp/unittest-temp exists files=0 bytes=
+tmpavet2qv9 absent
+--- sha256 planned files ---
+adf06d68a319ade557db601d08ae461868c14046f39f3f66f251bb21c80d4b0b  researchflow/api/app.py
+4d98755951439ea70c05a968ce298f22b3bfbcf32dd19cc29d0758b0cb60f9c6  tests/test_api_422.py
+59c842a4b1fa20c8d93b59bb3080d3985ffc559554507e8f285d2c3bfd27979f  docs/state/project_state.json
+4729b1b5c3420f64a2015cbd4ff62edd9e83e396dd83e2e605a8cc4464463f8d  design/pseudocode/INDEX.md
+425ab503b6a8c1023adbe1145e610675a4c40230186466ad728b1c7d77f0b506  design/pseudocode/STAGE_LOG.md
+cd3c3ab479550d361441239d5f7d70460f3999ae9444cf7f40919b17c2aea139  design/pseudocode/OPEN_QUESTIONS.md
+2a0276f3cff62a720747fc8f6a09978d95f2f45ddc0423c19eb002fc73f970f9  design/pseudocode/00_BASELINE/PHASE_RULES.md
+c26b113890aabc6d88a24daf188db63f3a1ccfd4d6d451fd593a615818e39c2f  design/pseudocode/M01_contracts/MODULE.md
+ead91c848dd7e6cdb0e074f4d1382b26b4cfd056e7f1b666830fd55ab38ccf5d  design/pseudocode/M03_config_env/MODULE.md
+686bd42fdaf78003d7dca126e98a4d58fad2a4e9ca0bff53637f5306bb6b4dbd  design/pseudocode/M13_scheduler/MODULE.md
+1581e2d82586ac20838ecdd2b148ba733b77bcec31fc90f9d072069dd6bb61f0  design/pseudocode/M14_recovery/MODULE.md
+88e67efef55ec972afd447413a39a29b265b92307903c1c745fa0d27cba327b0  design/pseudocode/M15_dcspa/MODULE.md
+62dc7694bc289c586a8fe9010d178ebd71bc6efb1b55c0d440d012b73697d995  design/pseudocode/M16_vas/MODULE.md
+d7d63868a31903ae246d667eaef1328b82d5004b7030549e83dcced5efe3e8fa  design/pseudocode/M17_agents/MODULE.md
+29f0d709d3f864d014c9ba8fa16cf8c75f936708a4bd2b819ae6ad425ea4b192  design/pseudocode/M18_knowledge/MODULE.md
+565c2153ca7d9d938fd1cadf7e60d6ece31db240aa9986d030d08e3c76a7013b  README.md
+e34b4a383fe69d62e4a30551596fc36f88777c5304bd2789da903d1a8a32687a  docs/DEVELOPMENT_WORKFLOW.md
+e1b5b25e4c33de58c291bb5c862c40a78137bf4f9edbcdae9d27c25f295e964f  docs/SESSION_HANDOFF.md
+db0c58ee52da0333d848480aec93b0d625e5367b8516442e980f5d9c4ac9d5ec  AGENTS.md
+770b4fcf114062d46b0c537fa05435fbfb468118d20f6429ae9dd8315158088c  docs/PROJECT_OVERVIEW.md
+2aac09bb17f44e13e7f632392c0d4fda6c82257b75fc16f6039fa09556dc8e4d  docs/ARCHITECTURE.md
+120505d4b423e9c46ab2488ac822f51d947e6c7534b49ba4ef0711700e45064f  docs/state/G0_DECISION_LIST.md

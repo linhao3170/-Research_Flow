@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "generated_by": "scripts/build_template_dataset.py",
+  "seed": 20261114,
+  "provenance": "synthetic data generated in-repo; no third-party rows, no network access",
+  "datasets": {
+    "local://datasets/synthetic_breast_cancer.csv": {
+      "path": "synthetic_breast_cancer.csv",
+      "sha256": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+      "license": "CC0-1.0",
+      "rows": 679,
+      "columns": [
+        "patient_id",
+        "event_time",
+        "age",
+        "bmi",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "diagnosis"
+      ],
+      "target": "diagnosis"
+    }
+  }
+}

@@ -1,0 +1,357 @@
+﻿===== P2 =====
+--- M02_state_machine/MODULE.md (first 10 lines) ---
+# M02 · 持久层与状态机（P2）
+
+> 阶段：P2「持久层与状态机」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：SQLite 表结构、四类仓储、迁移、幂等、四张迁移表、唯一写入口、I-01–I-08、重启恢复
+> 不覆盖：Gate 结果计算、签名/验签、任务派发、模板执行、Evidence 正文写入
+> 阶段约束：S0 规则仍生效——只读 P1 基线，不改契约/看板，不建环境，不跑测试，不写业务代码。
+
+## 1. 目标
+
+把“状态只能由 StateMachine 改变”从一句架构口号落成四件可检查的东西：
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 2.1 文件导航（>800 行文件必填） | ## 3. 架构原则与写者边界 | ## 4. 四张迁移表 | ## 5. 事务与审计 | ## 6. 并发 | ## 7. 重启恢复 | ## 8. 幂等 | ## 9. 对外接口 | ## 10. 验收（P2） | ## 11. 本阶段不做 | ## 12. 已知缺口与开放问题 | ## 12.1 需特别裁决的偏离
+--- M02_state_machine/NEGATIVE_TESTS.md (first 8 lines) ---
+# M02 · NEGATIVE_TESTS — 负例判据（P2）
+
+> 阶段：P2｜状态：**判据定义，未执行**（本阶段限权：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M02 落地（WP-03 之后）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P2 不得写成“已通过”**。
+> 数据库：真实 SQLite 文件（WAL）；禁止用 mock、内存库替身或“只断言抛异常”代替拒绝原因。
+
+
+P2 OQ rows: 11
+   > 口径：每个 OQ 恰好一行；状态只允许 `OPEN` / `DEFERRED` / `DECIDED` / `NEEDS_CONFIRMATION` 四个值；已有编号原样沿用，无编号项写 `(无编号) §12-N`，不新造编号。
+   | `(无编号) §12-1` | `evidence` 表无 `state` 列，摄入状态（`RECEIVED`/`VALIDATED`/`APPENDED`/`INVALID`/`CONFLICT`）如何持久化？ | P2 | OPEN | WP-07 开工前 | 待确认（T0 实现选择）；M02 不加列，`APPENDED` 以行存在表示，`INVALID`/`CONFLICT` 在写入前拒绝。 | `M02_state_machine/MODULE.md` §12-1
+   | `(无编号) §12-2` | `tasks`/`nodes` 的创建 INSERT 路径归谁？ | P2 | OPEN | WP-03 开工前 | 待确认；M02 把「创建」与「状态迁移」分开，INSERT 只能进入初始状态。 | `M02_state_machine/MODULE.md` §12-2 | WP-03 |
+   | `(无编号) §12-3` | 失败审计如何同时保留「声称旧值」与「实际旧值」？ | P2 | OPEN | WP-08 开工前 | 待确认（T0 实现选择）；M02 只记实际持久化状态，声称值进 `reason_code/details`，不新增 `detail_json` 列。 | `M02_state_machine/MODULE.md` §12-3、§12.1 D-2 | WP-08 |
+
+===== P3 =====
+--- M04_dag/MODULE.md (first 10 lines) ---
+# M04 · DAG 与图治理（P3）
+
+> 阶段：P3「DAG 与执行器」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：静态图构建、六类图校验、图版本与回放缓照、图变更审批、失效传播
+> 不覆盖：READY 选择与并发控制（P7）、Gate 判定（P5）、模板本体（P4）、API（P10）、恢复计划生成（WP-R）
+> 前置：P2 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P2 `IN_REVIEW`，未验收）；DEC-01/02/03 已在本模块内裁决（本文 §6）
+> 阶段约束（S0）：只读 05/06/ADR/M01/M02；不改 M02 schema；不建环境、不跑测试、不写业务代码
+
+## 1. 目标
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 2.1 文件导航（>800 行文件必填） | ## 3. 边界（谁写什么） | ## 4. 对外接口（供 P4–P7 引用） | ## 5. 关键设计决定 | ## 6. 待文档同步（不改 05/06/ADR，仅登记） | ## 7. 验收对照 | ## 8. OPEN QUESTIONS（新增，待用户裁决） | ## 9. 与 M02 / M05 的接口 | ## 10. 本阶段不做
+--- M04_dag/NEGATIVE_TESTS.md (first 8 lines) ---
+# M04 · NEGATIVE_TESTS — 负例判据（P3）
+
+> 阶段：P3｜状态：**判据定义，未执行**（本阶段限权：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M04 落地（WP-04 之后）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P3 不得写成"已通过"**。
+> 数据库：真实 SQLite 文件（WAL）；禁止 mock 替代 `_insert_planned` / `transition` 的拒绝路径。
+
+
+--- M05_executor/MODULE.md (first 10 lines) ---
+# M05 · Executor（P3）
+
+> 阶段：P3「DAG 与执行器」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：模板注册表、每 attempt 独立工作目录、子进程与整棵进程树回收、`run_attempt` 主流程、模板协议
+> 不覆盖：模板本体（P4）、E0–E3 写入（WP-07）、Gate 判定（P5）、调度与并发（P7）、API（P10）
+> 前置：P2 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P2 `IN_REVIEW`，未验收）；DEC-01/02/03 已裁决；M04 提供节点参数与 `artifact://<name>` 引用
+> 阶段约束（S0）：不改 M02/M01/05/06/ADR；不建环境、不跑测试、不实现任何模板
+
+## 1. 目标
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 边界（Executor 只执行） | ## 4. 模板注册表（`registry.py`） | ## 5. 工作目录（`workspace.py`） | ## 6. 超时与"失败也回收"（`process_control.py`） | ## 7. 产物清单（验收要求四项） | ## 8. `run_attempt()` 十步与"不裁决" | ## 9. 验收对照 | ## 10. OPEN QUESTIONS（新增，待用户裁决） | ## 11. 本阶段不做
+--- M05_executor/NEGATIVE_TESTS.md (first 8 lines) ---
+# M05 · NEGATIVE_TESTS — 负例判据（P3）
+
+> 阶段：P3｜状态：**判据定义，未执行**（本阶段限权：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M05 落地（WP-06 之后）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P3 不得写成"已通过"**。
+> 进程类负例必须在 Windows 上真实执行（作业对象/回收无法用 mock 证明）。
+
+
+P3 OQ rows: 12
+   | `OQ-P3-01` | 图规模上限（节点/边/深度/扇入/扇出）没有配置键 | P3 | OPEN | ADR-008 配置冻结前 | `DEFAULT_DAG_LIMITS=32/160/16/16/8` 标注「非契约」；不得写成契约上限或验收阈值。 | `M04_dag/MODULE.md` §8；`orchestration/dag/validator.py` 的 `DEFAULT_DAG_LIMITS` | WP-04 落地 |
+   | `OQ-P3-02` | 「图规模/深度超限」没有专用错误码 | P3 | DEFERRED | WP-04 落地前 | 不新增注册表码；用 `STATE_TRANSITION_DENIED` + `reason=DAG_INVALID` + `detail` 带上限与实际值。 | `M04_dag/MODULE.md` §5.4、§8 | WP-04 |
+   | `OQ-P3-03` | 「图版本冲突」没有专用 409 码 | P3 | DEFERRED | WP-04 落地前 | 不新增码；用 `STATE_TRANSITION_DENIED` + `reason=GRAPH_VERSION_CONFLICT`；不得改用 `IDEMPOTENCY_CONFLICT`（语义污染）。 | `M04_dag/MODULE.md` §5.4、§8；`graph_version.py` 的 `GraphVersionConflict` |
+   | `OQ-P3-04` | `nodes`/`graph_versions` 不存边，回放只能靠重建 | P3 | DEFERRED | WP-04 落地前 | 重建 + `graph_hash` 比对；不一致抛 `ReplayMismatch` fail-closed；差异比较用内存 `GraphContent`。 | `M04_dag/MODULE.md` §5.2/§5.3、§8；`graph_version.diff_graphs` | WP-04/WP-R |
+
+===== P4 =====
+--- M06_templates/MODULE.md (first 10 lines) ---
+# M06 · Templates（P4）
+
+> 阶段：P4「模板与证据链」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：三模型分类模板、参数契约、指标/产物/required_checks、SplitService 与六字段 manifest、
+> 模型工厂与超参白名单、Wine 冒烟与 Breast Cancer 主干差异、离线数据集登记与绑定
+> 不覆盖：Gate 判定（P5）、签名（P6）、L3 重跑（P5）、API（P10）、调度（P7）
+> 前置：P3 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P3 `IN_REVIEW`，未验收）；M01 契约与错误码已冻结
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 模板契约（`classification_benchmark.py`） | ## 4. Split Manifest（`splits.py`） | ## 5. 数据集登记（`data/datasets_registry.py`） | ## 6. Wine 冒烟 vs Breast Cancer 主干 | ## 7. 安全边界 | ## 8. 验收对照 | ## 9. DECISIONS（P4 设计决定） | ## 10. OPEN QUESTIONS（新增，待用户裁决） | ## 11. 本阶段不做
+--- M06_templates/NEGATIVE_TESTS.md (first 8 lines) ---
+# M06 · NEGATIVE_TESTS — 负例判据（P4）
+
+> 阶段：P4｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M06 落地（WP-05）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P4 不得写成“已通过”**。
+> 数据真实哈希、锁文件与 CSV 属 WP-05；本表只定义“拒绝原因必须是什么”。
+
+
+--- M07_evidence/MODULE.md (first 10 lines) ---
+# M07 · Evidence（P4）
+
+> 阶段：P4「模板与证据链」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：Collector 单写者、Evidence Store 追加/查询/冲突保留、哈希链公式与断链检测、
+> RFC 9162 Merkle 与 inclusion proof、事件缺口标记与 Gate 读取方式
+> 不覆盖：Gate 判定（P5）、Ed25519 签名/信任锚（P6）、L3 重跑（P5）、Evidence Bundle 导出（P6/WP-12）
+> 前置：P3 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P3 `IN_REVIEW`，未验收）；M01 错误码与 M02 evidence 表已冻结
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 信任边界与权限矩阵 | ## 4. 单写者（`collector.py` + `store.py`） | ## 5. E0/E1/E2 规则 | ## 6. 哈希链（`chain.py`） | ## 7. Merkle（`merkle.py`） | ## 8. 缺口（`gaps.py`） | ## 9. Store 与保留（`store.py`） | ## 10. 验收对照 | ## 11. OPEN QUESTIONS（新增，待用户裁决） | ## 12. 本阶段不做
+--- M07_evidence/NEGATIVE_TESTS.md (first 8 lines) ---
+# M07 · NEGATIVE_TESTS — 负例判据（P4）
+
+> 阶段：P4｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M07 落地（WP-07）；Merkle 标准向量在 WP-11 接入
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P4 不得写成“已通过”**。
+> 真实 SQLite、真实线程队列、真实 RFC 9162 向量；不得用 mock 证明并发/链/树正确。
+
+
+P4 OQ rows: 12
+   | `OQ-P4-01` | E3 单写者与 06 §3「Verifier W(E3)」冲突 | P4 | OPEN | P6 开工前 | P4 拒绝 E3。方案 A：Verifier 经 Collector 的 E3 入口提交（物理单写者，producer=verifier）；方案 B：Verifier 直写 E3（回到 06 §3 双写者）。未裁决前不得实现 E3 写入。 | `M07_evidence/MODULE.md` §5.3/§11；`evidence/coll
+   | `OQ-P4-02` | `chain_hash` 前像与域前缀未冻结 | P4 | OPEN | WP-07/ADR 冻结前 | P4 提案 `RF-EVIDENCE-CHAIN\x00v1\x00` + 13 字段投影；P1 曾把前像留给 WP-07；需 ADR 并以篡改负例锁定，不得把提案写成已冻结契约。 | `M07_evidence/evidence/chain.py`；`00_BASELINE/ENCODING_RULES.md` §4 | WP-07 |
+   | `OQ-P4-03` | 未登记数据集没有专用错误码 | P4 | DEFERRED | WP-05 落地前 | 不新增注册表码；用 `SCHEMA_INVALID` + `detail.reason=DATASET_NOT_REGISTERED`，`field_path=dataset_ref.uri`。若用户要求 403/404 语义再改。 | `M06_templates/data/datasets_registry.py`；`M06_templates/MODUL
+   | `OQ-P4-04` | `evidence_gaps` 表不在 06 §1.3 | P4 | OPEN | WP-07 落地前 | 作为 M07 内部追加日志（OPEN/FILLED 只追加）；进契约需 ADR/MINOR 迁移。未批准前不得声称已是冻结表。 | `M07_evidence/evidence/gaps.py`；`M07_evidence/MODULE.md` §8/§9 | WP-07 |
+
+===== P5 =====
+--- M08_gate/MODULE.md (first 10 lines) ---
+# M08 · Gate 与规则集（P5）
+
+> 阶段：P5「门控与三级验证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：规则集装载与版本哈希、coverage row 七字段、Gate 七步判定、四类一票否决
+> 不覆盖：Ed25519 签名/信任锚（P6）、验证预算分配（P9）、报告签发（P6/WP-11）、科学结论评价
+> 前置：P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P4 `IN_REVIEW`，未验收）；M01 错误码、M06 required_checks、M07 collector 已冻结
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 信任边界与权限矩阵 | ## 4. 规则集与版本哈希 | ## 5. 七步 Gate（顺序不可交换） | ## 6. coverage row 七字段 | ## 7. 四类一票否决 | ## 8. 三级验证边界（M08 只消费，不实现） | ## 9. 验收对照 | ## 10. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 11. 本阶段不做
+--- M08_gate/NEGATIVE_TESTS.md (first 8 lines) ---
+# M08 · NEGATIVE_TESTS — Gate 与规则集负例（P5）
+
+> 阶段：P5｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M08 落地（WP-08）、Verifier 集成（WP-11）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P5 不得写成“已通过”**。
+> 真实 Gate/真实规则集/真实证据链；不得用 mock 证明“缺证据会被拒绝”。
+
+
+--- M09_verifier_l12/MODULE.md (first 10 lines) ---
+# M09 · L1/L2 独立验证（P5）
+
+> 阶段：P5「门控与三级验证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：L1 过程完整性（schema/哈希/seq/链/Merkle/目录复用）、L2 结果自洽（指标重算/字段语义/混淆矩阵/R1–R5）
+> 不覆盖：L3 重跑（M10）、签名/信任锚（P6）、验证预算（P9）、科学结论评价
+> 前置：P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P4 `IN_REVIEW`，未验收）；M07 chain/merkle、M06 Split Manifest、M01 冻结 schema 可用
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. L1：过程完整性 | ## 4. L2：结果自洽 | ## 5. 指标重算口径（`metric_recompute.py`） | ## 6. 泄漏五规则的机器判据 | ## 7. 状态语义 | ## 8. 验收对照 | ## 9. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 10. 本阶段不做
+--- M09_verifier_l12/NEGATIVE_TESTS.md (first 8 lines) ---
+# M09 · NEGATIVE_TESTS — L1/L2 与泄漏五规则负例（P5）
+
+> 阶段：P5｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M09 落地（WP-11）、L2 与模板联调（WP-05/WP-11）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P5 不得写成“已通过”**。
+> 真实证据链/真实 CSV/真实 predictions；不得用 mock 证明“泄漏会被抓住”。
+
+
+--- M10_verifier_l3/MODULE.md (first 10 lines) ---
+# M10 · L3 / IRC 独立重执行（P5）
+
+> 阶段：P5「门控与三级验证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：L3 新目录/只读白名单/独立进程、重放流程、伪 L3 判定、等价性（bit-exact/TOST）、六类归因
+> 不覆盖：签名/信任锚（P6）、验证预算/VAS（P9）、跨环境普遍复现、科学结论评价
+> 前置：P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P4 `IN_REVIEW`，未验收）；M05 workspace 目录分离、M06 Split Manifest、M08 L3 阈值、M09 指标口径可用
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 沙箱：新目录、只读白名单、独立进程 | ## 4. 重放流程（9.3） | ## 5. 等价性（9.4 写死） | ## 6. 伪 L3 的判定点 | ## 7. 六类归因 | ## 8. 验收对照 | ## 9. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 10. 本阶段不做
+--- M10_verifier_l3/NEGATIVE_TESTS.md (first 8 lines) ---
+# M10 · NEGATIVE_TESTS — L3 沙箱、重放与归因负例（P5）
+
+> 阶段：P5｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M10 落地（WP-08）、L3 与 Verifier 联调（WP-11）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P5 不得写成“已通过”**。
+> 真实目录/真实进程/真实数据；不得用 mock 证明“L3 真的重跑”。
+
+
+P5 OQ rows: 12
+   | `OQ-P5-01` | 冻结 `EvidenceRecord` 没有 `ruleset_version` 字段，但策划书 §7.3 要求记录规则版本 | P5 | OPEN | WP-08 落地前 | Gate 在任务级（TaskSpec.ruleset_hash）+ E3 物证级绑定规则版本；证据级绑定需 MINOR schema 或 payload 约定，未裁决前不得声称“每条证据都绑定规则版本”。 | `M08_gate/evidence/ruleset.py`；
+   | `OQ-P5-02` | `VerificationReport` schema 没有 `gaps`/`attribution` 字段，但策划书 §7.4 把它们列为报告核心字段 | P5 | OPEN | P6 签发报告前 | GateResult/L3ReplayResult 作为结构化 sidecar；报告 schema 是否补字段需 MINOR + ADR；未裁决前不得把 gaps 写进冻结报告字段。 | `M08_gate/evidence/gate.py`；`
+   | `OQ-P5-03` | `l3_coverage` 的分母未定义（指标来源节点 / 必检项 / 全部节点） | P5 | OPEN | WP-11 签发报告前 | P5 临时取“报告指标来源节点”的 PASS 比例；规则集 `L3Policy.required_coverage` 以该口径为准；需用户确认后写死。 | `M08_gate/evidence/ruleset.py`；`M08_gate/MODULE.md` §5 第 7 步 | WP-11 |
+   | `OQ-P5-04` | E3 写入路径仍受 `OQ-P4-01` 阻塞：Collector 在 P4 拒收 E3 | P5 | OPEN | P6 开工前 | L3 只产出 `L3ReplayResult.to_attestation()`；E3 由 Verifier 写入，P6 前不实现写入；不得让 L3 直接写证据表。 | `M10_verifier_l3/verifier/l3_replay.py`；`M08_gate/MODULE.md` §3 | P6/WP-
+
+===== P6 =====
+--- M11_signing/MODULE.md (first 10 lines) ---
+# M11 · 签名、密钥与信任锚（P6）
+
+> 阶段：P6「签名与离线凭证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：RFC 8785 JCS、四类签名载荷白名单与域分离、Ed25519 签名/验签、key_id/有效期/轮换/撤销、
+> 包外信任锚与公钥指纹
+> 不覆盖：L1/L2/L3 重新验证（P5 已定）、证据包布局与 CLI（M12）、证书签发编排（WP-11）、
+> OS key store/HSM（部署，OQ-P6-05/06）、DC/SPA 契约冻结（T2）
+> 前置：P5 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P5 `IN_REVIEW`，未验收）；M07 chain/merkle 前像提案可用；G0 契约与 05 §1.5 已冻结
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 信任边界与权限 | ## 4. 四类载荷白名单（逐字段指回 7.4） | ## 5. 为什么“按对象全部字段签名”是错的 | ## 6. 为什么载荷必须包含规则版本、证据根、状态 | ## 7. 域分离与版本化 | ## 8. 密钥生命周期（7.6） | ## 9. 信任锚（7.6 R04） | ## 10. 失败码与拒绝点 | ## 11. 验收对照 | ## 12. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 13. 本阶段不做
+--- M11_signing/NEGATIVE_TESTS.md (first 8 lines) ---
+# M11 · NEGATIVE_TESTS — JCS、载荷、签名、密钥与信任锚负例（P6）
+
+> 阶段：P6｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M11 落地（WP-11）、G6-T0 离线验签准备
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P6 不得写成“已通过”**。
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+
+## 0. 判定纪律
+
+--- M12_bundle/MODULE.md (first 10 lines) ---
+# M12 · Evidence Bundle 与离线验签（P6）
+
+> 阶段：P6「签名与离线凭证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：证据包 12 类文件、manifest 哈希、anchor_proof absent 语义、verify_bundle CLI、
+> 固定检查顺序与退出码、五类负例
+> 不覆盖：L1/L2/L3 重新验证、报告/证书签发（WP-11）、时间戳服务/外部锚定实现（OQ-P6-09）、
+> 工作台展示（WP-13）
+> 前置：M11 签名/信任锚伪代码可用；P5 Gate/L3 产物可导出；WP-12 落地
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 检查顺序（fail-fast） | ## 4. 证据包 12 类文件 | ## 5. Manifest 与自哈希 | ## 6. 输出与退出码 | ## 7. 五类负例（必须逐条断言退出码） | ## 8. 信任边界与“不依赖数据库/模型” | ## 9. 边界与已知限制 | ## 10. 验收对照 | ## 11. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 12. 本阶段不做
+--- M12_bundle/NEGATIVE_TESTS.md (first 8 lines) ---
+# M12 · NEGATIVE_TESTS — Evidence Bundle 与离线验签负例（P6）
+
+> 阶段：P6｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：WP-12 落地、G6-T0（T0 只要求真包通过 + 外部信任锚；五类负例矩阵完整版归 G6/T1）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 命令模板：
+> `& $py verify_bundle.py .\evidence_bundle --trust-store .\trusted_keys.json`
+> 记录要求：命令、解释器、退出码、断言到的 reason、日志路径、运行时间；**P6 不得写成“已通过”**。
+
+P6 OQ rows: 12
+   | `OQ-P6-01` | `CompletionCertificate` 7.4 列 `task_id`，冻结 schema 与 05 §1.5 都没有 | P6 | OPEN | WP-11 签发证书前 | P6 按冻结 schema 排除 `task_id`，任务绑定走 `report_id`；是否 MINOR 补字段需用户裁决，未裁决前不得把 `task_id` 写进载荷或 schema。 | `M11_signing/MODULE.md` §4.2；`contra
+   | `OQ-P6-02` | DC/SPA 无 `schema_version`，D.5 的 DC 也没有 `key_id`/`alg` | P6 | OPEN | T2 DC/SPA 契约冻结前 | P6 用域前缀 `RF-DC-V1\0`/`RF-SPA-V1\0` 承载版本，DC 增补 `key_id`/`alg` 作为**提案**；`frozen=False`，T0 不签发、不写入包。需要 T2 契约 + ADR。 | `M11_signing/verifier/cr
+   | `OQ-P6-03` | 非 VERIFIED 报告是否允许签名/持久化：用户要求拒绝，但 schema 四态且 `signature` 必填 | P6 | OPEN | WP-11 签发报告前 | P6 只对 `VERIFIED` 报告签名；非 VERIFIED 结果保留为 GateResult 结构化 sidecar，不产生带签名的 `VerificationReport`。该口径与 schema 四态的关系需用户/契约裁决，未裁决前不得给非 VERIFIED 报告写
+   | `OQ-P6-04` | “非 VERIFIED 拒绝签发/签名策略拒绝”没有专用错误码 | P6 | OPEN | WP-11 error mapping 前 | 暂用 `SIGNATURE_INVALID`(422) + reason（`SIGNING_REPORT_NOT_VERIFIED` 等）；是否补内部码、是否 `user_visible=False`，需裁决；不得为它新增 E.3 第 14 码。 | `M11_signing/verifier/crypto/
+
+===== P7 =====
+--- M13_scheduler/MODULE.md (first 10 lines) ---
+# M13 · Ready Scheduler 与 Governor（P7）
+
+> 阶段：P7「调度与定向恢复」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：READY 三合取判定、确定性就绪队列与饥饿处理、SchedScore 五项归一化、Governor 五类监控与五个动作、派发七相
+> 不覆盖：DC/SPA 剪枝（T2）、VAS 验证预算分配（P9）、模板本体（P4）、恢复计划生成与冻结（M14）、HTTP 路由（P10）
+> 前置：P2–P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P2–P4 均为 `IN_REVIEW`，未验收）；M03 `scheduler.yaml`、M01 错误码为冻结设计输入
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 边界（谁写什么） | ## 4. 对外接口（供 M14 / P8–P10 引用） | ## 5. 关键设计决定 | ## 6. 验收对照 | ## 7. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 8. 已知局限（P7-FIX1 登记）与本阶段不做
+--- M13_scheduler/NEGATIVE_TESTS.md (first 8 lines) ---
+# M13 · NEGATIVE_TESTS — Ready Scheduler 与 Governor 负例（P7）
+
+> 阶段：P7｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M13 落地（WP-06 调度器）、G4 动态调度验收（T1）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P7 不得写成“已通过”**。
+> 真实 StateMachine（SQLite 事务）/真实队列/真实 Governor；不得用 mock 证明“依赖未满足不会派发”。
+
+
+--- M14_recovery/MODULE.md (first 10 lines) ---
+# M14 · 定向恢复与失效传播（P7）
+
+> 阶段：P7「调度与定向恢复」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：错误签名与六类分类、§8.4 逐分支的 T0 保守实现、内容寻址的计划冻结、`INVALIDATED→READY` 三条守卫
+> 不覆盖：完整 Recovery 状态机（`PROPOSED→…→CLOSED`，仅 T1）、Agent 提案、人工审批、DC/SPA 剪枝（T2）、
+> 失效传播本身（P3 `invalidation.py` 已交付，本模块只消费其结果）
+> 前置：P3/P2 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（均为 `IN_REVIEW`，未验收）；ADR-004 已 ACCEPTED
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+
+## 1. 目标
+HEADINGS: ## 1. 目标 | ## 2. 文件 | ## 3. 边界（谁写什么） | ## 4. 对外接口 | ## 5. 关键设计决定 | ## 6. 验收对照 | ## 7. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 8. 已知局限（P7-FIX1 登记）与本阶段不做
+--- M14_recovery/NEGATIVE_TESTS.md (first 8 lines) ---
+# M14 · NEGATIVE_TESTS — 定向恢复与计划冻结负例（P7）
+
+> 阶段：P7｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M14 落地（WP-R）、G4 恢复验收（T1）；T0 只跑最小切片
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P7 不得写成“已通过”**。
+> 真实 SQLite（`audit_log` 追加）/真实文件系统（内容寻址）/真实 StateMachine 守卫；不得用 mock 证明“哈希不符会被拒”。
+
+
+P7 OQ rows: 12
+   | `OQ-P7-01` | M03 `scheduler.yaml: ready_order` 是 `const "topological_then_node_id"`，与策划书 §8.5 的 SchedScore 排序冲突，T0 用哪个？ | P7 | OPEN | WP-06 调度器落地前 | 两种策略都实现：`TOPOLOGICAL_ONLY` 与 M03 现值一致、可用；`SCHED_SCORE` 在裁决前不得在 T0 启用（M13 不改 M03 schema）。需
+   | `OQ-P7-02` | SchedScore 权重与 Governor 五类阈值没有配置键（M03 把动态参数登记为 T1/G4 未定义），如何冻结？ | P7 | OPEN | ADR-008 / WP-06 前 | M13 定义四组键：`sched_score_weights.*`、`sched_score_risk.*`、`ready_queue.*`、`governor.*`（见 `governor.FOOTPRINT_KEYS`）；缺键拒绝启动、无默认回退；全
+   | `OQ-P7-03` | `TaskSpec` 的 19 个冻结字段里没有 user priority，SchedScore 的 `UserPriority` 从哪来？ | P7 | OPEN | WP-06 前 | 调度侧显式登记表（缺失默认 0），档位 0–3 映射到 [0,1]；不进契约、不改 `TaskSpec`。若需要用户可见优先级，须 MINOR 契约变更 + ADR。 | `scoring.normalize_user_priority`；`M13_sche
+   | `OQ-P7-04` | Governor 的「硬阈值暂停派发」没有专用错误码与 HTTP 语义，对外返回什么？ | P7 | DEFERRED | WP-06 error mapping 前 | 用 `RESOURCE_BUDGET_EXCEEDED`(429) + `detail.limit_kind` + `reason=GOVERNOR_*` / `MEMORY_HARD_LIMIT` 等；不新增 E.3 第 14 码；若需要区分「暂停」与「超限」再裁决。 | `
+
+===== P8 =====
+--- M17_agents/MODULE.md (first 10 lines) ---
+# M17 · Agent Gateway 与六角色（P8）
+
+> 阶段：P8「六角色与知识库」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：角色身份四元组、§10.2 权限矩阵 25 格、九类消息与方向、工具唯一出口、统一 LLM 客户端、角色调度、六个角色类与 role_off、CPG 五项指标
+> 不覆盖：Verifier 裁决与签发（M08–M12）、图审批（M04）、调度（M13）、HTTP（P10）、知识库本体（M18）
+> 前置：P1–P7 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（仅 P1 `ACCEPTED`，P2–P7 `IN_REVIEW`，P9 `BLOCKED`）；**T0 尚未验收**（G1–G7 `NOT_STARTED`，仅 WP-01/WP-02 DONE）
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+> FR 归属：`FR-012`（六角色消息契约与权限）在追踪矩阵中是 **T1 / G2+G5**；本阶段不宣称 G2/G5 已通过
+
+## 0. T0 未验收时的交付口径（先读）
+HEADINGS: ## 0. T0 未验收时的交付口径（先读） | ## 1. 目标 | ## 2. 文件 | ## 3. 边界（谁写什么；每条都有拒绝分支） | ## 4. 六角色契约（§10.1 逐行） | ## 5. 权限矩阵逐格对齐（§10.2 TABLE 41） | ## 6. 九类消息（§6.3 TABLE 27） | ## 7. 关键设计决定 | ## 8. role_off：六个角色都能关，关掉后不“单 Agent 全包” | ## 9. CPG 五项指标（§10.3） | ## 10. 验收对照 | ## 11. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 12. 本阶段不做
+--- M17_agents/NEGATIVE_TESTS.md (first 8 lines) ---
+# M17 · NEGATIVE_TESTS — 六角色、消息、工具出口与 role_off（P8）
+
+> 阶段：P8｜状态：**判据定义，未执行**（S0：不建环境、不跑测试、不写业务代码）
+> 执行阶段：M17 落地（WP-12 之后、T1 六角色接入）、G2 权限拒绝、G5 对照实验
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P8 不得写成“已通过”**。
+> 纪律：负例以“拒绝原因正确”为通过条件——必须断言错误码 + reason（至少两项）+ 副作用未发生。
+
+
+--- M18_knowledge/MODULE.md (first 10 lines) ---
+# M18 · 知识库与 FOL 三层环（P8）
+
+> 阶段：P8「六角色与知识库」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+> 覆盖：KnowledgeUnit 15 字段与三态、五类差异字段、版本治理与冲突升级、FTS5/BM25 检索与过滤、过期降权、检索 E1、五种绑定、L-A/L-B/L-C、R1–R3 对照
+> 不覆盖：SQLite/FTS5 建表与迁移（WP 落地）、HTTP、知识写入 UI、真实基准运行（RF-Bench 属 T1/G5）
+> 前置：P1–P7 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（仅 P1 `ACCEPTED`，P2–P7 `IN_REVIEW`，P9 `BLOCKED`）；**T0 尚未验收**（G1–G7 `NOT_STARTED`）
+> 阶段约束（S0）：只写 `design/pseudocode/**`；不建库、不跑检索、不改看板、不写业务代码
+> FR 归属：`FR-013`（知识单元版本治理与检索）、`FR-014`（FOL 三层反馈环）均为 **T1**；本阶段不宣称 G5 已通过
+
+## 0. T0 未验收时的交付口径（先读）
+HEADINGS: ## 0. T0 未验收时的交付口径（先读） | ## 1. 目标 | ## 2. 文件 | ## 3. 字段与五类差异（§11.1 / §11.2） | ## 4. 三态治理与“只增不改” | ## 5. 冲突：检测 → 标记 → 人工裁决（§11.4） | ## 6. 检索（§11.4） | ## 7. 五种绑定（§11.3） | ## 8. FOL 三层环与 R1–R3（§11.5 / §11.6） | ## 9. 边界：知识只回答“怎么做” | ## 10. 验收对照 | ## 11. OPEN QUESTIONS（详见 `design/pseudocode/OPEN_QUESTIONS.md`） | ## 12. 本阶段不做
+--- M18_knowledge/NEGATIVE_TESTS.md (first 8 lines) ---
+# M18 · NEGATIVE_TESTS — 知识版本、冲突、检索、绑定与 FOL（P8）
+
+> 阶段：P8｜状态：**判据定义，未执行**（S0：不建库、不跑检索、不写业务代码）
+> 执行阶段：M18 落地（知识库 WP）、G5 知识/反馈实验（T1）
+> 解释器（届时必须）：`C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe`
+> 记录要求：命令、解释器、退出码、日志路径、运行时间；**P8 不得写成“已通过”**。
+> 纪律：负例以“拒绝原因正确”为通过条件——断言错误码/`reason`/`field_path` 至少两项 + 副作用未发生。
+
+
+P8 OQ rows: 13
+   | `OQ-P8-01` | 角色契约版本 `role-contract/1.0` 没有上游字段，是否登记为独立契约？ | P8 | OPEN | T1 角色接入/契约评审前 | 作为装配常量，不进五份 schema；`MessageMeta.contract_version` 与 `TaskAssign.contract_version` 必须一致，失配拒绝；若要冻进契约需 MINOR + ADR。 | `M17_agents/MODULE.md` §7.1；`agents
+   | `OQ-P8-02` | §6.3 未定义消息信封（message_id/sent_at/correlation_id），如何做重放防护与审计？ | P8 | OPEN | WP-12 前 | 引入 `MessageMeta`（六个字段），并与 payload 重复字段做一致性校验；重放按 `task_id + message_id` 去重。若要进契约需 MINOR，且不得改写九类 payload 字段。 | `M17_agents/MODULE.md` §6；`agen
+   | `OQ-P8-03` | §10.1 的“参数化执行请求/画像请求/重算请求”在九类消息里没有专用类型 | P8 | OPEN | T1 六角色落地前 | 映射为工具请求（`template.parameterize`/`dataset.profile`）+ `FINDING`；不新增第十类（§6.3 是封闭集合）。若要专用消息，必须改 §6.3 并升 `MAJOR`。 | `M17_agents/MODULE.md` §6；`agents/roles.py` 的角色输出
+   | `OQ-P8-04` | 消息方向违规没有专用错误码，对外返回什么？ | P8 | DEFERRED | WP-12 error mapping 前 | 用 `SCHEMA_INVALID`(422) + `MESSAGE_DIRECTION_DENIED`；不新增 E.3 第 14 码；若需要 403 语义再裁决。 | `M17_agents/MODULE.md` §11；`agents/messages.py` 的 `MessageValidator` | WP-12
+

@@ -1,0 +1,26 @@
+{
+  "final_state": "VERIFIED",
+  "gaps": [],
+  "report": {
+    "evidence_root": "1f9e78f3122cb09f05b843ca2243b8cf4e47f22ffe604e832af020b4a70dcb13",
+    "final_state": "VERIFIED",
+    "issued_at": "2026-11-15T02:37:26.701108Z",
+    "key_id": "rf-t0-ed25519-01",
+    "l1_status": "PASS",
+    "l2_status": "PASS",
+    "l3_coverage": 1.0,
+    "l3_status": "PASS",
+    "report_id": "report_73249e7f-71af-4418-9c47-614c4cef0795",
+    "required_check_coverage": {
+      "missing": 0,
+      "passed": 8,
+      "required": 8
+    },
+    "ruleset_hash": "732f7faeb1bd31765db1606beb30ae2c223c673bc992a4a8c83e8c9c8ff894fa",
+    "schema_version": "1.0",
+    "signature": "PYFO5FTcD4Y70yfUJoeG82JAEPQcxTycU10Eplnv/tBLK1Uu2t0hPhlGbZZuqG9MYG7PKI+HlZ0BYMI/okniBw==",
+    "task_id": "task_920e46ec-db4d-4dcf-b912-8f8abcf80ea4"
+  },
+  "report_id": "report_73249e7f-71af-4418-9c47-614c4cef0795",
+  "stale": false
+}

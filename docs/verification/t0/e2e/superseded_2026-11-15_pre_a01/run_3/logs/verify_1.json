@@ -1,0 +1,12 @@
+{
+  "body": {
+    "certificate_id": "cert_6c9d11ea-5dcb-4b72-91dc-d9ab946dfda8",
+    "final_state": "VERIFIED",
+    "gaps": [],
+    "l1_status": "PASS",
+    "l2_status": "PASS",
+    "l3_status": "PASS",
+    "report_id": "report_bf2a2da6-0aeb-4642-a906-601f6f99ceda"
+  },
+  "status": 200
+}

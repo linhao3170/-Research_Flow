@@ -1,0 +1,52 @@
+{
+  "artifacts": [
+    {
+      "path": "output/split_manifest.json",
+      "sha256": "9783fe2fdea7e27989acf65c04b0f2494eb5cc42374ef95d8b12f1000d79e387",
+      "size": 58817
+    },
+    {
+      "path": "output/worker_status.json",
+      "sha256": "e7f99f23f41cfb1d46780e5ac27e5db298308890d17b083e4ea0b4d11ac8a0c1",
+      "size": 65
+    }
+  ],
+  "attempt_id": "attempt_01",
+  "attempt_seq": 1,
+  "code_hash": "aff6778d4a7b17b1130574f2c37639f38a27ee706c5be03a2119fe2083f703a3",
+  "command": [
+    "<python>",
+    "-B",
+    "-m",
+    "researchflow.execution.worker",
+    "--job",
+    "job.json"
+  ],
+  "dataset_sha256": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+  "duration_sec": 1.282,
+  "ended_at": "2026-11-14T11:37:38.646448Z",
+  "env_fingerprint": "99534c8f951ebfe9c6c9e06e950dbeda111616c9583d94cb26bab6ded3847e8f",
+  "exit_code": 0,
+  "inputs": [],
+  "kill_verified": null,
+  "killed": false,
+  "memory_exceeded": false,
+  "node_id": "split_dataset",
+  "parameters_hash": "d2e5392471e15505e2b17ae77b67941d833247d50b181f5469ed287f5cc17cf3",
+  "peak_memory_mb": 86.145,
+  "pid": 20588,
+  "schema_version": "1.0",
+  "started_at": "2026-11-14T11:37:37.359443Z",
+  "status": "EXITED",
+  "stderr_path": "stderr.log",
+  "stdout_path": "stdout.log",
+  "task_id": "task_f1901dd5-29e0-4f0f-a93d-b1f175d086e2",
+  "template_id": "split_dataset@1.0.0",
+  "timed_out": false,
+  "worker_error": null,
+  "worker_pids": [
+    6512,
+    20588,
+    24472
+  ]
+}

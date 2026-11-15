@@ -1,0 +1,126 @@
+{
+  "purpose": "Negative audit: changed job parameters must not silently pass reproduction verification",
+  "command": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe -B reports/t0_review_20261114/l3_parameter_probe.py",
+  "cwd": "D:\\ResearchFlow-project",
+  "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+  "python_version": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "permission": "sandbox escalation approved for this scoped probe",
+  "started_at": "2026-11-14T15:05:17.360312+00:00",
+  "ended_at": "2026-11-14T15:05:24.028802+00:00",
+  "duration_sec": 6.666,
+  "source_task_id": "task_f1901dd5-29e0-4f0f-a93d-b1f175d086e2",
+  "source_job_path": "D:\\ResearchFlow-project\\docs\\verification\\t0\\e2e\\run_1\\runtime\\tasks\\task_f1901dd5-29e0-4f0f-a93d-b1f175d086e2\\attempts\\train_logistic_regression\\attempt_02\\job.json",
+  "source_job_sha256": "1203943cb2beb4cea91605252699461be355d05f820b138c430b345938443556",
+  "probe_sha256": "80f02c70efebda466fd42fcf1400037ba5e54b9d6b04bbfd776eb16c97c5559c",
+  "original_job_unchanged": true,
+  "injection": "Path.read_text only for one job, in parent memory; child reruns are real",
+  "original_seed": 42,
+  "injected_seed": 43,
+  "injected_parameters_hash": "45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d",
+  "nodespec_parameters_hash": "3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+  "e2_parameters_hash": "3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+  "l1": "PASS",
+  "l2": "PASS",
+  "l3": {
+    "status": "PASS",
+    "coverage": 1.0,
+    "nodes": [
+      {
+        "node_id": "train_logistic_regression",
+        "status": "PASS",
+        "match_mode": "EXACT",
+        "split_hash": "2c0a572cabfeecb2bca8ec30d2ad075159cf83552183e1ede47bb5aa53336a26",
+        "executor_split_hash": "2c0a572cabfeecb2bca8ec30d2ad075159cf83552183e1ede47bb5aa53336a26",
+        "prediction_mismatches": 0,
+        "metric_deltas": [
+          {
+            "metric": "accuracy",
+            "executor": 0.7894736842105263,
+            "l3": 0.7894736842105263,
+            "delta": 0.0,
+            "within_tolerance": true
+          },
+          {
+            "metric": "precision_macro",
+            "executor": 0.7897418478260869,
+            "l3": 0.7897418478260869,
+            "delta": 0.0,
+            "within_tolerance": true
+          },
+          {
+            "metric": "recall_macro",
+            "executor": 0.789348710990502,
+            "l3": 0.789348710990502,
+            "delta": 0.0,
+            "within_tolerance": true
+          },
+          {
+            "metric": "f1_macro",
+            "executor": 0.789366515837104,
+            "l3": 0.789366515837104,
+            "delta": 0.0,
+            "within_tolerance": true
+          }
+        ],
+        "l3_split_dir": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7\\tasks\\l3\\attempts\\l3_split\\attempt_01",
+        "l3_train_dir": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7\\tasks\\l3\\attempts\\train_logistic_regression\\attempt_01",
+        "split_pid": 23032,
+        "train_pid": 14084,
+        "issues": []
+      },
+      {
+        "node_id": "train_random_forest",
+        "status": "PASS",
+        "match_mode": "EXACT",
+        "split_hash": "2c0a572cabfeecb2bca8ec30d2ad075159cf83552183e1ede47bb5aa53336a26",
+        "executor_split_hash": "2c0a572cabfeecb2bca8ec30d2ad075159cf83552183e1ede47bb5aa53336a26",
+        "prediction_mismatches": 0,
+        "metric_deltas": [
+          {
+            "metric": "accuracy",
+            "executor": 0.7894736842105263,
+            "l3": 0.7894736842105263,
+            "delta": 0.0,
+            "within_tolerance": true
+          },
+          {
+            "metric": "precision_macro",
+            "executor": 0.7897058823529413,
+            "l3": 0.7897058823529413,
+            "delta": 0.0,
+            "within_tolerance": true
+          },
+          {
+            "metric": "recall_macro",
+            "executor": 0.7895748530076888,
+            "l3": 0.7895748530076888,
+            "delta": 0.0,
+            "within_tolerance": true
+          },
+          {
+            "metric": "f1_macro",
+            "executor": 0.7894617819990954,
+            "l3": 0.7894617819990954,
+            "delta": 0.0,
+            "within_tolerance": true
+          }
+        ],
+        "l3_split_dir": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7\\tasks\\l3\\attempts\\l3_split\\attempt_01",
+        "l3_train_dir": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7\\tasks\\l3\\attempts\\train_random_forest\\attempt_01",
+        "split_pid": 23032,
+        "train_pid": 3464,
+        "issues": []
+      }
+    ],
+    "issues": [],
+    "verification_root": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7",
+    "processes": [
+      23032,
+      14084,
+      3464
+    ]
+  },
+  "parameter_integrity_gap_reproduced": true,
+  "certificate_issuance_tested": false,
+  "exit_code": 0
+}

@@ -1,0 +1,21 @@
+{
+  "exit_code": 0,
+  "summary": {
+    "bundle_version": "1.0.0",
+    "certificate_id": "cert_2d6a19b8-6f2a-492d-be7f-2c34841e4589",
+    "evidence_count": 32,
+    "final_state": "VERIFIED",
+    "invalidated_evidence": 16,
+    "key_fingerprint": "25585e2bdf247dffaf7c014679eafd6428bf01b8ec29e67eb14c11443d4ad2f1",
+    "key_id": "rf-t0-ed25519-01",
+    "l3_coverage": 1.0,
+    "merkle_root": "55c4bc680415d182e91d268b11e5e0fc34a5c4d2b6268715eb1b50a201fe096f",
+    "passed_checks": 8,
+    "report_id": "report_0f9e2ec1-8009-49e2-8af8-ce3bcefb5b59",
+    "required_checks": 8,
+    "status": "VERIFIED",
+    "task_id": "task_4e9644c4-c34f-4428-8b59-a52772200edc",
+    "tree_size": 32,
+    "trust_anchor_source": "external"
+  }
+}

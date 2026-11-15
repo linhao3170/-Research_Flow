@@ -1,0 +1,61 @@
+{
+  "dataset": {
+    "sha256": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+    "uri": "local://datasets/synthetic_breast_cancer.csv"
+  },
+  "graph_hash": "24a8c0c472f10679210f11081cff228f49109ee2bfff1a3c19f93723d8489559",
+  "graph_version": 1,
+  "nodes": [
+    {
+      "attempt_seq": 2,
+      "depends_on": [],
+      "node_id": "split_dataset",
+      "node_type": "ml.split",
+      "parameters_hash": "d2e5392471e15505e2b17ae77b67941d833247d50b181f5469ed287f5cc17cf3",
+      "required_checks": [
+        "executor_observed",
+        "artifact_hash"
+      ],
+      "state": "VERIFIED",
+      "template_id": "split_dataset@1.0.0"
+    },
+    {
+      "attempt_seq": 2,
+      "depends_on": [
+        "split_dataset"
+      ],
+      "node_id": "train_logistic_regression",
+      "node_type": "ml.train.classifier",
+      "parameters_hash": "3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+      "required_checks": [
+        "executor_observed",
+        "artifact_hash",
+        "metric_source"
+      ],
+      "state": "VERIFIED",
+      "template_id": "train_classifier@1.0.0"
+    },
+    {
+      "attempt_seq": 2,
+      "depends_on": [
+        "split_dataset"
+      ],
+      "node_id": "train_random_forest",
+      "node_type": "ml.train.classifier",
+      "parameters_hash": "f06c877a7c3a7371d62ab3c63a041407c5f6e8a33a8fae178bc12a9bed20430b",
+      "required_checks": [
+        "executor_observed",
+        "artifact_hash",
+        "metric_source"
+      ],
+      "state": "VERIFIED",
+      "template_id": "train_classifier@1.0.0"
+    }
+  ],
+  "task_id": "task_5323edaf-6702-4520-9b0a-bad3656bac48",
+  "topology_order": [
+    "split_dataset",
+    "train_logistic_regression",
+    "train_random_forest"
+  ]
+}

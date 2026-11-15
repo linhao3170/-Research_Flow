@@ -11,7 +11,7 @@
 | `ADR-004` | T0 恢复边界：内部不可变计划 + 控制事件不入 E0–E3 + 不复用 Recovery 状态机 | ACCEPTED（2026-11-09） | [ADR-004-t0-recovery-boundary.md](ADR-004-t0-recovery-boundary.md) |
 | `ADR-005` | 失败迁移的审计写入语义 | ACCEPTED（2026-11-09） | [ADR-005-failed-transition-audit.md](ADR-005-failed-transition-audit.md) |
 | `ADR-006` | T0 API 面与回环免认证 + 启动守卫 | ACCEPTED（2026-11-09） | [ADR-006-t0-api-and-loopback-auth.md](ADR-006-t0-api-and-loopback-auth.md) |
-| `ADR-007` | T0 最小工作台范围锁定为四视图 | **PROPOSED（WP-13 前裁决）** | [ADR-007-t0-workbench-scope.md](ADR-007-t0-workbench-scope.md) |
+| `ADR-007` | T0 最小工作台范围锁定为四视图 | ACCEPTED（2026-11-15 用户批准） | [ADR-007-t0-workbench-scope.md](ADR-007-t0-workbench-scope.md) |
 
 ## 规则
 
@@ -20,3 +20,5 @@
 3. 每条 ADR 至少包含：背景、决策、后果、备选（未选）、验证、关联。
 4. 正式 ADR 不是 G0 通过的替代品；G0 仍需用户书面批准（见 ⑧ §7）。
 5. 本目录文件与 ⑧ §4 登记表必须一致；新增或改状态时两边同步。
+
+> 2026-11-15 差异登记：`ADR-007` 已由用户批准并改为 `ACCEPTED`；`docs/G0/08_OPEN_QUESTIONS_AND_FREEZE.md` §4 是 G0 冻结时的历史记录（`PROPOSED`，2026-11-10 延后），不回溯改写。二者差异以本 ADR 的后续用户裁决为准；G0 冻结正文未被修改。

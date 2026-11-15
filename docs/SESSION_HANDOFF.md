@@ -3,6 +3,17 @@
 > 会话交接文件。每次大任务结束前更新；最新交接置于最上方。
 > 只记录已确认事实与真实测试结果；未确认内容标记“待核实”。
 
+## 2026-11-15 · T0 提交审核完成，交由 Harness 提交
+
+- 最新授权：用户要求提交 T0，并指定 **Harness 负责常规实施、commit 和 push；Codex 负责核心审核、方案判断及部分难点开发**。此前“验收 T0，暂不 commit”仅为历史记录；本次提交已获授权，不等于 T1 开工授权。
+- 执行入口：`docs/verification/publication/2026-11-15/PUBLISH_HANDOFF.md`。目标 `https://github.com/linhao3170/-Research_Flow.git`，前导连字符必须保留；远端可见性、是否为空及访问权限待核实。
+- 本轮已做：T0 收口材料核对、提交范围审核、忽略本地 runtime/数据库及临时文件、工作区候选扫描、预算记账和记忆同步。P9/P10 草稿保持 BLOCKED；保留现状不构成实施批准。
+- 预算：本次开发 API **15 元，用户确认**；同批记录只计一次。更早消耗与累计余额未知，不能推算 185 元。产品侧沿用 T0 无模型调用的 0 元记录。
+- 验证：state_sync validate/render/check 已通过；候选扫描记录见 `working_audit.json`。历史业务全量为 351 passed（395.66s），本轮未重跑。会话开始 docs drift 为 ERROR=0/WARNING=1，收尾未重跑；最终 staged 扫描与必要检查由 Harness 执行。
+- Git：只读核对分支 main、7 个历史提交、HEAD `309083e715cb59a1f0c181d95df44e1946ffbaa5`，仓库身份 `ResearchFlow Dev <dev@researchflow.local>`。Codex **未暂存、未 commit、未修改 remote、未 push**；不变更 `last_verified_commit`。
+- 保留限制：BLK-003 OPEN；G6 仍 IN_PROGRESS，仅 G6-T0 满足；G4/G5/G7 未启动。自动审批服务 404 曾阻断浏览器连接和部分提权请求，相关操作未执行，未更改权限或系统配置。
+- 下一步：Harness 按交接核对最终范围、远端和身份，执行普通提交/推送，核对远端 SHA 与干净提交快照，再按 `docs/goals/MEMORY_CLOSEOUT.md` 自动更新状态、日志、交接和稳定记忆。不自动进入 Goal 2。
+
 ## 交接模板
 
 ### YYYY-MM-DD · 阶段 X
@@ -15,6 +26,229 @@
 - 相关文件/命令：
 
 ## 交接记录
+
+### 2026-11-15 · T0 验收通过（暂不 commit）
+
+- 用户 2026-11-15 明确“验收 T0，暂不 commit”；`T-T0-ACCEPT-001` DONE，验收记录 `docs/verification/t0/T0_ACCEPTANCE.md`。
+- 依据：A-01/A-02/A-03 收口；351 passed；三次 e2e consistent；三次离线验签 VERIFIED；契约/状态/文档检查 exit 0。
+- 未完成：commit/推送（需单独授权并核对文件清单/Git 身份/忽略规则）、T1 启动、预算余额核实、完整 G6/G4/G5/G7。
+- 风险：`BLK-003` OPEN；全部测试在 danger-full-access 下运行；工作台单页/无下载/无失效原因；断网非 OS 级；L3 非跨机。
+- 下一步：用户决定 commit 与 T1；commit 前先核对仓库身份与具体文件清单，不盲目全目录暂存。
+
+### 2026-11-15 · T0 · ADR-007 已批准（T0 验收/commit 仍待用户）
+
+- 本次完成：用户选择“批准建议（推荐）”；ADR-007 转 `ACCEPTED`，三个边界为独立只读进程、四视图只读、证据单页 `limit=200` 无分页/下载、展示 STALE 不展示原因；`T-A03-001` 转 DONE，`BLK-004` 转 RESOLVED；正式记录 `docs/verification/t0/wp-13/ADR-007_DECISION.md`；state_sync 三步 exit 0。
+- 未完成：T0 验收结论、commit、GitHub 推送、是否进入 T1；预算余额仍未核实。
+- 风险/边界：G0 ⑧ 冻结正文保留 2026-11-10 的 PROPOSED 历史，差异在 ADR 索引登记；分页/下载/失效原因仍未实现；`BLK-003` 仍 OPEN；全部测试在 danger-full-access 下运行。
+- 下一步：用户复核 A-01/A-02/A-03 与修复后 e2e，决定 T0 验收与 commit；提交前确认文件清单、Git 身份与忽略规则；核实预算余额。
+- 相关文件：`docs/ADR/README.md`、`docs/ADR/ADR-007-t0-workbench-scope.md`、`docs/verification/t0/wp-13/ADR-007_DECISION.md`、`docs/state/project_state.json`。
+
+### 2026-11-15 · T0 · A-01/A-02 修复与 WP-13 材料补齐（A-03 裁决待用户）
+
+- 本次完成：
+  - A-01：L1/L3 在当前 attempt 上交叉核对 NodeSpec、job、result、E2 `parameters_hash`；L3 在启动复跑前拒绝，split/train 负例齐全；正常恢复 attempt_02 不误拒。
+  - A-02：真实 `taskkill /T` 中断 + 独立新进程重读；RUNNING 不默认 COMPLETED、0 报告/0 凭证、无残留进程；坏链/缺失 attempt 结果时 invalidate/rerun 以 `RECOVERY_NOT_SAFE` + 具体 L1 原因拒绝。
+  - A-03 材料：四视图 + API 不可达截图、DOM 快照、`walkthrough.md`、ADR-007 三个边界的裁决建议；工作台新增 `?view=`/`?task_id=`/超时配置与 STALE AppTest。
+  - 修复后重新生成三次隔离 e2e；修复前 e2e 整体归档到 `e2e/superseded_2026-11-15_pre_a01/` 并加 `SUPERSEDED_NOTICE.md`；三次离线验签 VERIFIED。
+  - 状态：`T-A01-001`/`T-A02-001` DONE，`T-A03-001` IN_REVIEW，`BLK-004` OPEN；G1/G2/G3/G6 补新证据，G6 仍 IN_PROGRESS。
+- 未完成：
+  - ADR-007 正式裁决未发生；仓库文档未发现其 `ACCEPTED` 书面记录，ADR-007 仍 `PROPOSED`，`T-A03-001` 不标 DONE。
+  - T0 验收结论、commit、GitHub 推送未做；`last_verified_commit` 仍 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`，HEAD 仍 `309083e715cb59a1f0c181d95df44e1946ffbaa5`。
+  - 完整 G6（五类负例矩阵）、G4/G5/G7 属 T1/T2；`BLK-003` 仍 OPEN。
+- 已知问题/风险：
+  - 全部测试在 `danger-full-access` 下运行，不写成 workspace-write 通过。
+  - 工作台证据取 `limit=200` 单页、无分页/下载、不展示失效原因；原因展示需另立冻结 REST 契约变更方案。
+  - `verify_bundle.py` 的 coverage 算术/证书 l3_coverage 跨对象一致性仍是 B 类补强；模块级 `app` 绕过 `serve()` 守卫仍是已披露入口边界。
+  - 断网为“代码无外呼 + 代理黑洞 + 无模型客户端”，非 OS 级断网；L3 与执行器共用同一解释器安装。
+- 实际测试命令与结果：
+  - `& .venv/Scripts/python.exe -m pytest tests -q -p no:cacheprovider` → 351 passed，395.66 s，exit 0；`docs/verification/t0/full_suite_2026-11-15.log`。
+  - A-01：26 passed（a-01/pytest_targeted.log）；probe `verdict=PASS`（a-01/probe_report.json）。
+  - A-02：4 passed（a-02/pytest_restart.log）；回归 11 passed（a-02/pytest_regression.log）；probe `verdict=PASS`。
+  - WP-13：4 passed（wp-13/pytest_2026-11-15.log）；截图 `verdict=PASS`（wp-13/screenshots.json）。
+  - e2e：三次 `consistent=true`；`verify_bundle.py` 三次 VERIFIED（g6-t0/2026-11-15/*.verify.log）。
+  - 契约/状态/漂移：10/10、72/72、state_sync 三步 exit 0、docs drift ERROR=0/WARNING=1。
+- 下一步：
+  1. 用户对 `docs/verification/t0/wp-13/ADR-007_DECISION_PROPOSAL.md` 的三个边界作书面裁决；批准后再改 ADR-007/索引/D-29 并把 `T-A03-001` 转 DONE。
+  2. 用户复核 A-01/A-02 证据与修复后 e2e，决定 T0 验收与 commit；commit 前确认文件清单、Git 身份与忽略规则。
+  3. 核实阿里云两项 API 预算余额并回填 `docs/verification/budget/BUDGET_LEDGER.md`；不要在未核实余额时按 0 计。
+- 待用户确认：ADR-007 三个边界；T0 验收/commit；是否进入 T1；预算余额。
+- 相关文件：`docs/verification/t0/{a-01,a-02,wp-13}/**`、`docs/verification/t0/e2e/**`、`docs/verification/t0/g6-t0/2026-11-15/**`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/CHANGELOG_DEV.md`。
+
+### 2026-11-14 · 三阶段 Goal 自动记忆与交接收尾（文档治理）
+
+- 本次完成：新增 `docs/goals/MEMORY_CLOSEOUT.md`，三份 Goal 均在启动入口及完成清单引用；每包保存检查点，结束前自动同步，必需检查失败不得 complete。用户已要求该文档同步自动执行，无需逐次询问。
+- 长期记忆：`docs/memory/feedback-and-lessons.md` 的 FB-29 记录自动同步偏好，Memory 索引增加规则入口。进度不复制到长期背景记忆；没有新增稳定事实时说明已复核无需修改。
+- 真实验证：项目 `.venv/Scripts/python.exe` 3.11.16/64 位；四份文档 UTF-8/围栏/本地引用检查 exit 0；state_sync validate/render/check 均 exit 0。日志与哈希：`docs/goals/verification/memory_closeout_20261114/`。变更前文档漂移 ERROR=0/WARNING=1；收尾复查结果以该目录 `docs_drift.log` 为准。因已知沙箱 Git 子进程问题，该只读漂移检查申请了限定命令提权；不关闭 BLK-003。
+- 业务接手注意：先读 `reports/t0_review_20261114/REVIEW.md`。A-01 参数绑定漏检已真实复现，A-02 中断/重启验收缺口、A-03 工作台裁决及材料待收口。用户已发出收口任务；本轮没有修复业务实现或核实收口完成，既有状态中的 DONE/PASS 不能单独代替新证据。
+- 下一最小动作：Harness 读取对应 Goal 与 MEMORY_CLOSEOUT，核验 T0 三项收口和两项累计预算；满足前置后按 Goal 2 批次计划续建。已批准事项不重复询问，未知架构增量仍按 AGENTS 先提交具体 diff 方案。
+- 状态/限制：仅新增 `T-GOALS-002` 文档任务；未改既有门禁、业务任务、预算余额、冻结件或 last_verified_commit。开发 API 200 元、产品 API 50 元跨阶段累计，余额仍需账单核实。
+- Git/权限：main，HEAD `309083e715cb59a1f0c181d95df44e1946ffbaa5`（7 commits）；工作区有既有多模块差异，本次仅文档/生成页/验证日志增量，未 commit/push。未运行产品 pytest，无架构变化。
+
+### 2026-11-14 · T0 · 后端可信闭环、工作台、三次 e2e 与独立验签（完成，未 commit）
+
+- 本次完成：
+  - WP-03 按 2026-11-14 复测（定向 87 / 全量 217 passed）转 `DONE`；新增 WP-04…14、WP-R 共 12 个任务并全部 `DONE`。
+  - 实现 T0 全链：DAG/模板/数据 → 受控执行器 → Collector 链 → L1/L2/L3 → Gate → Ed25519 报告/凭证 → 证据包 → 独立离线验签；最小 Streamlit 四视图只读消费真实 API；FR-010 最小切片（确定性计划、三条件守卫、保守重跑）。
+  - 三次隔离 e2e 全部 COMPLETED/VERIFIED，离线验签 exit 0；G6-T0 证据齐全；G1/G2/G3 记 `PASS`，G6 记 `IN_PROGRESS`（完整 G6 属 T1）。
+  - 独立只读审查 A 类 1 项（内存只采样 venv 启动器）已修复：进程树采样、200 MB 校准、真实内存限额终止；B 类 9 项修复、3 项接受披露；旧 e2e 证据归档不删除。
+- 未完成：
+  - 完整 G6（五类负例矩阵）、G4/G5/G7 属 T1/T2；T1 未启动。
+  - 工作台截图缺失（无浏览器自动化）；`BLK-003` 仍 OPEN；未 commit。
+- 已知问题/风险：
+  - 全部测试在 `danger-full-access` 下运行，不写成 workspace-write 通过。
+  - 断网为“代码无外呼 + 代理黑洞 + 无模型客户端”，非 OS 级断网；L3 与执行器共用同一解释器安装，跨机复现未测。
+  - 启动守卫只检查 token 是否存在，不提供鉴权；模块级 `app` 可绕过 `serve()` 守卫（已接受风险，见 D-23）。
+  - 跨进程并发 verify 未实现（进程锁 + 幂等覆盖单进程）；T0 单用户边界。
+- 实际测试命令与结果：
+  - 解释器：`D:\ResearchFlow-project\.venv\Scripts\python.exe`（3.11.16 / 64bit）。
+  - 全量：`& .venv/Scripts/python.exe -m pytest tests -q -p no:cacheprovider` → 339 passed，exit 0，312.44 s，日志 `docs/verification/t0/full_suite_2026-11-14_final.log`。
+  - e2e：`python scripts/e2e_run.py --runs 3 --out docs/verification/t0/e2e` → 三次一致，日志与报告见 `docs/verification/t0/e2e/`。
+  - 并发：`python scripts/measure_concurrency.py` → 并发 2、重叠 2.323 s、峰值 165.0/166.6 MB。
+  - 契约/状态：`validate_contracts.py` 72/72；`state_sync.py validate|render|check` exit 0；`check_docs_drift.py` ERROR=0/WARNING=1。
+- 下一步：
+  1. 用户复核 T0 证据与门禁裁决（G1/G2/G3 PASS、G6-T0 满足），决定是否 commit 与是否进入 T1。
+  2. 需要时补工作台截图（需浏览器自动化）与 workspace-write 全绿（需先关闭 BLK-003）。
+  3. 核对阿里云两项 API 预算的实际余额并回填 `docs/verification/budget/BUDGET_LEDGER.md`。
+- 待用户确认：T0 验收与 gate 裁决口径；commit 授权；是否开始 T1；预算余额。
+- 相关文件：`docs/verification/t0/{WP_INDEX.md,00_implementation_decisions.md,review_2026-11-14.md,e2e/e2e_report.md}`、`researchflow/**`、`tests/t0/**`、`scripts/e2e_run.py`、`verify_bundle.py`、`docs/plans/goal-01-plan.md`、`docs/state/project_state.json`。
+
+### 2026-11-14 · 三阶段 Harness Goal 文档交付（未实施三阶段开发，未 commit）
+
+- 本次完成：三份入口为 `docs/goals/GOAL_01_CORE_BACKEND.md`、`GOAL_02_COMPETITIVE_PRODUCT.md`、`GOAL_03_COMPETITION.md`。每份含可复制短 Goal、事实源、范围/审批、工作包、统一契约和伪代码流程、A/B/C 审查、真实测试/负例、预算与交接、完成/停止条件。按用户要求后端先行，最小 UI 后置。
+- 用户补充：赛道一 Agent 编排创新应用；通知图 `D:/bisai-xiangxi/72EE1C8758E9AC991F127B1913CD452E.jpg` 显示 11-20 初赛作品截止、12-06 决赛作品截止。官网正文仅 Loading，完整格式/评分/AI/IP 等仍待核实。模型阿里云 DeepSeek V4.1 Flash；按开发 API 200 元、产品运行/调试 API 50 元分别跨阶段累计，阶段分配是建议，不承诺足够完成所有实验。
+- 本机事实：只读安装包 runtime 为 `0.2.2-rc.3`；Goal 默认 256 自动轮次不是金额限额；实际会话能力仍需发现。金额硬限制依赖宿主/供应商，开发额度临界时应提前交接并由用户实际暂停。
+- 当前业务事实保持：WP-01/02 DONE、WP-03 IN_REVIEW；P1–P8 设计 ACCEPTED，P9/P10 BLOCKED；G0 PASS、G1–G7 NOT_STARTED；BLK-003 OPEN。历史 217 passed 属 full-access 补充，不是本次测试。
+- 验证：项目 `.venv` 3.11.16/64bit；文档结构/引用/hash 校验 exit 0，日志 `docs/goals/verification/document_validation.json`；状态 validate/render/check exit 0，命令/时间/耗时见 `state_sync.log`；文档漂移 ERROR=0/WARNING=1，见 `docs_drift.log`。沙箱内 Git 子进程失败经批准只读复核；未据此关闭产品测试环境阻塞。未运行产品 pytest。
+- 新登记 `T-GOALS-001` DONE 仅是文档交付，未改变现有门禁/任务结论。main，HEAD `309083e715cb59a1f0c181d95df44e1946ffbaa5`，last_verified_commit 仍 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`；保留原有大量未提交改动，未 commit。
+- 下一步：在 Harness 先做 Goal 1 的只读接手和预算/能力预检，集中形成批次 A 的具体 diff 与已决事项对账，再按现有审批推进；不得把三份文档本身当作未知架构方案的批准。
+- 限制：三阶段全量工作不保证赶上初赛；T0 不是完整赛道一能力。正式盲测需隔离构造者，外部复核/试点需真人记录，禁止用 AI 自评伪造。两项预算是否足够按真实 usage 估算。
+- 来源与审查详情：`docs/goals/verification/source_and_review.md`。无架构变化，未改业务实现、契约、插件或系统配置。
+
+### 2026-11-12 · T0 WP-03 · SQLite、StateMachine、双事务审计（执行完成，待验收，未 commit）
+
+- 本次完成：
+  - 按用户 2026-11-12“按你的建议来吧”确认的 16 项裁决，写入 `docs/verification/t0/wp-03/00_decisions.md`；批准 9A（7 表 + 最小测试事实端口）与 Step 1 计划。
+  - 实现 `researchflow/persistence/`：连接/事务、7 表 DDL 与触发器、只向前迁移、仓储、幂等键校验。
+  - 实现 `researchflow/orchestration/`：Task 9 / Node 10 迁移表、`StateMachine.transition()`、`create_initial()`、守卫、事实端口、计划文件读取、最小不变量。
+  - 新增 `researchflow/contracts/encoding.py`（RFC 8785 JCS）与 `errors.py`（13 个冻结 API 错误码）。
+  - `researchflow/api/app.py` 从 `_EphemeralTaskRegistry` 切换到 SQLite 创建服务；保留 201/409/422/404、GET `spec`、`/recover` 404。
+  - `docs/state/project_state.json` 新增 `T-WP-03-001`，状态 `IN_REVIEW`；`state_sync.py validate|render|check` 均 exit 0。
+- 未完成：
+  - `T-WP-03-001` 尚未经用户验收，未标 `DONE`；未 commit。
+  - workspace-write 下因 `BLK-003` 在 pytest `tmp_path` 创建阶段失败，未取得 workspace-write 全绿；全量结果为 full-access 补充。
+  - P9/P10 仍 `BLOCKED`；未读取其实现作为输入；未关闭阻塞。
+- 已知问题/风险：
+  - 全量 `217 passed` 来自 `danger-full-access` 补充运行，不能写成 workspace-write 通过；`BLK-003` 仍 `OPEN`。
+  - `tasks.task_spec_json` 与 `idempotency_keys.task_id NOT NULL + FK` 是对 06 §1.3 的已批准偏离，已在裁决与计划中记录；未改 06 冻结件。
+  - `INVALIDATED` 路径的 Gate/Report/Certificate 使用测试事实端口；只证明状态机/守卫逻辑，不证明真实 Gate/Verifier 结果。
+  - `last_verified_commit` 仍 `1c9a104`，与 HEAD `309083e` 不一致；未在无真实 commit 时修改。
+- 实际测试命令与结果：
+  - 解释器：`D:\ResearchFlow-project\.venv\Scripts\python.exe`（3.11.16 / 64bit）。
+  - 定向：`& .venv/Scripts/python.exe -m pytest tests/test_jcs.py tests/test_persistence_migrations.py tests/test_state_machine.py tests/test_audit_dual_transaction.py tests/test_direct_write_guard.py tests/test_invalidated_guard.py tests/test_idempotency_sqlite.py tests/test_api_sqlite.py tests/test_api_422.py tests/test_api_idempotency.py -q -p no:cacheprovider --basetemp=runtime/pytest-tmp` → `87 passed`，exit 0；日志 `docs/verification/t0/wp-03/pytest_targeted.log`。
+  - 全量：`& .venv/Scripts/python.exe -m pytest tests -q -p no:cacheprovider --basetemp=runtime/pytest-tmp` → `217 passed`，exit 0；日志 `docs/verification/t0/wp-03/pytest_full.log`。
+  - 证据脚本：`& .venv/Scripts/python.exe docs/verification/t0/wp-03/make_evidence.py` → `EVIDENCE_OK`，exit 0；七份证据日志见 `docs/verification/t0/wp-03/`。
+  - `state_sync.py validate|render|check` → 均 exit 0；`PROJECT_STATE.md` SHA256 `7b6f2c46…`，`IMPLEMENTATION_STATUS.md` SHA256 `394a5127…`。
+  - workspace-write 失败记录：`docs/verification/t0/wp-03/blk003_workspace_write_failure.md`（6 passed / 6 errors，均在 `tmp_path` setup 阶段 `PermissionError [WinError 5]`）。
+- 当前分支与 commit：`main`；HEAD `309083e`；工作区含既有未提交变更与本轮 WP-03 代码/测试/文档；未 commit。
+- 下一步：
+  1. 用户审阅 WP-03 实现、证据与 `T-WP-03-001` 验收标准，决定是否转 `DONE`。
+  2. 决定是否 commit（提交前确认 Git 身份；不得自动 commit）。
+  3. 决定是否在 `BLK-003` 修复后补一次纯 workspace-write 全量测试。
+- 待用户确认：WP-03 验收；commit 授权；`BLK-003` 后续处理。
+- 相关文件/命令：`docs/verification/t0/wp-03/00_decisions.md`、`01_step1_plan.md`、`pytest_targeted.log`、`pytest_full.log`、`make_evidence.py`、`researchflow/persistence/*`、`researchflow/orchestration/*`、`researchflow/api/app.py`、`tests/wp03_support.py`、`docs/state/project_state.json`。
+
+### 2026-11-12 · 伪代码 P2–P8 设计件验收 · WP-03 方案与提示词（执行完成，未 commit）
+
+- 本次完成：
+  - 按用户 2026-11-12 指令（C→B 顺序）完成 P2–P8 设计件审查：91 文件 / 51,402 行；14 个模块的 `MODULE.md`、`NEGATIVE_TESTS.md` 齐全；文件数/行数与 `INDEX.md`、`STAGE_LOG.md` 一致；每模块 ≥36 条负例标识；全部 `.py` 通过 `ast.parse`；>800 行文件已登记函数索引。报告：`reports/pseudocode/P2_P8_ACCEPTANCE_REVIEW.md`。
+  - `docs/state/project_state.json`：P2–P8 由 `IN_REVIEW` 改为 `ACCEPTED`（仅设计件验收）；补 `acceptance_basis` 与验收证据；`T-PSEUDO-001` 验收标准同步；top-level `updated_at` 更新。
+  - `STAGE_LOG.md`、`INDEX.md`、M04–M18 模块头、`README.md`、`ARCHITECTURE.md`、`DEVELOPMENT_WORKFLOW.md`、`PROJECT_OVERVIEW.md`、`memory/project-context.md` 同步为“P1–P8 设计件 ACCEPTED；P9/P10 BLOCKED”。
+  - 新增 `docs/plans/WP-03_IMPLEMENTATION_PLAN.md`（草案，未获实施批准）和 `docs/plans/WP-03_IMPLEMENTATION_PROMPT.md`（下一阶段实施提示词）。
+- 未完成：
+  - `§12-2`/`§12-6`/`§12-7`/`§12-8` 未裁决；P9/P10 未处置；WP-03 未获明确开工指令；未 commit；`BLK-003` 仍 OPEN。
+  - 未完成全量 pytest；定向 `tests/test_state_sync.py` 因 `BLK-003` 的 workspace-write 临时目录 ACL 阻塞（31 failed / 28 errors，均在 setUp/临时目录创建阶段，未见断言失败）；本轮无业务代码改动，只有设计验收状态、文档与计划。
+- 修改文件：
+  - `docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`；
+  - `design/pseudocode/{STAGE_LOG.md,INDEX.md}` 与 M04–M18 的模块头；
+  - `README.md`、`docs/{ARCHITECTURE.md,DEVELOPMENT_WORKFLOW.md,PROJECT_OVERVIEW.md}`、`docs/memory/project-context.md`；
+  - `docs/CHANGELOG_DEV.md`、`docs/SESSION_HANDOFF.md`；
+  - 新增 `reports/pseudocode/*`、`docs/plans/*`。
+- 实际测试命令与结果：
+  - 解释器：`D:\ResearchFlow-project\.venv\Scripts\python.exe`（3.11.16 / 64bit）。
+  - `& .venv/Scripts/python.exe scripts/state_sync.py validate` → exit 0；伪代码阶段 ACCEPTED 8 / BLOCKED 2。
+  - `& .venv/Scripts/python.exe scripts/state_sync.py render` → 生成 2 文件；`check` → exit 0，逐字节一致（`PROJECT_STATE.md` SHA256 `20835f51…`，`IMPLEMENTATION_STATUS.md` SHA256 `72f499dc…`）。
+  - `& .venv/Scripts/python.exe scripts/check_docs_drift.py` → ERROR=0、WARNING=1（`last_verified_commit` 与 HEAD 不一致，已知）。
+  - 尝试 `& .venv/Scripts/python.exe -m pytest tests/test_state_sync.py -q -p no:cacheprovider`：31 failed / 28 errors，全部在 setUp/临时目录创建阶段出现 `PermissionError [WinError 5]`（或由此派生的 `FileNotFoundError`），未见断言失败；属 `BLK-003` workspace-write 环境阻塞，未据此关闭阻塞，也未修改测试。
+  - 未改业务代码/契约/schema/测试；全量 pytest 未运行。
+- 当前分支与 commit：`main`；HEAD `309083e`；`git rev-list --count --all` 为 7；未 commit；工作区同时含既有 P0/文档变更与本轮变更。
+- 未解决/风险：
+  - P2–P8 `ACCEPTED` 是**设计件验收**，不是运行时实现、测试通过或门禁 PASS；若用户不认可本轮审查口径，可回退状态。
+  - WP-03 仍受 `DEVELOPMENT_WORKFLOW` §11.3 第 3/4/6 条阻塞；`PHASE_RULES` §9 的全阶段冻结审计仍因 P9/P10 未收口而不满足。若要先启动 WP-03，需要用户明确裁决审计范围/例外。
+  - 4 个 OQ 的建议口径见 `reports/remediation/P0_REMEDIATION_PLAN.md` §6.2 与 WP-03 方案 §2.2，未自行生效。
+  - JCS 与现有 `json.dumps(sort_keys=True)` 的请求哈希差异（RF-API-03）需在 WP-03 实施前确认。
+  - 本轮 pytest 尝试在系统临时目录产生的 `rf_state_sync_*` 目录可能残留（`BLK-003` 现象），未手工清理。
+- 下一步（最多 3 项）：
+  1. 用户审阅 P2–P8 验收记录与 WP-03 方案，确认是否维持 `ACCEPTED`。
+  2. 裁决 `§12-2`/`§12-6`/`§12-7`/`§12-8`、P9/P10 处置与 WP-03 指令。
+  3. 决定是否 commit 当前批次（提交前确认 Git 身份）。
+- 待用户确认：P2–P8 验收口径；4 个 OQ；P9/P10；WP-03 是否启动；commit 授权。
+- 相关证据：`reports/pseudocode/P2_P8_ACCEPTANCE_REVIEW.md`、`reports/pseudocode/p2_p8_*.log`、`docs/plans/WP-03_IMPLEMENTATION_PLAN.md`、`docs/plans/WP-03_IMPLEMENTATION_PROMPT.md`、`docs/CHANGELOG_DEV.md` 2026-11-12 条目。
+
+### 2026-11-12 · 文档治理 · 记忆与状态词汇对账（执行完成，未 commit）
+
+- 本次完成：
+  - 按用户“直接修复”指令，完成 2026-11-12 过时记忆审计后的文档修复；未改代码、契约、schema 或测试。
+  - 高优先级：把 `ADR-001` 的 `INVALIDATED` 传播到 `AGENTS.md` §6.2、`docs/MEMORY_GUIDE.md` §5.2、`docs/GLOSSARY.md`、`docs/ARCHITECTURE.md` §4.1/§4.2、`docs/DEVELOPMENT_WORKFLOW.md` §10.2；Node 统一为 10 个状态，补两条迁移与 I-09–I-14。
+  - `docs/state/runtime_states.md` 按 G0 冻结的 05 §9–§10 重写：Task 9、Node 10、Evidence 5、Recovery（T1）、I-01–I-14；删除“G0 未冻结/等待 G0”旧表述。
+  - 记忆文件：`architecture-decisions.md` §5/§7、`feedback-and-lessons.md`（FB-17/FB-25、历史限定、L-12/L-13）、`references.md`（R-01/R-23/R-24–R-27）、`project-context.md`（阶段 8/G0/T0/P0、2D 待确认）、`environment.md`（Context7 新哈希、tmp 目录、140 passed、Docker/API Key 限定）、`Memory.md`（索引补项）。
+  - 相邻文档：`G0_DECISION_LIST.md` 去掉 `NOT_STARTED` 残留并更新 R-2；`CONFLICT_REPORT.md` 方案 D 标为历史；`SECURITY_POLICY.md` §11 改为“G0 未覆盖、仍需裁决”。
+- 未完成：
+  - 2D 仍未见书面接受或补做记录；P9/P10 仍 `BLOCKED`；`BLK-003` 仍 `OPEN`。
+  - 未 commit；未更新 `last_verified_commit`（无新的受控测试与真实 commit）。
+- 修改文件：
+  - `AGENTS.md`、`docs/MEMORY_GUIDE.md`、`docs/GLOSSARY.md`、`docs/ARCHITECTURE.md`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/SECURITY_POLICY.md`、`docs/state/runtime_states.md`、`docs/state/G0_DECISION_LIST.md`、`docs/reference/CONFLICT_REPORT.md`、`docs/memory/*`、`docs/CHANGELOG_DEV.md`、`docs/SESSION_HANDOFF.md`。
+- 实际测试命令与结果：
+  - 解释器：`D:\ResearchFlow-project\.venv\Scripts\python.exe`（3.11.16，64bit）。
+  - `& .venv/Scripts/python.exe scripts/state_sync.py validate|render|check`：均 exit 0；`PROJECT_STATE.md` SHA256 `fb321d47…af98`，`IMPLEMENTATION_STATUS.md` SHA256 `e0ba518f…5fc3`，与 JSON 逐字节一致。
+  - `& .venv/Scripts/python.exe scripts/check_docs_drift.py`：ERROR=0，WARNING=1（`last_verified_commit=1c9a104` 与 HEAD `309083e` 不一致，已知），exit 0。
+  - 本地 Markdown 链接检查：15 个核心改动文档，`MISSING_LINKS=0`；`git diff --check` exit 0。
+  - 未运行 pytest/unittest；本次为文档修复，未触碰运行时行为。
+- 当前分支与 commit：`main`；HEAD `309083e`；`git rev-list --count --all` 为 7；本次未 commit。工作区同时含本次文档修改与既有 P0 未提交变更。
+- 未解决/风险：
+  - 2D 未裁决；P9 并发重写产物未验收；P10/M19 未获开发授权；`BLK-003` 仍 `OPEN`，140 passed 只代表受控 full-access。
+  - `last_verified_commit` 与 HEAD 不一致，`check_docs_drift` 维持 1 条已知 WARNING。
+- 下一步（最多 3 项）：
+  1. 用户审阅本次文档 diff，决定是否 commit（提交前确认 Git 身份）。
+  2. 裁决 2D：补做运行态验证，或书面接受“静态确认”口径。
+  3. 决定 P9 并发重写产物与 P10/M19 的处置；未授权前不启动 WP-03。
+- 待用户确认：commit 授权；2D 口径；P9/P10 与 WP-03 的下一步。
+- 相关证据：`docs/CHANGELOG_DEV.md` 2026-11-12 条目；`scripts/check_docs_drift.py` 输出；`docs/state/runtime_states.md`；`docs/memory/*`。
+
+### 2026-11-11 · P0 · API 幂等整改、full-access 测试与 P1–P10 状态注册表（执行完成，待裁决）
+
+> 本条目取代下方 2026-11-11“伪代码 P1–P6 冻结”条目中的阶段状态表述；旧条目保留为历史。
+
+- 本次完成：
+  - A：`researchflow/api/app.py` 分离内部 `_TaskRecord` 与公共 201 回执；同键同体首次/重放共用同一响应体；新增 `tests/test_api_idempotency.py` 的 A–E 测试。
+  - E：按用户授权执行一次受控 full-access 全量 pytest：`140 passed`，exit 0；完整日志 `reports/remediation/logs/21_full_pytest_fullaccess.log`。测试前后 Git 状态一致，项目内未新增临时目录；`BLK-003` 仍 `OPEN`，未据此关闭。
+  - B：`docs/state/project_state.json` 新增独立 `pseudocode_stages`（P1–P10）；`state_sync.py` 增加枚举、路径存在性、ACCEPTED 证据、BLOCKED 原因校验与渲染；`P1 ACCEPTED`，P2–P8 `IN_REVIEW`，P9/P10 `BLOCKED`。
+  - C：`OQ-P1-03`、`OQ-P1-05` 标 `NEEDS_CONFIRMATION`；`PHASE_RULES`、M01/M03、`STAGE_LOG` 同步，未编造原问题或裁决正文。
+  - I：README、DEVELOPMENT_WORKFLOW、PROJECT_OVERVIEW、ARCHITECTURE、AGENTS 版本元数据、G0_DECISION_LIST 历史横幅已更新；冻结件未改。
+  - 最终定向回归：API 422 + A–E + state_sync，`49 passed`，exit 0；报告见 `reports/remediation/P0_*`。
+- 未完成 / 待确认：
+  - D：§12-2 仅形成待裁决方案；§12-6/§12-7/§12-8 未裁决。未写入 M02 DECISIONS。
+  - G：P10/M19 仅登记现状，未获开发授权；未删除、未标 ACCEPTED。
+  - H：未 commit；`last_verified_commit` 未改。
+  - J：未清理任何缓存/临时目录。
+- 关键风险（必须保留）：
+  - 2026-11-11 22:53:54–55 发现并发进程重写并落盘 P9 的 6 个 `.py`（另有 4 份文档被改）；这不是原始正文恢复。P9 已标 `BLOCKED`，逐项哈希/行数见 `reports/remediation/P0_OPEN_ISSUES.md`。
+  - P9 的并发重写产物未运行 pytest、未导入、未验收；不得标 `ACCEPTED` 或当作原始设计。
+  - `last_verified_commit=1c9a104` 与 HEAD `309083e` 不一致；整改未提交，不得擅自推进。
+- 下一步：
+  - 用户裁决 D 的 §12-2 方案与 §12-6/§12-7/§12-8；对 P9 并发重写产物决定“接受为设计稿 / 重新补齐 / 保持 BLOCKED”；确认是否授权 commit。
+- 相关文件/命令：
+  - `researchflow/api/app.py`、`tests/test_api_idempotency.py`、`docs/state/project_state.json`、`scripts/state_sync.py`、`design/pseudocode/INDEX.md`、`STAGE_LOG.md`、`OPEN_QUESTIONS.md`、`reports/remediation/`。
+  - `& .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider`；`& .venv/Scripts/python.exe scripts/state_sync.py validate|render|check`。
 
 ### 2026-11-11 · P0 · 伪代码 P1–P6 冻结
 

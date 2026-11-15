@@ -13,7 +13,7 @@
 | [`feedback-and-lessons.md`](feedback-and-lessons.md) | 用户反馈、失败经验、流程教训 | 制定计划、运行测试、写交接或复盘时 |
 | [`environment.md`](environment.md) | 已核实 OS、解释器、工具链、DSH 配置摘要 | 运行脚本、测试、安装依赖、排查环境问题时 |
 | [`references.md`](references.md) | 策划书、官方资料、DSH 文档与引用索引 | 引用来源、核对指标、写 PRD / ADR 时 |
-| [`../state/runtime_states.md`](../state/runtime_states.md) | 运行时 Task/Node/Report/Certificate 状态与迁移对照 | 开发或评审 StateMachine、Gate、Verifier 前；G0 已冻结，按 contracts/ 核对 |
+| [`../state/runtime_states.md`](../state/runtime_states.md) | 运行时 Task/Node/Evidence/Recovery 状态与迁移对照 | 开发或评审 StateMachine、Gate、Verifier 前；G0 已冻结，按 `docs/design/05` §9–§10 与 `ADR-001` 核对 |
 
 ## 2. 不放进记忆文件的内容
 
@@ -30,7 +30,7 @@
 3. 发现记忆文件与 `AGENTS.md`、ADR 或冻结契约冲突时，以更高优先级文件为准，并立即报告冲突。
 4. 本索引本身不定义架构、不改变验收阈值、不构成开发批准。
 
-## 4. 阶段 7 知识文档索引
+## 4. 阶段 7 及后续知识文档索引
 
 以下文档是阶段 7 的结构化知识成果，不属于“长期记忆子文件”，但新会话恢复时应按任务读取：
 
@@ -47,3 +47,9 @@
 | [`../reference/SOURCE_REGISTER.md`](../reference/SOURCE_REGISTER.md) | 资料来源、版本证据、缺失资料 |
 | [`../reference/CONFLICT_REPORT.md`](../reference/CONFLICT_REPORT.md) | 冲突、影响、方案与推荐 |
 | [`../knowledge/ENGINEERING_LESSONS.md`](../knowledge/ENGINEERING_LESSONS.md) | 工程经验库（14 条，带来源锚点） |
+| [`../../design/pseudocode/INDEX.md`](../../design/pseudocode/INDEX.md) | P1–P10 伪代码阶段注册表 |
+| [`../../reports/remediation/`](../../reports/remediation/) | P0 整改测试、状态一致性与开放问题 |
+| [`../goals/GOAL_01_CORE_BACKEND.md`](../goals/GOAL_01_CORE_BACKEND.md) | Harness Goal 第一阶段后端可信闭环任务书 |
+| [`../goals/GOAL_02_COMPETITIVE_PRODUCT.md`](../goals/GOAL_02_COMPETITIVE_PRODUCT.md) | Harness Goal 第二阶段赛道竞争力任务书 |
+| [`../goals/GOAL_03_COMPETITION.md`](../goals/GOAL_03_COMPETITION.md) | Harness Goal 第三阶段差异化与竞赛交付任务书 |
+| [`../goals/MEMORY_CLOSEOUT.md`](../goals/MEMORY_CLOSEOUT.md) | 三阶段 Goal 的自动记忆、状态同步、检查点与结束前收尾规则 |

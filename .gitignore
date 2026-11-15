@@ -12,6 +12,7 @@
 # 私钥 / 证书私钥（公钥证书 .crt/.cer 不忽略）
 *.pem
 *.key
+*.private.json
 *.p12
 *.pfx
 id_rsa*
@@ -55,6 +56,17 @@ htmlcov/
 /*.log
 *.tmp
 *.temp
+
+# 发布时保留可离线复核的 Bundle/日志，排除本机数据库、密钥目录及临时测试目录。
+/docs/verification/t0/e2e/**/runtime/
+/pytest-of-Administrator/
+/tmple0ojac0/
+
+# 赛事通知的内部阅读裁剪图，不属于产品交付材料。
+/docs/goals/verification/contest_schedule_crop.png
+/docs/verification/publication/**/candidates.nul
+/docs/verification/publication/**/candidate_paths.txt
+/docs/verification/publication/**/candidate_head.txt
 
 # ---- 5. 策划书原件（精确文件名，不扩展到 *.docx）----
 # 只忽略根目录这一份冻结原件；其他 .docx（如后续验收导出件）仍可入库。

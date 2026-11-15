@@ -1,0 +1,59 @@
+﻿timestamp=2026-11-11T23:03:20.3094850+08:00
+purpose=P9 concurrent rewrite inventory; not acceptance evidence
+PATH=design/pseudocode/M15_dcspa/orchestration/determinism/dc_eligibility.py
+SHA256=dac738298af46a874fc04517fd334c01f08ebc5e6ad227454145800abb497502
+BYTES=46845
+LINES=1173
+CREATED=2026-11-11T22:53:54.9738305+08:00
+MODIFIED=2026-11-11T22:53:54.9738305+08:00
+
+PATH=design/pseudocode/M15_dcspa/orchestration/determinism/dc_issuer.py
+SHA256=53524c900025e76ea0c6741c58ba53a6bc5d01ee2a38dcc22ebf4785556f70aa
+BYTES=40072
+LINES=1035
+CREATED=2026-11-11T22:53:54.9768236+08:00
+MODIFIED=2026-11-11T22:53:54.9778236+08:00
+
+PATH=design/pseudocode/M15_dcspa/orchestration/determinism/spa_judge.py
+SHA256=3e8cfebfcd43ce930377ad2f2619d0cfcc9cc9ca29dcf6b275a617e3973cb527
+BYTES=48934
+LINES=1227
+CREATED=2026-11-11T22:53:54.9798241+08:00
+MODIFIED=2026-11-11T22:53:54.9808253+08:00
+
+PATH=design/pseudocode/M15_dcspa/orchestration/determinism/prr_ledger.py
+SHA256=81153260611eb00e8897b8ebb05b110eb6c7acb5832c01e8fb9316b1e974d69c
+BYTES=31630
+LINES=830
+CREATED=2026-11-11T22:53:54.9833320+08:00
+MODIFIED=2026-11-11T22:53:54.9833320+08:00
+
+PATH=design/pseudocode/M16_vas/orchestration/vas/risk_features.py
+SHA256=1656953478c95bcec6d1014ba0aadcfb5f41198091dd08498a25db828910d274
+BYTES=23123
+LINES=614
+CREATED=2026-11-11T22:53:54.9898614+08:00
+MODIFIED=2026-11-11T22:53:54.9898614+08:00
+
+PATH=design/pseudocode/M16_vas/orchestration/vas/knapsack.py
+SHA256=a1cd72cc71ea63b7ef22889f520c8fa263836edcde8293bc3bda79c21c4ffb64
+BYTES=31888
+LINES=747
+CREATED=2026-11-11T22:53:54.9863370+08:00
+MODIFIED=2026-11-11T22:53:54.9863370+08:00
+
+--- git object paths ---
+NO_GIT_OBJECT design/pseudocode/M15_dcspa/orchestration/determinism/dc_eligibility.py
+NO_GIT_OBJECT design/pseudocode/M15_dcspa/orchestration/determinism/dc_issuer.py
+NO_GIT_OBJECT design/pseudocode/M15_dcspa/orchestration/determinism/spa_judge.py
+NO_GIT_OBJECT design/pseudocode/M15_dcspa/orchestration/determinism/prr_ledger.py
+NO_GIT_OBJECT design/pseudocode/M16_vas/orchestration/vas/risk_features.py
+NO_GIT_OBJECT design/pseudocode/M16_vas/orchestration/vas/knapsack.py
+--- AST parse / symbol counts ---
+design/pseudocode/M15_dcspa/orchestration/determinism/dc_eligibility.py	AST=OK	TOPLEVEL=32	NAMES=Condition,DcReason,ConditionStatus,PurityClass,DcEligibilityError,DcNotEnabled,DcPolicy,DcCandidate,DcBinding,EnvComparisonView,RunProbe,ConditionResult,RunComparison,EligibilityVerdict,_require_hash,_require_utc,_canonical_directory,required_k,_divergent,compare_runs,_randomness_result,_purity_result,_input_fixed_result,_env_result,_k_run_result,_reason_of,_validity_result,evaluate_dc_eligibility,assert_randomness_is_veto,assert_conservative_defaults,assert_scope_statement,assert_condition_math
+design/pseudocode/M15_dcspa/orchestration/determinism/dc_issuer.py	AST=OK	TOPLEVEL=33	NAMES=DcIssuerError,DcRefused,DcSignatureInvalid,DcStoreCorrupt,DcRevoked,_require_hash,_require_utc_datetime,_utc_z,_parse_utc_z,_canonical_bytes,DcSignerPort,DcSignature,DcIdentity,compute_dc_id,DcAudit,DcRecord,RevocationReason,RevocationRecord,DcStatus,DcValidityReport,DcRegistry,DcIssuance,_derive_output_hashes,_derive_run_fingerprints,issue_dc,evaluate_dc_record,_invalid,evaluate_dc,revoke_dc,assert_signature_domain,assert_dc_scope,assert_revocation_is_terminal,assert_policy_binding
+design/pseudocode/M15_dcspa/orchestration/determinism/spa_judge.py	AST=OK	TOPLEVEL=45	NAMES=SpaAction,SpaCondition,ReexecuteReason,SkipReason,SpaJudgeError,SpaRefused,SpaNotEnabled,EvidenceRef,ConditionOutcome,ArtifactExpectation,ArtifactInspection,GateRecheck,SideEffectFacts,SpaRequest,SpaSignature,SpaSignerPort,SpaIdentity,compute_spa_id,SpaRecord,SpaDecision,_require_sha256,_require_utc,_require_utc_z,_utc_z,_canonical_bytes,_sorted_pairs,_artifact_hash,_dc_outcome,_predecessor_outcome,_disk_outcome,_gate_outcome,_side_effect_outcome,_reexecute,judge_spa,_safe_key_id,_dummy_dc_record,_dummy_request,assert_default_reexecute,assert_evidence_is_not_boolean,assert_no_unsigned_skip,_FakeSigner,_BrokenSigner,assert_skip_requires_all_five,assert_no_side_effect_skip,assert_fields_match_d5
+design/pseudocode/M15_dcspa/orchestration/determinism/prr_ledger.py	AST=OK	TOPLEVEL=21	NAMES=PrrRefused,_require_at,_utc_z,_require_id,ResultFingerprint,PruningAuthorization,PrrEventType,EpisodeStatus,ComparisonBasis,PrrEvent,_require_at_text,PrrEntry,clopper_pearson_upper,PrrReport,_EpisodeState,PrrLedger,_probe_entry,assert_denominator_policy,assert_no_zero_without_denominator,assert_no_cross_task_merge,assert_prr_records_raw
+design/pseudocode/M16_vas/orchestration/vas/risk_features.py	AST=OK	TOPLEVEL=25	NAMES=RiskRefused,_require_unit,_require_count,_require_utc,_require_sha256,BetaPrior,smoothed_failure_rate,RiskFacts,RiskFeatures,RiskWeights,_clamp,_failure_feature,_novelty_feature,_gap_feature,_impact_feature,_anomaly_feature,compute_features,compute_risk,WeightsFreeze,WeightRegistry,freeze_weights,_probe_facts,assert_bounds_hold,assert_weights_sum,assert_calibration_boundary
+design/pseudocode/M16_vas/orchestration/vas/knapsack.py	AST=OK	TOPLEVEL=23	NAMES=KnapsackRefused,SelectionMode,SelectionStatus,GapBasis,_require_float01,_require_cost,utility_units,ValidationCandidate,candidate_universe_hash,MandatoryReservation,reserve_mandatory,SelectionItem,KnapsackResult,_mask_key,_solve_exact,_greedy_order,_solve_greedy,_lp_upper_bound,select,_probe_candidates,assert_mandatory_first,assert_gap_honesty,assert_cost_units
+--- TODO/FIXME/NotImplemented ---

@@ -2,7 +2,7 @@
 
 > 项目：ResearchFlow
 > 适用范围：`D:\ResearchFlow-project` 及其全部子目录
-> 版本：阶段 5 基线（2026-11-08）
+> 版本：阶段 5 基线（2026-11-08）；2026-11-11 P0 治理修订；2026-11-12 运行时状态词汇与记忆同步
 > 地位：本文件是本项目的主要规则来源。`$DSH_HOME/AGENTS.md`（实际路径 `C:\Users\Administrator\.dsh\AGENTS.md`）当前不存在；如未来创建，只放跨项目通用纪律，不重复本项目内容。
 > 优先级：用户当前明确指令 > 本文件 > 其他项目文档。若本文件与已冻结架构、策划书或 ADR 冲突，先停止并报告，不得自行取舍。
 
@@ -94,12 +94,12 @@
 
 这套状态描述“研发任务/交付物”的进度，不是 ResearchFlow 运行时的 Task/Node 状态。
 
-### 6.2 ResearchFlow 运行时状态（按策划书附录 F 独立定义）
+### 6.2 ResearchFlow 运行时状态（按策划书附录 F 与 ADR-001 独立定义）
 
 - Task：`CREATED`、`PLANNING`、`READY`、`RUNNING`、`VERIFYING`、`COMPLETED`、`FAILED`、`BLOCKED`、`CANCELLED`。
-- Node：`PLANNED`、`READY`、`RUNNING`、`VERIFYING`、`VERIFIED`、`FAILED`、`BLOCKED`、`DIAGNOSING`、`RECOVERING`。
+- Node：`PLANNED`、`READY`、`RUNNING`、`VERIFYING`、`VERIFIED`、`FAILED`、`BLOCKED`、`DIAGNOSING`、`RECOVERING`、`INVALIDATED`。
 
-运行时状态、迁移表与不变量见 `docs/state/runtime_states.md`；该文件只是策划书附录 F 的对照索引，规范性仍以冻结后的契约为准。`project_state.json` 不得记录、推导或替代运行时状态。
+`INVALIDATED` 由 [`ADR-001`](docs/ADR/ADR-001-invalidated-node-state.md) 增加，Node 为 10 个状态；只允许 `VERIFIED → INVALIDATED` 与 `INVALIDATED → READY`，其他边未授权。运行时状态、完整迁移表与不变量见 `docs/state/runtime_states.md` 与 [`docs/design/05_CONTRACTS_AND_STATES.md`](docs/design/05_CONTRACTS_AND_STATES.md) §9–§10；规范性以冻结契约为准。`project_state.json` 不得记录、推导或替代运行时状态。
 
 ## 7. 记忆、状态与文档职责
 
@@ -159,5 +159,10 @@
 - 项目级 Skill 目录与三态验证：见 `docs/SKILL_CATALOG.md`；九个 Skill 位于 `.agents/skills/`，按任务按需加载，不把全文写入本文件。
 - 阶段 4 的交付证据与真实测试日志：见 `docs/verification/stage4/`。
 - 阶段 5 的 Skills 发现机制、结构与调用验证：见 `docs/verification/stage5/`。
+- 阶段 6 的 MCP 能力与 Context7 接入：见 `docs/verification/stage6/`。
+- 阶段 7 的资料接手、来源登记与冲突报告：见 `docs/reference/`。
+- 阶段 8 的工作站综合验收：见 `docs/verification/stage8/`。
+- G0 规格冻结与裁决：见 `docs/G0/`、`docs/verification/g0/`、`contracts/`。
+- T0 的 WP-01、WP-02 与 P0 整改：见 `docs/verification/t0/`、`reports/remediation/`、`design/pseudocode/INDEX.md`。
 - 策划书文件名与哈希：见 `docs/memory/references.md`。
 - 未确认事项：见各记忆文件中的“待核实”条目，不得用推测补齐。

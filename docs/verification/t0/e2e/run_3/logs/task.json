@@ -1,0 +1,32 @@
+{
+  "graph_version": 1,
+  "spec": {
+    "dataset_ref": {
+      "license": "CC0-1.0",
+      "sha256": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+      "uri": "local://datasets/synthetic_breast_cancer.csv"
+    },
+    "domain_pack": "tabular_ml@1.0.0",
+    "goal": "Train and compare tabular classifiers on the bundled synthetic dataset.",
+    "limits": {
+      "max_memory_mb": 4096,
+      "max_workers": 2,
+      "wall_time_sec": 600
+    },
+    "parameters": {
+      "models": [
+        "logistic_regression",
+        "random_forest"
+      ],
+      "seed": 42,
+      "target": "diagnosis",
+      "test_size": 0.2
+    },
+    "ruleset_hash": "732f7faeb1bd31765db1606beb30ae2c223c673bc992a4a8c83e8c9c8ff894fa",
+    "schema_version": "1.0",
+    "task_id": "task_7fea2344-3e75-4412-94f9-338ea05aaa4a",
+    "template_id": "classification_benchmark@1.0.0"
+  },
+  "state": "COMPLETED",
+  "task_id": "task_7fea2344-3e75-4412-94f9-338ea05aaa4a"
+}

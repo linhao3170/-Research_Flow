@@ -1,0 +1,49 @@
+{
+  "attempts": [
+    {
+      "artifacts": [
+        "output/split_manifest.json",
+        "output/worker_status.json"
+      ],
+      "attempt_id": "attempt_01",
+      "duration_sec": 1.235,
+      "exit_code": 0,
+      "node_id": "split_dataset",
+      "ok": true,
+      "status": "EXITED"
+    },
+    {
+      "artifacts": [
+        "output/metrics.json",
+        "output/predictions.csv",
+        "output/worker_status.json"
+      ],
+      "attempt_id": "attempt_01",
+      "duration_sec": 2.375,
+      "exit_code": 0,
+      "node_id": "train_logistic_regression",
+      "ok": true,
+      "status": "EXITED"
+    },
+    {
+      "artifacts": [
+        "output/metrics.json",
+        "output/predictions.csv",
+        "output/worker_status.json"
+      ],
+      "attempt_id": "attempt_01",
+      "duration_sec": 2.5,
+      "exit_code": 0,
+      "node_id": "train_random_forest",
+      "ok": true,
+      "status": "EXITED"
+    }
+  ],
+  "certificate_id": null,
+  "error": null,
+  "final_state": "RUNNING",
+  "ok": true,
+  "report_id": null,
+  "state": "VERIFYING",
+  "task_id": "task_7fea2344-3e75-4412-94f9-338ea05aaa4a"
+}

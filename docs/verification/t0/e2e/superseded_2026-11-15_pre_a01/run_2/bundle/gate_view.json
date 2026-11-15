@@ -1,0 +1,21 @@
+{
+  "note": "Gate re-evaluation happens in verify_bundle.py from records + invalidations + ruleset.",
+  "stale_evidence_ids": [
+    "ev_d5ded968-874f-5529-ba9c-51256b57f347",
+    "ev_e2841e83-9d0b-5862-8ef1-eed7df5e82a1",
+    "ev_e64398cb-234d-5cc6-be42-c80af5ca8a34",
+    "ev_97aca252-09bf-5ae5-adee-d28dd1c70db4",
+    "ev_22bd3762-9a7b-556d-82a3-0fd57dae83e7",
+    "ev_7e03426b-b25a-5374-a79e-274be6145ce0",
+    "ev_520ff41e-239c-5cf7-8a72-272514911e90",
+    "ev_6930e46f-2c11-5251-9071-605d814bf38a",
+    "ev_f9cd0ec4-feaa-58db-bfbc-f8d79096620a",
+    "ev_b872e7d8-fcdb-5ae6-8db9-6e88734f07f0",
+    "ev_4f0ecd5e-df05-5fe7-8a2a-5c82829caea9",
+    "ev_91197cd3-9427-58e9-89fb-2586adb875a7",
+    "ev_c6f1290e-66c5-520d-b057-ab6b04377f52",
+    "ev_bba51f52-f8c8-5d61-b975-b910982bd050",
+    "ev_b109b57c-69d1-5518-9517-05eb5920a20b",
+    "ev_34caba00-e67e-5126-a4dc-a78a0786fa1c"
+  ]
+}

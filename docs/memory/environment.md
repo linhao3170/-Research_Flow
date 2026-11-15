@@ -1,6 +1,6 @@
 # environment.md — 已核实环境、版本与配置摘要
 
-> 核验时间：2026-11-08 11:25–12:36（阶段 4–6）；阶段 7 追加 12:41 起（资料抽取与工具限制）；2026-11-10 WP-01 追加环境与依赖实测。
+> 核验时间：2026-11-08 11:25–12:36（阶段 4–6）；阶段 7 追加 12:41 起（资料抽取与工具限制）；2026-11-10 WP-01 追加环境与依赖实测；2026-11-12 复核 MCP 配置、工具链与临时目录。
 > 核验方式：本机 PowerShell 命令实测 + 项目文件检查。
 > 安全边界：本文件不记录任何密钥、令牌、凭据内容或 Session 标识；`C:\Users\Administrator\.dsh\.credentials.yaml` 未被读取。
 > 标记规则：只有命令实测结果写入“已核实”；推断或待定内容写入“待核实”。
@@ -71,6 +71,8 @@
 
 `uv` 版本与矩阵列的 0.13.7 不一致，按“工具、是否升级由 WP-01 决定”保留 0.12.16，偏差已记录。
 
+2026-11-12 复核：`.venv` 目录为 503,730,350 字节（503.7 MB），较 WP-01 记录多 1.38 MB；差异来自运行期缓存/测试产物，依赖闭包与 58 个 pin 未变。
+
 ## 3. Git 与版本控制
 
 | 项目 | 已核实值 |
@@ -81,13 +83,17 @@
 | `user.name` | `ResearchFlow Dev`（仅本仓库 `--local`） |
 | `user.email` | `dev@researchflow.local`（仅本仓库 `--local`） |
 | `core.autocrlf` | `true` |
+| 远端 `origin` | `https://github.com/linhao3170/-Research_Flow.git`（2026-11-15 添加；前导连字符为仓库名的一部分） |
+| 远端可见性 | **公开（public）**；GitHub API `private=false`、`size=0`、`default_branch=main`（2026-11-15 提交前核实，当时为空仓库） |
 | 仓库根 | `D:\ResearchFlow-project` |
 
 影响：
 
 - Git 身份仅在本仓库配置：`user.name=ResearchFlow Dev`、`user.email=dev@researchflow.local`；全局身份仍为空。提交前仍须由用户批准，不得自行扩大提交范围。
 - `core.autocrlf=true` 可能在检出时把文本转为 CRLF，破坏“逐字节一致”的 `state_sync.py check`。`.gitattributes` 已将 Python、JSON、Markdown、日志固定为 LF，并把 `.gitattributes` 自身固定为 LF。
-- 阶段 4–8 未执行 `git add` / `git commit`；2026-11-10 按用户指令建立 G0 基线、G0 裁决与 WP-01 提交（以 `git log` 为准）。
+- 证据包例外：`docs/verification/t0/e2e/**` 与 `docs/verification/t0/g6-t0/**` 设 `-text`，按原始字节入库；否则 Bundle 内 manifest 的 SHA-256 会与克隆后字节不符，离线验签失败（见 `feedback-and-lessons.md` L-17）。
+- 阶段 4–8 未执行 `git add` / `git commit`；2026-11-10 按用户指令建立 G0 基线、G0 裁决与 WP-01 提交（以 `git log` 为准）；2026-11-15 按用户授权执行 T0 首次普通提交与推送。
+- 远端为公开仓库这一事实来自 GitHub API 实测；若后续改为私有，属用户在 GitHub 侧的设置变更，需重新核实并更新本表。
 
 ## 4. Node.js 与 pnpm
 
@@ -98,7 +104,7 @@
 | pnpm 路径 | `C:\Users\Administrator\AppData\Roaming\npm\pnpm.cmd` |
 | PowerShell 约束 | 必须使用 `pnpm.cmd`；`pnpm.ps1` 被执行策略拦截 |
 
-本阶段未运行 pnpm；Node 依赖保持为空（截至 2026-11-11）。
+本阶段未运行 pnpm；Node 依赖保持为空（2026-11-12 复核，项目根无 `package.json`）。
 
 ## 5. PowerShell
 
@@ -123,7 +129,7 @@
 - `desktop` Profile 的 host plane 通过 `dsh-web-app/cordis.patch.yml` 将 `agent-instructions` 标记为 `disabled: true`，这是为了把 Agent 层插件交给每个会话的 preset 挂载。
 - DSH 默认 preset 为 `standard`；其配置在 `C:\Users\Administrator\.dsh\profiles\node_modules\@deepseek-ai\dsh\config\agent-presets\standard\agent.cordis.yml` 第 30–31 行重新挂载 `@deepseek-ai/dsh-agent-instructions`。
 - 本会话启动时的系统提示已包含 “Instructions from: AGENTS.md”，且重写 `AGENTS.md` 后收到 “Updated instructions from: AGENTS.md”，内容为新版本。**结论：项目 AGENTS 已实际加载并刷新。**
-- 全局 `C:\Users\Administrator\.dsh\AGENTS.md` 仍不存在（截至 2026-11-11）；本阶段未做创建或修改。如未来确有必要，须单独审批，方案见 `docs/reference/GLOBAL_AGENTS_PROPOSAL.md`。
+- 全局 `C:\Users\Administrator\.dsh\AGENTS.md` 仍不存在（2026-11-12 复核）；本阶段未做创建或修改。如未来确有必要，须单独审批，方案见 `docs/reference/GLOBAL_AGENTS_PROPOSAL.md`。
 
 ### 6.2 Skills 发现机制（阶段 5 核实）
 
@@ -153,8 +159,9 @@
 | 默认 MCP server | 无；`dsh-base` 只挂载 `mcp-resources`，不挂 `mcp-client` |
 | Context7 端点 | `https://mcp.context7.com/mcp` 匿名可用；`initialize` / `tools/list` / `tools/call` 均 HTTP 200 |
 | 当前接入状态 | **已接入并验证（2026-11-08 12:33）**；serverName=`context7`；两个工具已真实调用 |
-| 配置文件 | `cordis.patch.yml` 1,462 字节 / SHA256 `6FF6…59E1`；备份 `.bak-20261108-stage6` 为原始 1,200 字节 |
-| API Key | **未配置**；匿名可运行，带 Key 提高配额；未读取凭据文件 |
+| 配置文件 | `cordis.patch.yml`：2026-11-08 阶段 6 写入后 1,462 字节 / SHA256 `6FF6…59E1`；2026-11-12 复核为 3,616 字节 / SHA256 `F6AE…CD46`（后续配置变更，Context7 条目仍在；改动内容未逐项审计） |
+| 配置备份 | `.bak-20261108-stage6` 为原始 1,200 字节；另有 `.bak-20261109-max-effort` 1,819 字节 |
+| API Key | 阶段 6 记录为**未配置**（匿名可运行，带 Key 提高配额）；2026-11-12 未复核当前凭据状态，未读取凭据文件 |
 
 注意：profile 下 `0.1.0-rc.8` 的 `dsh-mcp-client` 只作解析回退，不作为当前行为依据；`dsh-app-boot` 的 bundle 解析是“安装锚点优先，profile 目录第二”。证据见 `docs/verification/stage6/`（执行结果见 `08_apply_result.md`）。
 
@@ -168,8 +175,9 @@
 - 按用户指定命令取证：`tempfile.mkdtemp(dir=D:\ResearchFlow-project)` 创建 `D:\ResearchFlow-project\tmpavet2qv9`，写 `probe.txt` 抛 `PermissionError [Errno 13] Permission denied: 'D:\ResearchFlow-project\tmpavet2qv9\probe.txt'`。系统临时目录拒绝属预期；工作区内 Python 新建子目录再写入也被拒。
 - 用户 2026-11-08 用 DSH 权限诊断工具检查该目录，结论 `NOT_THIS_CLASS`：`WRITE_DAC` / `WRITE_OWNER` 均具备，无缺失权限、无需清理的第三方授权项；`FIXED=0`，未做任何改动。机制为沙箱进程新建子目录时得到令牌默认权限，项目根上的沙箱授权未传播下去；属于环境侧授权传播问题，不是仓库权限损坏。不得手工改 ACL、不得再跑第二遍诊断。
 - `BLK-003` 因此由 HIGH 降为 MEDIUM，仍 OPEN；13b 维持 NOT VERIFIED。23 项 unittest 属代码正确性测试，可在单独批准的 full-access 会话运行，日志记录当次策略并立即恢复 workspace-write；结果不得用于第 5/6/23 项或任何安全项。
-- `tmpavet2qv9` 为空目录，阶段 9 开始时只删除该目录，不动其他目录。
+- `tmpavet2qv9`：2026-11-12 复核已不存在（`Test-Path` 为 False）；删除时间与执行者未记录，待核实；原“阶段 9 开始时只删除”的计划已不适用。
 - 阶段 8 未在项目外写入任何文件（`C:\Users\Administrator\stage8_outside_probe.txt` 写入被拒，文件未生成）；未读取 `.credentials.yaml` 或 Session 内容。
+- 2026-11-11 P0 在受控 full-access 下运行全量 pytest：`140 passed`，exit 0；该结果不关闭 `BLK-003`，也不代表 workspace-write 下通过，日志见 `reports/remediation/logs/21_full_pytest_fullaccess.log`。
 
 ## 7. 网络与依赖状态
 
@@ -177,8 +185,8 @@
 - 2026-11-10 WP-01 通过 PyPI 安装 58 个 Python 包（含 `httpx2`）并生成 `requirements.lock`；这是受控安装，不等于运行期默认开放网络。
 - Node 依赖保持为空；本阶段未运行 pnpm。
 - 阶段 5 的 Skills 为 Markdown + YAML frontmatter，结构校验脚本只用 Python 标准库；WP-01 后项目脚本可使用 `.venv`。
-- 未接入 LLM，未调用模型 API。
-- 未部署 Docker、本地大模型或数据库。
+- ResearchFlow 项目未接入 LLM，未调用模型 API；Harness 自身的模型推理不属于项目运行时。
+- 项目未使用 Docker；整机已安装 Docker Desktop（服务 Stopped，项目未使用，见 `docs/state/G0_DECISION_LIST.md` 附加说明）。未部署本地大模型或数据库。
 
 ## 8. 环境核验命令（摘要）
 
@@ -204,9 +212,26 @@ Write-Output $env:DSH_PROFILE
 Test-Path 'C:\Users\Administrator\.dsh\AGENTS.md'
 ```
 
-## 9. 待核实
+## 9. 2026-11-14 安装包只读核验补记
 
-- `.venv` 已创建（2026-11-10 WP-01，3.11.16/64bit），见 §2.5；未做干净机器复现（本机缓存预热）。
+- `D:\deepseek_harness1\resources\app.asar` 内 `dsh/desktop-runtime.json` 的 `release.version` 为 `0.2.2-rc.3`，五个 Goal 相关包同版本；上文 `0.2.2-rc.1` 为历史核验时点，不据其推断后续会话行为。证据：`docs/goals/verification/document_validation.json`、`source_and_review.md`。
+- Goal 提供同会话目标持久化和自动续轮；轮数不是金额限额，实际预设是否启用需会话工具发现。未修改安装包、Profile 或全局配置。
+- 本次 Codex 沙箱中 Python 启动 Git 子进程失败，获准沙箱外只读执行 `check_docs_drift.py` 后 exit 0。该结果仅针对本次文档检查，不关闭 DSH 的历史 BLK-003，也不证明产品测试全绿。
+
+
+### 9b. T0 运行时实测补记（2026-11-14）
+
+- **uv venv 的 `python.exe` 是启动器**：`subprocess.Popen` 返回的 pid 约 3.4 MB，真实解释器是其子进程（导入 pandas/sklearn 后可达 150–200 MB）。任何“按 pid 采样内存/判定限额”的代码必须枚举进程树（Toolhelp32），否则内存上限会 fail-open。本项目的 `ProcessTreeSampler` 已按此实现，并用 200 MB 真实分配校准。
+- 执行器对每个 worker 固定 `OMP_NUM_THREADS=OPENBLAS_NUM_THREADS=MKL_NUM_THREADS=NUMEXPR_NUM_THREADS=VECLIB_MAXIMUM_THREADS=1`，双 worker 并行时主机页文件压力可控。
+- 运行目录：`<runtime>/researchflow.db`、`<runtime>/tasks/<task>/attempts/<node>/attempt_NN/{job.json,result.json,stdout.log,stderr.log,inputs/,output/}`、`<runtime>/tasks/<task>/evidence_payloads/<sha256>.json`、`<runtime>/recovery_plans/<plan_hash>.json`、`<runtime>/verification/l3-*`、`<runtime>/keys/`（私钥，不进 Bundle）。
+- 数据根可用 `RESEARCHFLOW_DATA_ROOT` 指向隔离副本；默认 `researchflow/templates/data`（内置合成数据，CC0-1.0）。
+- 2026-11-14 实测：双集合训练 worker 峰值 165.0 / 166.6 MB；主机 16,117 MB；e2e 单轮约 27–28 s。
+- 全部 T0 测试在会话 `danger-full-access` 下运行；`BLK-003` 未关闭，不得写成 workspace-write 通过。
+
+## 10. 待核实
+
+- `.venv` 已创建（2026-11-10 WP-01，3.11.16/64bit），见 §2.5；未做干净机器复现（本机缓存预热）；WP-01 已做从锁文件的干净 `.venv` 复现。
+- MCP 配置文件 `cordis.patch.yml` 已从阶段 6 的 1,462 字节增长到 3,616 字节；用旧哈希做校验会失败，使用前应按当前文件重算。
 - 依赖版本已按矩阵锁定并写入 `requirements.lock`；`uv` 工具版本 0.12.16 与矩阵 0.13.7 的偏差已记录。
 - 并发 2 与 16GB 内存下的实际资源峰值尚未实测。
 - 外网在离线演示环境中的默认策略，需在 T0 验收方案中确认。

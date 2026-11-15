@@ -1,0 +1,56 @@
+[
+  {
+    "command": [
+      "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+      "-B",
+      "scripts/state_sync.py",
+      "validate"
+    ],
+    "cwd": "D:\\ResearchFlow-project",
+    "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+    "python_version": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+    "permission": "workspace-write",
+    "started_at": "2026-11-14T23:17:21.301397+08:00",
+    "ended_at": "2026-11-14T23:17:21.463200+08:00",
+    "duration_sec": 0.16,
+    "exit_code": 0,
+    "stdout": "OK: project_state.json 校验通过。阶段=T0，任务=23，伪代码阶段=10（ACCEPTED 8，BLOCKED 2），门禁 PASS=4/8，阻塞=3。\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+      "-B",
+      "scripts/state_sync.py",
+      "render"
+    ],
+    "cwd": "D:\\ResearchFlow-project",
+    "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+    "python_version": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+    "permission": "workspace-write",
+    "started_at": "2026-11-14T23:17:21.463200+08:00",
+    "ended_at": "2026-11-14T23:17:21.629592+08:00",
+    "duration_sec": 0.172,
+    "exit_code": 0,
+    "stdout": "已生成 docs/PROJECT_STATE.md  sha256=ca23a3a9ba01037fd66723f9f1df97195e25bcf2f36cae201b24411ba9c59605\n已生成 docs/IMPLEMENTATION_STATUS.md  sha256=eb375fd6ebb37cb77513df1665d92f2ffb655fc58130e0309fb8657a027fcb4b\nOK: 已生成 2 个文件。\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+      "-B",
+      "scripts/state_sync.py",
+      "check"
+    ],
+    "cwd": "D:\\ResearchFlow-project",
+    "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+    "python_version": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+    "permission": "workspace-write",
+    "started_at": "2026-11-14T23:17:21.629592+08:00",
+    "ended_at": "2026-11-14T23:17:21.789209+08:00",
+    "duration_sec": 0.152,
+    "exit_code": 0,
+    "stdout": "[OK] docs/PROJECT_STATE.md  sha256=ca23a3a9ba01037fd66723f9f1df97195e25bcf2f36cae201b24411ba9c59605\n[OK] docs/IMPLEMENTATION_STATUS.md  sha256=eb375fd6ebb37cb77513df1665d92f2ffb655fc58130e0309fb8657a027fcb4b\nOK: 2 个生成文件与 project_state.json 逐字节一致。\n",
+    "stderr": ""
+  }
+]

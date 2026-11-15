@@ -1,0 +1,37 @@
+{
+  "attempts": [
+    "attempt_02",
+    "attempt_02",
+    "attempt_02"
+  ],
+  "bundle_manifest_files": 63,
+  "bundle_verify_exit": 0,
+  "bundle_verify_l3_coverage": 1.0,
+  "bundle_verify_recomputed_root": "cbba0d55e1df084369c8c5bfa3c815b6b5853c47e072d4773dfd0b68bb29c940",
+  "bundle_verify_status": "VERIFIED",
+  "certificate_id": "cert_48518912-9ac3-48fd-816e-7931f1a63486",
+  "chain_ok": true,
+  "completed_at": "2026-11-15T02:37:55.269298Z",
+  "coverage": {
+    "missing": 0,
+    "passed": 8,
+    "required": 8
+  },
+  "dataset_sha256_v1": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+  "dataset_sha256_v2": "dea42fe914b17e02ba44f68200bf006da13ad3ad77f9486348f952c5e6286b55",
+  "duration_sec": 27.32,
+  "evidence_invalidated": 16,
+  "evidence_total": 32,
+  "final_report_state": "VERIFIED",
+  "final_task_state": "COMPLETED",
+  "http_requests": 11,
+  "idempotency_key": "e2e-2-c43d72254d9e",
+  "l3_coverage": 1.0,
+  "merkle_root": "cbba0d55e1df084369c8c5bfa3c815b6b5853c47e072d4773dfd0b68bb29c940",
+  "plan_hash": "3115ce14655f018bc9963444481e6bf7b223982c235eb6f39953193d5bbb2186",
+  "report_id": "report_a142afa7-55b3-468c-9c12-55fcc26c5198",
+  "run": 2,
+  "schema_version": "1.0",
+  "started_at": "2026-11-15T02:37:27.950623Z",
+  "task_id": "task_5323edaf-6702-4520-9b0a-bad3656bac48"
+}

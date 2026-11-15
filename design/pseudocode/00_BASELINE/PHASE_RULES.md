@@ -112,7 +112,8 @@
 统一登记在 `design/pseudocode/OPEN_QUESTIONS.md`：纯索引表，每个 OQ 一行，列为
 「OQ 编号 / 一句话问题 / 提出阶段 / 状态 / 死线 / 裁决·结论 / 落点（文件 §）/ 阻塞谁」。
 
-- 状态只允许 `OPEN` / `DEFERRED` / `DECIDED` 三个值。
+- 状态只允许 `OPEN` / `DEFERRED` / `DECIDED` / `NEEDS_CONFIRMATION` 四个值。
+- `NEEDS_CONFIRMATION` 仅用于“曾声称已裁决，但原问题或裁决正文/证据不可恢复”的条目；它不等于 `OPEN`，也不得当作 `DECIDED`，更不得作为后续阶段先例。
 - 已有编号原样沿用；无编号项写 `(无编号) §12-N`，靠「落点」列定位，不新造编号。
 - 裁决结果写入对应模块 `MODULE.md` 的 `DECISIONS` 段或对应节，并保留原 OQ 编号以便追溯。
 - P3 起每个阶段收尾必须新增/更新本表并报告行数变化；未更新本表的阶段不算完成。

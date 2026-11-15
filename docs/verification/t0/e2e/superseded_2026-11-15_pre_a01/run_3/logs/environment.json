@@ -1,0 +1,18 @@
+{
+  "api_base": "http://127.0.0.1:52522",
+  "code_hash": "aff6778d4a7b17b1130574f2c37639f38a27ee706c5be03a2119fe2083f703a3",
+  "dataset_sha256_v1": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+  "declared_max_workers": 2,
+  "interpreter": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "offline_controls": {
+    "loopback_only": true,
+    "model_provider": "none (T0 has no LLM client)",
+    "no_token": true,
+    "proxies_blackholed": true
+  },
+  "platform": "Windows-10-10.0.22631-SP0",
+  "ruleset_hash": "732f7faeb1bd31765db1606beb30ae2c223c673bc992a4a8c83e8c9c8ff894fa",
+  "ruleset_version": "1.0.0",
+  "run": 3,
+  "started_at": "2026-11-14T11:38:30.920294Z"
+}

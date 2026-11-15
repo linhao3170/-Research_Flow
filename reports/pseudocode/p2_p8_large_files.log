@@ -1,0 +1,36 @@
+﻿M02_state_machine MODULE.md HAS_NAV
+  orchestration\state_machine.py: 1336 lines mentioned=True
+  orchestration\transitions.py: 926 lines mentioned=True
+  persistence\schema_sql.py: 835 lines mentioned=True
+M04_dag MODULE.md HAS_NAV
+  orchestration\dag\builder.py: 1031 lines mentioned=True
+  orchestration\dag\graph_version.py: 813 lines mentioned=True
+  orchestration\dag\patch_approval.py: 968 lines mentioned=True
+  orchestration\dag\validator.py: 1029 lines mentioned=True
+M08_gate MODULE.md NO_NAV
+  evidence\gate.py: 1176 lines mentioned=True
+M09_verifier_l12 MODULE.md NO_NAV
+  verifier\leakage_rules.py: 987 lines mentioned=True
+M10_verifier_l3 MODULE.md NO_NAV
+  verifier\l3_replay.py: 1132 lines mentioned=True
+M11_signing MODULE.md NO_NAV
+  verifier\crypto\key_lifecycle.py: 822 lines mentioned=True
+  verifier\crypto\payloads.py: 1055 lines mentioned=True
+M12_bundle MODULE.md NO_NAV
+  verifier\bundle\packager.py: 871 lines mentioned=True
+  verifier\bundle\verify_bundle.py: 2043 lines mentioned=True
+M13_scheduler MODULE.md HAS_NAV
+  orchestration\scheduler\dispatch.py: 853 lines mentioned=True
+  orchestration\scheduler\governor.py: 1064 lines mentioned=True
+  orchestration\scheduler\ready_queue.py: 856 lines mentioned=True
+  orchestration\scheduler\scoring.py: 862 lines mentioned=True
+M15_dcspa MODULE.md HAS_NAV
+  orchestration\determinism\dc_eligibility.py: 1173 lines mentioned=True
+  orchestration\determinism\dc_issuer.py: 1035 lines mentioned=True
+  orchestration\determinism\prr_ledger.py: 830 lines mentioned=True
+  orchestration\determinism\spa_judge.py: 1227 lines mentioned=True
+M17_agents MODULE.md NO_NAV
+  agents\contracts.py: 891 lines mentioned=True
+  agents\gateway.py: 976 lines mentioned=True
+  agents\messages.py: 1146 lines mentioned=True
+  agents\tool_gateway.py: 838 lines mentioned=True

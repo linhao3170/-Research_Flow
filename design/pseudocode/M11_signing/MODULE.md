@@ -5,7 +5,7 @@
 > 包外信任锚与公钥指纹
 > 不覆盖：L1/L2/L3 重新验证（P5 已定）、证据包布局与 CLI（M12）、证书签发编排（WP-11）、
 > OS key store/HSM（部署，OQ-P6-05/06）、DC/SPA 契约冻结（T2）
-> 前置：P5 已验收；M07 chain/merkle 前像提案可用；G0 契约与 05 §1.5 已冻结
+> 前置：P5 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P5 设计件已验收；实现未开始）；M07 chain/merkle 前像提案可用；G0 契约与 05 §1.5 已冻结
 > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
 
 ## 1. 目标

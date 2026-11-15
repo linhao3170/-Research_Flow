@@ -1,0 +1,32 @@
+[
+  {
+    "attempt_seq": 2,
+    "node_id": "split_dataset",
+    "node_type": "ml.split",
+    "plan_hash": "53cb1467defdd5abd3ddd5e67fdd8bc38315eb560437b9ebd4a450eab303a290",
+    "plan_id": "plan_53cb1467defdd5abd3ddd5e67fdd8bc3",
+    "state": "VERIFIED",
+    "template_id": "split_dataset@1.0.0",
+    "updated_at": "2026-11-15T02:37:26.957746Z"
+  },
+  {
+    "attempt_seq": 2,
+    "node_id": "train_logistic_regression",
+    "node_type": "ml.train.classifier",
+    "plan_hash": "53cb1467defdd5abd3ddd5e67fdd8bc38315eb560437b9ebd4a450eab303a290",
+    "plan_id": "plan_53cb1467defdd5abd3ddd5e67fdd8bc3",
+    "state": "VERIFIED",
+    "template_id": "train_classifier@1.0.0",
+    "updated_at": "2026-11-15T02:37:27.048297Z"
+  },
+  {
+    "attempt_seq": 2,
+    "node_id": "train_random_forest",
+    "node_type": "ml.train.classifier",
+    "plan_hash": "53cb1467defdd5abd3ddd5e67fdd8bc38315eb560437b9ebd4a450eab303a290",
+    "plan_id": "plan_53cb1467defdd5abd3ddd5e67fdd8bc3",
+    "state": "VERIFIED",
+    "template_id": "train_classifier@1.0.0",
+    "updated_at": "2026-11-15T02:37:27.160348Z"
+  }
+]

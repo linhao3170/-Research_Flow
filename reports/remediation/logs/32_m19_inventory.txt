@@ -1,0 +1,75 @@
+﻿timestamp=2026-11-11T23:03:29.4246735+08:00
+purpose=P10/M19 current-state record only; no development authorization
+PATH=design\pseudocode\M19_api\api\error_map.py
+SHA256=38a52ac7d0c9ac65d78779c53abf33a4a751f226b9d36ca69a9b4c8f27de79f3
+BYTES=12304
+LINES=282
+MODIFIED=2026-11-11T22:22:43.4996515+08:00
+
+PATH=design\pseudocode\M19_api\api\middleware_idempotency.py
+SHA256=fb090eb1a3c08bd57d806ad97063df890c8f37cf030824f14e69b16d8e3621b6
+BYTES=24867
+LINES=568
+MODIFIED=2026-11-11T22:25:42.1251061+08:00
+
+PATH=design\pseudocode\M19_api\api\routes_evidence.py
+SHA256=019400da7af66f613d83f1feb79a177378610123f2289ea46b094aa305019014
+BYTES=15901
+LINES=369
+MODIFIED=2026-11-11T22:24:48.7612749+08:00
+
+PATH=design\pseudocode\M19_api\api\routes_tasks.py
+SHA256=6b8d87d1d21da8c29b24b043bb7749dbe94cfe8f2bab49d5eebdad1689e54a56
+BYTES=18217
+LINES=431
+MODIFIED=2026-11-11T22:24:15.5776317+08:00
+
+PATH=design\pseudocode\M19_api\api\routes_verify_report.py
+SHA256=064bcde11f019a1d2fe2f1703f6d68e71f2035131bcda55035a5dc04ea795973
+BYTES=21881
+LINES=488
+MODIFIED=2026-11-11T22:25:42.1533843+08:00
+
+--- git status for M19 ---
+?? design/pseudocode/M19_api/
+--- references to M19 outside M19 ---
+D:\ResearchFlow-project\README.md:82:- 部分完成：P2–P8 伪代码设计件存在但未获逐阶段验收；P9 的 6 个 `.py` 为 2026-11-11 并发重写产物，不是原始正文恢复，状态 `BLOCKED`；P10/M19 仅登记现状，状态 `BLOCKED`，未获开发授权。
+--- git object paths ---
+NO_GIT_OBJECT M19_api
+
+--- M19 imports ---
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\error_map.py:11:from __future__ import annotations
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\error_map.py:13:from dataclasses import dataclass
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\error_map.py:14:from types import MappingProxyType
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\error_map.py:15:from typing import Any, Final, Mapping
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:11:from __future__ import annotations
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:13:import hashlib
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:14:import json
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:15:import re
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:16:import uuid
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:17:from dataclasses import dataclass
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:18:from typing import Any, Awaitable, Callable, Final, Mapping, Protocol
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:20:from .error_map import build_error_response
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\middleware_idempotency.py:276:from researchflow.contracts.parsing import ContractJSONError, loads_strict
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:11:from __future__ import annotations
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:13:from dataclasses import dataclass
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:14:from typing import Any, Final, Mapping, Protocol, Sequence
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:16:from .error_map import RejectionRule, build_error_response
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:17:from .middleware_idempotency import RequestProblem, correlation_id_from_headers
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:18:from .routes_tasks import ApiResponse, HttpRequestContext
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_evidence.py:42:import json
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:11:from __future__ import annotations
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:13:from dataclasses import dataclass
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:14:from typing import Any, Callable, Final, Mapping, Protocol, Sequence
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:16:from .error_map import RejectionRule, build_error_response
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:17:from .middleware_idempotency import (
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:152:import json
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_tasks.py:378:from .middleware_idempotency import correlation_id_from_headers
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:13:from __future__ import annotations
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:15:from dataclasses import dataclass
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:16:from typing import Any, Final, Mapping, Protocol, Sequence
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:18:from .error_map import CERTIFICATE_NOT_AVAILABLE_REASON, RejectionRule, build_error_response
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:19:from .middleware_idempotency import RequestProblem, correlation_id_from_headers
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:20:from .routes_tasks import ApiResponse, HttpRequestContext
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:44:import json
+D:\ResearchFlow-project\design\pseudocode\M19_api\api\routes_verify_report.py:123:from researchflow.contracts.parsing import ContractJSONError, loads_strict

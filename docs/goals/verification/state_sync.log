@@ -1,0 +1,50 @@
+started_at=2026-11-14T18:04:29.8315233+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/state_sync.py validate
+interpreter=CPython 3.11.16 64bit
+policy=workspace-write
+OK: project_state.json 校验通过。阶段=T0，任务=10，伪代码阶段=10（ACCEPTED 8，BLOCKED 2），门禁 PASS=1/8，阻塞=3。
+exit_code=0
+elapsed_seconds=0.2178863
+started_at=2026-11-14T18:04:30.0750234+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/state_sync.py render
+interpreter=CPython 3.11.16 64bit
+policy=workspace-write
+已生成 docs/PROJECT_STATE.md  sha256=5d8a74743404beed65911a6e9d2398501e75fb6a39f92384847175057bd6763e
+已生成 docs/IMPLEMENTATION_STATUS.md  sha256=8bda124139356c94f3aca759b76082dc42fe0468222a308493108a8b2dc84cd6
+OK: 已生成 2 个文件。
+exit_code=0
+elapsed_seconds=0.2221921
+started_at=2026-11-14T18:04:30.2987033+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/state_sync.py check
+interpreter=CPython 3.11.16 64bit
+policy=workspace-write
+[OK] docs/PROJECT_STATE.md  sha256=5d8a74743404beed65911a6e9d2398501e75fb6a39f92384847175057bd6763e
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=8bda124139356c94f3aca759b76082dc42fe0468222a308493108a8b2dc84cd6
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+exit_code=0
+elapsed_seconds=0.182433
+started_at=2026-11-14T18:04:58.3642618+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/state_sync.py validate
+interpreter=CPython 3.11.16 64bit
+policy=workspace-write
+OK: project_state.json 校验通过。阶段=T0，任务=10，伪代码阶段=10（ACCEPTED 8，BLOCKED 2），门禁 PASS=1/8，阻塞=3。
+exit_code=0
+elapsed_seconds=0.2134987
+started_at=2026-11-14T18:04:58.6000870+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/state_sync.py render
+interpreter=CPython 3.11.16 64bit
+policy=workspace-write
+已生成 docs/PROJECT_STATE.md  sha256=05d5460b0b16ae45eeefbffbc40f31ce6a4df1a3e1575b9e45a66dce96fd9bdb
+已生成 docs/IMPLEMENTATION_STATUS.md  sha256=7c73ced9446b07c6e6e1c9ba929c40eadb10d211264b3ba7ac86787126c3be5c
+OK: 已生成 2 个文件。
+exit_code=0
+elapsed_seconds=0.2015931
+started_at=2026-11-14T18:04:58.8029497+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/state_sync.py check
+interpreter=CPython 3.11.16 64bit
+policy=workspace-write
+[OK] docs/PROJECT_STATE.md  sha256=05d5460b0b16ae45eeefbffbc40f31ce6a4df1a3e1575b9e45a66dce96fd9bdb
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=7c73ced9446b07c6e6e1c9ba929c40eadb10d211264b3ba7ac86787126c3be5c
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+exit_code=0
+elapsed_seconds=0.1700941

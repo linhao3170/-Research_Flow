@@ -62,6 +62,17 @@ TASK_STATUSES = (
 GATE_STATUSES = ("NOT_STARTED", "IN_PROGRESS", "PASS", "FAIL", "BLOCKED")
 GATE_IDS = tuple(f"G{index}" for index in range(8))
 
+# 伪代码阶段是独立于研发任务与门禁的第三套状态语义，禁止与 tasks/status 混用。
+PSEUDOCODE_STAGE_STATUSES = (
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "IN_REVIEW",
+    "BLOCKED",
+    "ACCEPTED",
+    "DEFERRED",
+)
+PSEUDOCODE_STAGE_IDS = tuple(f"P{index}" for index in range(1, 11))
+
 BLOCKER_STATUSES = ("OPEN", "RESOLVED", "WAIVED")
 SEVERITIES = ("CRITICAL", "HIGH", "MEDIUM", "LOW")
 
@@ -107,6 +118,21 @@ GATE_OPTIONAL_FIELDS = (
 
 GATE_ALLOWED_FIELDS = GATE_REQUIRED_FIELDS + GATE_OPTIONAL_FIELDS
 
+PSEUDOCODE_STAGE_REQUIRED_FIELDS = (
+    "stage_id",
+    "title",
+    "status",
+    "modules",
+    "deliverables",
+    "acceptance_criteria",
+    "acceptance_basis",
+    "evidence_paths",
+    "blocker",
+    "updated_at",
+)
+
+PSEUDOCODE_STAGE_ALLOWED_FIELDS = PSEUDOCODE_STAGE_REQUIRED_FIELDS
+
 BLOCKER_REQUIRED_FIELDS = (
     "blocker_id",
     "title",
@@ -132,7 +158,7 @@ TOP_LEVEL_REQUIRED_FIELDS = (
     "last_verified_commit",
 )
 
-TOP_LEVEL_ALLOWED_FIELDS = TOP_LEVEL_REQUIRED_FIELDS
+TOP_LEVEL_ALLOWED_FIELDS = TOP_LEVEL_REQUIRED_FIELDS + ("pseudocode_stages",)
 
 TASK_STATUS_LABELS = {
     "BACKLOG": "待办",
@@ -152,6 +178,15 @@ GATE_STATUS_LABELS = {
     "BLOCKED": "阻塞",
 }
 
+PSEUDOCODE_STAGE_STATUS_LABELS = {
+    "NOT_STARTED": "未开始",
+    "IN_PROGRESS": "进行中",
+    "IN_REVIEW": "评审中",
+    "BLOCKED": "阻塞",
+    "ACCEPTED": "已验收",
+    "DEFERRED": "延期",
+}
+
 BLOCKER_STATUS_LABELS = {
     "OPEN": "未解决",
     "RESOLVED": "已解决",
@@ -167,6 +202,7 @@ SEVERITY_LABELS = {
 
 TASK_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,63}$")
 BLOCKER_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,63}$")
+MODULE_ID_RE = re.compile(r"^M\d{2}_[a-z0-9_]+$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{7,40}$")
 DRIVE_RE = re.compile(r"^[A-Za-z]:")
 
@@ -349,8 +385,12 @@ def _string_list(
 # ---------------------------------------------------------------------------
 
 
-def validate_state(data: Any) -> list[Issue]:
-    """校验完整状态对象，返回问题列表；空列表表示通过。"""
+def validate_state(data: Any, root: Path | None = None) -> list[Issue]:
+    """校验完整状态对象，返回问题列表；空列表表示通过。
+
+    ``root`` 提供时，额外核对伪代码阶段的模块目录、交付物与证据路径是否真实存在；
+    不提供时只做结构与枚举校验（供纯函数测试使用）。
+    """
 
     issues: list[Issue] = []
 
@@ -413,6 +453,9 @@ def validate_state(data: Any) -> list[Issue]:
 
     if "stage_gates" in data:
         _validate_stage_gates(data["stage_gates"], issues)
+
+    if "pseudocode_stages" in data:
+        _validate_pseudocode_stages(data["pseudocode_stages"], issues, root)
 
     if "blockers" in data:
         _validate_blockers(data["blockers"], task_ids, issues)
@@ -771,6 +814,191 @@ def _validate_stage_gates(value: Any, issues: list[Issue]) -> None:
             )
 
 
+def _validate_pseudocode_stages(
+    value: Any,
+    issues: list[Issue],
+    root: Path | None,
+) -> None:
+    """校验 P1–P10 阶段注册表；与研发任务、门禁使用不同的状态枚举。"""
+
+    if not isinstance(value, list):
+        _add(issues, "$.pseudocode_stages", f"必须是数组，实际类型为 {type(value).__name__}")
+        return
+
+    seen: dict[str, int] = {}
+    for index, stage in enumerate(value):
+        base = f"pseudocode_stages[{index}]"
+        if not isinstance(stage, dict):
+            _add(issues, base, f"必须是对象，实际类型为 {type(stage).__name__}")
+            continue
+
+        _validate_object_fields(
+            stage,
+            base,
+            PSEUDOCODE_STAGE_REQUIRED_FIELDS,
+            PSEUDOCODE_STAGE_ALLOWED_FIELDS,
+            issues,
+        )
+
+        stage_id: str | None = None
+        if "stage_id" in stage:
+            raw_stage_id = stage["stage_id"]
+            if not isinstance(raw_stage_id, str):
+                _add(issues, f"{base}.stage_id", "必须是字符串")
+            elif raw_stage_id not in PSEUDOCODE_STAGE_IDS:
+                _add(
+                    issues,
+                    f"{base}.stage_id",
+                    f"非法阶段 ID {raw_stage_id!r}；只允许 {', '.join(PSEUDOCODE_STAGE_IDS)}",
+                )
+            else:
+                stage_id = raw_stage_id
+                if stage_id in seen:
+                    _add(
+                        issues,
+                        f"{base}.stage_id",
+                        f"重复的 stage_id {stage_id!r}；首次出现于 pseudocode_stages[{seen[stage_id]}]",
+                    )
+                else:
+                    seen[stage_id] = index
+
+        if "title" in stage:
+            _non_empty_string(stage["title"], f"{base}.title", issues, max_length=200)
+
+        status: str | None = None
+        if "status" in stage:
+            status_value = stage["status"]
+            if not isinstance(status_value, str):
+                _add(issues, f"{base}.status", "必须是字符串")
+            elif status_value not in PSEUDOCODE_STAGE_STATUSES:
+                _add(
+                    issues,
+                    f"{base}.status",
+                    f"非法伪代码阶段状态 {status_value!r}；允许值："
+                    f"{', '.join(PSEUDOCODE_STAGE_STATUSES)}",
+                )
+            else:
+                status = status_value
+
+        if "modules" in stage:
+            modules = _string_list(
+                stage["modules"],
+                f"{base}.modules",
+                issues,
+                min_items=1,
+                unique=True,
+            )
+            for module_index, module in enumerate(modules):
+                module_path = f"{base}.modules[{module_index}]"
+                if not MODULE_ID_RE.fullmatch(module):
+                    _add(
+                        issues,
+                        module_path,
+                        "模块 ID 必须形如 M01_contracts，只能包含小写字母、数字与下划线",
+                    )
+                    continue
+                if root is not None:
+                    candidate = root / "design" / "pseudocode" / module
+                    if not candidate.is_dir():
+                        _add(
+                            issues,
+                            module_path,
+                            f"模块目录不存在：design/pseudocode/{module}",
+                        )
+
+        if "deliverables" in stage:
+            deliverables = _string_list(
+                stage["deliverables"],
+                f"{base}.deliverables",
+                issues,
+                min_items=1,
+                unique=True,
+                repo_relative=True,
+            )
+            for deliverable_index, deliverable in enumerate(deliverables):
+                if root is not None and not (root / deliverable).exists():
+                    _add(
+                        issues,
+                        f"{base}.deliverables[{deliverable_index}]",
+                        f"交付物路径不存在：{deliverable}",
+                    )
+
+        if "acceptance_criteria" in stage:
+            _string_list(
+                stage["acceptance_criteria"],
+                f"{base}.acceptance_criteria",
+                issues,
+                min_items=1,
+            )
+
+        acceptance_basis: str | None = None
+        if "acceptance_basis" in stage:
+            acceptance_basis = _non_empty_string(
+                stage["acceptance_basis"],
+                f"{base}.acceptance_basis",
+                issues,
+                max_length=2000,
+            )
+
+        evidence_paths: list[str] = []
+        if "evidence_paths" in stage:
+            evidence_paths = _string_list(
+                stage["evidence_paths"],
+                f"{base}.evidence_paths",
+                issues,
+                unique=True,
+                repo_relative=True,
+            )
+            for evidence_index, evidence_path in enumerate(evidence_paths):
+                if root is not None and not (root / evidence_path).is_file():
+                    _add(
+                        issues,
+                        f"{base}.evidence_paths[{evidence_index}]",
+                        f"证据路径不存在或不是文件：{evidence_path}",
+                    )
+
+        if "blocker" in stage:
+            blocker = stage["blocker"]
+            if status == "BLOCKED":
+                if not isinstance(blocker, str) or not blocker.strip():
+                    _add(
+                        issues,
+                        f"{base}.blocker",
+                        "状态为 BLOCKED 时必须提供非空阻塞原因",
+                    )
+            elif blocker is not None:
+                _add(
+                    issues,
+                    f"{base}.blocker",
+                    "非 BLOCKED 状态下 blocker 必须为 null",
+                )
+
+        if "updated_at" in stage:
+            _validate_timestamp(stage["updated_at"], f"{base}.updated_at", issues)
+
+        if status == "ACCEPTED":
+            if not evidence_paths:
+                _add(
+                    issues,
+                    f"{base}.evidence_paths",
+                    "状态为 ACCEPTED 时必须至少提供 1 条验收证据路径",
+                )
+            if acceptance_basis is None:
+                _add(
+                    issues,
+                    f"{base}.acceptance_basis",
+                    "状态为 ACCEPTED 时必须提供明确的验收依据",
+                )
+
+    for stage_id in PSEUDOCODE_STAGE_IDS:
+        if stage_id not in seen:
+            _add(
+                issues,
+                "$.pseudocode_stages",
+                f"缺少伪代码阶段 {stage_id}；P1–P10 必须全部登记",
+            )
+
+
 def _validate_blockers(
     value: Any,
     task_ids: dict[str, int],
@@ -933,12 +1161,21 @@ def _gate_counts(gates: list[dict[str, Any]]) -> dict[str, int]:
     return _counts((gate["status"] for gate in gates), GATE_STATUSES)
 
 
+def _stage_counts(stages: list[dict[str, Any]]) -> dict[str, int]:
+    return _counts((stage["status"] for stage in stages), PSEUDOCODE_STAGE_STATUSES)
+
+
 def _sorted_tasks(state: dict[str, Any]) -> list[dict[str, Any]]:
     return sorted(state["tasks"], key=lambda task: task["task_id"])
 
 
 def _sorted_gates(state: dict[str, Any]) -> list[dict[str, Any]]:
     return [state["stage_gates"][gate_id] for gate_id in GATE_IDS]
+
+
+def _sorted_pseudocode_stages(state: dict[str, Any]) -> list[dict[str, Any]]:
+    stages = state.get("pseudocode_stages", [])
+    return sorted(stages, key=lambda stage: int(stage["stage_id"][1:]))
 
 
 def _sorted_blockers(state: dict[str, Any]) -> list[dict[str, Any]]:
@@ -953,8 +1190,10 @@ def _sorted_blockers(state: dict[str, Any]) -> list[dict[str, Any]]:
 def render_project_state(state: dict[str, Any]) -> str:
     tasks = _sorted_tasks(state)
     gates = _sorted_gates(state)
+    stages = _sorted_pseudocode_stages(state)
     blockers = _sorted_blockers(state)
     gate_counts = _gate_counts(gates)
+    stage_counts = _stage_counts(stages)
     task_counts = _task_counts(tasks)
     open_blockers = sum(1 for blocker in blockers if blocker["status"] == "OPEN")
 
@@ -979,6 +1218,8 @@ def render_project_state(state: dict[str, Any]) -> str:
         f"| 状态更新时间 | {_cell(state['updated_at'])} |",
         f"| 最近验证提交 | {commit_text} |",
         f"| 研发任务 | {len(tasks)}（{_format_task_summary(task_counts)}） |",
+        f"| 伪代码阶段 | {len(stages)}（ACCEPTED {stage_counts['ACCEPTED']}，"
+        f"BLOCKED {stage_counts['BLOCKED']}） |",
         f"| 阶段门禁 | {gate_counts['PASS']} / {len(gates)} PASS |",
         f"| 阻塞项 | {len(blockers)}（OPEN {open_blockers}） |",
         "",
@@ -1007,10 +1248,38 @@ def render_project_state(state: dict[str, Any]) -> str:
             f"未开始 {gate_counts['NOT_STARTED']} / {len(gates)}；"
             f"进行中 {gate_counts['IN_PROGRESS']} / {len(gates)}。",
             "",
-            "## 研发任务",
+            "## 伪代码阶段",
+            "",
+            "> 独立状态语义：伪代码阶段不参与 `tasks` 与 `stage_gates` 的状态计算；"
+            "`ACCEPTED` 只表示该阶段设计件通过用户验收，不表示运行时能力已实现。",
             "",
         ]
     )
+
+    if not stages:
+        lines.extend(["当前未登记伪代码阶段（`pseudocode_stages` 未提供）。", ""])
+    else:
+        lines.extend(
+            [
+                "| 阶段 | 名称 | 状态 | 模块 | 验收依据 | 证据 | 更新时间 |",
+                "|---|---|---|---|---|---|---|",
+            ]
+        )
+        for stage in stages:
+            lines.append(
+                "| {stage_id} | {title} | {status} | {modules} | {basis} | {evidence} 条 | {updated} |".format(
+                    stage_id=_code(stage["stage_id"]),
+                    title=_cell(stage["title"]),
+                    status=_status_text(stage["status"], PSEUDOCODE_STAGE_STATUS_LABELS),
+                    modules=_code_list(stage["modules"]),
+                    basis=_cell(stage["acceptance_basis"]),
+                    evidence=len(stage["evidence_paths"]),
+                    updated=_cell(stage["updated_at"]),
+                )
+            )
+        lines.append("")
+
+    lines.extend(["## 研发任务", ""])
 
     if not tasks:
         lines.extend(
@@ -1092,6 +1361,7 @@ def _format_task_summary(counts: dict[str, int]) -> str:
 def render_implementation_status(state: dict[str, Any]) -> str:
     tasks = _sorted_tasks(state)
     gates = _sorted_gates(state)
+    stages = _sorted_pseudocode_stages(state)
     blockers = _sorted_blockers(state)
     task_counts = _task_counts(tasks)
 
@@ -1194,7 +1464,45 @@ def render_implementation_status(state: dict[str, Any]) -> str:
 
     lines.extend(
         [
-            "## 4. 阻塞项",
+            "## 4. 伪代码阶段明细",
+            "",
+            "> 与研发任务、阶段门禁使用不同状态枚举；`ACCEPTED` 仅指设计件验收。",
+            "",
+        ]
+    )
+
+    if not stages:
+        lines.extend(["当前未登记伪代码阶段（`pseudocode_stages` 未提供）。", ""])
+    else:
+        for stage in stages:
+            lines.extend(
+                [
+                    f"### {_code(stage['stage_id'])} · {_cell(stage['title'])}",
+                    "",
+                    f"- 状态：{_status_text(stage['status'], PSEUDOCODE_STAGE_STATUS_LABELS)}",
+                    f"- 模块：{_code_list(stage['modules'])}",
+                    f"- 验收依据：{_cell(stage['acceptance_basis'])}",
+                    f"- 更新时间：{_cell(stage['updated_at'])}",
+                    f"- 阻塞：{_cell(stage['blocker']) if stage['blocker'] else '无'}",
+                    "- 验收标准：",
+                ]
+            )
+            for criterion in stage["acceptance_criteria"]:
+                lines.append(f"  - {_cell(criterion)}")
+            lines.append("- 交付物：")
+            for deliverable in stage["deliverables"]:
+                lines.append(f"  - {_code(deliverable)}")
+            lines.append("- 证据路径：")
+            if stage["evidence_paths"]:
+                for evidence_path in stage["evidence_paths"]:
+                    lines.append(f"  - {_code(evidence_path)}")
+            else:
+                lines.append("  - 无")
+            lines.append("")
+
+    lines.extend(
+        [
+            "## 5. 阻塞项",
             "",
         ]
     )
@@ -1297,7 +1605,8 @@ def load_state_file(
             )
         ]
 
-    return data, validate_state(data)
+    root = path.parents[2] if len(path.parents) >= 3 else None
+    return data, validate_state(data, root)
 
 
 def _load_for_root(root: Path) -> tuple[Any | None, list[Issue]]:
@@ -1324,10 +1633,14 @@ def command_validate(root: Path) -> int:
     assert isinstance(state, dict)  # 校验通过后必然成立
     task_count = len(state["tasks"])
     gate_counts = _gate_counts(_sorted_gates(state))
+    stages = _sorted_pseudocode_stages(state)
+    stage_counts = _stage_counts(stages)
     blocker_count = len(state["blockers"])
     print(
         "OK: project_state.json 校验通过。"
         f"阶段={state['current_phase']}，任务={task_count}，"
+        f"伪代码阶段={len(stages)}（ACCEPTED {stage_counts['ACCEPTED']}，"
+        f"BLOCKED {stage_counts['BLOCKED']}），"
         f"门禁 PASS={gate_counts['PASS']}/{len(GATE_IDS)}，阻塞={blocker_count}。"
     )
     return 0

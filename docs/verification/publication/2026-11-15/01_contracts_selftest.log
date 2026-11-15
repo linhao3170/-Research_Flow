@@ -1,0 +1,17 @@
+﻿# command: "D:\ResearchFlow-project\.venv\Scripts\python.exe" -B scripts/validate_contracts.py --selftest
+# cwd: D:\ResearchFlow-project
+# start: 2026-11-15T11:17:15.9028859+08:00
+# end: 2026-11-15T11:17:16.0837438+08:00
+# exit: 0
+CONTRACTS_SELFTEST root=D:\ResearchFlow-project python=3.11.16
+[PASS] selftest.01 const ͨ��: ͨ��
+[PASS] selftest.02 const �ܾ�: $.v const: �������� '1.0'��ʵ�� '2.0'
+[PASS] selftest.03 required �ܾ�: $ required: ȱ�ٱ����ֶ� 'v'
+[PASS] selftest.04 additionalProperties �ܾ�: $ additionalProperties: ������δ�����ֶ� 'extra'
+[PASS] selftest.05 pattern �ܾ�: $.h pattern: 'ABCD' ��ƥ�� '^[0-9a-f]{4}$'
+[PASS] selftest.06 if/then �ܾ�: $.producer const: �������� 'collector'��ʵ�� 'agent'
+[PASS] selftest.07 maxItems �ܾ�: $.a maxItems: Ԫ���� 1 > 0
+[PASS] selftest.08 uniqueItems �ܾ�: $.a uniqueItems: Ԫ�� 1 �� 0 �ظ�
+[PASS] selftest.09 format ���ܺϷ� RFC 3339��UTC Լ���� pattern �е���: ͨ��  # format ֻ�ж� RFC 3339 �Ϸ��ԣ��Ƿ� UTC �� pattern �ܾ�
+[PASS] selftest.10 format �ܾ��Ƿ���������: $.t format: '2026-13-01T00:00:00Z' ���� RFC 3339 date-time
+SELFTEST 10/10 PASS

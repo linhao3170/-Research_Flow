@@ -1,0 +1,35 @@
+{
+  "affected_nodes": [
+    "split_dataset",
+    "train_logistic_regression",
+    "train_random_forest"
+  ],
+  "cause_ref": "dea42fe914b17e02ba44f68200bf006da13ad3ad77f9486348f952c5e6286b55",
+  "cause_type": "INPUT_CHANGE",
+  "changed_node": "split_dataset",
+  "dataset_sha256": "dea42fe914b17e02ba44f68200bf006da13ad3ad77f9486348f952c5e6286b55",
+  "frozen_at": "2026-11-14T11:08:25.110314Z",
+  "invalidated_evidence": [
+    "ev_02b6d238-7f10-5d14-827e-e8612c32ed5f",
+    "ev_122c1449-b218-50e9-8b0b-199e3d85bf14",
+    "ev_18952842-6698-5a31-932d-2df52f5f5e29",
+    "ev_45f59654-56dc-592f-a657-ac9ff40f5588",
+    "ev_5fabd9d3-ba36-51cb-a85a-548e5eac42af",
+    "ev_6bfe308b-a9ee-56d4-baf3-0f17d3704cad",
+    "ev_6c4a1d83-12f4-5e60-8afa-1b1f50b417d8",
+    "ev_7d6a9c34-3d7f-5779-b462-98845b4c4813",
+    "ev_8aa07a46-3a50-5f64-a4cb-a3dd5c44da29",
+    "ev_ad818828-ce31-565a-a541-71e638e8ed82",
+    "ev_c921a1ed-7afe-5add-b31c-4568654f8061",
+    "ev_cbb3a397-5c2f-5ebe-a18d-2f84c2f18fee",
+    "ev_db1b86d0-8815-5388-92f7-1c6891343ae6",
+    "ev_dcc402b1-62dd-599f-a618-04cd9df312f4",
+    "ev_e512676a-40df-5e66-8d30-f33b4daee90d",
+    "ev_ecb866fd-96b4-5716-98f6-742b28e85eab"
+  ],
+  "plan_created": true,
+  "plan_hash": "c729e2583e653a41e450dbee0c571d8ccc92fe4a81ecd171a1afb8c7cea07c21",
+  "plan_id": "plan_c729e2583e653a41e450dbee0c571d8c",
+  "plan_path": "D:\\ResearchFlow-project\\docs\\verification\\t0\\e2e\\run_2\\runtime\\recovery_plans\\c729e2583e653a41e450dbee0c571d8ccc92fe4a81ecd171a1afb8c7cea07c21.json",
+  "task_id": "task_22a82629-062e-4779-bb3b-8bbfa611b12a"
+}

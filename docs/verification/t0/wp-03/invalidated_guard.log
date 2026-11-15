@@ -1,0 +1,5 @@
+{"actual_reason": "PLAN_FILE_MISSING", "api_error_code": "STATE_TRANSITION_DENIED", "case": "plan-file-missing", "error_code": "PLAN_HASH_MISMATCH", "expected_reason": "PLAN_FILE_MISSING", "state": "INVALIDATED"}
+{"actual_reason": "PLAN_HASH_MISMATCH", "api_error_code": "STATE_TRANSITION_DENIED", "case": "plan-hash-mismatch", "error_code": "PLAN_HASH_MISMATCH", "expected_reason": "PLAN_HASH_MISMATCH", "state": "INVALIDATED"}
+{"actual_reason": "PLAN_FREEZE_RECORD_MISSING", "api_error_code": "STATE_TRANSITION_DENIED", "case": "freeze-record-missing", "error_code": "PLAN_HASH_MISMATCH", "expected_reason": "PLAN_FREEZE_RECORD_MISSING", "state": "INVALIDATED"}
+{"actual_reason": "PLAN_FROZEN_AFTER_RERUN", "api_error_code": "STATE_TRANSITION_DENIED", "case": "freeze-after-rerun", "error_code": "PLAN_HASH_MISMATCH", "expected_reason": "PLAN_FROZEN_AFTER_RERUN", "state": "INVALIDATED"}
+{"actual_reason": null, "case": "all-three-guards-pass", "expected_reason": null, "plan_hash": "4af9ad224136cb2a2911d704715f1f083e276994ceb5d145eb411500753853e7", "plan_id": "plan-1", "state": "READY"}

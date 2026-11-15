@@ -4,7 +4,7 @@
 > 覆盖：三模型分类模板、参数契约、指标/产物/required_checks、SplitService 与六字段 manifest、
 > 模型工厂与超参白名单、Wine 冒烟与 Breast Cancer 主干差异、离线数据集登记与绑定
 > 不覆盖：Gate 判定（P5）、签名（P6）、L3 重跑（P5）、API（P10）、调度（P7）
-> 前置：P3 已验收（Executor 协议与工作区已定）；M01 契约与错误码已冻结
+> 前置：P3 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P3 设计件已验收；实现未开始）；M01 契约与错误码已冻结
 > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
 
 ## 1. 目标

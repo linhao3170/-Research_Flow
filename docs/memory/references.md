@@ -1,6 +1,6 @@
 # references.md — 资料来源与关键引用索引
 
-> 更新时间：2026-11-08（阶段 7；阶段 8 复核）
+> 更新时间：2026-11-08（阶段 7；阶段 8 复核）；2026-11-12 引用与状态核对
 > 核验状态：策划书已做全文只读抽取（754/754 段落、80/80 表格）；文件大小与 SHA256 已复核。**版本冲突已由用户 2026-11-08 决议关闭**：内容基线为文档内部 v4.3.0，文件名 v4.3.1 仅为标签；`BLK-002` 已关闭。
 > 证据规则：外部资料、官方网页、模型输出和第三方材料默认不是可信证据；只有经过声明的验证流程，才能用于“已实测 / 已验证”结论。
 
@@ -20,7 +20,7 @@
 | 文档内部版本 | **v4.3.0**（封面 P0001/P0007、页眉、正文 P0013、core title） |
 | 日期 | 文档控制表 `2026 年 11 月 6 日`；文件系统 `2026-11-06 18:43:34`；core 属性 `2013-12-23T23:15:00Z` 为模板默认值，不可用 |
 | 文档结构（实测） | 754 个段落；80 张表；0 图片/绘图/文本框；0 修订/批注；无 TOC；30 个手工分页符 |
-| 核验状态 | 文件存在、大小、SHA256 与全文抽取已复核；**版本生效性待用户确认** |
+| 核验状态 | 文件存在、大小、SHA256 与全文抽取已复核；版本冲突已于 2026-11-08 由用户决议关闭（内部 v4.3.0 为内容基线，v4.3.1 仅为文件名标签） |
 | 详细登记 | [`../reference/SOURCE_REGISTER.md`](../reference/SOURCE_REGISTER.md)；冲突见 [`../reference/CONFLICT_REPORT.md`](../reference/CONFLICT_REPORT.md) |
 
 本阶段实际对照的章节 / 表：
@@ -87,7 +87,11 @@
 | R-20 | 阶段 7 冲突报告 | `docs/reference/CONFLICT_REPORT.md` | v4.3.1/v4.3.0 冲突、飞书/赛事资料缺失、方案与推荐 |
 | R-21 | 阶段 7 只读抽取与版本证据 | `docs/verification/stage7/` | 754 段/80 表全文、`v4.3.1` 在文档内计数 0、页码不可用说明 |
 | R-22 | 阶段 8 综合验收报告与证据 | `docs/verification/stage8/STAGE8_REPORT.md`、`docs/verification/stage8/` | 26 项验收、运行态证据、FAIL/NOT VERIFIED、资源与安全审计 |
-| R-23 | G0 裁决清单（阶段 9 准备） | `docs/state/G0_DECISION_LIST.md` | 已裁决，见 docs/verification/g0/19_g0_pass_decision.md |
+| R-23 | G0 裁决清单（历史；G0 已于 2026-11-10 通过） | `docs/state/G0_DECISION_LIST.md` | 历史记录；当前门禁状态见 `docs/state/project_state.json` |
+| R-24 | T0 WP-01 环境与依赖锁定 | `docs/verification/t0/wp-01/` | 解释器、锁文件、TestClient 与体积证据 |
+| R-25 | T0 WP-02 核心契约落地 | `docs/verification/t0/wp-02/` | Pydantic 模型、72 例 parity、API 422 与幂等 |
+| R-26 | P0 整改与测试报告 | `reports/remediation/` | 140 passed full-access、状态一致性、P9/P10 现状 |
+| R-27 | P1–P10 伪代码阶段注册表 | `design/pseudocode/INDEX.md`、`STAGE_LOG.md` | 阶段状态、模块索引与验收记录 |
 
 ## 4. 引用纪律
 
@@ -107,6 +111,9 @@
 - [`docs/verification/stage6/`](../verification/stage6/)
 - [`docs/verification/stage7/`](../verification/stage7/)
 - [`docs/verification/stage8/`](../verification/stage8/)
+- [`docs/verification/t0/`](../verification/t0/)
+- [`reports/remediation/`](../../reports/remediation/)
+- [`design/pseudocode/INDEX.md`](../../design/pseudocode/INDEX.md)
 - [`docs/state/G0_DECISION_LIST.md`](../state/G0_DECISION_LIST.md)
 - [`docs/reference/SOURCE_REGISTER.md`](../reference/SOURCE_REGISTER.md)
 - [`docs/reference/CONFLICT_REPORT.md`](../reference/CONFLICT_REPORT.md)

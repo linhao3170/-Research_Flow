@@ -1,6 +1,6 @@
-# ARCHITECTURE — ResearchFlow 架构基线（候选，待 G0 冻结）
+# ARCHITECTURE — ResearchFlow 架构基线（G0 已 PASS）
 
-> 状态：阶段 7 资料接手成果；**不是已冻结契约**，G0 尚未通过
+> 状态：G0 已于 2026-11-10 由用户宣布 `PASS`；本文件是架构基线，不是门禁证据，也不替代冻结契约。当前实现/阶段状态以 `docs/state/project_state.json` 为准。
 > 基线：策划书**内部 v4.3.0**（文件名标签 v4.3.1；`BLK-002` 已关闭，2026-11-08 用户决议）
 > 证据锚点：`P####` → [`02_docx_body.txt`](verification/stage7/02_docx_body.txt)；`TABLE ##` → [`05_docx_tables.txt`](verification/stage7/05_docx_tables.txt)
 > 页码说明：DOCX 无可信页码（无 TOC/缓存分页；Word COM 不可用）；引用使用章节号 + `P####` + `TABLE ##`，可在上述文件中逐行核验。
@@ -143,13 +143,13 @@ Gate 顺序：
 | 对象 | 状态迁移 | 约束 |
 |---|---|---|
 | Task | `CREATED → PLANNING → READY → RUNNING → VERIFYING → COMPLETED/FAILED/BLOCKED/CANCELLED` | 汇总状态由系统产生 |
-| Node | `PLANNED → READY → RUNNING → VERIFYING → VERIFIED/FAILED/BLOCKED`；`FAILED → DIAGNOSING → RECOVERING → READY` | `VERIFIED` 唯一入口是 Gate PASS + Verifier VERIFIED + 有效凭证 |
+| Node | `PLANNED → READY → RUNNING → VERIFYING → VERIFIED/FAILED/BLOCKED`；`FAILED → DIAGNOSING → RECOVERING → READY`；`VERIFIED → INVALIDATED → READY` | 10 个状态；`VERIFIED` 唯一入口是 Gate PASS + Verifier VERIFIED + 有效凭证；`INVALIDATED → READY` 需计划存在、`plan_hash` 一致、先冻结后重跑 |
 | Evidence | `RECEIVED → VALIDATED → APPENDED`；`INVALID/CONFLICT` | 只追加；无效记录保留并标注 |
 | Recovery | `PROPOSED → VALIDATED → APPROVED → EXECUTING → RECHECKED → CLOSED/ESCALATED` | Recovery Agent 只提案，调度器/人工批准 |
 
-来源：§6.2 / TABLE 26；附录 F / TABLE 70。
+来源：§6.2 / TABLE 26；附录 F / TABLE 70；`docs/design/05` §9.2–§9.3；`ADR-001`。
 
-完整迁移表与不变量见 [`docs/state/runtime_states.md`](state/runtime_states.md)。该文件是附录 F 的对照索引，规范性以 G0 冻结后的契约为准。
+完整迁移表与不变量见 [`docs/state/runtime_states.md`](state/runtime_states.md)。该文件是附录 F 与 `ADR-001` 的对照索引，规范性以 G0 冻结契约为准。
 
 ### 4.2 核心不变量
 
@@ -163,8 +163,14 @@ Gate 顺序：
 | I-06 | 签名载荷包含规则版本、证据根和状态 |
 | I-07 | 非 `VERIFIED` 报告不产生 `CompletionCertificate` |
 | I-08 | 离线验签使用外部可信指纹，不信任证书自带公钥 |
+| I-09 | `INVALIDATED` 只从 `VERIFIED` 进入，且只能回 `READY` |
+| I-10 | stale 证据不得满足必检项；证据不删除 |
+| I-11 | 失效/恢复控制事件不是证据：只写 `audit_log` + `evidence_invalidations`，不占用 E0–E3 |
+| I-12 | `INVALIDATED → READY` 必须同时满足计划存在、`plan_hash` 一致、先冻结后重跑 |
+| I-13 | 报告与证书签名载荷必须含 `schema_version`；验签方拒绝未知 `MAJOR` |
+| I-14 | 失败迁移的 `DENIED` 审计在状态回滚后仍存在；二次失败降级结构化 stderr 并计测试缺口 |
 
-来源：附录 F.2 / TABLE 71；`AGENTS.md` §4.10–4.11。
+来源：附录 F.2 / TABLE 71；`docs/design/05` §10；`ADR-001`；`AGENTS.md` §4.10–4.11。
 
 ## 5. 证据等级 E0–E3
 
@@ -511,7 +517,7 @@ Agent 声明(E0) / 工具调用(E1) / Executor 观测(E2)
 
 来源：§5.5 / TABLE 23；§15.4 / TABLE 58。
 
-`[现状]` 以上依赖**均未安装、未锁定版本**；`.venv` 未创建。实际版本必须在 T0 开始时锁定并记录。
+`[现状]` 以上依赖已在 WP-01 锁定：`.venv` 使用 Python 3.11.16（64 位），`requirements.lock` 锁定 58 个包；实际版本与偏差见 `docs/verification/t0/wp-01/`。这表示依赖基线已建立，不表示架构各层已实现。
 
 ## 13. 当前实现状态与 G0 缺口
 
@@ -519,16 +525,16 @@ Agent 声明(E0) / 工具调用(E1) / Executor 观测(E2)
 
 | 项 | 状态 |
 |---|---|
-| 业务代码 | 未开发；`researchflow/` 只有 `.gitkeep` |
-| 契约/Schema | 未建立；`contracts/` 只有 `.gitkeep` |
-| StateMachine / DB / 审计 | 未实现 |
-| Executor / Collector / Gate / Verifier | 未实现 |
-| 密码学 / 离线验签 | 未实现 |
+| 业务代码 | 部分实现：Pydantic 契约模型 + `POST/GET /api/v1/tasks`；其余未实现 |
+| 契约/Schema | 5 份冻结 JSON Schema v1.0 + 72 个正反例 |
+| StateMachine / DB / 审计 | 未实现；P2 设计件已验收（2026-11-12），实现未开始 |
+| Executor / Collector / Gate / Verifier | 未实现；P3–P5 设计件已验收（2026-11-12） |
+| 密码学 / 离线验签 | 未实现；P6 设计件已验收（2026-11-12） |
 | 前端 | 未实现 |
-| T0 | 未开始 |
-| G0–G7 | 全部 `NOT_STARTED` |
+| T0 | 进行中 |
+| G0–G7 | G0 `PASS`；G1–G7 `NOT_STARTED` |
 
-### 13.2 G0 必须冻结的缺口
+### 13.2 G0 冻结时的缺口（历史清单，已由 G0 文档包处置）
 
 - Task / Node / Evidence / Report / Certificate 的完整 JSON Schema；
 - REST API 路径、请求/响应字段与错误码表；
@@ -540,6 +546,8 @@ Agent 声明(E0) / 工具调用(E1) / Executor 观测(E2)
 - 并发 2、16GB 内存下的资源验收口径；
 - ~~**策划书基线版本（`BLK-002`）**~~（已于 2026-11-08 由用户决议：内部 v4.3.0 为内容基线，v4.3.1 仅为文件名标签；不再列为 G0 缺口）。
 
+> 上述清单是 G0 冻结前的历史缺口记录，不代表当前仍未冻结。G0 已于 2026-11-10 `PASS`；当前实现状态见 `docs/state/project_state.json`。
+
 来源：§7.2、§7.6、§15.3、附录 D/E/F；`docs/memory/architecture-decisions.md` §7。
 
 ## 14. 待确认与建议
@@ -547,7 +555,7 @@ Agent 声明(E0) / 工具调用(E1) / Executor 观测(E2)
 ### 14.1 待用户确认
 
 1. ~~`BLK-002`：以内部 v4.3.0 还是文件名 v4.3.1 为基线；是否存在真正的 v4.3.1 内容。~~ **已决（2026-11-08）**：内部 v4.3.0 为内容基线，v4.3.1 仅为文件名标签。
-2. G0 冻结范围与交付顺序；剩余 3 项裁决见 [`state/G0_DECISION_LIST.md`](state/G0_DECISION_LIST.md)。
+2. G0 冻结时的 3 项裁决已由 G0 文档包关闭；历史记录见 [`state/G0_DECISION_LIST.md`](state/G0_DECISION_LIST.md)。
 3. 是否采用策划书建议的技术栈与进程预算。
 4. 并发 2 的最终验收口径。
 

@@ -1,0 +1,1 @@
+{"audit_write_failed":true,"error_code":"AUDIT_WRITE_FAILED","original_error_code":"STATE_TRANSITION_DENIED","task_id":"task_3f2c9a1e-0b7d-4c55-9a4e-1f6b2d8c7a10","node_id":null,"previous_state":"CREATED","next_state":"COMPLETED","reason":"ILLEGAL_EDGE","correlation_id":"evidence-c","actor":"orchestrator:evidence","field_path":null}

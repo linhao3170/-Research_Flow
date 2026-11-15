@@ -1,0 +1,160 @@
+{
+  "api_port": 62271,
+  "browser": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "browser_version": "Google Chrome 157.0.8103.51",
+  "capture_runtime": "runtime\\wp13-screenshots",
+  "command": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe -B docs/verification/t0/wp-13/capture_screenshots.py",
+  "cwd": "D:\\ResearchFlow-project",
+  "dom_checks": [
+    {
+      "bytes": 156862,
+      "expected": [
+        "Task 状态",
+        "COMPLETED",
+        "task_f1901dd5-29e0-4f0f-a93d-b1f175d086e2"
+      ],
+      "missing": [],
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dom\\task.html"
+    },
+    {
+      "bytes": 161555,
+      "expected": [
+        "确定性拓扑序",
+        "split_dataset",
+        "train_logistic_regression"
+      ],
+      "missing": [],
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dom\\dag.html"
+    },
+    {
+      "bytes": 172751,
+      "expected": [
+        "证据条数",
+        "链校验",
+        "已失效证据",
+        "32",
+        "16"
+      ],
+      "missing": [],
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dom\\evidence.html"
+    },
+    {
+      "bytes": 156860,
+      "expected": [
+        "报告状态",
+        "VERIFIED",
+        "L3 覆盖",
+        "CompletionCertificate"
+      ],
+      "missing": [],
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dom\\report.html"
+    },
+    {
+      "bytes": 156860,
+      "expected": [
+        "任务",
+        "DAG",
+        "证据",
+        "报告"
+      ],
+      "missing": [],
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dom\\overview.html"
+    },
+    {
+      "bytes": 17229,
+      "expected": [
+        "无法读取任务",
+        "无法连接 API"
+      ],
+      "missing": [],
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dom\\api_unreachable.html"
+    }
+  ],
+  "dom_ok": true,
+  "duration_sec": 14.476,
+  "ended_at": "2026-11-15T02:36:54.442386Z",
+  "exit_code": 0,
+  "images_ok": true,
+  "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+  "notes": [
+    "The source e2e run_1 tree was copied, never modified.",
+    "The copy contains the task database and evidence payloads only; no keys.",
+    "Each screenshot is a fresh headless browser run against the real Streamlit app and real API.",
+    "DOM dumps are saved next to the screenshots so the expected visible text is machine-checkable."
+  ],
+  "purpose": "WP-13 four-view screenshots from real API data",
+  "python_version": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "screenshots": [
+    {
+      "bytes": 113572,
+      "duration_sec": 0.066,
+      "height": 1200,
+      "luma_max": 255,
+      "luma_min": 31,
+      "mode": "RGB",
+      "nonwhite_fraction": 0.0352,
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\task.png",
+      "width": 1440
+    },
+    {
+      "bytes": 70542,
+      "duration_sec": 0.047,
+      "height": 1200,
+      "luma_max": 255,
+      "luma_min": 45,
+      "mode": "RGB",
+      "nonwhite_fraction": 0.0763,
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\dag.png",
+      "width": 1440
+    },
+    {
+      "bytes": 103980,
+      "duration_sec": 0.083,
+      "height": 1200,
+      "luma_max": 255,
+      "luma_min": 45,
+      "mode": "RGB",
+      "nonwhite_fraction": 0.0604,
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\evidence.png",
+      "width": 1440
+    },
+    {
+      "bytes": 121811,
+      "duration_sec": 0.09,
+      "height": 1200,
+      "luma_max": 255,
+      "luma_min": 31,
+      "mode": "RGB",
+      "nonwhite_fraction": 0.0648,
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\report.png",
+      "width": 1440
+    },
+    {
+      "bytes": 113572,
+      "duration_sec": 0.089,
+      "height": 1200,
+      "luma_max": 255,
+      "luma_min": 31,
+      "mode": "RGB",
+      "nonwhite_fraction": 0.0352,
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\overview.png",
+      "width": 1440
+    },
+    {
+      "bytes": 42741,
+      "duration_sec": 0.07,
+      "height": 1200,
+      "luma_max": 255,
+      "luma_min": 45,
+      "mode": "RGB",
+      "nonwhite_fraction": 0.0454,
+      "target": "docs\\verification\\t0\\wp-13\\screenshots\\api_unreachable.png",
+      "width": 1440
+    }
+  ],
+  "source_runtime": "docs\\verification\\t0\\e2e\\superseded_2026-11-15_pre_a01\\run_1\\runtime",
+  "started_at": "2026-11-15T02:36:39.962830Z",
+  "streamlit_port": 62272,
+  "task_id": "task_f1901dd5-29e0-4f0f-a93d-b1f175d086e2",
+  "verdict": "PASS"
+}

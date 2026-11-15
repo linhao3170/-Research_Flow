@@ -1,0 +1,1 @@
+{"case": "denied-survives-rolled-back-state", "denial_reason": "STATE_WRITE_FAILED", "denied_error_code": "STATE_TRANSITION_DENIED", "denied_exists": true, "denied_next_state": "PLANNING", "denied_previous_state": "CREATED", "ok_transition_audits": 0, "state_after_rollback": "CREATED"}

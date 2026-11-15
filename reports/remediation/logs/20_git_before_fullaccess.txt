@@ -1,0 +1,24 @@
+﻿timestamp=2026-11-11T22:54:39.3575558+08:00
+policy=workspace-write (pre-test snapshot)
+head=309083e715cb59a1f0c181d95df44e1946ffbaa5
+--- git status --porcelain=v1 ---
+ M design/pseudocode/INDEX.md
+ M design/pseudocode/OPEN_QUESTIONS.md
+ M design/pseudocode/STAGE_LOG.md
+ M researchflow/api/app.py
+?? design/pseudocode/M13_scheduler/
+?? design/pseudocode/M14_recovery/
+?? design/pseudocode/M15_dcspa/
+?? design/pseudocode/M16_vas/
+?? design/pseudocode/M17_agents/
+?? design/pseudocode/M18_knowledge/
+?? design/pseudocode/M19_api/
+?? reports/
+?? tests/test_api_idempotency.py
+--- cache/temp before ---
+.pytest_cache exists files=4 bytes=12253
+__pycache__ exists files=1 bytes=757
+researchflow/__pycache__ exists files=1 bytes=237
+tests/__pycache__ exists files=5 bytes=115985
+tmp/unittest-temp exists files=0 bytes=
+tmpavet2qv9 absent

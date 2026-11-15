@@ -1,0 +1,11 @@
+{
+  "final_certificate_id": "cert_da8818cd-1d4e-452c-b4b3-03fc5dd8b805",
+  "final_report_id": "report_60f2ac7f-dcf8-4d2e-89ef-1465f98f63eb",
+  "note": "Superseded reports/certificates are listed by id; only the final pair is included.",
+  "superseded_certificate_ids": [
+    "cert_b2b2d551-eb0b-40e6-b8a8-4df0ee9d8a52"
+  ],
+  "superseded_report_ids": [
+    "report_cc922f8e-f373-4710-9b61-dee76b022bb2"
+  ]
+}

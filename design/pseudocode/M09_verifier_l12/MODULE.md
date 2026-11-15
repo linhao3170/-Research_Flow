@@ -3,7 +3,7 @@
 > 阶段：P5「门控与三级验证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
 > 覆盖：L1 过程完整性（schema/哈希/seq/链/Merkle/目录复用）、L2 结果自洽（指标重算/字段语义/混淆矩阵/R1–R5）
 > 不覆盖：L3 重跑（M10）、签名/信任锚（P6）、验证预算（P9）、科学结论评价
-> 前置：P4 已验收；M07 chain/merkle、M06 Split Manifest、M01 冻结 schema 可用
+> 前置：P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P4 设计件已验收；实现未开始）；M07 chain/merkle、M06 Split Manifest、M01 冻结 schema 可用
 > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
 
 ## 1. 目标

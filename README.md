@@ -2,25 +2,25 @@
 
 ResearchFlow 3.1 是面向 AI 实验任务的可信多智能体编排、动态调度与独立验证平台。目标是把任务规划、执行控制、证据采集、故障恢复、结果验证和凭证签发整合为一条可审计工程链。
 
-> 当前处于 **WORKSTATION_SETUP**：已建立项目规则、记忆、研发状态基线、九个项目级 Skills、Context7 MCP 接入（匿名额度），并在阶段 7 完成策划书全文抽取、来源登记、冲突报告与知识文档。尚未开发 ResearchFlow 业务代码，G0–G7 均为 `NOT_STARTED`。
-> 策划书基线已确认（2026-11-08 用户决议）：内容基线为文档内部 `v4.3.0`，文件名标签 `v4.3.1` 仅作标签；`BLK-002` 已关闭。G0 仍有 3 项待裁决，见 [`docs/state/G0_DECISION_LIST.md`](docs/state/G0_DECISION_LIST.md)。
+> 当前处于 **T0**：G0 已于 2026-11-10 由用户宣布 `PASS`；`T-WP-01-001`、`T-WP-02-001` 为 `DONE`；P1–P8 伪代码设计件 `ACCEPTED`（P1 2026-11-11；P2–P8 2026-11-12），P9 `BLOCKED`（并发重写来源待裁决），P10 `BLOCKED`（未获开发授权）；G1–G7 仍 `NOT_STARTED`。
+> 策划书基线已确认（2026-11-08 用户决议）：内容基线为文档内部 `v4.3.0`，文件名标签 `v4.3.1` 仅作标签；`BLK-002` 已关闭。G0 冻结时的 3 项待裁决已由 G0 文档包关闭，历史记录见 [`docs/state/G0_DECISION_LIST.md`](docs/state/G0_DECISION_LIST.md)。
 > 项目定位与边界以 [`docs/PROJECT_OVERVIEW.md`](docs/PROJECT_OVERVIEW.md) 与 [`docs/memory/project-context.md`](docs/memory/project-context.md) 为准；研发进度以 [`docs/state/project_state.json`](docs/state/project_state.json) 为唯一机器可读事实源。
 
 ## 目录结构
 
 | 目录 | 说明 |
 |---|---|
-| `contracts/` | 对外数据契约 / JSON Schema（尚未建立） |
-| `researchflow/` | 未来 Python 应用代码包（尚未开发） |
+| `contracts/` | 5 份冻结 JSON Schema v1.0 + 72 个正反例 |
+| `researchflow/` | Pydantic v2 契约模型 + 现有 `POST/GET /api/v1/tasks` 绑定；StateMachine/SQLite 未实现 |
 | `tests/` | 测试代码 |
 | `scripts/` | 工程辅助脚本 |
 | `docs/reference/inbox/` | 后续外部资料入口（当前仅 `.gitkeep`；不存放策划书副本） |
 | `docs/reference/` | 来源登记与冲突报告；策划书原件在仓库根目录，禁止复制 |
 | `docs/memory/` | 项目记忆索引与子文件 |
 | `docs/state/` | 研发状态 JSON 与运行时状态对照 |
-| `docs/ADR/` | 架构决策记录（当前为空） |
-| `docs/PRD/` | 产品需求文档（尚未建立） |
-| `docs/design/` | 设计文档（尚未建立） |
+| `docs/ADR/` | 架构决策记录：ADR-001–006 `ACCEPTED`，ADR-007 `PROPOSED` |
+| `docs/PRD/` | G0 PRD、需求追踪矩阵与 T0 PRD |
+| `docs/design/` | G0 冻结的架构、契约/状态、数据/API、T0 计划/门禁设计 |
 | `docs/verification/` | 真实验证日志与阶段证据 |
 | `.agents/skills/` | 项目级 Agent Skills（9 个 ResearchFlow Skill Bundle） |
 
@@ -54,7 +54,7 @@ ResearchFlow 3.1 是面向 AI 实验任务的可信多智能体编排、动态�
 C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-x86_64-none\python.exe
 ```
 
-PATH 上的 `python`（3.12）与 `py -3.11`（32 位 3.11.0）均不得用于本项目。当前未创建 `.venv`、未安装第三方依赖；状态同步脚本与测试只使用标准库。
+PATH 上的 `python`（3.12）与 `py -3.11`（32 位 3.11.0）均不得用于本项目。项目 `.venv` 已按 3.11.16（64 位）创建，`requirements.lock` 锁定 58 个包；运行测试必须使用 `.venv/Scripts/python.exe` 或上述 uv 绝对路径。`BLK-003`（workspace-write 下的测试临时目录 ACL）仍 `OPEN`；2026-11-11 的 full-access 全量测试通过不能用于关闭该阻塞。
 
 详细环境核验见 [`docs/memory/environment.md`](docs/memory/environment.md)。
 
@@ -76,8 +76,13 @@ Skill 结构校验：
 
 ## 当前阶段
 
-阶段 7：ResearchFlow 项目资料接手。已完成策划书全文只读抽取（754 段落 / 80 表格 / 0 媒体）、版本证据核对、来源登记、冲突报告与知识文档；**未复制/移动/修改根目录 DOCX**。阶段 6 的 Context7 接入保持可用（匿名额度，未配置 API Key），备份保留。未 commit、未建 `.venv`、未装依赖、未开发业务代码。
+当前处于 T0 契约与治理基线，尚未进入运行时实现阶段：
 
-当前关键未决项：G0 的 3 项裁决（FR-010 的 T0 边界、§15.5 与附录 J 的顺序、FR-015/016/017 的 P1 与 T2 错位）；版本项已决。`BLK-003`（workspace-write 下测试临时目录 ACL）仍 `OPEN`。
+- 已完成：G0 规格冻结（2026-11-10 `PASS`）；WP-01 环境锁定；WP-02 五份契约模型与创建/查询 API；P1–P8 伪代码设计件验收（P2–P8 于 2026-11-12 按 C 指令）。
+- 部分完成：P1–P8 设计件已验收，但运行时实现尚未开始；P9 的 6 个 `.py` 为 2026-11-11 并发重写产物，不是原始正文恢复，状态 `BLOCKED`；P10/M19 仅登记现状，状态 `BLOCKED`，未获开发授权。
+- 测试：2026-11-11 按用户 E 项授权执行一次受控 full-access 全量 pytest，`140 passed`、exit 0；该结果不关闭 `BLK-003`，也不构成 G1 或运行时能力通过。
+- Git：`last_verified_commit` 仍为 `1c9a104`；HEAD 已前移到状态提交，整改未 commit。
 
-后续阶段需用户明确批准；本仓库不自动 commit，提交前必须确认 Git 身份。
+当前不能宣称：G1–G7 `PASS`；StateMachine/SQLite/审计已实现；Collector/Gate/Verifier/签名/离线验签已实现；P9/P10 已验收；P2–P8 设计件已验收不等于运行时实现；六份 P9 并发重写文件等同于原始设计。
+
+WP-03 的进入条件尚未满足：P2 未验收、§12-2/§12-6/§12-7/§12-8 未裁决、P9 缺口未获用户处置、`BLK-003` 仍 OPEN。后续阶段需用户明确批准；本仓库不自动 commit，提交前必须确认 Git 身份。根目录 DOCX 未复制、未移动、未改名、未修改。

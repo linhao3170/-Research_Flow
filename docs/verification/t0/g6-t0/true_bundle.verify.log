@@ -1,0 +1,9 @@
+G6-T0 true-bundle offline verification
+date=2026-11-14
+verifier=repo verify_bundle.py sha256=595f2fae75a0e74d349dc9d9c47f90e4a98803fb5a7af9a412173ebfda5b3e18
+command: .venv/Scripts/python.exe -E isolated-verifier/verify_bundle.py --bundle isolated-verifier/bundle --trust-store isolated-verifier/trust_store.json
+run_1 exit=0 status=VERIFIED merkle_root matches report; see run_1.verify.stdout.log / run_1.verify.json
+run_2 exit=0 status=VERIFIED merkle_root matches report; see run_2.verify.stdout.log / run_2.verify.json
+run_3 exit=0 status=VERIFIED merkle_root matches report; see run_3.verify.stdout.log / run_3.verify.json
+trust_anchor=external trust_store.json (public key only, copied from the run directory; never inside the bundle)
+note=the verifier re-evaluates the Gate from the bundled records/invalidations/ruleset and checks E3-to-split binding (executor_split_hash, train_pid, l3_split_dir).

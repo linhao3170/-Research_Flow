@@ -1,6 +1,6 @@
 # DEVELOPMENT_WORKFLOW — ResearchFlow 开发工作流
 
-> 状态：阶段 7 资料接手成果；阶段 8 复核
+> 状态：T0 P0 整改后的当前工作流；阶段 7/8 的历史执行约束保留在 §11.2，不再作为当前禁令。
 > 基线：策划书内部 v4.3.0（文件名标签 v4.3.1；`BLK-002` 已关闭）；`AGENTS.md`（阶段 5 基线）
 > 证据锚点：`P####` → [`02_docx_body.txt`](verification/stage7/02_docx_body.txt)；`TABLE ##` → [`05_docx_tables.txt`](verification/stage7/05_docx_tables.txt)
 > 页码说明：DOCX 无可信页码（无 TOC/缓存分页；Word COM 不可用）；引用使用章节号 + `P####` + `TABLE ##`，可在上述文件中逐行核验。
@@ -21,7 +21,7 @@
 1. 先登记到 [`reference/CONFLICT_REPORT.md`](reference/CONFLICT_REPORT.md)，列出原文、位置、影响、方案。
 2. 不自动合并两个版本或多个来源。
 3. 用户当前明确指令 > `AGENTS.md` > 已批准 ADR/冻结契约 > 记忆索引/知识文档。
-4. 版本已定（`BLK-002` 已关闭），但 G0 仍有 3 项待裁决；G0 冻结前不把目标数字当最终验收合同。
+4. 版本已定（`BLK-002` 已关闭）；G0 已于 2026-11-10 `PASS`，冻结时的 3 项待裁决已由 G0 文档包关闭（历史见 `state/G0_DECISION_LIST.md`）。目标数字仍不是实测成绩，不得写成当前能力。
 
 ## 2. 每次任务开始前
 
@@ -109,7 +109,7 @@ G0 规格冻结 → G1 纵向闭环 → G2 证据可信 → G3 L3 独立重执�
 
 每道门禁的通过条件与未通过处理见 [`ARCHITECTURE.md`](ARCHITECTURE.md) §7 或 [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md) §7.2；原始表为 §15.3 / TABLE 57。
 
-`[现状]` 当前 G0–G7 全部 `NOT_STARTED`；不得提前标 PASS。
+`[现状]` `G0` 已 `PASS`；`G1`–`G7` 仍 `NOT_STARTED`，不得提前标 PASS。P1–P8 伪代码设计件 `ACCEPTED`（P2–P8 于 2026-11-12 验收），P9/P10 `BLOCKED`；这些阶段状态不参与门禁计算。
 
 ## 6. 测试与证据规则
 
@@ -178,7 +178,7 @@ G0 规格冻结 → G1 纵向闭环 → G2 证据可信 → G3 L3 独立重执�
 3. 引用测试结果写命令、解释器、退出码、日志路径与运行时间。
 4. 原始资料与摘要分开；不得改写原文冒充原文。
 5. 不得复制/移动/重命名根目录策划书；只登记路径与 SHA256；`docs/reference/inbox/` 留给后续外部资料。
-6. `BLK-002` 已关闭；G0 冻结前，仍不把任何目标数字写成最终验收合同，不宣布 G0 通过。
+6. `BLK-002` 已关闭；G0 已于 2026-11-10 `PASS`。后续变更仍按 ADR/用户审批执行，不把目标数字写成实测成绩，不把伪代码阶段写成运行时能力。
 
 来源：`AGENTS.md` §1.2、§1.7–1.8、§9；[`reference/SOURCE_REGISTER.md`](reference/SOURCE_REGISTER.md)；[`reference/CONFLICT_REPORT.md`](reference/CONFLICT_REPORT.md)。
 
@@ -186,8 +186,8 @@ G0 规格冻结 → G1 纵向闭环 → G2 证据可信 → G3 L3 独立重执�
 
 - 不自动 `git add` / `git commit`。
 - 提交前询问用户并确认 `user.name` / `user.email`（`BLK-001`）。
-- 当前 `last_verified_commit=null`；0 commit。
-- 策划书 DOCX 不纳入 Git（避免第二份副本）；当前未被 `.gitignore` 忽略，后续 `git add` 必须显式排除。
+- 当前有 7 个 commit；HEAD 为 `309083e`，`last_verified_commit` 为 `1c9a104`；两者不一致是未提交整改的预期状态，不得擅自推进 `last_verified_commit`。
+- 策划书 DOCX 不纳入 Git（避免第二份副本）；已按精确文件名忽略，后续 `git add` 仍须显式核对。
 - `.gitattributes` 固定 LF；`state_sync.py check` 依赖逐字节一致。
 
 来源：`AGENTS.md` §3.3、§9；[`memory/environment.md`](memory/environment.md) §3；`09_inventory.log`。
@@ -213,21 +213,44 @@ $py = 'C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-
 ### 10.2 状态词汇
 
 - 研发看板只允许 `BACKLOG`、`READY`、`IN_PROGRESS`、`BLOCKED`、`IN_REVIEW`、`DONE`、`DEFERRED`。
-- 运行时 Task/Node 状态按附录 F；不得写入 `project_state.json`。
+- 伪代码阶段使用独立注册表 `pseudocode_stages`，只允许 `NOT_STARTED`、`IN_PROGRESS`、`IN_REVIEW`、`BLOCKED`、`ACCEPTED`、`DEFERRED`；`ACCEPTED` 只表示设计件验收，不表示运行时能力。
+- 运行时 Task/Node 状态按附录 F 与 `ADR-001`（Node 增加 `INVALIDATED`，共 10 个状态）；不得写入 `project_state.json`。
 - 门禁只有 `NOT_STARTED`、`IN_PROGRESS`、`PASS`、`FAIL`、`BLOCKED`；PASS 必须有证据路径、`decided_by`（裁决人）与 `decided_at`（裁决日期，`YYYY-MM-DD` 或带时区 ISO-8601）。
 
 来源：`AGENTS.md` §6、§7；[`MEMORY_GUIDE.md`](MEMORY_GUIDE.md)。
 
-## 11. 当前阶段的执行约束（阶段 7）
+## 11. 当前阶段的执行约束（T0 P0 整改后）
 
-- **不 commit、不建 `.venv`、不装依赖、不开发业务代码。**
-- 不复制/移动根目录 DOCX。
-- 不删除阶段 6 备份 `cordis.patch.yml.bak-20261108-stage6`；至少保留到阶段 8 验收结束。
-- `T-SKILLS-001` 在阶段 7 状态同步中由 `IN_REVIEW` 转 `DONE`；`T-MCP-001` 保持 `DONE`。
-- 不顺手改 G0–G7。
-- `BLK-002` 已关闭（2026-11-08 用户决议）；`BLK-003`（workspace-write 下测试临时目录 ACL 阻塞）保持 `OPEN`。
+### 11.1 当前约束
 
-来源：用户阶段 7 指令；[`state/project_state.json`](state/project_state.json)。
+- 不自动 commit；本轮整改只输出 Diff 与报告，等待用户单独批准。不得擅自修改 `last_verified_commit`。
+- 不扩大 P10/M19 开发范围；不删除 M19；不得把 P9 并发重写文件标为 `ACCEPTED` 或原始正文。
+- 不修改冻结契约、冻结架构、ADR 正文、PRD/G0/design 历史结论；只允许修正非冻结文档的现状说明与历史横幅。
+- 不清理 `.pytest_cache`、`__pycache__`、`tmp/unittest-temp` 或其他临时目录；只记录。
+- 不复制/移动/改名根目录 DOCX。
+- `BLK-003`（workspace-write 下测试临时目录 ACL 阻塞）保持 `OPEN`；full-access 测试结果不用于关闭它。
+- `G1`–`G7` 保持 `NOT_STARTED`；P0 整改完成不等于 G1 或 WP-03 启动授权。
+
+### 11.2 历史约束（阶段 7/8，仅作记录）
+
+- 阶段 7 的“不 commit、不建 `.venv`、不装依赖、不开发业务代码”已被后续 WP-01/WP-02 与 G0 PASS 取代，不再作为当前禁令。
+- 阶段 6 备份 `cordis.patch.yml.bak-20261108-stage6` 仍保留；不得因本轮整改删除。
+- `T-SKILLS-001` 已 `DONE`；`T-MCP-001` 保持 `DONE`。
+
+来源：用户 2026-11-11 P0 整改授权；[`state/project_state.json`](state/project_state.json)。
+
+### 11.3 WP-03 进入条件（部分满足）
+
+1. API 幂等修复完成，测试 A–E 通过；本轮已做到。
+2. P2 由用户正式验收，或书面豁免；**2026-11-12 已按 C 指令验收设计件**（不表示运行时实现）。
+3. §12-2、§12-6、§12-7、§12-8 已裁决并写入 M02 `DECISIONS`/ADR；本轮只提交 D 方案，不自行生效。
+4. P9 缺口/并发重写产物已获用户处置，不作为 WP-03 输入。
+5. `BLK-003` 状态如实保留并说明影响。
+6. 用户明确下达 WP-03 指令。
+
+仍未满足第 3、4、6 条；第 2 条只完成设计件验收，不解除 §12 开放问题。在上述条件满足前，不得创建 WP-03 代码、数据库或迁移。
+
+方案与提示词（草案，未获实施批准）：[`docs/plans/WP-03_IMPLEMENTATION_PLAN.md`](plans/WP-03_IMPLEMENTATION_PLAN.md)、[`docs/plans/WP-03_IMPLEMENTATION_PROMPT.md`](plans/WP-03_IMPLEMENTATION_PROMPT.md)。
 
 ## 12. 飞书资料缺口
 

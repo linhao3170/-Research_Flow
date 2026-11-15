@@ -1,0 +1,71 @@
+﻿timestamp=2026-11-12T09:38:03.2578116+08:00
+purpose=post-session stability recheck; no modifications
+head=309083e715cb59a1f0c181d95df44e1946ffbaa5
+commits=7
+--- status ---
+ M AGENTS.md
+ M README.md
+ M design/pseudocode/00_BASELINE/PHASE_RULES.md
+ M design/pseudocode/INDEX.md
+ M design/pseudocode/M01_contracts/MODULE.md
+ M design/pseudocode/M03_config_env/MODULE.md
+ M design/pseudocode/M04_dag/MODULE.md
+ M design/pseudocode/M05_executor/MODULE.md
+ M design/pseudocode/M06_templates/MODULE.md
+ M design/pseudocode/M07_evidence/MODULE.md
+ M design/pseudocode/M08_gate/MODULE.md
+ M design/pseudocode/M09_verifier_l12/MODULE.md
+ M design/pseudocode/M10_verifier_l3/MODULE.md
+ M design/pseudocode/M11_signing/MODULE.md
+ M design/pseudocode/OPEN_QUESTIONS.md
+ M design/pseudocode/STAGE_LOG.md
+ M docs/ARCHITECTURE.md
+ M docs/CHANGELOG_DEV.md
+ M docs/DEVELOPMENT_WORKFLOW.md
+ M docs/IMPLEMENTATION_STATUS.md
+ M docs/PROJECT_OVERVIEW.md
+ M docs/PROJECT_STATE.md
+ M docs/SESSION_HANDOFF.md
+ M docs/state/G0_DECISION_LIST.md
+ M docs/state/project_state.json
+ M researchflow/api/app.py
+ M scripts/state_sync.py
+ M tests/test_state_sync.py
+?? design/pseudocode/M13_scheduler/
+?? design/pseudocode/M14_recovery/
+?? design/pseudocode/M15_dcspa/
+?? design/pseudocode/M16_vas/
+?? design/pseudocode/M17_agents/
+?? design/pseudocode/M18_knowledge/
+?? design/pseudocode/M19_api/
+?? reports/
+?? tests/test_api_idempotency.py
+--- state sync validate ---
+OK: project_state.json 校验通过。阶段=T0，任务=8，伪代码阶段=10（ACCEPTED 1，BLOCKED 2），门禁 PASS=1/8，阻塞=3。
+VALIDATE_EXIT=0
+--- state sync check ---
+[OK] docs/PROJECT_STATE.md  sha256=fb321d479d121747993b067ef68b7747e34fc4db6564eba643b019c07f12af98
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=e0ba518f54af47aafc71191cb55b7d13daa2bd7d968d954f7ecda9f707e75fc3
+OK: 2 个生成文件与 project_state.json 逐字节一致。
+CHECK_EXIT=0
+--- docs drift ---
+docs/state/project_state.json:848: WARNING: last_verified_commit 与当前 HEAD 不一致 (expected=309083e715cb59a1f0c181d95df44e1946ffbaa5, actual=1c9a10461c50c02058ce28be8b4b09c0c8870e80)
+STATE-FREE enforced=5/9；ERROR=0；WARNING=1
+DRIFT_EXIT=0
+--- p9 hashes ---
+True  design/pseudocode/M16_vas/orchestration/vas/risk_features.py  1656953478c95bcec6d1014ba0aadcfb5f41198091dd08498a25db828910d274
+True  design/pseudocode/M15_dcspa/orchestration/determinism/dc_issuer.py  53524c900025e76ea0c6741c58ba53a6bc5d01ee2a38dcc22ebf4785556f70aa
+True  design/pseudocode/M15_dcspa/orchestration/determinism/spa_judge.py  3e8cfebfcd43ce930377ad2f2619d0cfcc9cc9ca29dcf6b275a617e3973cb527
+True  design/pseudocode/M15_dcspa/orchestration/determinism/dc_eligibility.py  dac738298af46a874fc04517fd334c01f08ebc5e6ad227454145800abb497502
+True  design/pseudocode/M15_dcspa/orchestration/determinism/prr_ledger.py  81153260611eb00e8897b8ebb05b110eb6c7acb5832c01e8fb9316b1e974d69c
+True  design/pseudocode/M16_vas/orchestration/vas/knapsack.py  a1cd72cc71ea63b7ef22889f520c8fa263836edcde8293bc3bda79c21c4ffb64
+--- caches ---
+.pytest_cache files=4 bytes=12253
+__pycache__ files=1 bytes=757
+researchflow/__pycache__ files=1 bytes=237
+tests/__pycache__ files=5 bytes=115985
+tmp/unittest-temp files=0 bytes=
+tmpavet2qv9 absent
+--- diff check ---
+
+DIFFCHECK_EXIT=0

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T22:38:12+08:00",
+  "generated_at": "2026-11-12T22:24:11+08:00",
   "tool": "scripts/check_model_parity.py",
   "contract_version": "1.0",
   "python": "3.11.16",

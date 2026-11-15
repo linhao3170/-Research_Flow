@@ -1,0 +1,79 @@
+﻿## P2
+  M02_state_machine: files=10 lines=5991 MODULE=True NEG=True
+    missing_sections=['不变量']
+    says_not_implementation=True
+    neg_ids=66 first=['NEG-M02-01', 'NEG-M02-02', 'NEG-M02-03']
+    py_parse_errors=0 researchflow_imports=0
+## P3
+  M04_dag: files=7 lines=4928 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=39 first=['NEG-M04-01', 'NEG-M04-02', 'NEG-M04-03']
+    py_parse_errors=0 researchflow_imports=2
+      IMP design\pseudocode\M04_dag\orchestration\dag\builder.py
+      IMP design\pseudocode\M04_dag\orchestration\dag\patch_approval.py
+  M05_executor: files=7 lines=2930 MODULE=True NEG=True
+    missing_sections=['开放问题']
+    says_not_implementation=True
+    neg_ids=49 first=['NEG-M05-01', 'NEG-M05-02', 'NEG-M05-03']
+    py_parse_errors=0 researchflow_imports=0
+## P4
+  M06_templates: files=7 lines=2924 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=58 first=['NEG-M06-01', 'NEG-M06-02', 'NEG-M06-03']
+    py_parse_errors=0 researchflow_imports=0
+  M07_evidence: files=7 lines=3185 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=65 first=['NEG-M07-01', 'NEG-M07-02', 'NEG-M07-03']
+    py_parse_errors=0 researchflow_imports=0
+## P5
+  M08_gate: files=5 lines=2613 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=36 first=['NEG-M08-01', 'NEG-M08-02', 'NEG-M08-03']
+    py_parse_errors=0 researchflow_imports=0
+  M09_verifier_l12: files=6 lines=2997 MODULE=True NEG=True
+    missing_sections=['不变量', '错误码', '开放问题']
+    says_not_implementation=True
+    neg_ids=59 first=['NEG-M08-01', 'NEG-M09-01', 'NEG-M09-02']
+    py_parse_errors=0 researchflow_imports=0
+  M10_verifier_l3: files=5 lines=2313 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=56 first=['NEG-M10-01', 'NEG-M10-02', 'NEG-M10-03']
+    py_parse_errors=0 researchflow_imports=0
+## P6
+  M11_signing: files=7 lines=4180 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=79 first=['NEG-M11-01', 'NEG-M11-02', 'NEG-M11-03']
+    py_parse_errors=0 researchflow_imports=0
+  M12_bundle: files=4 lines=3404 MODULE=True NEG=True
+    missing_sections=['不变量', '错误码', '开放问题']
+    says_not_implementation=True
+    neg_ids=74 first=['NEG-M12-01', 'NEG-M12-02', 'NEG-M12-03']
+    py_parse_errors=0 researchflow_imports=0
+## P7
+  M13_scheduler: files=6 lines=4176 MODULE=True NEG=True
+    missing_sections=['开放问题']
+    says_not_implementation=True
+    neg_ids=36 first=['NEG-M13-01', 'NEG-M13-02', 'NEG-M13-03']
+    py_parse_errors=0 researchflow_imports=0
+  M14_recovery: files=5 lines=2400 MODULE=True NEG=True
+    missing_sections=['不变量', '错误码', '开放问题']
+    says_not_implementation=True
+    neg_ids=40 first=['NEG-M14-01', 'NEG-M14-02', 'NEG-M14-03']
+    py_parse_errors=0 researchflow_imports=0
+## P8
+  M17_agents: files=9 lines=6238 MODULE=True NEG=True
+    missing_sections=['不变量', '开放问题']
+    says_not_implementation=True
+    neg_ids=61 first=['NEG-M17-01', 'NEG-M17-02', 'NEG-M17-03']
+    py_parse_errors=0 researchflow_imports=0
+  M18_knowledge: files=6 lines=3123 MODULE=True NEG=True
+    missing_sections=['不变量', '错误码', '开放问题']
+    says_not_implementation=True
+    neg_ids=64 first=['NEG-40', 'NEG-51', 'NEG-M18-01']
+    py_parse_errors=0 researchflow_imports=0

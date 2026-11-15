@@ -3,7 +3,7 @@
 > 阶段：P5「门控与三级验证」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
 > 覆盖：规则集装载与版本哈希、coverage row 七字段、Gate 七步判定、四类一票否决
 > 不覆盖：Ed25519 签名/信任锚（P6）、验证预算分配（P9）、报告签发（P6/WP-11）、科学结论评价
-> 前置：P4 已验收（E0/E1/E2 可产生、链与 Merkle 可校验）；M01 错误码、M06 required_checks、M07 collector 已冻结
+> 前置：P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P4 设计件已验收；实现未开始）；M01 错误码、M06 required_checks、M07 collector 已冻结
 > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
 
 ## 1. 目标

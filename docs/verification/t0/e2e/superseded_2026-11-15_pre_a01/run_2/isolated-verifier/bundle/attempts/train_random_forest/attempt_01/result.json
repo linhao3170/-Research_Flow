@@ -1,0 +1,63 @@
+{
+  "artifacts": [
+    {
+      "path": "output/metrics.json",
+      "sha256": "48176e2fea4cb786292344420962bf6bceb5c562908a999f328affe09fd5f4a2",
+      "size": 408
+    },
+    {
+      "path": "output/predictions.csv",
+      "sha256": "dfec19b7782ee010e7d1d6a34f4aa74bd9a50cdb4688ceaa3b9d7d21181c3138",
+      "size": 1294
+    },
+    {
+      "path": "output/worker_status.json",
+      "sha256": "895d0d459d0cff6bd860cb32b0d917aa8cff041d121d6f4c4cb00fac77caeab1",
+      "size": 68
+    }
+  ],
+  "attempt_id": "attempt_01",
+  "attempt_seq": 1,
+  "code_hash": "aff6778d4a7b17b1130574f2c37639f38a27ee706c5be03a2119fe2083f703a3",
+  "command": [
+    "<python>",
+    "-B",
+    "-m",
+    "researchflow.execution.worker",
+    "--job",
+    "job.json"
+  ],
+  "dataset_sha256": "53cd7dba31964e3d48de07a0a3bb649bd91116bc09ef6819c297c95fa8167b13",
+  "duration_sec": 2.531,
+  "ended_at": "2026-11-14T11:38:09.160790Z",
+  "env_fingerprint": "99534c8f951ebfe9c6c9e06e950dbeda111616c9583d94cb26bab6ded3847e8f",
+  "exit_code": 0,
+  "inputs": [
+    {
+      "name": "split_manifest",
+      "sha256": "9783fe2fdea7e27989acf65c04b0f2494eb5cc42374ef95d8b12f1000d79e387",
+      "size": 58817
+    }
+  ],
+  "kill_verified": null,
+  "killed": false,
+  "memory_exceeded": false,
+  "node_id": "train_random_forest",
+  "parameters_hash": "f06c877a7c3a7371d62ab3c63a041407c5f6e8a33a8fae178bc12a9bed20430b",
+  "peak_memory_mb": 166.566,
+  "pid": 3556,
+  "schema_version": "1.0",
+  "started_at": "2026-11-14T11:38:06.625742Z",
+  "status": "EXITED",
+  "stderr_path": "stderr.log",
+  "stdout_path": "stdout.log",
+  "task_id": "task_54fccbe4-d6b2-446b-9919-4dd2d98885aa",
+  "template_id": "train_classifier@1.0.0",
+  "timed_out": false,
+  "worker_error": null,
+  "worker_pids": [
+    3556,
+    4680,
+    24328
+  ]
+}

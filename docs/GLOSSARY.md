@@ -1,6 +1,6 @@
 # GLOSSARY — ResearchFlow 术语表
 
-> 状态：阶段 7 资料接手成果
+> 状态：阶段 7 资料接手成果；2026-11-12 运行时状态词汇按 G0/ADR-001 校正
 > 基线：策划书内部 v4.3.0（文件名标签 v4.3.1；`BLK-002` 已关闭）
 > 证据锚点：`P####` → [`02_docx_body.txt`](verification/stage7/02_docx_body.txt)；`TABLE ##` → [`05_docx_tables.txt`](verification/stage7/05_docx_tables.txt)
 > 页码说明：DOCX 无可信页码（无 TOC/缓存分页；Word COM 不可用）；引用使用章节号 + `P####` + `TABLE ##`，可在上述文件中逐行核验。
@@ -42,9 +42,9 @@
 |---|---|---|---|
 | **研发看板状态** | 研发任务/交付物进度 | `BACKLOG`、`READY`、`IN_PROGRESS`、`BLOCKED`、`IN_REVIEW`、`DONE`、`DEFERRED` | `docs/state/project_state.json` |
 | **运行时 Task 状态** | ResearchFlow 运行中的任务状态 | `CREATED`、`PLANNING`、`READY`、`RUNNING`、`VERIFYING`、`COMPLETED`、`FAILED`、`BLOCKED`、`CANCELLED` | 运行时 StateMachine / DB（未实现） |
-| **运行时 Node 状态** | 运行中的节点状态 | `PLANNED`、`READY`、`RUNNING`、`VERIFYING`、`VERIFIED`、`FAILED`、`BLOCKED`、`DIAGNOSING`、`RECOVERING` | 同上 |
+| **运行时 Node 状态** | 运行中的节点状态（10 个） | `PLANNED`、`READY`、`RUNNING`、`VERIFYING`、`VERIFIED`、`FAILED`、`BLOCKED`、`DIAGNOSING`、`RECOVERING`、`INVALIDATED` | 同上；`INVALIDATED` 见 ADR-001 |
 
-**规则**：两套词汇不得合并、改名或互相替代。`DONE` ≠ `COMPLETED`；研发看板的 `BLOCKED` ≠ 运行时 `BLOCKED`。详见 [`state/runtime_states.md`](state/runtime_states.md)。
+**规则**：两套词汇不得合并、改名或互相替代。`DONE` ≠ `COMPLETED`；研发看板的 `BLOCKED` ≠ 运行时 `BLOCKED`。运行时 Node 状态以 [`design/05_CONTRACTS_AND_STATES.md`](design/05_CONTRACTS_AND_STATES.md) §9.3 为准；`INVALIDATED` 由 [`ADR-001`](ADR/ADR-001-invalidated-node-state.md) 增加，只允许 `VERIFIED → INVALIDATED → READY`。详见 [`state/runtime_states.md`](state/runtime_states.md)。
 
 ### 2.3 G-hold vs G0–G7
 

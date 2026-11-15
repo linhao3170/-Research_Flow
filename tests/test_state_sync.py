@@ -84,10 +84,11 @@ def make_state(
     tasks: list[dict[str, Any]] | None = None,
     gates: dict[str, dict[str, Any]] | None = None,
     blockers: list[dict[str, Any]] | None = None,
+    stages: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     if gates is None:
         gates = {gate_id: make_gate(gate_id) for gate_id in GATE_IDS}
-    return {
+    state: dict[str, Any] = {
         "schema_version": "1.0",
         "project_name": "ResearchFlow",
         "updated_at": NOW,
@@ -98,6 +99,61 @@ def make_state(
         "blockers": blockers if blockers is not None else [],
         "last_verified_commit": None,
     }
+    if stages is not None:
+        state["pseudocode_stages"] = stages
+    return state
+
+
+def make_stage(
+    stage_id: str,
+    status: str = "IN_REVIEW",
+    **overrides: Any,
+) -> dict[str, Any]:
+    stage: dict[str, Any] = {
+        "stage_id": stage_id,
+        "title": f"伪代码阶段 {stage_id}",
+        "status": status,
+        "modules": ["M01_contracts"],
+        "deliverables": ["design/pseudocode/M01_contracts"],
+        "acceptance_criteria": ["示例阶段验收标准"],
+        "acceptance_basis": "示例阶段依据",
+        "evidence_paths": ["design/pseudocode/STAGE_LOG.md"],
+        "blocker": None,
+        "updated_at": NOW,
+    }
+    if status == "BLOCKED":
+        stage["blocker"] = "示例阶段阻塞原因"
+    stage.update(overrides)
+    return stage
+
+
+def make_all_stages() -> list[dict[str, Any]]:
+    return [make_stage(f"P{index}") for index in range(1, 11)]
+
+
+def prepare_stage_paths(root: Path) -> None:
+    (root / "design" / "pseudocode" / "M01_contracts").mkdir(parents=True, exist_ok=True)
+    log_path = root / "design" / "pseudocode" / "STAGE_LOG.md"
+    log_path.write_text("# stage log\n", encoding="utf-8", newline="\n")
+
+
+def materialize_stage_paths(root: Path, state: dict[str, Any]) -> None:
+    """为真实状态 JSON 的阶段路径创建临时占位文件/目录。
+
+    仅用于 render/check 测试；不复制真实内容，也不放宽 state_sync 的路径存在性校验。
+    """
+
+    for stage in state.get("pseudocode_stages", []):
+        for module in stage.get("modules", []):
+            (root / "design" / "pseudocode" / module).mkdir(parents=True, exist_ok=True)
+        for key in ("deliverables", "evidence_paths"):
+            for relative in stage.get(key, []):
+                path = root / relative
+                if path.suffix:
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text("placeholder\n", encoding="utf-8", newline="\n")
+                else:
+                    path.mkdir(parents=True, exist_ok=True)
 
 
 def write_state(root: Path, state: dict[str, Any] | str) -> None:
@@ -265,6 +321,93 @@ class StateSyncTests(unittest.TestCase):
         self.assertIn("tasks[0].evidence_paths", result.stderr)
 
     # ------------------------------------------------------------------
+    # pseudocode_stages：P1–P10 独立状态注册表
+    # ------------------------------------------------------------------
+
+    def test_valid_pseudocode_stages_pass(self) -> None:
+        prepare_stage_paths(self.root)
+        write_state(self.root, make_state(stages=make_all_stages()))
+        result = run_cli(self.root, "validate")
+        self.assertEqual(result.returncode, 0, combined(result))
+        self.assertIn("伪代码阶段=10", result.stdout)
+
+    def test_pseudocode_stage_status_cannot_reuse_task_status(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()
+        stages[0]["status"] = "DONE"
+        write_state(self.root, make_state(stages=stages))
+        result = run_cli(self.root, "validate")
+        self.assertNotEqual(result.returncode, 0, combined(result))
+        self.assertIn("pseudocode_stages[0].status", result.stderr)
+        self.assertIn("非法伪代码阶段状态", result.stderr)
+
+    def test_accepted_stage_requires_evidence(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()
+        stages[0].update(status="ACCEPTED", evidence_paths=[])
+        write_state(self.root, make_state(stages=stages))
+        result = run_cli(self.root, "validate")
+        self.assertNotEqual(result.returncode, 0, combined(result))
+        self.assertIn("pseudocode_stages[0].evidence_paths", result.stderr)
+        self.assertIn("ACCEPTED", result.stderr)
+
+    def test_blocked_stage_requires_blocker(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()
+        stages[0].update(status="BLOCKED", blocker=None)
+        write_state(self.root, make_state(stages=stages))
+        result = run_cli(self.root, "validate")
+        self.assertNotEqual(result.returncode, 0, combined(result))
+        self.assertIn("pseudocode_stages[0].blocker", result.stderr)
+        self.assertIn("BLOCKED", result.stderr)
+
+    def test_duplicate_pseudocode_stage_id_fails(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()
+        stages[1]["stage_id"] = "P1"
+        write_state(self.root, make_state(stages=stages))
+        result = run_cli(self.root, "validate")
+        self.assertNotEqual(result.returncode, 0, combined(result))
+        self.assertIn("重复的 stage_id", result.stderr)
+        self.assertIn("P1", result.stderr)
+
+    def test_missing_pseudocode_stage_fails(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()[:9]
+        write_state(self.root, make_state(stages=stages))
+        result = run_cli(self.root, "validate")
+        self.assertNotEqual(result.returncode, 0, combined(result))
+        self.assertIn("缺少伪代码阶段 P10", result.stderr)
+
+    def test_missing_stage_module_directory_fails(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()
+        stages[0]["modules"] = ["M99_missing"]
+        write_state(self.root, make_state(stages=stages))
+        result = run_cli(self.root, "validate")
+        self.assertNotEqual(result.returncode, 0, combined(result))
+        self.assertIn("pseudocode_stages[0].modules[0]", result.stderr)
+        self.assertIn("模块目录不存在", result.stderr)
+
+    def test_render_includes_pseudocode_stages(self) -> None:
+        prepare_stage_paths(self.root)
+        stages = make_all_stages()
+        stages[0].update(status="ACCEPTED")
+        write_state(self.root, make_state(stages=stages))
+        render = run_cli(self.root, "render")
+        self.assertEqual(render.returncode, 0, combined(render))
+        check = run_cli(self.root, "check")
+        self.assertEqual(check.returncode, 0, combined(check))
+        project_state = (self.root / "docs" / "PROJECT_STATE.md").read_text(encoding="utf-8")
+        implementation_status = (self.root / "docs" / "IMPLEMENTATION_STATUS.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## 伪代码阶段", project_state)
+        self.assertIn("`P1`", project_state)
+        self.assertIn("## 4. 伪代码阶段明细", implementation_status)
+        self.assertIn("`P10`", implementation_status)
+
+    # ------------------------------------------------------------------
     # render / check
     # ------------------------------------------------------------------
 
@@ -374,6 +517,7 @@ class StateSyncTests(unittest.TestCase):
         )
         copied = copy.deepcopy(json.loads(real_state))
         write_state(self.root, copied)
+        materialize_stage_paths(self.root, copied)
         render = run_cli(self.root, "render")
         self.assertEqual(render.returncode, 0, combined(render))
         check = run_cli(self.root, "check")

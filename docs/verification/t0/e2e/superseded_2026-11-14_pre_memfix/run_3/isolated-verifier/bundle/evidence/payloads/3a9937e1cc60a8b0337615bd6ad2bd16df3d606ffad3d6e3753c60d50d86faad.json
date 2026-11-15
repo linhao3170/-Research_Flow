@@ -1,0 +1,1 @@
+{"artifact_path":"output/worker_status.json","attempt_seq":1,"event":"artifact_observed","sha256":"895d0d459d0cff6bd860cb32b0d917aa8cff041d121d6f4c4cb00fac77caeab1","size":68,"template_id":"train_classifier@1.0.0"}

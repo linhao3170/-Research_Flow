@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-11-15T02:37:54.659532Z",
+  "keys": [
+    {
+      "alg": "Ed25519",
+      "fingerprint": "36099fa0dd14419e8d000ed2093ef3f468534dabdbbde23a6fda4479674461fe",
+      "key_id": "rf-t0-ed25519-01",
+      "public_key_b64": "gYbhY/xzC1nd7VZxNFepSo+peHo+jQq63LnAHPHTB3o="
+    }
+  ],
+  "schema_version": "1.0"
+}

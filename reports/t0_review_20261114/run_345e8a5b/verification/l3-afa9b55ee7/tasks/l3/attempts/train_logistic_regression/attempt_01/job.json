@@ -1,0 +1,27 @@
+{
+  "attempt_id": "attempt_01",
+  "attempt_seq": 1,
+  "dataset_ref": {
+    "license": "CC0-1.0",
+    "sha256": "dea42fe914b17e02ba44f68200bf006da13ad3ad77f9486348f952c5e6286b55",
+    "uri": "local://datasets/synthetic_breast_cancer.csv"
+  },
+  "input_artifacts": {
+    "split_manifest": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7\\tasks\\l3\\attempts\\train_logistic_regression\\attempt_01\\inputs\\split_manifest"
+  },
+  "limits": {
+    "max_memory_mb": 4096,
+    "max_workers": 2,
+    "wall_time_sec": 600
+  },
+  "node_id": "train_logistic_regression",
+  "output_dir": "D:\\ResearchFlow-project\\reports\\t0_review_20261114\\run_345e8a5b\\verification\\l3-afa9b55ee7\\tasks\\l3\\attempts\\train_logistic_regression\\attempt_01\\output",
+  "parameters": {
+    "model": "logistic_regression",
+    "seed": 43
+  },
+  "parameters_hash": "45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d",
+  "schema_version": "1.0",
+  "task_id": "task_f1901dd5-29e0-4f0f-a93d-b1f175d086e2",
+  "template_id": "train_classifier@1.0.0"
+}

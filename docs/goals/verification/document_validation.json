@@ -1,0 +1,91 @@
+{
+  "started_at": "2026-11-14T18:07:00.066011+08:00",
+  "finished_at": "2026-11-14T18:07:00.071015+08:00",
+  "elapsed_seconds": 0.005,
+  "command": "PowerShell here-string piped to D:/ResearchFlow-project/.venv/Scripts/python.exe -B -; UTF-8 document/link/fence and source hash validation",
+  "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+  "version": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "architecture": "64bit",
+  "scope": "documentation only; no product tests, model API calls or deployment",
+  "documents": [
+    {
+      "file": "docs/goals/GOAL_01_CORE_BACKEND.md",
+      "bytes": 21931,
+      "lines": 175,
+      "sha256": "0d47593dc25c17c4c2392915483b2254c1053809357cea0049458e59aac4a7fa",
+      "missing_links": []
+    },
+    {
+      "file": "docs/goals/GOAL_02_COMPETITIVE_PRODUCT.md",
+      "bytes": 15832,
+      "lines": 107,
+      "sha256": "f1ec100bf50e86c0bf894ea1f4822aa7a8a3046aa9f600dc34601778a3eae209",
+      "missing_links": []
+    },
+    {
+      "file": "docs/goals/GOAL_03_COMPETITION.md",
+      "bytes": 23160,
+      "lines": 187,
+      "sha256": "19712a0425c6bd7cf0cd9063e73f675000d7dd2a901db0c43cc792cf23754943",
+      "missing_links": []
+    }
+  ],
+  "source_hashes": [
+    {
+      "path": "D:\\agent-flow\\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx",
+      "bytes": 111209,
+      "sha256": "9e54168fb1b553294ecb88e2e3f5c8ce878ee699fcf07e37d531a68c195ccb3a"
+    },
+    {
+      "path": "D:\\ResearchFlow-project\\ResearchFlow_3.1_项目策划书_v4.3.1_完整开发版.docx",
+      "bytes": 111209,
+      "sha256": "9e54168fb1b553294ecb88e2e3f5c8ce878ee699fcf07e37d531a68c195ccb3a"
+    },
+    {
+      "path": "D:\\bisai-xiangxi\\72EE1C8758E9AC991F127B1913CD452E.jpg",
+      "bytes": 825522,
+      "sha256": "9b43f73a52fbab98e2209b449da7b6415986b8a3e2acb0e814d5e07feddbc413"
+    }
+  ],
+  "installed_harness_release": {
+    "schemaVersion": 1,
+    "version": "0.2.2-rc.3",
+    "hostProtocolVersion": 4,
+    "nodeVersion": "24.21.0",
+    "pnpmVersion": "11.28.5"
+  },
+  "goal_packages": [
+    {
+      "name": "dsh-goal",
+      "version": "0.2.2-rc.3",
+      "readme_sha256": "9ee42f6d0b3d196764a391923a4105801f3a014e24117b431c32700134917548"
+    },
+    {
+      "name": "dsh-tool-goal",
+      "version": "0.2.2-rc.3",
+      "readme_sha256": "a26d0a4e39ce41a1b6df8ec674bd64b4b3fb2c10025f5275965050b69193e4ce"
+    },
+    {
+      "name": "dsh-command-goal",
+      "version": "0.2.2-rc.3",
+      "readme_sha256": "5069ea3790e35988abe2729a04eb1119250306cc8a3693eb385e2b0c4e3d3f1b"
+    },
+    {
+      "name": "dsh-goal-round-driver",
+      "version": "0.2.2-rc.3",
+      "readme_sha256": "0ce10ba494b0992f2fd5e21456a1e2f96858fc55a79d78e14c2c963b82f6d905"
+    },
+    {
+      "name": "dsh-client-ui-goal",
+      "version": "0.2.2-rc.3",
+      "readme_sha256": "654ce3e36233ff4dd15ab1807f6e798f526d1aea4c81f41a1fc82a787e93a305"
+    }
+  ],
+  "errors": [],
+  "exit_code": 0,
+  "review_fixes": [
+    "hold remains sealed until formal blind run; contamination retires hold",
+    "development model cost continues for local tool work; Goal has no money hard cap",
+    "existing NFR restart/non-loopback refusal and WP dependencies explicit"
+  ]
+}

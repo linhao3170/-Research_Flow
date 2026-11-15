@@ -1,0 +1,19 @@
+{
+  "alg": "Ed25519",
+  "cert_id": "cert_da8818cd-1d4e-452c-b4b3-03fc5dd8b805",
+  "code_hash": "aff6778d4a7b17b1130574f2c37639f38a27ee706c5be03a2119fe2083f703a3",
+  "env_fingerprint": "b6d1766379d5a651b2dc7289fca29d03aa11f161340d67a3f2147b8dd6603f6c",
+  "final_state": "VERIFIED",
+  "issued_at": "2026-11-14T11:38:30.044547Z",
+  "key_fingerprint": "43d11787d1ec0622664b40924709a702e6d33d6a287d48c163fa6958f72d812d",
+  "key_id": "rf-t0-ed25519-01",
+  "l3_coverage": 1.0,
+  "merkle_root": "bd3bd6360f0111649e16a912cedc7cbbad64115ae7d3f22da997d99593cf53f2",
+  "report_id": "report_60f2ac7f-dcf8-4d2e-89ef-1465f98f63eb",
+  "ruleset_hash": "732f7faeb1bd31765db1606beb30ae2c223c673bc992a4a8c83e8c9c8ff894fa",
+  "schema_version": "1.0",
+  "signature": "H9CxgguYG6rJa/h8Dk5VmvvHV+j5voMWR70M9zeApSrqT/qA76QWHqWdQwMzODIyU9X60q8+s05PtNLea9VNDA==",
+  "skipped_nodes": [],
+  "stale": false,
+  "tree_size": 32
+}

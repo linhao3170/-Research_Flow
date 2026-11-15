@@ -1,6 +1,6 @@
 # MEMORY_GUIDE — ResearchFlow 记忆与交接指南
 
-> 状态：阶段 7 资料接手成果
+> 状态：阶段 7 资料接手成果；2026-11-12 记忆与状态词汇对账
 > 适用：所有新会话、任务恢复、阶段收尾、状态同步、交接
 > 依据：`AGENTS.md` §1、§2、§6、§7；[`memory/Memory.md`](memory/Memory.md)；`researchflow-memory-handoff` Skill
 > 原则：只记录可核对事实；未知标“待核实”；不把聊天记录、推测或计划当成项目事实。
@@ -16,11 +16,13 @@
 | 长期记忆 | [`memory/project-context.md`](memory/project-context.md)、[`architecture-decisions.md`](memory/architecture-decisions.md)、[`environment.md`](memory/environment.md)、[`references.md`](memory/references.md)、[`feedback-and-lessons.md`](memory/feedback-and-lessons.md) | 稳定项目事实、架构约束、环境、来源、教训 | 只在事实确认后更新 |
 | 研发状态 | [`state/project_state.json`](state/project_state.json) | 当前阶段、任务、门禁、阻塞、最近验证提交 | 唯一机器可读事实源 |
 | 生成视图 | [`PROJECT_STATE.md`](PROJECT_STATE.md)、[`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) | 状态的可读视图 | 只由 `state_sync.py render` 生成，禁止手改 |
-| 运行时状态 | [`state/runtime_states.md`](state/runtime_states.md) | Task/Node/Report/Certificate 状态与迁移 | 与研发看板严格分离 |
+| 运行时状态 | [`state/runtime_states.md`](state/runtime_states.md) | Task/Node/Evidence/Recovery 状态与迁移（Report/Certificate 为签发对象状态） | 与研发看板严格分离 |
 | 开发日志 | [`CHANGELOG_DEV.md`](CHANGELOG_DEV.md) | 本次变更、原因、验证、影响 | 追加式，不覆盖历史 |
 | 会话交接 | [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) | 上次完成/未完成、风险、下一步、待确认 | 最新置顶 |
-| 阶段证据 | [`verification/stage4-7/`](verification/) | 真实命令、日志、测试结果 | 只追加，保留原始日志 |
-| 知识文档 | [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)、[`ARCHITECTURE.md`](ARCHITECTURE.md)、[`GLOSSARY.md`](GLOSSARY.md)、[`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md)、[`SECURITY_POLICY.md`](SECURITY_POLICY.md)、[`SKILL_CATALOG.md`](SKILL_CATALOG.md)、[`MCP_CATALOG.md`](MCP_CATALOG.md) | 结构化知识、来源、建议/决策区分 | 阶段 7 建立；按需更新 |
+| 阶段证据 | [`verification/`](verification/)、[`reports/remediation/`](../reports/remediation/) | 真实命令、日志、测试结果（stage4–8、g0、t0、P0 整改） | 只追加，保留原始日志 |
+| 知识文档 | [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)、[`ARCHITECTURE.md`](ARCHITECTURE.md)、[`GLOSSARY.md`](GLOSSARY.md)、[`DEVELOPMENT_WORKFLOW.md`](DEVELOPMENT_WORKFLOW.md)、[`SECURITY_POLICY.md`](SECURITY_POLICY.md)、[`SKILL_CATALOG.md`](SKILL_CATALOG.md)、[`MCP_CATALOG.md`](MCP_CATALOG.md) | 结构化知识、来源、建议/决策区分 | 阶段 7 建立；后续阶段按需更新 |
+| 伪代码设计注册表 | [`../design/pseudocode/INDEX.md`](../design/pseudocode/INDEX.md) | P1–P10 阶段、模块、验收状态 | 与 `pseudocode_stages` 同步 |
+| P0 整改证据 | [`../reports/remediation/`](../reports/remediation/) | 测试、状态一致性、开放问题与验收 | 只追加，不改写 |
 
 ## 2. 新会话读取顺序
 
@@ -67,20 +69,24 @@ $py = 'C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-
 
 要求：三步均 exit 0；`check` 通过后才可说 Markdown 状态报告已同步。生成文件禁止手工编辑。
 
+文档改动后还应运行 `& $py scripts/check_docs_drift.py`：`ERROR` 必须为 0；`WARNING` 需在交接中解释原因。
+
 ## 5. 状态词汇纪律
 
 ### 5.1 研发看板（只用于 `project_state.json`）
 
 `BACKLOG`、`READY`、`IN_PROGRESS`、`BLOCKED`、`IN_REVIEW`、`DONE`、`DEFERRED`。
 
-### 5.2 运行时（按策划书附录 F）
+### 5.2 运行时（按策划书附录 F 与 ADR-001）
 
 - Task：`CREATED`、`PLANNING`、`READY`、`RUNNING`、`VERIFYING`、`COMPLETED`、`FAILED`、`BLOCKED`、`CANCELLED`。
-- Node：`PLANNED`、`READY`、`RUNNING`、`VERIFYING`、`VERIFIED`、`FAILED`、`BLOCKED`、`DIAGNOSING`、`RECOVERING`。
+- Node：`PLANNED`、`READY`、`RUNNING`、`VERIFYING`、`VERIFIED`、`FAILED`、`BLOCKED`、`DIAGNOSING`、`RECOVERING`、`INVALIDATED`。
+
+`INVALIDATED` 由 `ADR-001` 增加；Node 为 10 个状态，只允许 `VERIFIED → INVALIDATED` 与 `INVALIDATED → READY`。
 
 禁止：把 `DONE` 当 `COMPLETED`；把运行时 `VERIFYING` 写进研发看板；用研发看板 `BLOCKED` 替代运行时 `BLOCKED`；为了“统一”合并/改名/删减任一状态集合。
 
-来源：`AGENTS.md` §6；[`state/runtime_states.md`](state/runtime_states.md)。
+来源：`AGENTS.md` §6；[`state/runtime_states.md`](state/runtime_states.md)；[`design/05_CONTRACTS_AND_STATES.md`](design/05_CONTRACTS_AND_STATES.md) §9.3；[`ADR-001`](ADR/ADR-001-invalidated-node-state.md)。
 
 ## 6. 记忆卫生
 
@@ -133,13 +139,15 @@ $py = 'C:\Users\Administrator\AppData\Roaming\uv\python\cpython-3.11.16-windows-
 
 ## 8. 阶段 7 的记忆变更
 
+> 以下为阶段 7 当时的记录：`BLK-002` 已于 2026-11-08 关闭，G0 已于 2026-11-10 由用户宣布通过。当前状态以 `docs/state/project_state.json` 为准。
+
 阶段 7 新增/更新：
 
 - 新增 `docs/PROJECT_OVERVIEW.md`、`ARCHITECTURE.md`、`GLOSSARY.md`、`DEVELOPMENT_WORKFLOW.md`、`MEMORY_GUIDE.md`、`MCP_CATALOG.md`、`SECURITY_POLICY.md`。
 - 更新 `docs/SKILL_CATALOG.md`（阶段 7 复核；`T-SKILLS-001` 转 `DONE`）。
 - 新增 `docs/reference/SOURCE_REGISTER.md`、`CONFLICT_REPORT.md`。
 - 更新 `docs/memory/references.md`、`project-context.md`、`architecture-decisions.md`，修正版本引用。
-- 更新 `docs/state/project_state.json`：`T-SKILLS-001` → `DONE`；`T-MCP-001` 保持 `DONE`；`BLK-002` 保持 `OPEN`；G0–G7 不变。
+- 更新 `docs/state/project_state.json`：`T-SKILLS-001` → `DONE`；`T-MCP-001` 保持 `DONE`；`BLK-002` 当时保持 `OPEN`（已于 2026-11-08 关闭）；G0–G7 当时不变（G0 已于 2026-11-10 通过）。
 - 追加 `docs/CHANGELOG_DEV.md`、`docs/SESSION_HANDOFF.md`。
 
 来源：阶段 7 指令与真实执行；详见 [`verification/stage7/STAGE7_REPORT.md`](verification/stage7/STAGE7_REPORT.md)。

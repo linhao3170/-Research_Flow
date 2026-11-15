@@ -1,0 +1,39 @@
+{
+  "attempts": [
+    {
+      "artifacts": [
+        "output/split_manifest.json",
+        "output/worker_status.json"
+      ],
+      "attempt_id": "attempt_02",
+      "exit_code": 0,
+      "node_id": "split_dataset",
+      "status": "EXITED"
+    },
+    {
+      "artifacts": [
+        "output/metrics.json",
+        "output/predictions.csv",
+        "output/worker_status.json"
+      ],
+      "attempt_id": "attempt_02",
+      "exit_code": 0,
+      "node_id": "train_logistic_regression",
+      "status": "EXITED"
+    },
+    {
+      "artifacts": [
+        "output/metrics.json",
+        "output/predictions.csv",
+        "output/worker_status.json"
+      ],
+      "attempt_id": "attempt_02",
+      "exit_code": 0,
+      "node_id": "train_random_forest",
+      "status": "EXITED"
+    }
+  ],
+  "plan_hash": "dbb451dcb496cc228e85af715ab6d9ff61c1295914dd3596cb565defbd2f7392",
+  "plan_id": "plan_dbb451dcb496cc228e85af715ab6d9ff",
+  "task_id": "task_4e9644c4-c34f-4428-8b59-a52772200edc"
+}

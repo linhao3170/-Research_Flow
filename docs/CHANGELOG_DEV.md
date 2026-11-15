@@ -431,3 +431,229 @@
   - `last_verified_commit` 指向 `1c9a104`；第二次提交后 HEAD 前移，`check_docs_drift` 会提示该字段与 HEAD 不一致（WARNING，exit 0），属预期。
 - 相关文件：`design/pseudocode/*`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`docs/memory/environment.md`、`docs/MEMORY_GUIDE.md`、`docs/SESSION_HANDOFF.md`。
 - 架构变化：无。仅伪代码规格、状态看板与文档治理；未改 `contracts/`、`researchflow/`、`docs/design/`、`docs/ADR/`。
+
+### 2026-11-11 · P0 · API 幂等整改、full-access 测试与 P1–P10 阶段注册表
+
+- 变更：
+  - A：`researchflow/api/app.py` 分离内部 `_TaskRecord` 与公共 201 回执；同键同体首次/重放共用同一响应体；新增 `tests/test_api_idempotency.py` A–E；`GET` 结构与 422 顺序未改。
+  - E：按用户授权执行一次受控 full-access 全量 pytest，`140 passed`、exit 0；测试前后 Git 状态一致，项目内未新增临时目录；`BLK-003` 仍 `OPEN`。
+  - B：`docs/state/project_state.json` 新增 `pseudocode_stages`（P1–P10，独立状态枚举）；`scripts/state_sync.py` 增加校验/渲染/检查；P1 `ACCEPTED`，P2–P8 `IN_REVIEW`，P9/P10 `BLOCKED`。
+  - C：`OQ-P1-03`、`OQ-P1-05` 标 `NEEDS_CONFIRMATION`；同步 `PHASE_RULES`、M01/M03、`STAGE_LOG`；未编造决议正文。
+  - F：P9 六个 `.py` 为 2026-11-11 22:53:54–55 并发重写落盘，不是原始正文恢复；逐项登记 SHA256/行数/时间，P9 标 `BLOCKED`，未标 `ACCEPTED`。
+  - G：P10/M19 仅登记 5 文件 / 2,138 行与依赖；未删除、未获开发授权。
+  - I：README、DEVELOPMENT_WORKFLOW、SESSION_HANDOFF、AGENTS 版本元数据、PROJECT_OVERVIEW、ARCHITECTURE、G0_DECISION_LIST 历史横幅更新；冻结件未改。
+  - D：仅提交 §12-2/§12-6/§12-7/§12-8 的 A/B 方案与影响，未写入正式决议。
+- 原因：用户 2026-11-11 P0 整改授权 A–J；修复 WP-02 幂等验收缺口并建立唯一阶段状态源。
+- 验证：
+  - API 422 + A–E：`18 passed`，exit 0。
+  - 受控 full-access 全量：`140 passed`，exit 0（B 之前）。
+  - B 后定向回归（API 422 + A–E + state_sync）：`49 passed`，exit 0。
+  - `validate_contracts.py --selftest`：`10/10 PASS`；`validate_contracts.py`：`72/72`，exit 0。
+  - `state_sync.py validate|render|check`：均 exit 0，逐字节一致。
+  - `check_docs_drift.py`：ERROR=0，WARNING=1（`last_verified_commit` 与 HEAD 不一致，预期），exit 0。
+  - 状态一致性断言：52/52 PASS。
+- 影响/后续：
+  - P9 并发重写产物的来源/版本未确认；P10 未授权；§12-2/6/7/8 未裁决；WP-03 不得启动。
+  - 未 commit；`last_verified_commit` 保持 `1c9a104`；未清理临时目录。
+  - 报告：`reports/remediation/P0_CHANGELOG.md`、`P0_TEST_REPORT.md`、`P0_FINAL_ACCEPTANCE.md`、`P0_OPEN_ISSUES.md`、`P0_STATE_CONSISTENCY_REPORT.md`。
+- 架构变化：无。未改冻结 API 契约、状态迁移规则、证据/验证/签名边界或 ADR；P9 未验收，不构成运行时实现声明。
+
+### 2026-11-12 · 文档治理 · 记忆与状态词汇对账
+
+- 变更：
+  - 高优先级：把 `ADR-001` 的 `INVALIDATED` 传播到 `AGENTS.md` §6.2、`docs/MEMORY_GUIDE.md` §5.2、`docs/GLOSSARY.md`、`docs/ARCHITECTURE.md` §4.1/§4.2、`docs/DEVELOPMENT_WORKFLOW.md` §10.2；Node 统一为 10 个状态，补两条迁移与 I-09–I-14。
+  - `docs/state/runtime_states.md` 按 G0 冻结的 05 §9–§10 重写：Task 9、Node 10、Evidence 5、Recovery（T1）、I-01–I-14；删除“详细契约尚未在 G0 冻结 / 等待 G0”的旧表述。
+  - `docs/memory/architecture-decisions.md` §5 改为 Task/Node/Evidence/Recovery 分类；§7 区分已冻结与仍开放项，明确密钥/信任锚/`gates.yaml` 字段未冻结（`OQ-029`）。
+  - `docs/memory/feedback-and-lessons.md`：FB-17/FB-25 标注为阶段 4/7 当时快照并补当前状态；FB-04/13/18/21 加“当时”限定；新增 L-12（并发重写设计件）与 L-13（文件存在不等于开发授权）；L-11 补 140 passed 与 `BLK-003` 仍 OPEN。
+  - `docs/memory/references.md`：修正 R-01“版本生效性待确认”；R-23 改为历史；新增 R-24–R-27（WP-01/WP-02/P0/伪代码注册表）。
+  - `docs/memory/project-context.md`：§7 历史补到阶段 8/G0/T0/P0；Context7 配置大小更新；§8 增加 2D 待确认。
+  - `docs/memory/environment.md`：Context7 配置更新为 3,616 字节 / `F6AE…CD46`；`tmpavet2qv9` 已不存在；补 140 passed 与 `BLK-003` 仍 OPEN；Docker 表述改为整机已装、项目未使用；API Key/LLM 表述加“未复核/项目范围”限定。
+  - `docs/memory/Memory.md`：runtime_states 指向 05 §9–§10；补 P1–P10 注册表与 P0 报告索引。
+  - `docs/state/G0_DECISION_LIST.md`：去掉“G0 `NOT_STARTED`”残留；R-2 的 2D 改为“G0 已通过但未见书面接受”；`tmpavet2qv9` 更新为已不存在。
+  - `docs/reference/CONFLICT_REPORT.md`：方案 D 标为历史默认；业务代码现状更新。
+  - `docs/SECURITY_POLICY.md` §11：把“G0 必须冻结的安全项”改为“G0 未覆盖、仍需裁决”，避免与 G0 通过冲突。
+- 原因：用户 2026-11-12 要求全面审计过时记忆并直接修复；审计发现 `ADR-001` 未传播、`runtime_states` 停留在 G0 前、`architecture-decisions` §7 过冻结、FB/环境/索引状态滞后。
+- 验证：
+  - `& .venv/Scripts/python.exe scripts/state_sync.py validate|render|check`：均 exit 0；生成文件逐字节一致。
+  - `& .venv/Scripts/python.exe scripts/check_docs_drift.py`：ERROR=0，WARNING=1（`last_verified_commit` 与 HEAD 不一致，已知），exit 0。
+  - 本地 Markdown 链接检查：15 个核心改动文档，`MISSING_LINKS=0`。
+  - `git diff --check`：exit 0。
+  - 未运行 pytest/unittest；本次只改文档，未触碰代码、契约、schema 或测试。
+- 影响/后续：
+  - 无运行时/契约/状态机代码变更；`project_state.json` 的任务、门禁、阻塞与 `last_verified_commit` 未改。
+  - 2D 仍未见书面接受记录；P9/P10 仍 `BLOCKED`；`BLK-003` 仍 `OPEN`。
+  - 未 commit；等待用户审阅与提交决定。
+- 相关文件：`AGENTS.md`、`docs/MEMORY_GUIDE.md`、`docs/GLOSSARY.md`、`docs/ARCHITECTURE.md`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/SECURITY_POLICY.md`、`docs/state/runtime_states.md`、`docs/state/G0_DECISION_LIST.md`、`docs/reference/CONFLICT_REPORT.md`、`docs/memory/*`。
+- 架构变化：无。对齐已冻结的 `ADR-001` 与 05 §9–§10，不新增或修改架构决策。
+
+
+### 2026-11-12 · 伪代码 P2–P8 设计件验收 · WP-03 方案与提示词（执行完成，未 commit）
+
+- 变更：
+  - 按用户 2026-11-12 指令（C→B 顺序）完成 P2–P8 设计件验收审查：91 文件 / 51,402 行；14 个模块的 `MODULE.md`、`NEGATIVE_TESTS.md` 齐全；文件数/行数与 `INDEX.md`、`STAGE_LOG.md` 一致；每模块 ≥36 条负例标识；全部 `.py` 通过 `ast.parse`；>800 行文件已登记函数索引。审查报告：`reports/pseudocode/P2_P8_ACCEPTANCE_REVIEW.md`。
+  - `docs/state/project_state.json`：P2–P8 状态由 `IN_REVIEW` 改为 `ACCEPTED`（仅设计件验收）；补 `acceptance_basis` 与验收证据路径；`T-PSEUDO-001` 验收标准同步为 P1–P8 ACCEPTED；top-level `updated_at` 更新。
+  - `design/pseudocode/STAGE_LOG.md`：P2–P8 验收状态改为“已验收（2026-11-12；设计件）”，补验收依据；P9/P10 保持原状态。`INDEX.md` 与 M04–M18 的模块头状态引用同步为“设计件已验收；实现未开始”。
+  - `README.md`、`docs/ARCHITECTURE.md`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/PROJECT_OVERVIEW.md`、`docs/memory/project-context.md`：同步为 P1–P8 设计件 ACCEPTED、P9/P10 BLOCKED；`DEVELOPMENT_WORKFLOW` §11.3 标题改为“部分满足”并注明第 2 条仅完成设计件验收。
+  - 新增 `docs/plans/WP-03_IMPLEMENTATION_PLAN.md`（草案，未获实施批准）与 `docs/plans/WP-03_IMPLEMENTATION_PROMPT.md`（下一阶段实施提示词）。
+  - 新增 `reports/pseudocode/` 下 3 份只读审计日志：`p2_p8_inventory.log`、`p2_p8_doc_summary.log`、`p2_p8_large_files.log`。
+- 原因：用户 2026-11-12 指令按 C（逐阶段验收 P2–P8）→ B（WP-03 方案）顺序推进；先完成设计件验收，再出方案与提示词。
+- 验证：
+  - `& .venv/Scripts/python.exe scripts/state_sync.py validate` → exit 0；伪代码阶段 ACCEPTED 8 / BLOCKED 2。
+  - `& .venv/Scripts/python.exe scripts/state_sync.py render` → 生成 2 文件；`check` → exit 0，逐字节一致（`PROJECT_STATE.md` SHA256 `20835f51…`，`IMPLEMENTATION_STATUS.md` SHA256 `72f499dc…`）。
+  - `& .venv/Scripts/python.exe scripts/check_docs_drift.py` → ERROR=0、WARNING=1（`last_verified_commit` 与 HEAD 不一致，已知）。
+  - 尝试 `& .venv/Scripts/python.exe -m pytest tests/test_state_sync.py -q -p no:cacheprovider`：31 failed / 28 errors，全部在 setUp/临时目录创建阶段出现 `PermissionError [WinError 5]`（或由此派生的 `FileNotFoundError`），未见断言失败；属 `BLK-003` workspace-write 环境阻塞，未据此关闭阻塞，也未修改测试。
+  - 本次只改设计验收状态、文档与计划，未改业务代码、契约、schema 或测试。
+- 影响/后续：
+  - P2–P8 设计件已验收；`ACCEPTED` 不表示运行时实现、测试通过或门禁 PASS。
+  - WP-03 仍未满足 `DEVELOPMENT_WORKFLOW` §11.3 第 3/4/6 条：`§12-2`/`§12-6`/`§12-7`/`§12-8` 未裁决、P9/P10 未处置、未下达 WP-03 指令。
+  - `BLK-003` 仍 OPEN；`last_verified_commit` 仍 `1c9a104`；未 commit。
+- 架构变化：无。仅设计阶段验收与计划文档；未改冻结契约/架构/ADR，未写业务代码。
+- 相关文件：`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`、`design/pseudocode/{STAGE_LOG.md,INDEX.md}`、`design/pseudocode/M04_dag/MODULE.md` 至 `M18_knowledge/MODULE.md`、`reports/pseudocode/*`、`docs/plans/*`、`README.md`、`docs/{ARCHITECTURE.md,DEVELOPMENT_WORKFLOW.md,PROJECT_OVERVIEW.md}`、`docs/memory/project-context.md`。
+
+### 2026-11-12 · T0 WP-03 · SQLite 迁移、StateMachine 与双事务审计（执行完成，待验收，未 commit）
+
+- 变更：
+  - 新增 `researchflow/persistence/`：连接/事务助手、7 表 DDL 与触发器、只向前迁移执行器、Task/Node/Evidence/Audit/Idempotency 仓储、幂等键校验。
+  - 新增 `researchflow/orchestration/`：Task 9 / Node 10 迁移表、`StateMachine.transition()`、`create_initial()`、守卫、事实端口、内容寻址计划读取、最小不变量。
+  - 新增 `researchflow/contracts/encoding.py`（RFC 8785 JCS）与 `researchflow/contracts/errors.py`（13 个冻结 API 错误码）。
+  - `researchflow/api/app.py` 从 `_EphemeralTaskRegistry` 切换到 SQLite 创建服务；保留 201/409/422/404 与 `/recover` 404；`GET /tasks/{id}` 保留 `spec`。
+  - 7 表：`tasks`、`nodes`、`evidence`、`evidence_invalidations`、`audit_log`、`idempotency_keys`、`schema_migrations`；`tasks.task_spec_json` 与 `idempotency_keys.task_id NOT NULL + FK` 按 `00_decisions.md` 记录为已批准偏离。
+  - 新增 WP-03 定向测试、全量回归、证据脚本；`docs/state/project_state.json` 新增 `T-WP-03-001`（`IN_REVIEW`）。
+- 原因：用户 2026-11-12 确认 16 项裁决（“按你的建议来吧”），批准 9A 范围与 Step 1 计划；实现 T0 WP-03 最小持久层与状态机唯一写入口。
+- 验证：
+  - 定向：`87 passed`，exit 0；日志 `docs/verification/t0/wp-03/pytest_targeted.log`。
+  - 全量：`217 passed`，exit 0；日志 `docs/verification/t0/wp-03/pytest_full.log`。该全量结果来自 `danger-full-access` 补充运行；workspace-write 下 `BLK-003` 仍在 pytest `tmp_path` setup 阶段失败，未写成 workspace-write 通过。
+  - 证据脚本：`make_evidence.py` exit 0；生成 `transitions.jsonl`、`illegal.log`、`direct_write.log`、`audit_log.jsonl`、`denied_survives_rollback.log`、`audit_degraded_stderr.log`、`invalidated_guard.log`。
+  - `state_sync.py validate|render|check`：均 exit 0；生成文件逐字节一致。
+  - `BLK-003` 仍 OPEN；`last_verified_commit` 未改；未 commit。
+- 影响/后续：
+  - `T-WP-03-001` 置 `IN_REVIEW`，等待用户验收；未标 DONE。
+  - 全量测试为 full-access 补充结果；workspace-write 阻塞仍如实保留。
+  - 未修改冻结契约/设计/ADR/PRD/G0；未把 P9/P10 当输入。
+- 架构变化：无新增架构决策；按 05/06/07/ADR-001/004/005 与已批准裁决落地；两项 DDL 偏离已记录。
+- 相关文件：`researchflow/persistence/*`、`researchflow/orchestration/*`、`researchflow/contracts/{encoding,errors}.py`、`researchflow/api/app.py`、`tests/wp03_support.py`、`tests/test_{jcs,persistence_migrations,state_machine,audit_dual_transaction,direct_write_guard,invalidated_guard,idempotency_sqlite,api_sqlite}.py`、`tests/test_api_{422,idempotency}.py`、`docs/verification/t0/wp-03/*`、`docs/state/project_state.json`、`docs/{PROJECT_STATE.md,IMPLEMENTATION_STATUS.md,CHANGELOG_DEV.md,SESSION_HANDOFF.md}`。
+
+### 2026-11-14 · 三阶段 DeepSeek Harness Goal 任务书（文档交付，未 commit）
+
+- 新增 `docs/goals/GOAL_01_CORE_BACKEND.md`、`GOAL_02_COMPETITIVE_PRODUCT.md`、`GOAL_03_COMPETITION.md`：按 T0 后端可信闭环→T1 赛道竞争力→T2 差异化/竞赛交付递进。结合用户两张开发方法图，落实统一契约/命名、伪代码、分批实现、A/B/C 审查与状态/记忆交接。
+- 依据现有代码/状态续建，明确 WP-03 待验收、历史 full-access 测试、BLK-003 与 P9/P10 阻塞；不重做 WP-01/02，不把设计件或测试事实端口当生产闭环。
+- 只读核实 Harness 安装包 runtime 已为 `0.2.2-rc.3`，按实际 Goal 工具、自动轮数、恢复/暂停/阻塞语义编写；说明提示词/轮数不提供金额硬限额。
+- 纳入用户赛道一通知图：初赛作品截止 11-20、决赛作品截止 12-06；完整官网章程仍未取得，不虚构评分/格式/奖项认定。模型按用户指定阿里云 DeepSeek V4.1 Flash；开发 API 200 元与产品运行/调试 50 元跨阶段分别累计。
+- 三路只读审查修正：明确重启/非回环拒绝测试、WP 依赖；盲测正式运行前不暴露细节、污染后转开发集；开发费用与产品费用分别停止，模型操作本地文件仍耗开发费用；有限试点协议避免无界等待。
+- 验证：项目 `.venv` CPython 3.11.16/64bit；文档 UTF-8/围栏/本地引用/来源 hash 校验 exit 0，记录 `docs/goals/verification/document_validation.json`；`state_sync.py validate/render/check` 均 exit 0（2026-11-14 18:04，约 0.21/0.20/0.17 秒），日志 `state_sync.log`；`check_docs_drift.py` exit 0、ERROR=0/WARNING=1（约 0.25 秒），日志 `docs_drift.log`。首次受限环境 Git 子进程失败后，获准只读沙箱外复核；该复核不证明 BLK-003 已解决。
+- `T-GOALS-001` DONE 仅表示文档交付。当前阶段、既有任务、门禁、伪代码状态、阻塞和 last_verified_commit 保持原值；生成视图由脚本同步。
+- 未运行产品 pytest、未改业务代码/冻结契约、未安装插件/依赖、未改 DSH 配置、未调用收费 API、未提交赛事或 Git commit。
+- **无架构变化**：新增阶段任务书、事实/来源核对和文档交付登记；未来架构/契约实施仍需具体方案及批准。
+- 相关文件：`docs/goals/`、`docs/state/project_state.json`、生成状态视图、CHANGELOG、SESSION_HANDOFF、Memory 索引与环境核验补记。
+
+### 2026-11-14 · T0 · 后端可信闭环、最小工作台、三次离线端到端与独立验签
+
+- 变更：
+  - 迁移 0002/0003（只向前）：新增 `graph_versions/reports/certificates/ingestion_log`；重建 `audit_log` 扩展动作并保留历史行、索引与四个状态守卫触发器。0001 语句与 checksum 未改。
+  - 新增 T0 产品模块：`researchflow/dag`、`templates`（内置合成数据 CC0-1.0 + 注册表 + Split Manifest）、`execution`（受控子进程、进程树超时回收、进程树内存采样）、`evidence`（Collector/链/内容寻址载荷）、`gate` + `rules/ruleset.v1.json`、`verification`（L1/L2/L3 + 报告/凭证签发）、`signing`（Ed25519/JCS 白名单/Merkle/信任锚）、`bundle`、`recovery`、`pipeline`、`server`、`cli`、`workbench`；根 `verify_bundle.py` 独立离线验签。
+  - API 增加 `GET /graph`、`GET /evidence`、`POST /verify`、`GET /report`、`GET /certificate`；`POST /recover` 仍 404；启动守卫拒绝非回环且无 token；报告/凭证响应带 `stale`。
+  - 新增 T0 测试 `tests/t0/*`（契约、DAG、模板、执行、Collector、Gate、L1/L2/L3、签名、Bundle、恢复、工作台、API、管线）与 `scripts/e2e_run.py`、`scripts/measure_concurrency.py`、`scripts/build_template_dataset.py`。
+  - 独立只读审查（2026-11-14）：发现并修复 A 类“内存只采样 venv 启动器”问题（改为进程树采样 + 200 MB 真实分配校准 + 真实内存上限终止），并加固 E3 绑定、规则等级下限、verify 幂等、`attempt_end` 严格性、证书时间顺序等 B 类项；旧 e2e 证据归档在 `docs/verification/t0/e2e/superseded_2026-11-14_pre_memfix/`，不删除。
+  - `docs/state/project_state.json`：WP-03 转 `DONE`；新增 T-WP-04…14 与 T-WP-R 共 12 个任务并转 `DONE`；G1/G2/G3 `PASS`（实施会话 + 独立审查证据复核），G6 `IN_PROGRESS`（仅 G6-T0 满足，完整 G6 属 T1）。
+- 原因：按 GOAL_01 完成 T0 可信闭环：真实执行、受控证据、独立验证、条件签发、离线验签；保留已通过的 WP-01/02/03 契约与实现。
+- 验证（解释器 `.venv/Scripts/python.exe`，3.11.16/64bit；会话 `danger-full-access`）：
+  - 定向各 WP：wp-04 15、wp-05 15、wp-06 10、wp-07 9、wp-08 14、wp-09 11、wp-10 8、wp-11 9、wp-12 11、wp-13 3、wp-r 6、pipeline 5，全部 exit 0；日志在 `docs/verification/t0/wp-*/pytest.log` 与 `docs/verification/t0/pipeline_tests.log`。
+  - 全量：`& .venv/Scripts/python.exe -m pytest tests -q -p no:cacheprovider` → **339 passed**，exit 0，312.44 s；日志 `docs/verification/t0/full_suite_2026-11-14_final.log`。
+  - 三次 e2e：`python scripts/e2e_run.py --runs 3 --out docs/verification/t0/e2e` → 三次 COMPLETED/VERIFIED，必检 8/8、L3 覆盖 1.0、32 条证据（16 条失效）、63 个 Bundle 文件、独立验签 exit 0，`consistent=true`；报告 `docs/verification/t0/e2e/e2e_report.md`。
+  - 并发/内存：`python scripts/measure_concurrency.py` → 观测并发 2、重叠 2.323 s、两 worker 峰值 165.004/166.586 MB；主机 16,117 MB。
+  - G6-T0：`docs/verification/t0/g6-t0/`（包外信任锚、隔离目录、三次真包通过；`verify_bundle.py` SHA256 `595f2fae…b3e18`）。
+  - 契约：`validate_contracts.py --selftest` 10/10 PASS；`validate_contracts.py` 72/72 exit 0；`state_sync.py validate|render|check` 均 exit 0；`check_docs_drift.py` ERROR=0、WARNING=1（`last_verified_commit` 与 HEAD 不一致，已知）。
+- 影响/后续：
+  - 冻结件未改（`contracts/`、`docs/design/`、`docs/ADR/`、`design/pseudocode/`）；实现层偏离与已接受风险见 `docs/verification/t0/00_implementation_decisions.md`，独立审查见 `docs/verification/t0/review_2026-11-14.md`。
+  - `BLK-003` 仍 `OPEN`；全部结果不写成 workspace-write 通过。工作台截图未提供（AppTest 替代并披露）。断网为“代码无外呼 + 代理黑洞 + 无模型客户端”，非物理断网。
+  - 完整 G6、G4、G5、G7 属 T1/T2，未启动；`POST /recover` 仍 404；T0 无 LLM/DC/SPA/完整 Recovery 状态机。
+  - 未 commit；`last_verified_commit` 仍为 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`（未用 HEAD 冒充）。
+- 相关文件：`researchflow/**`、`tests/t0/**`、`scripts/{e2e_run,measure_concurrency,build_template_dataset}.py`、`verify_bundle.py`、`researchflow/rules/ruleset.v1.json`、`docs/plans/goal-01-plan.md`、`docs/verification/t0/**`、`docs/verification/budget/BUDGET_LEDGER.md`、`docs/state/project_state.json`、`docs/PROJECT_STATE.md`、`docs/IMPLEMENTATION_STATUS.md`。
+
+
+## 2026-11-14 · Goal 自动记忆与交接收尾规则
+
+- 用户要求：Harness 每批及结束前主动更新项目记忆与交接，无需再次提醒。
+- 变更：新增 `docs/goals/MEMORY_CLOSEOUT.md`；三份 Goal 的启动入口和完成清单均引用。要求稳定记忆与研发进度分离、无新事实时说明无需修改、每包检查点、真实验证和批准来源/累计预算交接、收尾失败不 complete；明确崩溃和用户立即停止时的边界。
+- 状态：仅新增文档任务 `T-GOALS-002`；未变更既有业务任务、门禁、阶段、预算余额或 `last_verified_commit`。
+- 验证：四份 Markdown UTF-8/代码围栏/本地链接/收尾引用检查通过；`state_sync.py validate/render/check` 均 exit 0。记忆前置漂移检查 ERROR=0/WARNING=1（已知 last_verified_commit 与 HEAD 差异）；收尾完整结果见 `docs/goals/verification/memory_closeout_20261114/`。只改文档，不运行产品测试。
+- 无架构变化：本次仅强化已有记忆、状态及交接流程，不改变产品契约、状态机、权限边界或实现。
+- 记忆：在 `feedback-and-lessons.md` 登记自动同步偏好，Memory 索引指向收尾规则；未把待修复项写成已完成。
+- 交接：最新记录置顶，并指向 `reports/t0_review_20261114/REVIEW.md` 的三项 T0 收口要求。当前仅确认收口任务已发出，未核实修复验收完成。
+- Git：main，HEAD `309083e715cb59a1f0c181d95df44e1946ffbaa5`，本次未 commit/push；保留既有工作区差异。
+
+### 2026-11-15 · T0 · A-01/A-02 修复、WP-13 材料补齐与三次 e2e 重跑（未 commit）
+
+- 变更：
+  - A-01 参数完整性：`VerificationContext.parameter_binding()` 对当前 attempt 交叉核对 NodeSpec、`job.json`、`result.json` 与 E2 `executor_launch` 的 `parameters_hash`；L1 新增 `L1_PARAMETERS_BINDING_MISMATCH/INCOMPLETE`；L3 在创建目录/子进程前 preflight split 与全部 metric 节点，失败返回 `coverage=0`、`nodes=()`、`verification_root=""`，原因码 `L3_PARAMETERS_BINDING_MISMATCH/INCOMPLETE`。未改 contracts/Schema/迁移/Gate/状态边。
+  - A-02 恢复安全：`RecoveryService.invalidate()` 与 `rerun()` 在状态迁移、计划写入或执行前运行只读 L1；坏链或缺失 attempt 结果以 `RECOVERY_NOT_SAFE` + 具体 `L1_*` 原因拒绝。新增真实 `taskkill /T` 中断/新进程重读测试、坏链/缺失证据恢复拒绝测试；未实现 T1 Recovery、未新增状态边、`/recover` 仍 404。
+  - A-03 材料：WP-13 支持 `?view=` 初始标签页、`?task_id=` 预填与 `RESEARCHFLOW_API_TIMEOUT`；新增 CDP 截图脚本、四视图 + API 不可达截图、DOM 快照、`walkthrough.md`、`ADR-007_DECISION_PROPOSAL.md`；新增失效证据 STALE 的 AppTest。ADR-007 仍 `PROPOSED`，正式裁决待用户。
+  - 证据：`docs/verification/t0/a-01/`、`a-02/`、`wp-13/`；修复前 e2e 整体归档到 `docs/verification/t0/e2e/superseded_2026-11-15_pre_a01/`（未删除、未改写），新 e2e 写入 `docs/verification/t0/e2e/`；新离线验签日志在 `docs/verification/t0/g6-t0/2026-11-15/`。
+  - 状态：新增 `T-A01-001`、`T-A02-001`（DONE）与 `T-A03-001`（IN_REVIEW，ADR 裁决待用户），新增 `BLK-004` OPEN；G1/G2/G3/G6 补新证据，G6 仍 `IN_PROGRESS`；`last_verified_commit` 未改。
+- 原因：复核报告 A-01/A-02/A-03 要求先修复真实负例缺口并补齐 WP-13 冻结交付，再谈 T0 验收；旧 e2e 不能证明修复后代码。
+- 验证（解释器 `D:\ResearchFlow-project\.venv\Scripts\python.exe`，3.11.16/64bit；会话 `danger-full-access`）：
+  - `pytest tests/t0/test_wp09_verifier_l12.py tests/t0/test_wp10_verifier_l3.py` → **26 passed**，126.91 s，exit 0；日志 `docs/verification/t0/a-01/pytest_targeted.log`。
+  - `docs/verification/t0/a-01/parameter_binding_probe.py` → exit 0，`verdict=PASS`；pre-fix 模拟 L1/L3 均 PASS，post-fix L1/L3 均 FAIL 且 L3 无目录/子进程；`probe_report.json`。
+  - `pytest tests/t0/test_wp_restart_safety.py` → **4 passed**，31.24 s；`pytest tests/t0/test_wp_recovery.py tests/t0/test_wp_api.py` → **11 passed**，65.28 s；日志 `a-02/`。
+  - `docs/verification/t0/a-02/recovery_chain_probe.py` → exit 0，`verdict=PASS`；坏链/缺失结果 invalidate 与坏链 rerun 均 `RECOVERY_NOT_SAFE`，状态/计划未变。
+  - `pytest tests/t0/test_wp13_workbench.py` → **4 passed**，23.50 s（含 stale 视图）；`wp-13/capture_screenshots.py` → exit 0，`verdict=PASS`，四视图 + API 不可达 + DOM。
+  - 全量 `pytest tests -q -p no:cacheprovider` → **351 passed**，395.66 s，exit 0；日志 `docs/verification/t0/full_suite_2026-11-15.log`。
+  - 三次 e2e `python scripts/e2e_run.py --runs 3 --out docs/verification/t0/e2e` → `consistent=true`，三次 COMPLETED/VERIFIED、32 证据/16 失效、必检 8/8、L3 1.0；`e2e/runs_summary.json`、`e2e_report.md`。
+  - 仓库 `verify_bundle.py -E` + 包外 `trust_store.json` 对 run_1..3 → 三次 `VERIFIED`，exit 0；日志 `g6-t0/2026-11-15/`。
+  - `validate_contracts.py --selftest` 10/10；`validate_contracts.py` 72/72 exit 0；`state_sync.py validate/render/check` 均 exit 0；`check_docs_drift.py` ERROR=0/WARNING=1（last_verified_commit 与 HEAD 不一致，已知）。
+- 影响/后续：
+  - 无契约/Schema/迁移/状态边变化；ADR-007 未批准、未扩分页/下载/失效原因；T0 不宣布全部完成，ADR-007 裁决与 T0 验收/commit 仍待用户。
+  - `BLK-003` 仍 OPEN；`BLK-004`（ADR-007 正式裁决）OPEN；完整 G6/G4/G5/G7 属 T1/T2，未启动。
+- 相关文件：`researchflow/verification/{context,l1,l3}.py`、`researchflow/recovery/service.py`、`researchflow/workbench/app.py`、`tests/t0/{test_wp09_verifier_l12,test_wp10_verifier_l3,test_wp_restart_safety,test_wp13_workbench,support,restart_probe}.py`、`docs/verification/t0/{a-01,a-02,wp-13}/**`、`docs/plans/A-01_PARAMETER_BINDING_PLAN.md`、`docs/verification/t0/e2e/**`、`docs/verification/t0/g6-t0/2026-11-15/**`、`docs/state/project_state.json`、生成状态文档、本 CHANGELOG、`docs/SESSION_HANDOFF.md`。
+
+### 2026-11-15 · T0 · ADR-007 正式批准
+
+- 变更：用户在当前 DSH 会话的裁决问答中选择“批准建议（推荐）”；`ADR-007` 由 `PROPOSED` 改为 `ACCEPTED`。三个边界：①独立只读 Streamlit 进程、只发 GET；②四视图只读，证据固定 `limit=200` 单页、无分页/报告下载；③展示 `STALE` 与失效计数、不展示失效原因（需另立 REST 契约方案）。新增 `docs/verification/t0/wp-13/ADR-007_DECISION.md`，更新 ADR 文件/索引/D-34、`T-A03-001`（DONE）、`BLK-004`（RESOLVED）与生成状态文档。
+- 原因：A-03 的正式裁决来源缺失；材料补齐后由用户明确裁决，避免把待选项静默视为已批准。
+- 验证：`state_sync.py validate/render/check` 均 exit 0；ADR 文件、索引与 D-34 状态一致；G0 ⑧ 冻结正文未改写，差异在 ADR 索引登记。
+- 影响/后续：T0 四视图范围已锁定；分页、下载、失效原因展示仍不在范围。T0 验收、commit 与是否进入 T1 仍由用户决定；未 commit、未推送。
+- 相关文件：`docs/ADR/ADR-007-t0-workbench-scope.md`、`docs/ADR/README.md`、`docs/verification/t0/wp-13/{ADR-007_DECISION,ADR-007_DECISION_PROPOSAL,walkthrough}.md`、`docs/verification/t0/00_implementation_decisions.md`、`docs/state/project_state.json`、生成状态文档。
+
+### 2026-11-15 · T0 · 用户验收通过（暂不 commit）
+
+- 用户在当前 DSH 会话中明确选择“**验收 T0，暂不 commit**”。T0 阶段验收通过；新增 `docs/verification/t0/T0_ACCEPTANCE.md` 与状态任务 `T-T0-ACCEPT-001`（DONE）。
+- 验收依据：A-01/A-02/A-03 收口；全量 351 passed（395.66 s）；三次新 e2e `consistent=true`（32 证据/16 失效/必检 8/8/L3 1.0）；三次离线验签 `VERIFIED`；契约 10/10、72/72；state_sync 三步 exit 0。
+- 边界：验收不表示 commit/推送已授权、不表示完整 G6（T1）通过、不表示 T1 启动；`BLK-003` 仍 OPEN，B 类入口/验签补强与预算余额未核实均如实披露。
+- 下一步：commit 作为单独事项（先核对 Git 身份、文件清单、忽略规则、历史未验收产物）；T1、GitHub 目标/可见性/推送范围与预算由用户另行决定。
+- 相关文件：`docs/verification/t0/T0_ACCEPTANCE.md`、`docs/verification/t0/review_2026-11-15.md`、`docs/state/project_state.json`、生成状态文档、`docs/CHANGELOG_DEV.md`、`docs/SESSION_HANDOFF.md`。
+
+### 2026-11-15 · 安全 · 忽略运行私钥文件
+
+- 变更：`.gitignore` 增加 `*.private.json`；`git check-ignore -v` 确认 `docs/verification/t0/e2e/run_1/runtime/keys/rf-t0-ed25519-01.private.json` 被忽略。
+- 原因：三次 e2e 的 runtime 目录含测试私钥，当前工作区未 commit；即使未来提交，也不得把运行私钥纳入版本库。公开密钥 `*.public.json` 不忽略。
+- 验证：`git check-ignore -v` 输出命中 `.gitignore:15:*.private.json`；未修改已有私钥文件，未删除 e2e 证据。
+- 影响：仅忽略规则；无业务代码、契约、Schema 或运行状态变化。
+
+### 2026-11-15 · T0 · GitHub 提交审核与 Harness 交接
+
+- 用户已将此前“暂不 commit”调整为提交并推送已验收 T0，随后指定由 DeepSeek Harness 执行；Codex 负责核心审核、方案判断与部分难点开发。准确仓库为 `https://github.com/linhao3170/-Research_Flow`，保留前导连字符；远端可见性、空仓库状态及权限待 Harness 核实。
+- 预算台账追加本次开发 API 消耗 **15.00 元（用户确认）**，更正同批未知记录且不重复累计；此前批次消耗与总余额仍未核实，不推算剩余 185 元。
+- 提交范围审核与执行步骤写入 `docs/verification/publication/2026-11-15/PUBLISH_HANDOFF.md`。`.gitignore` 增量排除 e2e runtime 数据库、临时目录、内部裁剪图和候选 NUL 文件；未删除文件。公开 Bundle、信任锚及验收证据保留。
+- P9/P10 仅作为仍为 BLOCKED 的历史草稿保存，以满足登记目录完整性；不代表设计验收或实施授权，不执行、不改状态。
+- 工作区候选路径/典型秘密格式扫描结果见同目录 `working_audit.json`；扫描不回显秘密值，不等同于最终 staged 或历史无秘密证明。最终暂存内容由 Harness 重新审核。
+- 状态任务 `T-PUBLISH-PREP-001` 记录审核交接 DONE；`state_sync.py validate/render/check` 均 exit 0。历史全量 351 passed、三次 e2e 和离线验签仅核对材料，本轮未重跑。会话开始文档漂移检查 ERROR=0/WARNING=1；收尾未重跑漂移检查，不宣称最终文档检查通过。
+- 本轮浏览器连接与部分提权请求因自动审批服务 404（代理不支持 `codex-auto-review`）未执行；未修改审批或系统配置。候选扫描后改用直接 Git 导出与受限文件读取，不绕过审批。
+- 自动更新 SESSION_HANDOFF 与长期分工偏好 FB-30。**无架构变化**：仅预算、发布准备和文档治理；未修改业务实现、冻结契约或门禁，未变更 `last_verified_commit`。
+- Codex 未暂存、未 commit、未添加或修改 remote、未 push；T1 未启动。后续由 Harness 按提交交接执行真实提交、推送及自动记忆收尾。
+
+### 2026-11-15 · T0 · 首次普通提交与推送（Harness 执行，提交时记录）
+
+- 变更：
+  - 核对并新增 `origin` = `https://github.com/linhao3170/-Research_Flow.git`（前导连字符保留）：`git ls-remote --heads origin` exit 0、0 个 ref；GitHub API 返回 `private=false`、`size=0`、`default_branch=main`，即**公开空仓库**，与此前“按私有仓库预期”不符。已在 `PUBLISH_HANDOFF.md` 报告差异，未修改仓库可见性。
+  - 按重新生成的候选清单逐路径暂存 T0 验收成果，不使用无清单 `git add .`；最终索引扫描 `staged_audit.json` 与 7 个历史提交扫描均 0 findings；未暂存私钥、凭据或本地运行数据库。
+  - `.gitattributes` 将 `docs/verification/t0/e2e/**` 与 `docs/verification/t0/g6-t0/**` 标为 `-text`，按原始字节入库。原因：e2e Bundle 的 `manifest.json` 记录文件原始字节的 SHA-256；提交前实测 run_1 Bundle 34/65 个文件被 CRLF→LF 归一化，新克隆中离线验签会失败；修正后 1427 个证据文件工作区与索引逐字节一致。
+  - 新增 `T-PUBLISH-001`（提交时 `IN_PROGRESS`）；`docs/verification/publication/2026-11-15/` 保存提交前检查日志。
+- 原因：用户授权把已验收 T0 普通提交并推送到指定仓库，要求真实执行、证据完整、排除敏感内容且不改验收标准。
+- 验证：
+  - `validate_contracts.py --selftest` → 10/10；`validate_contracts.py` → 72/72，exit 0。
+  - `state_sync.py validate` / `render` / `check` → 均 exit 0，两条生成文件逐字节一致；`check_docs_drift.py` → ERROR=0、WARNING=1（`last_verified_commit` 与 HEAD 不同，已知）。
+  - 索引/历史秘密扫描 0 findings；证据文件字节一致性 1427/1427。
+  - 历史全量 351 passed（395.66 s）为既有证据，本次未重跑，不写成本轮通过；`last_verified_commit` 保持 `1c9a10461c50c02058ce28be8b4b09c0c8870e80`。
+- 影响/后续：仓库实际公开，若需私有须由用户在 GitHub 侧调整；P9/P10 仍为 `BLOCKED` 草稿，不构成验收或开发批准；T1 未启动。推送结果、远端 SHA 与干净快照验证见后续收尾条目。
+- 相关文件：`.gitattributes`、`.gitignore`、`docs/state/project_state.json`、`docs/verification/publication/2026-11-15/**`、`docs/verification/budget/BUDGET_LEDGER.md`、`docs/SESSION_HANDOFF.md`。
+- **无架构变化**：仅发布准备、忽略/换行规则、状态与文档治理；未改业务实现、冻结契约、Schema、迁移、状态边或门禁。

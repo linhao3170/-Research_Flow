@@ -1,0 +1,62 @@
+{
+  "check_definitions": {
+    "artifact_hash": {
+      "kinds": [
+        "artifact_observed"
+      ],
+      "level": "E2"
+    },
+    "executor_observed": {
+      "kinds": [
+        "executor_launch",
+        "executor_process_exit"
+      ],
+      "level": "E2"
+    },
+    "metric_source": {
+      "kinds": [
+        "verifier_recheck"
+      ],
+      "level": "E3"
+    }
+  },
+  "execution": {
+    "default_backoff_sec": 0,
+    "max_attempts": 2
+  },
+  "graph": {
+    "max_edges": 64,
+    "max_nodes": 32
+  },
+  "l2": {
+    "leakage_rules": [
+      "R1_TARGET_IN_FEATURES",
+      "R2_ROW_OVERLAP",
+      "R3_GROUP_OVERLAP",
+      "R4_TEMPORAL_ORDER",
+      "R5_MANIFEST_DUPLICATE"
+    ],
+    "metric_tolerance": 1e-09
+  },
+  "l3": {
+    "metric_node_types": [
+      "ml.train.classifier"
+    ],
+    "metric_tolerance": 1e-09,
+    "minimum_coverage": 1.0,
+    "prediction_mismatch_limit": 0
+  },
+  "required_checks": {
+    "ml.split": [
+      "executor_observed",
+      "artifact_hash"
+    ],
+    "ml.train.classifier": [
+      "executor_observed",
+      "artifact_hash",
+      "metric_source"
+    ]
+  },
+  "ruleset_version": "1.0.0",
+  "schema_version": "1.0"
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "measured_at": "2026-11-14T11:39:11.327896Z",
+  "interpreter": "3.11.16 (main, Sep  1 2026, 14:15:24) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "declared_max_workers": 2,
+  "graph": [
+    "split_dataset",
+    "train_logistic_regression",
+    "train_random_forest"
+  ],
+  "attempts": [
+    {
+      "node_id": "train_logistic_regression",
+      "attempt_id": "attempt_01",
+      "launcher_pid": 24268,
+      "worker_pids": [
+        12992,
+        24156,
+        24268
+      ],
+      "started_at": "2026-11-14T11:39:08.561262Z",
+      "ended_at": "2026-11-14T11:39:10.915994Z",
+      "duration_sec": 2.36,
+      "peak_memory_mb": 165.004,
+      "exit_code": 0
+    },
+    {
+      "node_id": "train_random_forest",
+      "attempt_id": "attempt_01",
+      "launcher_pid": 10764,
+      "worker_pids": [
+        10764,
+        12760,
+        16436
+      ],
+      "started_at": "2026-11-14T11:39:08.592905Z",
+      "ended_at": "2026-11-14T11:39:11.074165Z",
+      "duration_sec": 2.484,
+      "peak_memory_mb": 166.586,
+      "exit_code": 0
+    }
+  ],
+  "observed_overlap_seconds": 2.323,
+  "observed_concurrency": 2,
+  "peak_worker_memory_sum_mb": 331.59,
+  "host_memory": {
+    "total_mb": 16117.0,
+    "available_mb": 5413.9,
+    "load_percent": 66.0
+  },
+  "notes": [
+    "Two training nodes were scheduled in parallel because limits.max_workers=2.",
+    "The venv python.exe is a launcher; peak_memory_mb is the maximum working set across the launcher and its real interpreter child (ProcessTreeSampler).",
+    "No GPU, distributed or multi-tenant measurement is claimed for T0."
+  ],
+  "workspace": "D:\\ResearchFlow-project\\runtime\\measure-concurrency-e87cc08a"
+}

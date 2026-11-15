@@ -1,0 +1,24 @@
+{
+  "accuracy": 0.8368794326241135,
+  "f1_macro": 0.8280214244047304,
+  "feature_columns": [
+    "age",
+    "bmi",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6"
+  ],
+  "fn": 9,
+  "fp": 14,
+  "model": "logistic_regression",
+  "n_test": 141,
+  "n_train": 538,
+  "precision_macro": 0.8236215538847118,
+  "recall_macro": 0.8348098530682799,
+  "seed": 42,
+  "tn": 75,
+  "tp": 43
+}

@@ -1,6 +1,6 @@
 # project-context.md — 项目目标、边界与背景
 
-> 更新时间：2026-11-08（阶段 7；阶段 8 复核）
+> 更新时间：2026-11-08（阶段 7；阶段 8 复核）；2026-11-12 历史阶段与引用核对
 > 核验状态：背景文档，不含当前状态。
 > 本文件不是需求合同；需求以后续评审通过的 PRD / 契约 / ADR 为准。
 
@@ -17,7 +17,7 @@ ResearchFlow 3.1 是面向 AI 实验任务的可信多智能体编排、动态�
 5. 结果验证；
 6. 完成凭证签发。
 
-来源：策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002`）§1.1（一句话定位）。
+来源：策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002` 已关闭）§1.1（一句话定位）。
 
 核心判定立场：Agent 的自然语言声明只提供“待核查主张”，不构成成功证据。任务是否完成由 StateMachine 根据 Gate 与独立 Verifier 的结构化结果决定，不由 Agent 自述决定。
 
@@ -41,7 +41,7 @@ ResearchFlow 3.1 是面向 AI 实验任务的可信多智能体编排、动态�
 | 交付顺序 | 先 T0 最小可信闭环，再 T1，再 T2 |
 | T0 边界 | 不接入 LLM；不开发六个 Agent；不接入 DeepSeek Harness Adapter |
 
-来源：用户阶段 4 指令；策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002`）§4.4、§15.2。
+来源：用户阶段 4 指令；策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002` 已关闭）§4.4、§15.2。
 
 “不得擅自扩大范围。”任何范围变更必须先获得用户明确批准并记录 ADR。
 
@@ -92,21 +92,38 @@ T0 必须覆盖的能力（策划书内部 v4.3.0 §15.2 T0/T1/T2 交付阶段�
 - 不宣称哈希链绝对不可篡改；只称可发现篡改，并说明密钥与锚定边界。
 - 不把知识检索、Agent 自评或多 Agent 投票当作实验完成证据。
 
-来源：策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002`）§4.4。
+来源：策划书内部 v4.3.0（文件名标签 v4.3.1，`BLK-002` 已关闭）§4.4。
 
-## 7. 仓库基线历史（阶段 4–7）
+## 7. 仓库基线历史（阶段 4 起）
 
 - 阶段 4 新增：项目 `AGENTS.md`、记忆索引与子文件、研发状态 JSON、状态同步脚本、测试与真实日志。
 - 阶段 5 新增：`.agents/skills/` 下九个 ResearchFlow Skill、`docs/SKILL_CATALOG.md`、`scripts/validate_skills.py` 与 `docs/verification/stage5/` 证据。
-- 阶段 6 新增：`docs/verification/stage6/`（MCP 能力、Context7 接入、写入校验与真实调用）；`cordis.patch.yml` 已写入 context7（1,462 字节）。
+- 阶段 6 新增：`docs/verification/stage6/`（MCP 能力、Context7 接入、写入校验与真实调用）；`cordis.patch.yml` 已写入 context7（阶段 6 时 1,462 字节；2026-11-12 复核为 3,616 字节，后续配置变更）。
 - 阶段 7 新增：`docs/PROJECT_OVERVIEW.md`、`ARCHITECTURE.md`、`GLOSSARY.md`、`DEVELOPMENT_WORKFLOW.md`、`MEMORY_GUIDE.md`、`MCP_CATALOG.md`、`SECURITY_POLICY.md`；`docs/reference/SOURCE_REGISTER.md`、`CONFLICT_REPORT.md`；`docs/verification/stage7/` 只读抽取与版本证据。
+- 阶段 8 新增：`docs/verification/stage8/` 的 26 项工作站验收、策略恢复补验、安全与资源审计。
+- 2026-11-10：G0 规格冻结由用户宣布通过；`contracts/` 5 份 schema + 72 例；ADR-001–006 为 ACCEPTED，ADR-007 保持 PROPOSED；`docs/G0/`、`docs/design/`。
+- 2026-11-10：T0 WP-01 环境锁定（`.venv` 3.11.16、58 个 pin）；WP-02 契约模型与 `POST/GET /api/v1/tasks`；`docs/verification/t0/`。
+- 2026-11-11：P1–P10 伪代码阶段注册表；`design/pseudocode/`。
+- 2026-11-11：P0 整改（API 幂等、状态注册表、受控 full-access 全量 140 passed）；`reports/remediation/`。
+- 2026-11-12：P1–P8 设计件已验收（P2–P8 按 C 指令验收；ACCEPTED 仅指设计件）；P9/P10 仍阻塞。
 
 ## 8. 待核实
 
 - 飞书 AI 开发说明：项目内未落地；如作为优先级 2 来源，需用户提供导出件。
 - 赛事官方章程的完整要求；策划书 §1.3 记录“官方动态页本次读取未返回完整章程”，项目内无通知原图/章程文件；不得自行推断评分权重、页数、匿名要求等。
 - 16GB 内存与“并发 2”是设计约束；并发能力尚未实测，不得宣称已达成。
+- 阶段 8 的 2D 未单独执行、2C 仅静态确认；G0 已通过，但未见对 2D 的书面接受或补做记录，需用户确认（见 `docs/state/G0_DECISION_LIST.md` R-2）。
 - DOCX 无可信页码；来源引用使用章节 + `P####`/`TABLE ##` 锚点。
+
+
+## 8b. T0 实施状态（2026-11-14）
+
+- T0 后端可信闭环已实现并验证：WP-03 验收完成，WP-04–14 与 WP-R 全部 `DONE`。
+- 三次隔离 e2e：任务 `COMPLETED`、报告 `VERIFIED`、必检 8/8、L3 覆盖 1.0、独立离线验签 exit 0；证据见 `docs/verification/t0/e2e/`。
+- 门禁：G1/G2/G3 `PASS`（实施会话 + 独立只读审查复核证据）；G6 `IN_PROGRESS`，仅 G6-T0 满足，完整五类负例矩阵属 T1，未提前通过。G4/G5/G7 未启动。
+- 关键实现边界：T0 无 LLM、无六角色、无 DC/SPA、无完整 Recovery 状态机；`POST /recover` 仍 404；恢复通过内部 CLI/编排完成。
+- 已知限制：工作台截图缺失（AppTest 替代）；`BLK-003` 仍 OPEN；断网为“代码无外呼 + 代理黑洞”，非物理断网；L3 与执行器共用同一解释器安装。
+- 下一步：用户复核 T0 证据/门禁与 commit 授权；随后才进入 T1（G4/G5/G6 完整版/G7 与动态调度/恢复）。
 
 ## 9. 相关文件
 

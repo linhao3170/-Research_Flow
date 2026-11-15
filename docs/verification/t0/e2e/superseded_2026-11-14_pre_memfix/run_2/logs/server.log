@@ -1,0 +1,12 @@
+INFO:     127.0.0.1:57039 - "GET /readyz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57040 - "POST /api/v1/tasks HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50902 - "POST /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51019 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51020 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51021 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/evidence?limit=200 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51054 - "POST /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52462 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52463 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/graph HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52464 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/evidence?limit=200 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52465 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/report HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52466 - "GET /api/v1/tasks/task_22a82629-062e-4779-bb3b-8bbfa611b12a/certificate HTTP/1.1" 200 OK

@@ -1,0 +1,80 @@
+{
+  "attempt_id": "attempt_01",
+  "binding_problem_codes": [
+    "PARAMETERS_HASH_MISMATCH",
+    "PARAMETERS_HASH_MISMATCH"
+  ],
+  "command": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe -B docs/verification/t0/a-01/parameter_binding_probe.py",
+  "cwd": "D:\\ResearchFlow-project",
+  "duration_sec": 8.435,
+  "e2_launch_parameters_hash": "3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+  "ended_at": "2026-11-15T02:14:09.091850Z",
+  "exit_code": 0,
+  "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+  "job_bytes_changed": true,
+  "node_id": "train_logistic_regression",
+  "nodespec_parameters_hash": "3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+  "original_job_sha256": "700824bf254afbba96c58ea83f241874faefa82de2da6e269a123b175f562aa4",
+  "original_parameters_hash": "3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+  "post_fix": {
+    "l1": {
+      "codes": [
+        "L1_PARAMETERS_BINDING_MISMATCH",
+        "L1_PARAMETERS_BINDING_MISMATCH"
+      ],
+      "details": [
+        "train_logistic_regression attempt_01 job.parameters_hash 45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d != NodeSpec parameters_hash 3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+        "train_logistic_regression attempt_01 hash_payload(job.parameters) 45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d != NodeSpec parameters_hash 3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a"
+      ],
+      "status": "FAIL"
+    },
+    "l3": {
+      "coverage": 0.0,
+      "issues": [
+        {
+          "code": "L3_PARAMETERS_BINDING_MISMATCH",
+          "detail": "train_logistic_regression attempt_01 job.parameters_hash 45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d != NodeSpec parameters_hash 3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+          "node_id": "train_logistic_regression"
+        },
+        {
+          "code": "L3_PARAMETERS_BINDING_MISMATCH",
+          "detail": "train_logistic_regression attempt_01 hash_payload(job.parameters) 45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d != NodeSpec parameters_hash 3cb72d132033aad0acfdbdd1029c30152b0fb5ed3504faf267c99f82684fef8a",
+          "node_id": "train_logistic_regression"
+        }
+      ],
+      "node_count": 0,
+      "processes": [],
+      "status": "FAIL",
+      "verification_root": ""
+    },
+    "new_l3_directories": [],
+    "no_replay_side_effect": true
+  },
+  "pre_fix_simulation": {
+    "l1": {
+      "codes": [],
+      "details": [],
+      "status": "PASS"
+    },
+    "l3": {
+      "coverage": 1.0,
+      "issues": [],
+      "node_count": 1,
+      "processes": [
+        22212,
+        6420
+      ],
+      "status": "PASS",
+      "verification_root": "D:\\ResearchFlow-project\\runtime\\a01-probe-01b6dfb3\\runtime\\verification\\l3-bba723fb17"
+    },
+    "method": "monkeypatched VerificationContext.parameter_binding to trust job.json, reproducing the code path before the A-01 fix",
+    "simulated": true
+  },
+  "purpose": "A-01 parameter binding sensitivity probe",
+  "python_version": "3.11.16",
+  "started_at": "2026-11-15T02:14:00.657093Z",
+  "tampered_job_sha256": "dad38f3a426f0fd7d6695433e20a6e31ab543516f60ee79a0d96987e723802b2",
+  "tampered_parameters_hash": "45dc0c40aff877d53b56e4145bf7eb906fa7ac53155134e7183f831fba9b754d",
+  "task_id": "task_7fa634d6-9fa7-4fe4-b342-bedecfffaacf",
+  "verdict": "PASS"
+}

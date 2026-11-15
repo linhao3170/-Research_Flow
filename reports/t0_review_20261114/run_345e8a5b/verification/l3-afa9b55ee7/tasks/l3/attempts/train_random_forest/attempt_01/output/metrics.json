@@ -1,0 +1,24 @@
+{
+  "accuracy": 0.7894736842105263,
+  "f1_macro": 0.7894617819990954,
+  "feature_columns": [
+    "age",
+    "bmi",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6"
+  ],
+  "fn": 15,
+  "fp": 13,
+  "model": "random_forest",
+  "n_test": 133,
+  "n_train": 515,
+  "precision_macro": 0.7897058823529413,
+  "recall_macro": 0.7895748530076888,
+  "seed": 42,
+  "tn": 53,
+  "tp": 52
+}

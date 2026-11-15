@@ -1,0 +1,12 @@
+G6-T0 environment isolation record
+date=2026-11-14
+host=Windows 11 (10.0.22631), single machine
+isolation_level=another directory + fresh verifier copy + fresh Python process (-E); another device/Windows user NOT used (disclosed limitation)
+verifier_source=repo verify_bundle.py sha256=595f2fae75a0e74d349dc9d9c47f90e4a98803fb5a7af9a412173ebfda5b3e18 (trusted version copied before running; hash recorded before the run)
+interpreter=D:\ResearchFlow-project\.venv\Scripts\python.exe 3.11.16 64bit
+trust_anchor_source=external file copied to each isolated dir (never inside bundle)
+no_database=verifier imports only stdlib+cryptography; it does not import researchflow
+run_1 isolated_dir=docs/verification/t0/e2e/run_1/isolated-verifier cwd=isolated-verifier bundle=isolated-verifier/bundle trust_store=isolated-verifier/trust_store.json
+run_2 isolated_dir=docs/verification/t0/e2e/run_2/isolated-verifier cwd=isolated-verifier bundle=isolated-verifier/bundle trust_store=isolated-verifier/trust_store.json
+run_3 isolated_dir=docs/verification/t0/e2e/run_3/isolated-verifier cwd=isolated-verifier bundle=isolated-verifier/bundle trust_store=isolated-verifier/trust_store.json
+note=run_1..run_3 were regenerated after the memory-observation fix; the earlier evidence set is retained under docs/verification/t0/e2e/superseded_2026-11-14_pre_memfix/ and is not used as evidence.

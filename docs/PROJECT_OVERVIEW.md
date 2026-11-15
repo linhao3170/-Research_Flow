@@ -117,7 +117,7 @@
 
 来源：§15.3 / TABLE 57。
 
-`[现状]` G0–G7 当前全部 `NOT_STARTED`，没有任何门禁 PASS；不得把本文件中的目标写成已达成。
+`[现状]` `G0` 已于 2026-11-10 `PASS`；`G1`–`G7` 仍 `NOT_STARTED`。目标数字与门禁条件不是实测成绩，不得把本文件中的目标写成已达成。
 
 ## 8. 核心验收指标（目标，不是实测）
 
@@ -155,15 +155,17 @@
 
 | 项 | 状态 | 证据 |
 |---|---|---|
-| 业务代码 | **未开发**；`researchflow/` 只有 `.gitkeep` | 仓库检查 |
-| 契约/Schema | **未建立**；`contracts/` 只有 `.gitkeep` | 仓库检查 |
-| `.venv` / 依赖 | **未创建 / 未安装** | `09_inventory.log` |
-| 运行时 StateMachine | **未实现** | `docs/state/runtime_states.md` §7 |
-| T0 | **未开始** | G0–G7 全 `NOT_STARTED` |
+| 业务代码 | **部分实现**：Pydantic v2 契约模型与 `POST/GET /api/v1/tasks` 绑定；StateMachine/SQLite/审计未实现 | `researchflow/contracts/`、`researchflow/api/app.py`、[`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) |
+| 契约/Schema | **5 份冻结 JSON Schema v1.0 + 72 个正反例** | `contracts/`、`docs/verification/g0/02_validate_contracts.log` |
+| `.venv` / 依赖 | **已创建 / 已锁定**：3.11.16（64 位），58 包 | `requirements.lock`、`docs/verification/t0/wp-01/` |
+| 运行时 StateMachine | **未实现**；设计见 P2，设计件已验收（2026-11-12），实现未开始 | `docs/state/runtime_states.md`、`pseudocode_stages.P2` |
+| T0 | **进行中**：G0 `PASS`；G1–G7 `NOT_STARTED` | [`PROJECT_STATE.md`](PROJECT_STATE.md) |
+| 伪代码阶段 | P1–P8 设计件 `ACCEPTED`（P2–P8 于 2026-11-12 验收）；P9/P10 `BLOCKED` | `docs/state/project_state.json` → `pseudocode_stages` |
 | 策划书基线 | **已确认**（2026-11-08）；内部 v4.3.0 为内容基线，v4.3.1 仅为文件名标签 | `BLK-002` 已关闭；[`CONFLICT_REPORT.md`](reference/CONFLICT_REPORT.md) |
-| 资料接手 | 阶段 7 完成，等待验收 | [`STAGE7_REPORT.md`](verification/stage7/STAGE7_REPORT.md) |
+| P9 产物 | 6 个 `.py` 为 2026-11-11 并发重写，不是原始正文恢复；未测试、未验收 | `reports/remediation/P0_OPEN_ISSUES.md` |
+| P10/M19 | 仅 5 个 API `.py`；无模块文档；未获开发授权 | `design/pseudocode/M19_api/` |
 
-**不得把 T1/T2 的功能写成 T0 已完成，也不得把策划书目标写成当前能力。**
+**不得把 T1/T2 的功能写成 T0 已完成，也不得把策划书目标写成当前能力。** 当前状态以 [`state/project_state.json`](state/project_state.json) 为唯一机器可读事实源；本表是阅读指路，不另建状态。
 
 ## 11. 文档地图
 

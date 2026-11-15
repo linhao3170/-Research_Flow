@@ -1,0 +1,37 @@
+﻿ M AGENTS.md
+ M README.md
+ M design/pseudocode/00_BASELINE/PHASE_RULES.md
+ M design/pseudocode/INDEX.md
+ M design/pseudocode/M01_contracts/MODULE.md
+ M design/pseudocode/M03_config_env/MODULE.md
+ M design/pseudocode/M04_dag/MODULE.md
+ M design/pseudocode/M05_executor/MODULE.md
+ M design/pseudocode/M06_templates/MODULE.md
+ M design/pseudocode/M07_evidence/MODULE.md
+ M design/pseudocode/M08_gate/MODULE.md
+ M design/pseudocode/M09_verifier_l12/MODULE.md
+ M design/pseudocode/M10_verifier_l3/MODULE.md
+ M design/pseudocode/M11_signing/MODULE.md
+ M design/pseudocode/OPEN_QUESTIONS.md
+ M design/pseudocode/STAGE_LOG.md
+ M docs/ARCHITECTURE.md
+ M docs/CHANGELOG_DEV.md
+ M docs/DEVELOPMENT_WORKFLOW.md
+ M docs/IMPLEMENTATION_STATUS.md
+ M docs/PROJECT_OVERVIEW.md
+ M docs/PROJECT_STATE.md
+ M docs/SESSION_HANDOFF.md
+ M docs/state/G0_DECISION_LIST.md
+ M docs/state/project_state.json
+ M researchflow/api/app.py
+ M scripts/state_sync.py
+ M tests/test_state_sync.py
+?? design/pseudocode/M13_scheduler/
+?? design/pseudocode/M14_recovery/
+?? design/pseudocode/M15_dcspa/
+?? design/pseudocode/M16_vas/
+?? design/pseudocode/M17_agents/
+?? design/pseudocode/M18_knowledge/
+?? design/pseudocode/M19_api/
+?? reports/
+?? tests/test_api_idempotency.py

@@ -1,0 +1,7 @@
+{
+  "alg": "Ed25519",
+  "key_fingerprint": "5e1d09d7a6cff5a4efb9dc1054e62d4796a63e78bad12327da4249fcb66e9b45",
+  "key_id": "rf-t0-ed25519-01",
+  "schema_version": "1.0",
+  "signature": "x181lwehnYvIE1UkmdSwGyH1dmZpmlV9CWQ1xW7QlrrHON7xQ0IquIG3AZhMtGv9t5g1sSYtB7KKpsqTutihAg=="
+}

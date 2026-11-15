@@ -1,0 +1,13 @@
+COMMAND: D:\ResearchFlow-project\.venv\Scripts\python.exe -B scripts/state_sync.py validate
+START: 2026-11-15T11:08:00.1282102+08:00; EXIT: 0; SECONDS: 0.2005638
+OK: project_state.json 校验通过。阶段=T0，任务=28，伪代码阶段=10（ACCEPTED 8，BLOCKED 2），门禁 PASS=4/8，阻塞=4。
+COMMAND: D:\ResearchFlow-project\.venv\Scripts\python.exe -B scripts/state_sync.py render
+START: 2026-11-15T11:08:00.3717888+08:00; EXIT: 0; SECONDS: 0.1799539
+已生成 docs/PROJECT_STATE.md  sha256=91a8382895b20b5d6d71fb6eff1242e90714270f07bd30aafa30cf95988838e3
+已生成 docs/IMPLEMENTATION_STATUS.md  sha256=769c8b31f84465ef635195c3b57b55eb7d8bbbe6b470480d4a0174919d8ee641
+OK: 已生成 2 个文件。
+COMMAND: D:\ResearchFlow-project\.venv\Scripts\python.exe -B scripts/state_sync.py check
+START: 2026-11-15T11:08:00.5542445+08:00; EXIT: 0; SECONDS: 0.2148561
+[OK] docs/PROJECT_STATE.md  sha256=91a8382895b20b5d6d71fb6eff1242e90714270f07bd30aafa30cf95988838e3
+[OK] docs/IMPLEMENTATION_STATUS.md  sha256=769c8b31f84465ef635195c3b57b55eb7d8bbbe6b470480d4a0174919d8ee641
+OK: 2 个生成文件与 project_state.json 逐字节一致。

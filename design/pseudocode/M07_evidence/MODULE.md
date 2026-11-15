@@ -4,7 +4,7 @@
 > 覆盖：Collector 单写者、Evidence Store 追加/查询/冲突保留、哈希链公式与断链检测、
 > RFC 9162 Merkle 与 inclusion proof、事件缺口标记与 Gate 读取方式
 > 不覆盖：Gate 判定（P5）、Ed25519 签名/信任锚（P6）、L3 重跑（P5）、Evidence Bundle 导出（P6/WP-12）
-> 前置：P3 已验收；M01 错误码与 M02 evidence 表已冻结
+> 前置：P3 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P3 设计件已验收；实现未开始）；M01 错误码与 M02 evidence 表已冻结
 > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
 
 ## 1. 目标

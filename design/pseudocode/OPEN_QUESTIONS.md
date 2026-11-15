@@ -1,7 +1,8 @@
 # 伪代码阶段开放问题索引（OPEN_QUESTIONS）
 
 > 用途：`design/pseudocode/` 全阶段的 OQ 唯一索引（PHASE_RULES §8）。纯索引，不复制正文；正文与裁决以「落点」列所指文件为准。
-> 口径：每个 OQ 恰好一行；状态只允许 `OPEN` / `DEFERRED` / `DECIDED` 三个值；已有编号原样沿用，无编号项写 `(无编号) §12-N`，不新造编号。
+> 口径：每个 OQ 恰好一行；状态只允许 `OPEN` / `DEFERRED` / `DECIDED` / `NEEDS_CONFIRMATION` 四个值；已有编号原样沿用，无编号项写 `(无编号) §12-N`，不新造编号。
+> `NEEDS_CONFIRMATION` 表示“曾声称已裁决，但原问题或裁决正文/证据不可恢复”；不得当作 `DECIDED`，不得作为后续阶段先例。
 >
 > **纪律（写死）：P3 起每个阶段收尾必须新增/更新本表并报告行数变化；未更新本表的阶段不算完成。**
 > 行数变化记录：P3 收尾 —— A 段 21 行 → 33 行（新增 12 条 `OQ-P3-01`…`OQ-P3-12`），B 段 5 行不变（其中 `OQ-CT-08`、`OQ-CT-12` 补记 P3 落点）；全表 42 → 55 行。
@@ -9,6 +10,8 @@
 > P5 收尾 —— A 段 45 → 57 行（新增 12 条 `OQ-P5-01`…`OQ-P5-12`），B 段 5 行不变；文件物理行 68 → 81 行（新增 12 行 + 1 行 P5 记录）。
 > P6 收尾 —— A 段 57 → 69 行（新增 12 条 `OQ-P6-01`…`OQ-P6-12`），B 段 5 行不变；文件物理行 81 → 94 行（新增 12 行 + 1 行 P6 记录）。
 > P7 收尾 —— A 段 69 → 81 行（新增 12 条 `OQ-P7-01`…`OQ-P7-12`），B 段 5 行不变；文件物理行 94 → 107 行（新增 12 行 + 1 行 P7 记录）。
+> P8 收尾 —— A 段 81 → 94 行（新增 13 条 `OQ-P8-01`…`OQ-P8-13`），B 段 5 行不变；文件物理行 107 → 121 行（新增 13 行 + 1 行 P8 记录）。
+> P9 收尾 —— A 段新增 15 条 `OQ-P9-01`…`OQ-P9-15`；事故恢复后追加 `OQ-P9-16`…`OQ-P9-20`（5 条，其中 2 条 DECIDED）。
 
 ## A. 伪代码阶段自建 OQ
 
@@ -16,9 +19,9 @@
 |---|---|---|---|---|---|---|---|
 | `OQ-P1-01` | 首条 `prev_hash` 是否定为 64 个 `0`？ | P1 | DECIDED | WP-07 首次写证据之前 | 保持 PROPOSED（`GENESIS_PREV_HASH_PROPOSED = "0"*64`）；校验器只校形态，不比较创世值；未裁决前不得写成测试期望、API 文案或契约必填约束。 | `M01_contracts/MODULE.md` §8 `OQ-P1-01`；`00_BASELINE/ENCODING_RULES.md` §6 | WP-07（写链前必须裁决） |
 | `OQ-P1-02` | DC/SPA 等 UUID 型 ID 是否新增前缀？ | P1 | DEFERRED | T2（随 `dc_`/`spa_` 契约定义） | 不新增 UUID 型 ID；`dc_`/`spa_` 随 T2 契约定义；`plan` 使用 `plan_hash`；`bundle` 是目录名。P1/P2 不生成、不预留、不实现。 | `M01_contracts/MODULE.md` §8 `OQ-P1-02`；`contracts/encoding.py` 的 `ID_SPECS` | T2 的 DC/SPA 契约 |
-| `OQ-P1-03` | 原问题未落文件（§8 仅记「已由用户处理」） | P1 | DECIDED | 未记录（需补录） | 裁决内容未落文件，需补录 | `M01_contracts/MODULE.md` §8（仅声明已处理，无正文） | 无（裁决已作，仅缺书面记录） |
+| `OQ-P1-03` | 原问题未落文件（§8 仅记「已由用户处理」） | P1 | NEEDS_CONFIRMATION | 用户补证前 | 原问题与裁决正文均未落文件；已搜索工作区、Git 历史、ZIP 与邻近目录，未找到可恢复来源；不得作为先例，等待用户补正文或确认无法恢复。 | `M01_contracts/MODULE.md` §8（仅声明已处理，无正文；2026-11-11 标 NEEDS_CONFIRMATION） | 追溯链；不得据此推断用户曾批准的内容 |
 | `OQ-P1-04` | `CERTIFICATE_NOT_AVAILABLE` 是否新增独立错误码？ | P1 | DECIDED | 已关闭（无） | 不新增第 14 个错误码；用 `STATE_TRANSITION_DENIED` + `detail.reason = "CERTIFICATE_NOT_AVAILABLE"` 表达，HTTP 409。 | `M01_contracts/MODULE.md` §8 `OQ-P1-04`；`contracts/errors.py` | 无 |
-| `OQ-P1-05` | 原问题未落文件（§8 仅记「已由用户处理」） | P1 | DECIDED | 未记录（需补录） | 裁决内容未落文件，需补录 | `M01_contracts/MODULE.md` §8（仅声明已处理，无正文） | 无（裁决已作，仅缺书面记录） |
+| `OQ-P1-05` | 原问题未落文件（§8 仅记「已由用户处理」） | P1 | NEEDS_CONFIRMATION | 用户补证前 | 原问题与裁决正文均未落文件；已搜索工作区、Git 历史、ZIP 与邻近目录，未找到可恢复来源；不得作为先例，等待用户补正文或确认无法恢复。 | `M01_contracts/MODULE.md` §8（仅声明已处理，无正文；2026-11-11 标 NEEDS_CONFIRMATION） | 追溯链；不得据此推断用户曾批准的内容 |
 | `OQ-P1-06` | 40 个配置键何时冻结？ | P1 | DECIDED | ADR-008 冻结前 | 40 个配置键标为「待 ADR-008 冻结」；`FROZEN`/`PLAN`/`DERIVED` 分类保留；ADR-008 之前键名与取值不是稳定接口，改名须同步 `schemas.py`、`MODULE.md`、`NEGATIVE_TESTS.md`。 | `M03_config_env/MODULE.md` §8 `OQ-P1-06`；`config/schemas.py` | ADR-008；配置落地 WP |
 | `OQ-P1-07` | `artifact_refs` 显式 `null` 是否合法？ | P1 | DECIDED | WP-02 复审时 | 以 schema 为准，显式 `null` 非法；不改 schema；WP-02 复审时补 null 拒绝与反例。 | `M01_contracts/MODULE.md` §8 `OQ-P1-07`；`00_BASELINE/CONTRACT_INDEX.md` 第 43 行 | WP-02（补反例） |
 | `OQ-P1-08` | `PYTHONHASHSEED` 未设或 `randomized` 是否判环境不一致？ | P1 | DECIDED | T0 签发证书或做 L3 前 | 接受「未设置或 `randomized` 一律 MISMATCH」；不得在 `compare_env_fingerprint()` 里放宽。 | `M03_config_env/MODULE.md` §8 `OQ-P1-08`；`config/env_fingerprint.py` | T0 证书/L3 运行配置 |
@@ -95,6 +98,40 @@
 | `OQ-P7-10` | 恢复计划不是七契约之一，`plan_format_version` 是否要登记、如何演进？ | P7 | OPEN | WP-R 冻结前 | 正文用 `plan_format_version="1.0"`（**不是** `schema_version`，避免与契约版本混淆）；未知版本拒绝冻结；若计划将来对外或进包，需 ADR 登记格式与演进规则。 | `planner.PLAN_FORMAT_VERSION`；`plan_freeze.canonical_plan_bytes` | WP-R；ADR |
 | `OQ-P7-11` | `RECOVERY_PLAN_FROZEN` 审计只有一个 `node_id` 列，而计划跨多个节点，记哪个？ | P7 | OPEN | WP-R 落地前 | 用失败节点作为 `node_id`（与 `nodes.plan_id/plan_hash` 落在失败节点上一致）；「一份计划是否只服务一个节点」与多节点归属需裁决。 | `plan_freeze.FreezeRecord`；`M14_recovery/MODULE.md` §7 | WP-R；审计口径 |
 | `OQ-P7-12` | `DATA`/`CODE` 类失败的「修复已发生 / 输入已变」在 T0 无法证明，是否只对 `RESOURCE` 生成计划？ | P7 | OPEN | G4 前 | T0 只对 `RESOURCE` 生成重跑计划；其余返回 `escalation`（`CATEGORY_NOT_RECOVERABLE_IN_T0` / `UNKNOWN_FAILURE`）。若要在 T0 支持 `DATA`，需先定义「输入哈希变更」证据端口并写进契约。 | `error_signature.CATEGORY_POLICY`；`planner.plan_recovery`；`M14_recovery/MODULE.md` §5.2 | WP-R；G4 |
+| `OQ-P8-01` | 角色契约版本 `role-contract/1.0` 没有上游字段，是否登记为独立契约？ | P8 | OPEN | T1 角色接入/契约评审前 | 作为装配常量，不进五份 schema；`MessageMeta.contract_version` 与 `TaskAssign.contract_version` 必须一致，失配拒绝；若要冻进契约需 MINOR + ADR。 | `M17_agents/MODULE.md` §7.1；`agents/contracts.py` 的 `ROLE_CONTRACT_VERSION` | T1 角色接入 |
+| `OQ-P8-02` | §6.3 未定义消息信封（message_id/sent_at/correlation_id），如何做重放防护与审计？ | P8 | OPEN | WP-12 前 | 引入 `MessageMeta`（六个字段），并与 payload 重复字段做一致性校验；重放按 `task_id + message_id` 去重。若要进契约需 MINOR，且不得改写九类 payload 字段。 | `M17_agents/MODULE.md` §6；`agents/messages.py` 的 `MessageMeta` | WP-12 |
+| `OQ-P8-03` | §10.1 的“参数化执行请求/画像请求/重算请求”在九类消息里没有专用类型 | P8 | OPEN | T1 六角色落地前 | 映射为工具请求（`template.parameterize`/`dataset.profile`）+ `FINDING`；不新增第十类（§6.3 是封闭集合）。若要专用消息，必须改 §6.3 并升 `MAJOR`。 | `M17_agents/MODULE.md` §6；`agents/roles.py` 的角色输出表 | T1 六角色 |
+| `OQ-P8-04` | 消息方向违规没有专用错误码，对外返回什么？ | P8 | DEFERRED | WP-12 error mapping 前 | 用 `SCHEMA_INVALID`(422) + `MESSAGE_DIRECTION_DENIED`；不新增 E.3 第 14 码；若需要 403 语义再裁决。 | `M17_agents/MODULE.md` §11；`agents/messages.py` 的 `MessageValidator` | WP-12 |
+| `OQ-P8-05` | 工具参数 Schema 不匹配：E.3 归到 `TOOL_NOT_ALLOWLISTED`(403)，与 422 直觉冲突 | P8 | DEFERRED | WP-12 error mapping 前 | 按 E.3 用 403 + `reason=TOOL_ARGS_SCHEMA_INVALID` + `field_path`；不新增码；若用户要求 422 再改。 | `M17_agents/MODULE.md` §7.5；`agents/tool_gateway.py` 的 `invoke` 步骤 4 | WP-12 |
+| `OQ-P8-06` | LLM/工具预算、超时、上下文 token 上限没有配置键 | P8 | OPEN | ADR-008 配置冻结前 | `PROPOSED_*` 常量（LLM 48/4/200k/600s；工具 8/64；上下文 6000–8000；温度 0）；标“未校准/非契约”，缺键不启动由 M03 承担。 | `M17_agents/MODULE.md` §7.6；`agents/llm_client.py`、`agents/tool_gateway.py` | ADR-008；WP-06/12 |
+| `OQ-P8-07` | Verification 角色可见 E2 是否过宽（可能提前看到执行证据并影响“验证计划”）？ | P8 | OPEN | T1 角色接入前 | 当前允许 E0/E1/E2，E3 永不；若要求只见索引元数据或只看 E0/E1，需裁决并改 `ContextScope`。 | `M17_agents/MODULE.md` §4/§11；`agents/contracts.py` 的 `ROLE_SPECS[VERIFICATION]` | T1 角色接入 |
+| `OQ-P8-08` | Agent 工具调用的 E1 由 Collector 写，但 Collector 的 E3 入口受 `OQ-P4-01` 阻塞 | P8 | OPEN | WP-07/WP-12 前 | M17 只提交 `level=E1, kind=tool_invocation`；E3 不在 M17 范围；E1 写失败即 `EVIDENCE_UNAVAILABLE` 并扣留 value。 | `M17_agents/MODULE.md` §3；`agents/tool_gateway.py` 的 `ToolEvidenceEvent` | WP-07/WP-12 |
+| `OQ-P8-09` | CPG“实质产出”口径与 stale 降权系数 0.5 没有原文依据 | P8 | DEFERRED | G5 前 | 产出只计 FINDING/PLAN/RECOVERY/VERIFY_REQUEST；PROGRESS/EVIDENCE_REF/ESCALATE 不计；密度用固定分母 30；stale 系数标 `PROPOSED`，不得写成验收阈值。 | `M17_agents/MODULE.md` §9；`agents/cpg.py`；`M18_knowledge/knowledge/retrieval.py` 的 `STALE_KB_WEIGHT` | G5 |
+| `OQ-P8-10` | 中文检索：FTS5 tokenizer 与查询侧 bigram 是否同口径？ | P8 | OPEN | 知识库 WP 落地前 | 查询侧 ASCII 词 + CJK bigram；索引侧 tokenizer 必须实测同口径，否则中文召回不可用；未实测前不得宣称中文检索已通过。 | `M18_knowledge/MODULE.md` §6.3；`knowledge/retrieval.py` 的 `tokenize_query` | 知识库 WP |
+| `OQ-P8-11` | `kid` 形态未定义；§11.4「supersedes 指向新版本」方向有歧义 | P8 | OPEN | 知识库 WP 落地前 | `kid` 为不透明非空字符串；`supersedes` 放在新版本上指向旧 `content_hash`（标准语义）；若按字面“指向新版本”实现，需改写字段语义并升契约。 | `M18_knowledge/MODULE.md` §4；`knowledge/unit.py` 的 `new_version` | 知识库 WP |
+| `OQ-P8-12` | 知识人工批准/复核流程与存储未定义；T1 才装配 | P8 | OPEN | T1 知识库接入前 | `HumanApproval` + `reviewed_by` 必填；`created_by` 不得是 Agent；`KnowledgeRetrieval(tier="T0")` 直接拒绝；写入端口由 WP 落地。 | `M18_knowledge/MODULE.md` §0/§8；`knowledge/feedback.py` 的 `KnowledgeLoop`；`knowledge/retrieval.py` 的 `RetrievalTierRefused` | T1 知识库 |
+| `OQ-P8-13` | 模块编号 M15/M16 没有伪代码目录，P8 按用户指令直接做 M17/M18 | P8 | DECIDED | P9 开工前 | 用户 P9 指令明确映射：M15 = DC/SPA，M16 = VAS；P9 已按 `M15_dcspa/`、`M16_vas/` 落盘，编号缺口关闭。 | `M15_dcspa/MODULE.md`；`M16_vas/MODULE.md`；本 OQ | 无（已关闭） |
+| `OQ-P9-01` | `dc_id` / `spa_id` 形态未冻结（`dc_`/`spa_` 不是既定前缀） | P9 | OPEN | T2 DC/SPA 契约冻结前 | 用内容寻址 64 位小写十六进制（无前缀）：`dc_id = sha256(JCS(identity_without_dc_id))`；`new_id("dc"/"spa")` 继续抛 `UnfrozenIdKind`。T2 若要求前缀，需同步改契约与负例。 | `dc_issuer.compute_dc_id`；`spa_judge.compute_spa_id`；`M15_dcspa/MODULE.md` §6.6 | T2 DC/SPA 契约 |
+| `OQ-P9-02` | D.5 的 `output_hashes[]` 是逐运行还是去重产物集？与 M11 `unique=True` 冲突 | P9 | OPEN | T2 DC 契约冻结前 | 解释为“排序去重的产物哈希集合”：bit-exact 下逐运行列表必然重复，会撞 M11 unique；去重集仍能绑定全部产物。若改为逐运行列表，M11 提案必须去掉 unique。 | `dc_issuer.DcIdentity.output_hashes`；`M15_dcspa/MODULE.md` §6.2 | T2 DC 契约 |
+| `OQ-P9-03` | M11 拒绝未冻结 DC/SPA 载荷（OQ-P6-02），P9 无合规签名器 | P9 | OPEN | T2 签名落地前 | 只定义 `DcSignerPort` / `SpaSignerPort`；`issue_dc` 无合规 signer 时不可用；`judge_spa(signer=None)` 恒 REEXECUTE。**不得**把 DC/SPA 签名写成已实现。 | `dc_issuer.DcSignerPort`；`spa_judge.SpaSignerPort`；`M15_dcspa/MODULE.md` §6.6 | T2 签名/契约 |
+| `OQ-P9-04` | 敏感因素“增加探针”的具体增量与上限无原文 | P9 | DEFERRED | T2 落地前 | `+2 探针/因子、封顶 9` 标 PROPOSED；不得写成验收阈值；落地时从配置读取。 | `dc_eligibility.DcPolicy.required_k`；`M15_dcspa/MODULE.md` §6.2 | T2 探针策略 |
+| `OQ-P9-05` | DC 的 TTL 时长无原文 | P9 | DEFERRED | T2 落地前 | `expires_at` 必填；上限 30 天（PROPOSED）；到期即失效，不自动续期。 | `dc_eligibility._validity_result`；`dc_issuer.issue_dc` | T2 DC 策略 |
+| `OQ-P9-06` | D.5 的 `artifact_hash` 单值无法表达多产物 | P9 | OPEN | T2 SPA 契约冻结前 | 用“排序后的 `{path: hash}` 的 JCS 哈希”合成一个值；若要求逐产物字段，需 T2 schema 扩展。 | `spa_judge._artifact_hash`；`M15_dcspa/MODULE.md` §8 | T2 SPA 契约 |
+| `OQ-P9-07` | SPA `predecessor_hashes` 的键/顺序/重复语义未定义 | P9 | OPEN | T2 SPA 契约冻结前 | 只存排序去重哈希值（满足 M11 unique）；键名与“前驱集合”校验在判定时用 `predecessor_ids`；T2 若需键值对应，需改字段。 | `spa_judge.SpaIdentity.predecessor_hashes`；`_predecessor_outcome` | T2 SPA 契约 |
+| `OQ-P9-08` | PRR 分母与目标 0 的统计口径未定义 | P9 | OPEN | G5/PRR 报告前 | 分母只含已完成重跑的剪枝节点；未重跑/失败/进行中计入 unresolved；只有 coverage=1 才给点估计；零错误给 Clopper–Pearson 双侧 95% 上界并给 n。 | `prr_ledger.PrrReport`；`clopper_pearson_upper`；`M15_dcspa/MODULE.md` §6.5 | G5 统计口径 |
+| `OQ-P9-09` | PRR 审计抽样比例/策略无原文 | P9 | DEFERRED | G5 前 | 默认全量重跑审计（coverage=1）；任何抽样方案必须先预注册并保留逐节点行；未裁决前不得用抽样数字报 PRR。 | `prr_ledger.PrrLedger.record_not_rerun`；`M15_dcspa/MODULE.md` §8 | G5 审计方案 |
+| `OQ-P9-10` | VAS 验证预算/成本单位没有配置键 | P9 | OPEN | ADR-008 配置冻结前 | 整数 tick；换算由调用方配置层定义；本阶段不加 `scheduler.yaml`/`gates.yaml` 键。 | `knapsack.ValidationCandidate.cost_ticks`；`M16_vas/MODULE.md` §6.3 | ADR-008；M13 落地 |
+| `OQ-P9-11` | 特征内部权重、cap、冲突权重无原文 | P9 | DEFERRED | G-dev 校准前 | 作为预注册常量写死在 `risk_features.py`；只有五维总权重可校准；看到 G-hold 后不得改。 | `risk_features.NOVELTY_WEIGHTS/IMPACT_WEIGHTS/ANOMALY_WEIGHTS/GAP_CONFLICT_WEIGHT`；`M16_vas/MODULE.md` §6.1 | G-dev 校准 |
+| `OQ-P9-12` | 四策略随机种子/重复次数/盲测边界未定义 | P9 | OPEN | G5 前 | 种子进 `StrategyInput` 并记录；同任务配对比较；重复运行不算独立样本；G-hold 不用于调参/调权重。 | `strategies.StrategyInput.seed`；`STATISTICAL_NOTE`；`M16_vas/MODULE.md` §6.6 | G5 实验设计 |
+| `OQ-P9-13` | M15/M16 编号缺口（原 `OQ-P8-13`） | P9 | DECIDED | 已关闭（无） | 按用户 P9 指令：M15 = DC/SPA，M16 = VAS；目录与模块文档已落盘。 | `M15_dcspa/`；`M16_vas/`；本 OQ | 无（已关闭） |
+| `OQ-P9-14` | DP 阈值（24 项 / 200,000 tick）无原文依据 | P9 | DEFERRED | T2 落地前 | 标 PROPOSED；超过阈值用贪心并报告上界差距；不得写成验收阈值或“最优性保证”。 | `knapsack.EXACT_MAX_ITEMS/EXACT_MAX_BUDGET_TICKS`；`M16_vas/MODULE.md` §6.5 | T2 预算实现 |
+| `OQ-P9-15` | `CoverageBenefit` 的构造口径未定义 | P9 | OPEN | T2/G5 前 | 由调用方从 Gate coverage/报告指标映射给出，并保持四策略一致；VAS 不自行重算指标或证据等级；若需公式，另行预注册。 | `knapsack.ValidationCandidate.coverage_benefit`；`M16_vas/MODULE.md` §8 | 实验设计；M08/M09 |
+
+| `OQ-P9-16` | 并发写入：另一路进程曾删除 P9 代码并新建 `M19_api` | P9 | OPEN | P9 复验收前 | 复验收前确认无并发写入；落盘后立即做哈希快照，发现被改写即回滚重落。 | `STAGE_LOG.md` P9 事故记录 | P9 验收 |
+| `OQ-P9-17` | 6 个代码文件曾从磁盘消失（4×M15 + knapsack/risk_features） | P9 | DECIDED | 已关闭（2026-11-11） | 按同一验收口径重写并落盘：1,173/1,035/1,227/830/747/614 行；P9 合计 11 文件 / 7,122 行（含复核横幅 +4 行；`INDEX.md` 曾写 7,030，已按实测修正）。该 DECIDED 只表示“已重写落盘”，不表示原始正文已恢复或阶段已验收。 | `M15_dcspa/MODULE.md` §2；`M16_vas/MODULE.md` §2；`STAGE_LOG.md` P9 复核修正 | 无（重写动作已关闭；验收仍挂 P9 BLOCKED） |
+| `OQ-P9-18` | `strategies.py` 依赖 `knapsack` 的 7 个符号，模块缺失即断链 | P9 | DECIDED | 已关闭（2026-11-11） | `knapsack.py` 保留 `KnapsackRefused/KnapsackResult/SelectionMode/ValidationCandidate/candidate_universe_hash/reserve_mandatory/select` 七个符号；`reserve_mandatory` 是四策略共用入口。 | `knapsack.py`；`strategies.py` L43 | 无（已关闭） |
+| `OQ-P9-19` | 负例文本与实现符号不一致（初稿名 vs 真实符号） | P9 | OPEN | M15/M16 落地前 | 两份 `NEGATIVE_TESTS.md` 增加 §0.1 符号对照；关键 6 条已按当前符号重写；其余逐条重写挂 `OQ-P9-20`。 | `M15_dcspa/NEGATIVE_TESTS.md` §0.1；`M16_vas/NEGATIVE_TESTS.md` §0.1 | T2 落地 |
+| `OQ-P9-20` | 负例逐条文本重写（86 + 68 条）未完成 | P9 | DEFERRED | T2 落地前 | 本轮只对齐符号与被点名负例；其余保留 ID 与场景，落地时按 §0.1 对照逐条改写断言。 | 两份 `NEGATIVE_TESTS.md` | T2 负例执行 |
 
 ## B. 上游 G0 的 OQ 引用（只引用，不改判）
 

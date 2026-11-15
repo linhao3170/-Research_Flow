@@ -1,0 +1,16 @@
+started_at=2026-11-14T18:05:02.9511079+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/check_docs_drift.py
+interpreter=CPython 3.11.16 64bit
+policy=approved read-only sandbox escalation for Git subprocess
+docs/state/project_state.json:20: WARNING: last_verified_commit 与当前 HEAD 不一致 (expected=309083e715cb59a1f0c181d95df44e1946ffbaa5, actual=1c9a10461c50c02058ce28be8b4b09c0c8870e80)
+STATE-FREE enforced=5/9；ERROR=0；WARNING=1
+exit_code=0
+elapsed_seconds=0.2452781
+started_at=2026-11-14T18:07:06.2825140+08:00
+command=& D:/ResearchFlow-project/.venv/Scripts/python.exe -B scripts/check_docs_drift.py
+interpreter=CPython 3.11.16 64bit
+policy=approved read-only sandbox escalation for Git subprocess
+docs/state/project_state.json:20: WARNING: last_verified_commit 与当前 HEAD 不一致 (expected=309083e715cb59a1f0c181d95df44e1946ffbaa5, actual=1c9a10461c50c02058ce28be8b4b09c0c8870e80)
+STATE-FREE enforced=5/9；ERROR=0；WARNING=1
+exit_code=0
+elapsed_seconds=0.2612449

@@ -1,0 +1,483 @@
+﻿# P0 untracked changes
+# 说明：这些文件不在 Git 基线中；diff 的旧侧是本轮 22:53:44 备份。
+# M15/M16 的旧侧是并发重写前的版本，因此 diff 同时包含并发重写与本轮复核横幅/状态修正，不能当作纯整改 diff。
+
+
+# ===== design/pseudocode/M13_scheduler/MODULE.md (old: reports/remediation/backup_before/design/pseudocode/M13_scheduler/MODULE.md) =====
+
+diff --git a/reports/remediation/backup_before/design/pseudocode/M13_scheduler/MODULE.md b/design/pseudocode/M13_scheduler/MODULE.md
+index fb496da..074c251 100644
+--- a/reports/remediation/backup_before/design/pseudocode/M13_scheduler/MODULE.md
++++ b/design/pseudocode/M13_scheduler/MODULE.md
+@@ -3,7 +3,7 @@
+ > 阶段：P7「调度与定向恢复」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+ > 覆盖：READY 三合取判定、确定性就绪队列与饥饿处理、SchedScore 五项归一化、Governor 五类监控与五个动作、派发七相
+ > 不覆盖：DC/SPA 剪枝（T2）、VAS 验证预算分配（P9）、模板本体（P4）、恢复计划生成与冻结（M14）、HTTP 路由（P10）
+-> 前置：P2–P4 已验收（StateMachine/状态机、图与失效传播、Executor 与模板）；M03 `scheduler.yaml`、M01 错误码已冻结
++> 前置：P2–P4 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（P2–P4 均为 `IN_REVIEW`，未验收）；M03 `scheduler.yaml`、M01 错误码为冻结设计输入
+ > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+ 
+ ## 1. 目标
+
+# ===== design/pseudocode/M14_recovery/MODULE.md (old: reports/remediation/backup_before/design/pseudocode/M14_recovery/MODULE.md) =====
+
+diff --git a/reports/remediation/backup_before/design/pseudocode/M14_recovery/MODULE.md b/design/pseudocode/M14_recovery/MODULE.md
+index 7c6cc44..a769f53 100644
+--- a/reports/remediation/backup_before/design/pseudocode/M14_recovery/MODULE.md
++++ b/design/pseudocode/M14_recovery/MODULE.md
+@@ -4,7 +4,7 @@
+ > 覆盖：错误签名与六类分类、§8.4 逐分支的 T0 保守实现、内容寻址的计划冻结、`INVALIDATED→READY` 三条守卫
+ > 不覆盖：完整 Recovery 状态机（`PROPOSED→…→CLOSED`，仅 T1）、Agent 提案、人工审批、DC/SPA 剪枝（T2）、
+ > 失效传播本身（P3 `invalidation.py` 已交付，本模块只消费其结果）
+-> 前置：P3 已验收（`descendants` / 失效集合）、P2 已验收（`StateMachine` 与 `PLAN_THREE_GUARDS`）、ADR-004 已 ACCEPTED
++> 前置：P3/P2 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（均为 `IN_REVIEW`，未验收）；ADR-004 已 ACCEPTED
+ > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+ 
+ ## 1. 目标
+
+# ===== design/pseudocode/M17_agents/MODULE.md (old: reports/remediation/backup_before/design/pseudocode/M17_agents/MODULE.md) =====
+
+diff --git a/reports/remediation/backup_before/design/pseudocode/M17_agents/MODULE.md b/design/pseudocode/M17_agents/MODULE.md
+index 8a9ce17..d1eff04 100644
+--- a/reports/remediation/backup_before/design/pseudocode/M17_agents/MODULE.md
++++ b/design/pseudocode/M17_agents/MODULE.md
+@@ -3,7 +3,7 @@
+ > 阶段：P8「六角色与知识库」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+ > 覆盖：角色身份四元组、§10.2 权限矩阵 25 格、九类消息与方向、工具唯一出口、统一 LLM 客户端、角色调度、六个角色类与 role_off、CPG 五项指标
+ > 不覆盖：Verifier 裁决与签发（M08–M12）、图审批（M04）、调度（M13）、HTTP（P10）、知识库本体（M18）
+-> 前置：P1–P7 已验收；**T0 尚未验收**（`project_state.json`：G1–G7 `NOT_STARTED`，仅 WP-01/WP-02 DONE）
++> 前置：P1–P7 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（仅 P1 `ACCEPTED`，P2–P7 `IN_REVIEW`，P9 `BLOCKED`）；**T0 尚未验收**（G1–G7 `NOT_STARTED`，仅 WP-01/WP-02 DONE）
+ > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
+ > FR 归属：`FR-012`（六角色消息契约与权限）在追踪矩阵中是 **T1 / G2+G5**；本阶段不宣称 G2/G5 已通过
+ 
+
+# ===== design/pseudocode/M18_knowledge/MODULE.md (old: reports/remediation/backup_before/design/pseudocode/M18_knowledge/MODULE.md) =====
+
+diff --git a/reports/remediation/backup_before/design/pseudocode/M18_knowledge/MODULE.md b/design/pseudocode/M18_knowledge/MODULE.md
+index c7077f6..0fb3863 100644
+--- a/reports/remediation/backup_before/design/pseudocode/M18_knowledge/MODULE.md
++++ b/design/pseudocode/M18_knowledge/MODULE.md
+@@ -3,7 +3,7 @@
+ > 阶段：P8「六角色与知识库」｜日期：2026-11-11｜状态：**伪代码/设计件，不是实现**
+ > 覆盖：KnowledgeUnit 15 字段与三态、五类差异字段、版本治理与冲突升级、FTS5/BM25 检索与过滤、过期降权、检索 E1、五种绑定、L-A/L-B/L-C、R1–R3 对照
+ > 不覆盖：SQLite/FTS5 建表与迁移（WP 落地）、HTTP、知识写入 UI、真实基准运行（RF-Bench 属 T1/G5）
+-> 前置：P1–P7 已验收；**T0 尚未验收**（G1–G7 `NOT_STARTED`）
++> 前置：P1–P7 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（仅 P1 `ACCEPTED`，P2–P7 `IN_REVIEW`，P9 `BLOCKED`）；**T0 尚未验收**（G1–G7 `NOT_STARTED`）
+ > 阶段约束（S0）：只写 `design/pseudocode/**`；不建库、不跑检索、不改看板、不写业务代码
+ > FR 归属：`FR-013`（知识单元版本治理与检索）、`FR-014`（FOL 三层反馈环）均为 **T1**；本阶段不宣称 G5 已通过
+ 
+
+# ===== design/pseudocode/M15_dcspa/MODULE.md (old: reports/remediation/backup_before/design/pseudocode/M15_dcspa/MODULE.md) =====
+
+diff --git a/reports/remediation/backup_before/design/pseudocode/M15_dcspa/MODULE.md b/design/pseudocode/M15_dcspa/MODULE.md
+index c635b20..0ed95ed 100644
+--- a/reports/remediation/backup_before/design/pseudocode/M15_dcspa/MODULE.md
++++ b/design/pseudocode/M15_dcspa/MODULE.md
+@@ -4,8 +4,10 @@
+ > 覆盖：DC 六类资格条件、DC 签发/过期/撤销、SPA 五项判定、PRR 逐节点台账
+ > 不覆盖：重跑本身（P7/M14）、Scheduler/Governor（P7/M13）、L1–L3 验证（P5/M09–M10）、
+ > 签名算法实现（P6/M11）、Gate 判定（P5/M08）、科学正确性裁决
+-> 前置：P5 验证、P6 签名、P7 恢复已验收；T2 能力，**T0/T1 不启用**
++> 前置：P5/P6/P7 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（均 `IN_REVIEW`，未验收）；T2 能力，**T0/T1 不启用**
+ > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
++>
++> **复核修正（2026-11-11）**：本模块 4 个 `.py` 由并发进程于 22:53:54–55 重写并落盘，不是原始正文恢复；未运行测试、未验收；P9 在状态源中为 `BLOCKED`。下方“完成（伪代码）”只表示文件存在，不表示已验证。
+ 
+ ## 1. 目标
+ 
+@@ -23,131 +25,176 @@
+ 
+ | 文件 | 内容 | 行数 | 状态 |
+ |---|---|---:|---|
+-| `orchestration/determinism/dc_eligibility.py` | 六类条件、随机性否决、k 次 bit-exact 比对、有效期/规则版本 | 1,317 | 完成（伪代码） |
+-| `orchestration/determinism/dc_issuer.py` | DC identity/内容寻址 ID、签发、过期、撤销、复用判定 | 973 | 完成（伪代码） |
+-| `orchestration/determinism/spa_judge.py` | 五项条件、证据对象、签名记录、默认 REEXECUTE | 1,327 | 完成（伪代码） |
+-| `orchestration/determinism/prr_ledger.py` | 逐节点剪枝/重跑/结果变化台账、精确二项上界 | 842 | 完成（伪代码） |
+-
+-计数口径：物理行数（`text.count("\n") + 1`）。四个文件均在 800–1500 行档，
+-按 PHASE_RULES §5 第 2 档在 §3 登记完整函数索引；不拆分，理由见 §7.8。
+-
+-## 3. 文件导航（PHASE_RULES §5 第 2 档：800–1500 行）
+-
+-### 3.1 `dc_eligibility.py`
+-
+-| 名称 | 起始行 | 职责 | 依据 |
+-|---|---:|---|---|
+-| `Condition` | 101 | 六类条件枚举 | TABLE 34 R02–R07 |
+-| `ConditionStatus` | 129 | PASS/FAIL/MISSING_EVIDENCE/VETO | §8.2；“缺证据不等于通过” |
+-| `DcReason` | 138 | 拒绝/否决策略原因 | §8.2 |
+-| `DcEligibilityError` | 173 | 输入结构错误（非资格不合格） | 错误码注册表 |
+-| `DcPolicy` | 192 | k 下限/增量/上限、TTL、独立进程目录要求 | §8.2 R05/R07 |
+-| `DcCandidate` | 230 | 节点静态声明（纯度/随机性/敏感因素） | §8.2 R02/R06 |
+-| `_require_hash` / `_require_hash_map` | 279/287 | 哈希与映射形态校验 | ENCODING_RULES §4 |
+-| `DcBinding` | 303 | 输入/代码/模板/环境/规则绑定 | §8.2 R03/R04/R07 |
+-| `RunProbe` | 346 | 单次探针运行的可观测事实 | §8.2 R05 |
+-| `EnvComparisonView` | 415 | M03 环境比较结果的只读投影 | §8.2 R04 |
+-| `ConditionResult` | 446 | 条件结论；PASS 必须带证据引用 | §8.2；本文件核心约束 |
+-| `RunComparison` | 486 | k 次比对结果 | §8.2 R05 |
+-| `EligibilityVerdict` | 510 | 六项结论与 eligible 的一致性校验 | §8.2；验收判据 2 |
+-| `required_k` | 589 | 敏感因素 → 探针数 | §8.2 R05 |
+-| `_canonical_directory` | 616 | 目录比较的保守规范化 | §8.2 R05 |
+-| `compare_runs` | 626 | k 次运行 bit-exact 判定（主逻辑） | §8.2 R05 |
+-| `_divergent` | 838 | 构造“有差异”的结果 | §8.2 R05 |
+-| `_randomness_result` | 861 | 随机性一票否决 | §8.2 R06；验收判据 2 |
+-| `_purity_result` | 896 | 节点纯度 | §8.2 R02 |
+-| `_input_fixed_result` | 950 | 输入固定 | §8.2 R03 |
+-| `_env_result` | 988 | 环境指纹 | §8.2 R04 |
+-| `_k_run_result` | 1026 | 重复执行条件 | §8.2 R05 |
+-| `_validity_result` | 1066 | 有效期与规则版本 | §8.2 R07 |
+-| `_require_utc` | 1132 | UTC datetime 校验 | ENCODING_RULES §3 |
+-| `evaluate_dc_eligibility` | 1143 | 六项逐条判定主入口 | §8.2 |
+-| `assert_randomness_is_veto` | 1210 | 自检：否决优先且结构不可绕过 | 验收判据 2 |
+-| `assert_conservative_defaults` | 1260 | 自检：默认保守、缺证据不通过 | 本阶段判据 |
+-| `assert_scope_statement` | 1289 | 自检：DC 限定语未被改写 | AGENTS §4.13 |
+-| `assert_condition_math` | 1304 | 自检：6 条件、k 单调性 | §8.2 R05 |
+-
+-### 3.2 `dc_issuer.py`
+-
+-| 名称 | 起始行 | 职责 | 依据 |
+-|---|---:|---|---|
+-| `DcIssuerError` / `DcRefused` / `DcSignatureInvalid` / `DcStoreCorrupt` | 128–156 | 签发/签名/存储拒绝 | 错误码注册表 |
+-| `_require_hash` / `_require_utc_datetime` / `_utc_z` | 166–178 | 形态与 UTC 固定写法 | ENCODING_RULES §3/§4 |
+-| `DcSignature` | 184 | 签名信封；要求回验 | §7.5；OQ-P6-02 |
+-| `DcSignerPort` | 221 | T2 签名端口；P9 无合规实现 | §7.5；OQ-P9-03 |
+-| `DcIdentity` | 250 | 除 `dc_id` 外的 13 个签名字段 | 附录 D.5；M11 提案 |
+-| `compute_dc_id` | 345 | 内容寻址 `dc_id`（JCS+SHA-256） | OQ-P9-01 |
+-| `DcRecord` | 363 | 已签发 DC（14 字段 + 签名） | 附录 D.5 |
+-| `DcAudit` | 448 | 签发审计（不进签名正文） | §7.4/§7.6 |
+-| `RevocationReason` / `RevocationRecord` | 472/486 | 撤销原因与记录 | §8.2 R07；终态 |
+-| `DcStatus` / `DcValidity` | 509/525 | 复用状态与一致性 | §8.3 条件 1 |
+-| `DcRegistry` | 544 | 只增不改的登记表（P9 内存设计） | 附录 D.6 |
+-| `DcIssuance` | 611 | 签发结果 | — |
+-| `_derive_output_hashes` | 617 | 排序去重产物哈希 | OQ-P9-02 |
+-| `issue_dc` | 627 | 签发主流程（复核、派生、签名、落库、审计） | §8.2；D.5 |
+-| `evaluate_dc_record` | 760 | 过期/撤销/绑定/签名的复用判定 | §8.3 条件 1 |
+-| `evaluate_dc` | 835 | 按 ID 取记录再判定 | §8.3 条件 1 |
+-| `revoke_dc` | 851 | 撤销入口 | §8.2 R07 |
+-| `assert_signature_domain` | 885 | 自检：域前缀/字段顺序/算法 | §7.5；M11 |
+-| `assert_dc_scope` | 915 | 自检：eligible=false 不签发、限定语 | AGENTS §4.13 |
+-| `assert_revocation_is_terminal` | 949 | 自检：无恢复入口 | §8.2 R07 |
+-| `assert_policy_binding` | 962 | 自检：策略版本/k/TTL 保守 | OQ-P9-04/05 |
+-
+-### 3.3 `spa_judge.py`
+-
+-| 名称 | 起始行 | 职责 | 依据 |
+-|---|---:|---|---|
+-| `SpaAction` / `DEFAULT_ACTION` | 127/133 | 动作枚举；默认 REEXECUTE | §8.3；验收判据 1 |
+-| `SpaCondition` / `SPA_CONDITION_ORDER` | 137/146 | 五项条件与顺序 | §8.3 / P0196–P0200 |
+-| `ReexecuteReason` | 156 | 重跑原因（区分“缺证据”与“证据为假”） | §8.3 |
+-| `SkipReason` | 177 | 唯一合法跳过原因 | 附录 D.5 |
+-| `SpaJudgeError` / `SpaRefused` | 183/194 | 输入结构错误 / 记录签名拒绝 | 错误码注册表 |
+-| `EvidenceRef` | 235 | 证据引用；生产者白名单 | §8.3；E0/E1 边界 |
+-| `ConditionOutcome` | 264 | 条件结论；PASS 必带证据 | 验收判据 1 |
+-| `DcLookupPort` / `PredecessorHashPort` / `ArtifactDiskPort` / `GateRecheckPort` / `SideEffectPort` / `SpaSignerPort` | 303–348 | 六个只读/签名端口 | §8.3 |
+-| `ArtifactExpectation` / `ArtifactInspection` | 367/386 | 产物期望与磁盘复算结果 | §8.3 条件 3 |
+-| `_canonical_path` / `_is_within` | 415/421 | 路径包含判定 | §8.3 条件 3 |
+-| `GateRecheck` | 429 | 当前规则集下的 Gate 复检（含过期/撤销/冲突） | §8.3 条件 4 |
+-| `SideEffectFacts` | 461 | 副作用与“本次必须执行”事实 | §8.3 条件 5 |
+-| `SpaRequest` | 479 | 一次判定的全部只读输入 | §8.3 |
+-| `SpaSignature` | 533 | SPA 签名信封；要求回验 | §7.5；OQ-P6-02 |
+-| `SpaIdentity` | 573 | 除 `spa_id` 外的 10 个签名字段 | 附录 D.5；M11 |
+-| `compute_spa_id` | 646 | 内容寻址 `spa_id` | OQ-P9-01 |
+-| `SpaRecord` | 653 | 已签名 SPA 记录 | 附录 D.5 |
+-| `SpaDecision` | 717 | SKIP/REEXECUTE 的结构约束 | 验收判据 1 |
+-| `_dc_outcome` | 760 | 条件 1 | §8.3 |
+-| `_predecessor_outcome` | 799 | 条件 2 | §8.3 |
+-| `_disk_outcome` | 865 | 条件 3 | §8.3 |
+-| `_gate_outcome` | 904 | 条件 4 | §8.3 |
+-| `_side_effect_outcome` | 963 | 条件 5 | §8.3 |
+-| `_gate_result_body` / `_artifact_hash` | 1014/1029 | 签名正文片段 | 附录 D.5 |
+-| `_reexecute` | 1035 | 默认分支 | 验收判据 1 |
+-| `judge_spa` | 1052 | 五项判定主入口 | §8.3 |
+-| `_reexecute_with_signing_failure` | 1154 | 签名失败回退重跑 | §8.3 条件 1/5 |
+-| `assert_default_reexecute` | 1170 | 自检：默认分支与无记录 SKIP 拒绝 | 验收判据 1 |
+-| `assert_evidence_is_not_boolean` | 1222 | 自检：PASS 必须有证据、生产者白名单 | §8.3；E0/E1 |
+-| `assert_no_unsigned_skip` | 1246 | 自检：无回验签名不得跳过 | §7.5 |
+-| `assert_no_side_effect_skip` | 1271 | 自检：副作用/必须执行必重跑 | §8.3 条件 5 |
+-| `_StaticSideEffectPort` / `_dummy_request` | 1292/1302 | 自检替身 | — |
+-
+-### 3.4 `prr_ledger.py`
+-
+-| 名称 | 起始行 | 职责 | 依据 |
+-|---|---:|---|---|
+-| `PrrRefused` / `_require_at` | 97/117 | 台账拒绝与时间校验 | 附录 D.6 |
+-| `ResultFingerprint` | 128 | 结果指纹（状态/产物/指标/退出码） | §4.2 R08 |
+-| `PruningAuthorization` | 172 | SPA+DC+计划三元授权 | §8.3；I-05 |
+-| `PrrEventType` / `EpisodeStatus` / `ComparisonBasis` | 204–226 | 事件、状态、比较依据 | §4.2 R08 |
+-| `PrrEvent` | 235 | 追加事件 | 附录 D.6 |
+-| `PrrEpisode` | 262 | 单 episode 快照 | §4.2 R08 |
+-| `PrrReport` | 284 | 单任务报告（分子/分母/覆盖率/上界/逐节点行） | §4.2 R08 |
+-| `clopper_pearson_upper` | 364 | 精确二项上界 | 策划书 §4.3；0/72≈4.99% |
+-| `_EpisodeState` | 400 | 内部可变状态 | — |
+-| `PrrLedger` | 421 | 单任务台账（pruning/rerun/result/correction/report） | §4.2 R08；验收判据 4 |
+-| `assert_denominator_policy` | 784 | 自检：分母政策与 0/72 上界 | §4.2 R08 |
+-| `assert_no_zero_without_denominator` | 800 | 自检：无分母不报 0 | §4.2 R08 |
+-| `assert_task_scoped` | 814 | 自检：无跨任务合并 | 策划书 §4.3 |
+-| `assert_prr_records_raw` | 828 | 自检：逐节点原始行 | §4.2 R08 |
++| `orchestration/determinism/dc_eligibility.py` | 六类条件、随机性否决、k 次 bit-exact 比对、有效期/规则版本 | 1,173 | 存在（并发重写，未测试） |
++| `orchestration/determinism/dc_issuer.py` | DC identity/内容寻址 ID、签发、过期、撤销、复用判定 | 1,035 | 存在（并发重写，未测试） |
++| `orchestration/determinism/spa_judge.py` | 五项条件、证据对象、签名记录、默认 REEXECUTE | 1,227 | 存在（并发重写，未测试） |
++| `orchestration/determinism/prr_ledger.py` | 逐节点剪枝/重跑/结果变化台账、精确二项上界 | 830 | 存在（并发重写，未测试） |
++
++计数口径：物理行数。四个文件均在 800–1500 行档，按 PHASE_RULES §5 第 2 档在 §3 登记完整函数索引；不拆分，理由见 §6.8。
++
++## 3. 文件导航（PHASE_RULES §5 第 2 档：四个文件均在 800–1500 行）
++
++> 行数为物理行数。索引由脚本按 AST 起始行生成，不手填，避免「文档指向不存在的函数」。
++> 依据列统一见各函数 docstring 内的章节号。
++
++### 3.1 `dc_eligibility.py`（1,173 行，32 个类/函数）
++
++> 六类条件、k 次 bit-exact 比对、随机性否决、有效期。索引按源码起始行生成，与文件一一对应。
++
++| 名称 | 起始行 | 职责（docstring 首行） |
++|---|---:|---|
++| `Condition` | 77 | §8.2 TABLE 34 的六行，顺序即表格顺序（报告顺序）。 |
++| `DcReason` | 168 | 不通过原因。每条对应一个可断言的判断点。 |
++| `ConditionStatus` | 196 | 条件结论。`MISSING_EVIDENCE` 与 `FAIL` 都不得当成通过。 |
++| `PurityClass` | 205 | 节点纯度分类。`STRICT_PURE` 是唯一可申请 DC 的类别。 |
++| `DcEligibilityError` | 230 | 输入事实自相矛盾（不是「资格不合格」）。对外 422。 |
++| `DcNotEnabled` | 243 | T0/T1 或 `dc_spa=false` 时申请 DC：能力未开。对外 403。 |
++| `DcPolicy` | 259 | DC 判定参数。除 `k_min=3` 外全部是 PROPOSED（OQ-P9-04/05）。 |
++| `DcCandidate` | 287 | 节点的静态声明：能决定「能不能申请 DC」的那部分。 |
++| `DcBinding` | 314 | §8.2「输入固定」要求绑定的一整套哈希（缺一项即 MISSING_EVIDENCE）。 |
++| `EnvComparisonView` | 353 | M03 环境比较结果的只读投影：每个组成项是否与历史一致。 |
++| `RunProbe` | 379 | 单次探针运行的可观测事实（由 M05 采集，本文件只读）。 |
++| `ConditionResult` | 415 | 一条条件的结论。 |
++| `RunComparison` | 472 | k 次运行比对结果。`bit_exact` 为真时才可能签 DC。 |
++| `EligibilityVerdict` | 511 | 六条件结论汇总。`eligible` 由结构强制，不由调用方填。 |
++| `_require_hash` | 574 | 哈希必须是 64 位小写十六进制（ENCODING_RULES §4）。 |
++| `_require_utc` | 582 | 时间必须是带时区的 UTC（不接受 naive，不猜本地时区）。 |
++| `_canonical_directory` | 590 | 目录比较用的保守规范化：去尾分隔符、转小写、统一分隔符。 |
++| `required_k` | 605 | 按敏感因素计算所需探针次数：`k_min + step × 因子数`，封顶 `k_max`。 |
++| `_divergent` | 624 | 构造一条「不通过」的检查行。 |
++| `compare_runs` | 629 | 比对 k 次探针运行是否 bit-exact，并检查「独立」与「未被复用」。 |
++| `_randomness_result` | 769 | 条件 5：随机性节点一票否决（EVALUATION_ORDER 第一位）。 |
++| `_purity_result` | 800 | 条件 1：节点纯度。任一污染源命中即「永不签 DC」。 |
++| `_input_fixed_result` | 842 | 条件 2：输入固定。数据/配置/代码/模板/依赖/上游哈希必须齐全且一致。 |
++| `_env_result` | 868 | 条件 3：环境指纹。七组成项缺一项即不完整；不一致即失效。 |
++| `_k_run_result` | 909 | 条件 4：重复执行。k 次跨进程跨目录且产物/指标 bit-exact。 |
++| `_reason_of` | 952 | 从失败的检查行反推原因，保证条件结果与比对明细一致。 |
++| `_validity_result` | 964 | 条件 6：有效期与规则版本。四个字段必须在、未过期、TTL 不超上限。 |
++| `evaluate_dc_eligibility` | 1015 | 六条件逐条判定，返回资格结论（不签发）。 |
++| `assert_randomness_is_veto` | 1082 | 随机性必须是否决项，且结构上无法绕过。返回空元组表示通过。 |
++| `assert_conservative_defaults` | 1112 | 缺证据不得通过；默认策略必须保守。返回空元组表示通过。 |
++| `assert_scope_statement` | 1136 | 限定语必须写明「不是数学确定性证明」。返回空元组表示通过。 |
++| `assert_condition_math` | 1147 | 六条件齐全、k 单调、封顶生效。返回空元组表示通过。 |
++
++### 3.2 `dc_issuer.py`（1,035 行，33 个类/函数）
++
++> 内容寻址 ID、签发、过期、撤销、复用判定。索引按源码起始行生成，与文件一一对应。
++
++| 名称 | 起始行 | 职责（docstring 首行） |
++|---|---:|---|
++| `DcIssuerError` | 116 | 签发链路错误基类。 |
++| `DcRefused` | 139 | 拒绝签发或拒绝状态变更（资格不足、开关关闭、已撤销）。对外 409。 |
++| `DcSignatureInvalid` | 146 | 签名失败或回验失败。对外 422。 |
++| `DcStoreCorrupt` | 153 | 登记表被改写：同一 `dc_id` 出现两份不同内容。对外 409。 |
++| `DcRevoked` | 160 | DC 已撤销（终态）。对外 409。 |
++| `_require_hash` | 170 | 64 位小写十六进制（ENCODING_RULES §4）。 |
++| `_require_utc_datetime` | 178 | 只接受带时区的 UTC datetime（不猜本地时区）。 |
++| `_utc_z` | 186 | UTC datetime → RFC3339 `...Z`（§7.5 时间写法）。 |
++| `_parse_utc_z` | 192 | RFC3339 `...Z` → UTC datetime；格式不符直接拒绝。 |
++| `_canonical_bytes` | 201 | 规范化字节串（占位）。 |
++| `DcSignerPort` | 215 | T2 签名端口。P9 **没有**合规实现（OQ-P6-02：M11 拒绝未冻结载荷）。 |
++| `DcSignature` | 229 | 签名信封。`signed_body_hash` 把「签的是哪份正文」也钉住。 |
++| `DcIdentity` | 264 | D.5 中除 `dc_id` / `signature` 外的 11 个字段。 |
++| `compute_dc_id` | 324 | 内容寻址 `dc_id` = `sha256(JCS(identity))`，64 位小写十六进制、**无前缀**。 |
++| `DcAudit` | 339 | 签发/撤销审计（**不进签名正文**，否则无法在事后补记）。 |
++| `DcRecord` | 355 | 已签发的 DC：D.5 的 13 个字段 + 签名信封 + 审计（审计不参与签名）。 |
++| `RevocationReason` | 387 | 撤销原因。原文未给枚举（OQ-P9-05 同源），这里是 PROPOSED 但必须显式。 |
++| `RevocationRecord` | 399 | 撤销记录：只追加，**没有** `unrevoke` / `restore`。 |
++| `DcStatus` | 427 | DC 复用状态。`VALID` 是唯一允许 SPA 条件 1 通过的值。 |
++| `DcValidityReport` | 445 | 一次复用判定的结果：`validity` + 逐项原因（不只给布尔）。 |
++| `DcRegistry` | 493 | P9 的内存登记表。T2 落地换真实存储；语义保持一致： |
++| `DcIssuance` | 557 | 签发结果：记录 + 重算依据 + 登记表规模。 |
++| `_derive_output_hashes` | 583 | 从探针派生排序去重的产物哈希集（OQ-P9-02）。 |
++| `_derive_run_fingerprints` | 594 | 从探针派生运行指纹（保持探针顺序，供 D.5 逐条核对）。 |
++| `issue_dc` | 599 | 签发一张 DC。资格不合格、重算不一致、无签名器、TTL 超限一律拒绝。 |
++| `evaluate_dc_record` | 728 | 判定一张 DC 现在还能不能用（§8.3 条件 1 的唯一入口）。 |
++| `_invalid` | 854 | 构造「签名有效但绑定变化」的判定结果。 |
++| `evaluate_dc` | 871 | 按 ID 取记录再判定。未登记时返回 `NOT_ELIGIBLE`（缺证据，不是通过）。 |
++| `revoke_dc` | 908 | 撤销一张 DC。终态：重复撤销抛 `DcRevoked`，没有恢复入口。 |
++| `assert_signature_domain` | 950 | 域前缀、算法、签名字段集合必须与 §7.5 一致。返回空元组表示通过。 |
++| `assert_dc_scope` | 970 | `eligible=False` 不得产生记录；限定语不得被改写成「已证明确定」。返回空元组表示通过。 |
++| `assert_revocation_is_terminal` | 1011 | 撤销必须终态：重复撤销失败，且登记表无恢复方法。返回空元组表示通过。 |
++| `assert_policy_binding` | 1028 | k/TTL 的默认值必须保守且可追溯。返回空元组表示通过。 |
++
++### 3.3 `spa_judge.py`（1,227 行，45 个类/函数）
++
++> 五项条件、证据、Gate 复检、默认 REEXECUTE。索引按源码起始行生成，与文件一一对应。
++
++| 名称 | 起始行 | 职责（docstring 首行） |
++|---|---:|---|
++| `SpaAction` | 88 | SPA 判定的动作。**第一成员是 REEXECUTE**：默认值不是靠 if 兜底，是靠枚举顺序。 |
++| `SpaCondition` | 98 | §8.3 的五条，顺序即原文顺序。 |
++| `ReexecuteReason` | 128 | 重跑原因。区分「缺证据」与「证据为假」——两者都必须重跑，但归因不同。 |
++| `SkipReason` | 154 | 跳过原因。D.5 的 `skip_reason` 只允许这些值（原文未给枚举，PROPOSED）。 |
++| `SpaJudgeError` | 164 | SPA 判定错误基类。 |
++| `SpaRefused` | 176 | 记录/输入不合格（字段不符 D.5、计划未冻结、开关关闭）。 |
++| `SpaNotEnabled` | 183 | T0/T1 或开关关闭时要求判 SPA：能力未开。对外 403。 |
++| `EvidenceRef` | 211 | 证据引用。`producer` 必须在白名单内——这是把 E0 声明挡在门外的唯一位置。 |
++| `ConditionOutcome` | 242 | 一条条件的结论。PASS 必须带证据；非 PASS 必须带原因。 |
++| `ArtifactExpectation` | 282 | 历史证据里的产物期望：相对路径 + 当时的 SHA-256。 |
++| `ArtifactInspection` | 295 | 现场复算结果：实际哈希、解析软链接后的真实路径、是否仍在工作区。 |
++| `GateRecheck` | 318 | 当前规则集下的 Gate 复检。四个字段缺一不可：通过、过期、撤销、新冲突。 |
++| `SideEffectFacts` | 337 | 副作用与「本次必须执行」。两个字段都是保守方向：不知道就算有。 |
++| `SpaRequest` | 350 | 一次判定的全部只读输入。判定期间不得再读外部状态（避免 TOCTOU）。 |
++| `SpaSignature` | 394 | SPA 签名信封。`verify` 由端口完成；本对象只固定「签了什么」。 |
++| `SpaSignerPort` | 436 | SPA 签名端口（Verifier 进程）。P9 无合规实现（OQ-P6-02/OQ-P9-03）。 |
++| `SpaIdentity` | 450 | D.5 中除 `spa_id` / `signature` 外的 10 个字段。 |
++| `compute_spa_id` | 481 | 内容寻址 `spa_id` = `sha256(JCS(identity))`，64 位小写十六进制、无前缀（OQ-P9-01）。 |
++| `SpaRecord` | 489 | 已签名的 SPA 记录：D.5 的 12 个字段。 |
++| `SpaDecision` | 515 | 判定结果。结构上不允许「SKIP 无记录」或「REEXECUTE 带记录」。 |
++| `_require_sha256` | 554 | SHA-256 十六进制：64 位小写。 |
++| `_require_utc` | 560 | — |
++| `_require_utc_z` | 565 | — |
++| `_utc_z` | 572 | — |
++| `_canonical_bytes` | 577 | 规范化字节串（占位）。真实实现走 M11 `jcs.canonicalize`（RFC 8785）。 |
++| `_sorted_pairs` | 584 | 前驱哈希按节点名排序后比较（顺序无语义，不得让顺序差异变成「变化」）。 |
++| `_artifact_hash` | 589 | 把多产物合成一个 `artifact_hash`：排序后的 `{path: hash}` 的 JCS 哈希（OQ-P9-06）。 |
++| `_dc_outcome` | 600 | 条件 1：存在有效 DC，且输入结构/代码/环境/规则与当前一致。 |
++| `_predecessor_outcome` | 659 | 条件 2：所有直接前驱输出哈希与恢复前历史一致（上游变化沿 DAG 传播失效）。 |
++| `_disk_outcome` | 694 | 条件 3：现场重算 SHA-256 与历史一致；realpath 不得越界或指向旧目录。 |
++| `_gate_outcome` | 757 | 条件 4：旧证据在当前规则集下仍通过 Gate，未过期、未撤销、无新冲突。 |
++| `_side_effect_outcome` | 811 | 条件 5：节点无副作用，且任务规则未要求本次必须实际执行。 |
++| `_reexecute` | 847 | 构造 REEXECUTE 决定：原因去重但保持首次出现顺序；`DEFAULT_CONSERVATIVE` 兜底。 |
++| `judge_spa` | 864 | 判定一个节点能否用 SPA 跳过本次执行。 |
++| `_safe_key_id` | 969 | 取 key_id；端口异常时返回空串（后续由 `SpaSignature` 拒绝空 key_id）。 |
++| `_dummy_dc_record` | 980 | 构造一张「签名有效、未过期、绑定一致」的 DC，供守卫函数走通条件 1。 |
++| `_dummy_request` | 1026 | 构造一个「五条件全绿」的请求，供守卫改字段做负例。 |
++| `assert_default_reexecute` | 1078 | 默认动作必须是 REEXECUTE；无记录 SKIP 必须被结构拒绝。返回空元组表示通过。 |
++| `assert_evidence_is_not_boolean` | 1105 | PASS 必须有证据；Agent/LLM 不得作为证据生产者。返回空元组表示通过。 |
++| `assert_no_unsigned_skip` | 1126 | 无签名器不得 SKIP：五条件全绿也只会得到 REEXECUTE(SIGNER_UNAVAILABLE)。 |
++| `_FakeSigner` | 1139 | 自检替身：只证明 SKIP 路径可达，不证明签名安全。 |
++| `_BrokenSigner` | 1152 | 签名成功但回验失败：必须回退 REEXECUTE，而不是抛异常或给出 SKIP。 |
++| `assert_skip_requires_all_five` | 1159 | 五条件全绿 + 可用签名器 → SKIP；任一条被破坏 → REEXECUTE。 |
++| `assert_no_side_effect_skip` | 1187 | 副作用或「必须执行」的节点一律重跑。返回空元组表示通过。 |
++| `assert_fields_match_d5` | 1215 | SPA 字段必须与 D.5 的 12 个一致。返回空元组表示通过。 |
++
++### 3.4 `prr_ledger.py`（830 行，21 个类/函数）
++
++> 逐节点剪枝/重跑/结果变化台账、精确二项上界。索引按源码起始行生成，与文件一一对应。
++
++| 名称 | 起始行 | 职责（docstring 首行） |
++|---|---:|---|
++| `PrrRefused` | 62 | 台账拒绝：字段不符、授权缺失、顺序错乱、试图改写历史。 |
++| `_require_at` | 74 | 台账时间必须是带时区的 UTC（不猜本地时区）。 |
++| `_utc_z` | 82 | — |
++| `_require_id` | 87 | — |
++| `ResultFingerprint` | 96 | 结果指纹：状态、产物哈希集、指标哈希、退出码。 |
++| `PruningAuthorization` | 142 | 剪枝三元授权。少一个就不是「有授权的剪枝」，而是「无凭据的跳过」。 |
++| `PrrEventType` | 157 | 台账事件。顺序即允许发生的顺序。 |
++| `EpisodeStatus` | 168 | 单个被剪节点的状态。仅 `RERUN_COMPLETED` 计入分母。 |
++| `ComparisonBasis` | 178 | `changed` 的比较依据。随机节点按保守方向处理，单列一档。 |
++| `PrrEvent` | 187 | 追加事件。`seq` 由台账分配，调用方不得自填（防重排）。 |
++| `_require_at_text` | 221 | — |
++| `PrrEntry` | 229 | 单个被剪节点的台账行（对外只读快照）。 |
++| `clopper_pearson_upper` | 297 | 精确二项（Clopper–Pearson）**双侧** 95% 上界。 |
++| `PrrReport` | 318 | 单任务、单计划的台账报告。**不含**跨任务合并字段。 |
++| `_EpisodeState` | 380 | 内部可变状态：一个节点从剪枝到复核的全过程。 |
++| `PrrLedger` | 439 | 单任务台账。只追加；没有 `merge` / `aggregate` / `combine`。 |
++| `_probe_entry` | 714 | 构造一行合法的探针台账，供守卫函数使用（不写台账、不产事件）。 |
++| `assert_denominator_policy` | 737 | 分母只含已完成重跑；覆盖率不足不给点估计；0/72 上界对齐 4.99%。 |
++| `assert_no_zero_without_denominator` | 764 | 没有分母时不得报 0；报告必须区分「0/0」与「0/n」。 |
++| `assert_no_cross_task_merge` | 795 | 台账不得提供跨任务合并/聚合入口。 |
++| `assert_prr_records_raw` | 806 | 逐节点原始行必须完整：授权、时间、比较依据、差异都不许缺。 |
+ 
+ ## 4. 边界（谁写什么）
+ 
+
+# ===== design/pseudocode/M16_vas/MODULE.md (old: reports/remediation/backup_before/design/pseudocode/M16_vas/MODULE.md) =====
+
+diff --git a/reports/remediation/backup_before/design/pseudocode/M16_vas/MODULE.md b/design/pseudocode/M16_vas/MODULE.md
+index 3b3e1f0..e45e248 100644
+--- a/reports/remediation/backup_before/design/pseudocode/M16_vas/MODULE.md
++++ b/design/pseudocode/M16_vas/MODULE.md
+@@ -5,8 +5,10 @@
+ > 强制集合先占预算、四策略同预算对照、权重冻结边界
+ > 不覆盖：验证执行（M09–M10）、Gate 判定（M08）、Scheduler/Governor（M13）、
+ > 真实 G-dev 校准与 G-hold 实验（T2/G5）、科学正确性裁决
+-> 前置：P5 验证、P6 签名、P7 恢复已验收；T2 能力，**T0/T1 不启用**
++> 前置：P5/P6/P7 设计产物存在；验收状态以 `docs/state/project_state.json` 为准（均 `IN_REVIEW`，未验收）；T2 能力，**T0/T1 不启用**
+ > 阶段约束（S0）：只写 `design/pseudocode/**`；不建环境、不跑测试、不改看板、不写业务代码
++>
++> **复核修正（2026-11-11）**：本模块 `risk_features.py`、`knapsack.py` 由并发进程于 22:53:54–55 重写并落盘，不是原始正文恢复；未运行测试、未验收；P9 在状态源中为 `BLOCKED`。下方“完成（伪代码）”只表示文件存在，不表示已验证。
+ 
+ ## 1. 目标
+ 
+@@ -25,37 +27,43 @@
+ 
+ | 文件 | 内容 | 行数 | 状态 |
+ |---|---|---:|---|
+-| `orchestration/vas/risk_features.py` | 五特征、Beta-Binomial、归一化、权重冻结 | 749 | 完成（伪代码） |
+-| `orchestration/vas/knapsack.py` | 强制先占、DP 精确、贪心 + 上界差距、参考最优差距 | 815 | 完成（伪代码） |
+-| `orchestration/vas/strategies.py` | 四策略、同预算对照、强制桶、统计口径 | 644 | 完成（伪代码） |
+-
+-计数口径：物理行数（`text.count("\n") + 1`）。`knapsack.py` 在 800–1500 行档，
+-按 PHASE_RULES §5 第 2 档在 §3 登记完整函数索引；其余两个文件 ≤ 800 行，无需索引。
+-
+-## 3. 文件导航（`knapsack.py`，800–1500 行档）
+-
+-| 名称 | 起始行 | 职责 | 依据 |
+-|---|---:|---|---|
+-| `KnapsackRefused` | 87 | 预算/结构拒绝（429/422） | 错误码注册表 |
+-| `SelectionMode` | 107 | AUTO/EXACT_DP/GREEDY | §8.7 |
+-| `SelectionStatus` | 115 | 强制/选中/预算排除/零效用 | §8.7 |
+-| `GapBasis` | 124 | 精确最优/参考最优/仅上界 | §8.7；本文件差距口径 |
+-| `_require_float01` / `_require_cost` | 132/149 | 特征与成本形态校验 | §8.7 |
+-| `utility_units` | 161 | `R×CoverageBenefit` → 整数 micro-utility | §8.7 |
+-| `ValidationCandidate` | 174 | 候选（风险/覆盖收益/成本/强制） | §8.7 |
+-| `candidate_universe_hash` | 222 | 候选集指纹（四策略可比性） | §8.8 |
+-| `MandatoryReservation` | 229 | 强制集合占预算结果 | §8.7 |
+-| `reserve_mandatory` | 242 | **第 2 步**：强制先占；超预算拒绝 | §8.7；验收判据 3 |
+-| `SelectionItem` | 327 | 逐项状态与原因 | §8.7 |
+-| `KnapsackResult` | 349 | 分配结果与不变量 | §8.7 |
+-| `_mask_key` | 462 | DP 平局决胜（少项、字典序） | §8.7 |
+-| `_solve_exact` | 467 | 整数 DP 精确解 | §8.7 |
+-| `_greedy_order` / `_solve_greedy` | 515/526 | 贪心顺序与装包 | §8.7 |
+-| `_lp_upper_bound` | 543 | LP 松弛上界（Fraction） | §8.7 |
+-| `select` | 573 | 主入口：VALIDATE→MANDATORY→OPTIONAL→GAP | §8.7；验收判据 3 |
+-| `assert_mandatory_first` | 739 | 自检：强制先占且超预算不丢 | 验收判据 3 |
+-| `assert_gap_honesty` | 768 | 自检：上界差距 ≠ 最优差距 | §8.7 |
+-| `assert_cost_units` | 802 | 自检：整数 tick 与取整规则 | §8.7 |
++| `orchestration/vas/risk_features.py` | 五特征、Beta-Binomial、归一化、权重冻结 | 614 | 存在（并发重写，未测试） |
++| `orchestration/vas/knapsack.py` | 强制先占、DP 精确、贪心 + 上界差距、参考最优差距 | 747 | 存在（并发重写，未测试） |
++| `orchestration/vas/strategies.py` | 四策略、同预算对照、强制桶、统计口径 | 644 | 存在（并发重写，未测试） |
++
++计数口径：物理行数。三个文件均 ≤ 800 行（第 1 档），按 PHASE_RULES §5 无需索引；§3 保留 knapsack 索引便于评审。
++
++## 3. 文件导航
++
++> `knapsack.py` = 747 行，`risk_features.py` = 614 行，`strategies.py` = 644 行。三者均 ≤ 800 行，按 PHASE_RULES §5 第 1 档
++> **无需**函数索引；下表保留是为了评审时能直接跳到「强制先占 / 差距口径」这两处验收点。
++> 索引由脚本按 AST 起始行生成。
++
++| 名称 | 起始行 | 职责（docstring 首行） |
++|---|---:|---|
++| `KnapsackRefused` | 87 | 预算分配拒绝：形态错误（422）或资源/强制集错误（429）。 |
++| `SelectionMode` | 110 | 选择模式。`AUTO` 按阈值挑 DP/贪心；显式 `EXACT_DP` 超阈值时**拒绝**，不静默降级。 |
++| `SelectionStatus` | 118 | 单项在分配里的状态。 |
++| `GapBasis` | 127 | 差距口径。`UPPER_BOUND_ONLY` 时 `relative_gap` 必须为 None。 |
++| `_require_float01` | 138 | 特征/收益必须在 [0,1]（不是 bool，不是 NaN）。 |
++| `_require_cost` | 150 | 成本必须是整数 tick（>=0）；小数成本一律拒绝，不做隐式取整。 |
++| `utility_units` | 159 | `Utility = R × CoverageBenefit`，转成整数 micro-utility。 |
++| `ValidationCandidate` | 176 | 一个可被验证的节点。风险与覆盖收益由调用方给出（VAS 不重算指标）。 |
++| `candidate_universe_hash` | 217 | 候选集指纹：四策略可比性的依据（排序后 JCS + SHA-256，64 位小写十六进制）。 |
++| `MandatoryReservation` | 231 | 强制集合占预算的结果。`optional` 是剩下的可选候选，保持稳定顺序。 |
++| `reserve_mandatory` | 261 | 第 2 步：强制集合先占预算；超预算抛 429，**不**返回部分强制集合。 |
++| `SelectionItem` | 330 | 逐项状态，便于复核「为什么没选它」。 |
++| `KnapsackResult` | 352 | 分配结果与不变量。差距口径是类型化的，不能只报一个数。 |
++| `_mask_key` | 422 | DP 平局决胜：先比选入项数（少者优先），再比位掩码（字典序小者优先）。 |
++| `_solve_exact` | 427 | 0/1 整数 DP 精确解。 |
++| `_greedy_order` | 470 | 贪心顺序：`Priority` 降序，同优先级按 node_id 升序（确定性）。 |
++| `_solve_greedy` | 475 | 贪心装包。返回 (效用, 已花 tick, 选中 node_id 序列)。 |
++| `_lp_upper_bound` | 490 | 分数背包（LP 松弛）上界：按 Priority 排序后允许切开一项。 |
++| `select` | 514 | 在预算内选择验证项：强制先占 → 可选优化 → 差距报告。 |
++| `_probe_candidates` | 653 | 固定探针：两个强制项 + 四个可选，成本 2/2/3/2/1/1，预算 6。 |
++| `assert_mandatory_first` | 665 | 强制集合先占预算；超预算必须 429 且不返回部分强制集合。 |
++| `assert_gap_honesty` | 691 | 上界差距不得冒充最优差距；参考最优低于达成值必须拒绝。 |
++| `assert_cost_units` | 734 | 成本必须是整数 tick；`utility_units` 必须用 Decimal 取整。 |
+ 
+ ## 4. 边界（谁写什么）
+ 

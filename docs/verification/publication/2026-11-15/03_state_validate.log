@@ -1,0 +1,6 @@
+﻿# command: "D:\ResearchFlow-project\.venv\Scripts\python.exe" -B scripts/state_sync.py validate
+# cwd: D:\ResearchFlow-project
+# start: 2026-11-15T11:21:15.7850224+08:00
+# end: 2026-11-15T11:21:15.9867864+08:00
+# exit: 0
+OK: project_state.json 校验通过。阶段=T0，任务=29，伪代码阶段=10（ACCEPTED 8，BLOCKED 2），门禁 PASS=4/8，阻塞=4。

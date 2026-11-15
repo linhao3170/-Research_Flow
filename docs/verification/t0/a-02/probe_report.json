@@ -1,0 +1,206 @@
+{
+  "cases": [
+    {
+      "attempt_02_dirs_after": [],
+      "damage": {
+        "chain_after_issues": [
+          {
+            "code": "CHAIN_PAYLOAD_MISSING",
+            "detail": "payload 33cc41d22c9dcb97753f6766f43de549b40c951996b0f8e2a81a35ccca747124 is not in the evidence payload store",
+            "evidence_id": "ev_e55e7b05-7ec0-5fe1-bde9-994464ab70ad"
+          }
+        ],
+        "chain_after_ok": false,
+        "chain_before_ok": true,
+        "payload_hash": "33cc41d22c9dcb97753f6766f43de549b40c951996b0f8e2a81a35ccca747124"
+      },
+      "duration_sec": 8.805,
+      "freeze_rows_after": 2,
+      "mode": "pre-fix",
+      "node_states_after": {
+        "split_dataset": "INVALIDATED",
+        "train_logistic_regression": "INVALIDATED"
+      },
+      "result": {
+        "affected_nodes": [
+          "split_dataset",
+          "train_logistic_regression"
+        ],
+        "decision": "PROCEEDED",
+        "exception_code": null,
+        "exception_detail": null,
+        "plan_hash": "a759d87962a28ab0f44999bc48dbe89e61cbe5d9e87deb4a8dd7ab424bdb10c5"
+      },
+      "scenario": "broken_chain",
+      "simulated_pre_fix": true,
+      "started_at": "2026-11-15T02:14:35.413526Z",
+      "task_id": "task_305cb745-5d03-4c39-bb6c-7249c4e06097"
+    },
+    {
+      "attempt_02_dirs_after": [],
+      "damage": {
+        "chain_after_issues": [
+          {
+            "code": "CHAIN_PAYLOAD_MISSING",
+            "detail": "payload cd1085b3d4460fbdc716ae157521ab5032ee8ee0984c3a7f36328d2e38c8df31 is not in the evidence payload store",
+            "evidence_id": "ev_caf5f0ba-a205-50c1-95fc-26af5902e3fe"
+          }
+        ],
+        "chain_after_ok": false,
+        "chain_before_ok": true,
+        "payload_hash": "cd1085b3d4460fbdc716ae157521ab5032ee8ee0984c3a7f36328d2e38c8df31"
+      },
+      "duration_sec": 8.013,
+      "freeze_rows_after": 0,
+      "mode": "post-fix",
+      "node_states_after": {
+        "split_dataset": "VERIFIED",
+        "train_logistic_regression": "VERIFIED"
+      },
+      "result": {
+        "affected_nodes": null,
+        "decision": "REFUSED",
+        "exception_code": "RECOVERY_NOT_SAFE",
+        "exception_detail": "L1 precheck failed before recovery: L1_CHAIN_PAYLOAD_MISSING: ev_caf5f0ba-a205-50c1-95fc-26af5902e3fe: payload cd1085b3d4460fbdc716ae157521ab5032ee8ee0984c3a7f36328d2e38c8df31 is not in the evidence payload store",
+        "plan_hash": null
+      },
+      "scenario": "broken_chain",
+      "simulated_pre_fix": false,
+      "started_at": "2026-11-15T02:14:44.225562Z",
+      "task_id": "task_2fa2a30d-f49a-4851-b586-b482eb9e4749"
+    },
+    {
+      "attempt_02_dirs_after": [],
+      "damage": {
+        "removed": "tasks\\task_0254140f-32ac-4256-a140-bc6b552061ca\\attempts\\split_dataset\\attempt_01\\result.json"
+      },
+      "duration_sec": 8.189,
+      "freeze_rows_after": 2,
+      "mode": "pre-fix",
+      "node_states_after": {
+        "split_dataset": "INVALIDATED",
+        "train_logistic_regression": "INVALIDATED"
+      },
+      "result": {
+        "affected_nodes": [
+          "split_dataset",
+          "train_logistic_regression"
+        ],
+        "decision": "PROCEEDED",
+        "exception_code": null,
+        "exception_detail": null,
+        "plan_hash": "06330cf84ea496459c3f7d73bb2953d1c24080d566ef85fa480a0266eaf9cf28"
+      },
+      "scenario": "missing_result",
+      "simulated_pre_fix": true,
+      "started_at": "2026-11-15T02:14:52.244126Z",
+      "task_id": "task_0254140f-32ac-4256-a140-bc6b552061ca"
+    },
+    {
+      "attempt_02_dirs_after": [],
+      "damage": {
+        "removed": "tasks\\task_f42f4857-3e14-43a1-bf19-79cf98272aeb\\attempts\\split_dataset\\attempt_01\\result.json"
+      },
+      "duration_sec": 8.119,
+      "freeze_rows_after": 0,
+      "mode": "post-fix",
+      "node_states_after": {
+        "split_dataset": "VERIFIED",
+        "train_logistic_regression": "VERIFIED"
+      },
+      "result": {
+        "affected_nodes": null,
+        "decision": "REFUSED",
+        "exception_code": "RECOVERY_NOT_SAFE",
+        "exception_detail": "L1 precheck failed before recovery: L1_ATTEMPT_RESULT_MISSING: attempt_01 has no result.json",
+        "plan_hash": null
+      },
+      "scenario": "missing_result",
+      "simulated_pre_fix": false,
+      "started_at": "2026-11-15T02:15:00.438644Z",
+      "task_id": "task_f42f4857-3e14-43a1-bf19-79cf98272aeb"
+    },
+    {
+      "attempt_02_dirs_after": [],
+      "damage": {
+        "chain_after_issues": [
+          {
+            "code": "CHAIN_PAYLOAD_MISSING",
+            "detail": "payload 8eea329058d05470d5fe195bd2bdf24fd276e7cd2ee2da6e6d86f84dd62774d1 is not in the evidence payload store",
+            "evidence_id": "ev_7b5e45b0-cce2-522c-8397-57d302780611"
+          }
+        ],
+        "chain_after_ok": false,
+        "chain_before_ok": true,
+        "payload_hash": "8eea329058d05470d5fe195bd2bdf24fd276e7cd2ee2da6e6d86f84dd62774d1"
+      },
+      "duration_sec": 8.238,
+      "freeze_rows_after": 2,
+      "mode": "post-fix",
+      "node_states_after": {
+        "split_dataset": "INVALIDATED",
+        "train_logistic_regression": "INVALIDATED"
+      },
+      "plan_hash": "7b0e8a63513762078f88110a33cb1fcbbdc180edbd727338de3b22c8cc2f7932",
+      "result": {
+        "decision": "REFUSED",
+        "exception_code": "RECOVERY_NOT_SAFE",
+        "exception_detail": "L1 precheck failed before recovery: L1_CHAIN_PAYLOAD_MISSING: ev_7b5e45b0-cce2-522c-8397-57d302780611: payload 8eea329058d05470d5fe195bd2bdf24fd276e7cd2ee2da6e6d86f84dd62774d1 is not in the evidence payload store"
+      },
+      "scenario": "rerun_broken_chain",
+      "started_at": "2026-11-15T02:15:08.563357Z",
+      "task_id": "task_29890e11-0a88-4b7a-b20a-32ffb0300b3f"
+    }
+  ],
+  "checks": [
+    {
+      "actual": "PROCEEDED",
+      "expected": "PROCEEDED",
+      "mode": "pre-fix",
+      "ok": true,
+      "scenario": "broken_chain"
+    },
+    {
+      "actual": "REFUSED",
+      "expected": "REFUSED",
+      "mode": "post-fix",
+      "ok": true,
+      "scenario": "broken_chain"
+    },
+    {
+      "actual": "PROCEEDED",
+      "expected": "PROCEEDED",
+      "mode": "pre-fix",
+      "ok": true,
+      "scenario": "missing_result"
+    },
+    {
+      "actual": "REFUSED",
+      "expected": "REFUSED",
+      "mode": "post-fix",
+      "ok": true,
+      "scenario": "missing_result"
+    },
+    {
+      "actual": "REFUSED",
+      "expected": "REFUSED",
+      "mode": "post-fix",
+      "ok": true,
+      "scenario": "rerun_broken_chain"
+    }
+  ],
+  "command": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe -B docs/verification/t0/a-02/recovery_chain_probe.py",
+  "cwd": "D:\\ResearchFlow-project",
+  "duration_sec": 41.393,
+  "ended_at": "2026-11-15T02:15:16.806816Z",
+  "exit_code": 0,
+  "interpreter": "D:\\ResearchFlow-project\\.venv\\Scripts\\python.exe",
+  "no_new_attempts": true,
+  "pre_fix_note": "pre-fix mode monkeypatches RecoveryService._require_valid_evidence to a no-op; it reproduces the code path before the A-02 fix and is labelled simulated. The actual pre-fix code was also observed in this session before the guard was added (invalidate proceeded with a broken chain and wrote two freeze rows).",
+  "purpose": "A-02 recovery evidence-validation sensitivity probe",
+  "python_version": "3.11.16",
+  "reasons_ok": true,
+  "started_at": "2026-11-15T02:14:35.413526Z",
+  "states_untouched": true,
+  "verdict": "PASS"
+}

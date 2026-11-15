@@ -22,3 +22,8 @@
 
 # 二进制文档不参与换行转换
 *.docx binary
+
+# 证据包与离线验签材料按原始字节保存：包内 manifest 的 SHA-256 基于
+# 生成时的原始字节，换行归一化会导致新 clone 中 verify_bundle 失败。
+/docs/verification/t0/e2e/** -text
+/docs/verification/t0/g6-t0/** -text
